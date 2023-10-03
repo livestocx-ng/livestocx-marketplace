@@ -17,6 +17,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        main: "#006838",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -70,6 +71,9 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      backgroundImage: {
+        'home': "url('/home.jpg')"
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],

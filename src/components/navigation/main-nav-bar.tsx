@@ -4,28 +4,7 @@ import Image from 'next/image';
 import {useEffect, useState} from 'react';
 import {ShoppingCartIcon, User2} from 'lucide-react';
 
-const NavLinks = [
-	{
-		title: 'Home',
-		url: '/',
-	},
-	{
-		title: 'Marketplace',
-		url: '#/marketplace',
-	},
-	{
-		title: 'About',
-		url: '#/about',
-	},
-	{
-		title: 'Contact',
-		url: '#/contact',
-	},
-	{
-		title: 'Sellers',
-		url: '#/sellers',
-	},
-];
+import { NavLinks } from '@/data';
 
 const MainNavbar = () => {
 	const [scrolling, setScrolling] = useState<boolean>(false);

@@ -1,6 +1,8 @@
 import SearchForm from './components/search-form';
 import CarouselSlide from './components/carousel-slide';
 import HomeProducts from './components/home-products';
+import TestimonialCard from './components/testimonial-card';
+import {Testimonials} from '@/data';
 
 export default function HomePage() {
 	return (
@@ -20,6 +22,12 @@ export default function HomePage() {
 
 			<div className='flex flex-col w-full bg-white px-8 py-10'>
 				<HomeProducts />
+			</div>
+
+			<div className='flex items-center justify-between flex-wrap px-8 py-10 bg-white'>
+				{Testimonials.map((testimonial) => (
+					<TestimonialCard key={testimonial.id} data={testimonial} />
+				))}
 			</div>
 		</main>
 	);

@@ -1,5 +1,7 @@
 'use client';
+import {RotateCw} from 'lucide-react';
 import {Fragment, useState} from 'react';
+
 import {Button} from '@/components/ui/button';
 import ProductCard from './product-card';
 
@@ -58,6 +60,17 @@ const HomeProducts = () => {
 				].map((item) => (
 					<ProductCard key={item} />
 				))}
+			</div>
+
+			<div className='flex justify-center mt-10'>
+				<Button
+					type='button'
+					variant={'outline'}
+					className='flex items-center space-x-1 bg-white border hover:bg:white focus:bg-white'
+				>
+					<RotateCw />
+					<span>Load More</span>
+				</Button>
 			</div>
 		</Fragment>
 	);

@@ -8,9 +8,10 @@ interface FormTextInputProps {
 	name: string;
 	value: string;
 	// minLength?: number;
+	// maxLength?: number;
 	padding?: string;
 	placeHolder: string;
-	type?: string;
+	type?: 'text' | 'password' | 'number';
 	handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -20,6 +21,7 @@ const FormTextInput = ({
 	name,
 	value,
 	// minLength,
+	// maxLength,
 	handleChange,
 	padding,
 	placeHolder,
@@ -28,14 +30,13 @@ const FormTextInput = ({
 	return (
 		<input
 			name={name}
-			onChange={(event) => handleChange(event)}
+			value={value}
 			placeholder={placeHolder}
 			type={type ? type : 'text'}
-			// minLength={minLength}
-			value={value}
 			disabled={disabled ? disabled : false}
+			onChange={(event) => handleChange(event)}
 			className={cn(
-				'placeholder:text-[12px] text-[12px] hover:outline-none focus:outline-none focus:border-gray-600 focus:ring-blue',
+				'placeholder:text-[12px] text-[12px] hover:outline-none focus:outline-none focus:border-gray-600',
 				classes,
 				padding ? padding : 'px-5 py-4'
 			)}

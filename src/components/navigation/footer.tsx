@@ -27,8 +27,8 @@ const IconLink = ({href, icon, width, height}: IconLinkProps) => {
 
 const Footer = () => {
 	return (
-		<div className='h-[250px] w-full bg-main flex items-center justify-between px-10'>
-			<div className=''>
+		<div className='sm:h-[250px] py-10 sm:py-0 w-full bg-main flex flex-col sm:flex-row items-center justify-between px-10'>
+			<div className='mb-5 sm:mb-0'>
 				<Image
 					alt='logo'
 					width={50}
@@ -39,8 +39,10 @@ const Footer = () => {
 			</div>
 
 			<div className='flex flex-col items-center space-y-5 text-center'>
-				<div className='flex items-center text-center space-x-3'>
-					{NavLinks.map((link) => (
+				<div className='flex flex-col sm:flex-row items-center text-center sm:space-x-10 space-y-5 sm:space-y-0'>
+					{NavLinks.filter(
+						(link) => link.title !== 'Marketplace'
+					).map((link) => (
 						<Link
 							href={link.url}
 							key={link.title}
@@ -66,11 +68,11 @@ const Footer = () => {
 					</Link>
 				</div>
 
-				<p>Copyright &copy;2023 Livestocx</p>
+				<p className='text-sm text-white'>Copyright &copy;2023 Livestocx</p>
 			</div>
 
-			<div className='flex flex-col items-center justify-center space-y-5'>
-				<div className='flex items-center space-x-3'>
+			<div className='flex flex-col items-center justify-center space-y-5 mt-20 sm:mt-0'>
+				<div className='flex items-center space-x-10 sm:space-x-3'>
 					<Link href={'#'} className=''>
 						<Image
 							alt={''}

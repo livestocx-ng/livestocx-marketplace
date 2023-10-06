@@ -34,7 +34,7 @@ const SearchForm = () => {
 					value={formData.search}
 					handleChange={handleChange}
 					placeHolder='What are you looking for?'
-					classes='w-[60%] bg-[#00A65120] text-white text-sm placeholder:text-sm placeholder:italic border-2 border-green-600 focus:border-green-600 rounded-full'
+					classes='w-[70%] sm:w-[60%] bg-[#00A65120] text-white text-sm placeholder:text-sm placeholder:italic border-2 border-green-600 focus:border-green-600 rounded-full'
 				/>
 
 				<Button className='bg-main rounded-full w-12 h-12'>

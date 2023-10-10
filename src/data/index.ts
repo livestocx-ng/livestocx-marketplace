@@ -10,6 +10,16 @@ export interface Testimonial {
 	description: string;
 }
 
+interface TeamMember {
+	id: number;
+	name: string;
+	image: string;
+	intro: string;
+	facebook: string;
+	linkedin: string;
+	instagram: string;
+}
+
 export const NavLinks: NavLink[] = [
 	{
 		title: 'Home',
@@ -21,7 +31,7 @@ export const NavLinks: NavLink[] = [
 	},
 	{
 		title: 'About',
-		url: '#/about',
+		url: '/about-us',
 	},
 	{
 		title: 'Contact',
@@ -56,3 +66,24 @@ export const Testimonials: Testimonial[] = [
 			'I must say that their services have left a lasting impression on me, and I am eagerly looking forward to future interactions.',
 	},
 ];
+
+export const TeamMembers: TeamMember[] = [
+	{
+		id: 1,
+		image: '/about__1.png',
+		name: 'Oghenekevwe Emadago',
+		intro: 'Founder of Livestocx is a skilled innovator and experienced entrepreneur who has achieved great success in his career. His previous business venture, Girlified, was able to secure a substantial amount of funding, which is a testament to his outstanding business acumen and strategic skills.',
+		facebook: '#',
+		linkedin: 'https://www.linkedin.com/in/oghenekevwe-emadago?miniProfileUrn=urn%3Ali%3Afs_miniProfile%3AACoAAC6nN7sB_tHEBBPhKw7AlemgLv4gM8PXzao&lipi=urn%3Ali%3Apage%3Ad_flagship3_search_srp_all%3BNaz%2FvpQPTWu7rMCohxRbTQ%3D%3D',
+		instagram: '#',
+	},
+	{
+		id: 2,
+		image: '/about__2.png',
+		name: 'Idokoh Divine',
+		intro: 'Founder of Livestocx is a skilled innovator and experienced entrepreneur who has achieved great success in his career. His previous business venture, Girlified, was able to secure a substantial amount of funding, which is a testament to his outstanding business acumen and strategic skills.',
+		facebook: '#',
+		linkedin: '#',
+		instagram: '#',
+	},
+]

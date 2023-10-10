@@ -2,7 +2,7 @@
 import React, {useReducer} from 'react';
 import {Search} from 'lucide-react';
 import {Button} from '@/components/ui/button';
-import FormTextInput from '@/components/input/form-input';
+import FormTextInput from '@/components/input/form-text-input';
 
 const SearchForm = () => {
 	const [formData, updateFormData] = useReducer(

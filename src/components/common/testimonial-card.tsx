@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 const TestimonialCard = ({data}: {data: Testimonial}) => {
 	return (
-		<div className='flex flex-col items-center justify-center space-y-5 w-[350px] h-[350px] bg-white border rounded-lg px-4 py-8'>
+		<div className='flex flex-col items-center justify-center space-y-5 md:w-[350px] h-[350px] bg-white border rounded-lg px-4 py-8 mb-5 md:mb-0'>
 			<div className='flex space-x-3 items-center'>
 				{[1, 2, 3, 4, 5].map((item) => (
 					<Star key={item} className='text-orange-500' />

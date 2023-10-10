@@ -2,10 +2,18 @@
 
 import Image from 'next/image';
 import {ShoppingCartIcon} from 'lucide-react';
+import {useRouter} from 'next/navigation';
 
 const ProductCard = () => {
+	const router = useRouter();
+
 	return (
-		<div className='w-[300px] h-[300px] flex flex-col justify-between relative'>
+		<div
+			onClick={() => {
+				router.push('/U9IKL9101');
+			}}
+			className='w-full md:w-[300px] h-[300px] flex flex-col justify-between relative cursor-pointer'
+		>
 			<div className='h-[75%] relative rounded-t-lg'>
 				<Image
 					fill

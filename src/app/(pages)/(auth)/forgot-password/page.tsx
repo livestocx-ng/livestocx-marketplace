@@ -1,8 +1,8 @@
 'use client';
 
 import {useReducer} from 'react';
-import FormTextInput from '@/components/input/form-input';
-import AuthHeader from '../components/auth-header';
+import FormTextInput from '@/components/input/form-text-input';
+import AuthHeader from '../../../../components/header/auth-header';
 import Link from 'next/link';
 import {Separator} from '@/components/ui/separator';
 import {Button} from '@/components/ui/button';

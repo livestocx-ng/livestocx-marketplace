@@ -7,19 +7,17 @@ import {
 	Settings,
 	ShoppingCartIcon,
 } from 'lucide-react';
-import {Tab} from '../page';
 import {cn} from '@/lib/utils';
+import {Tab, Tabs} from '../page';
 import {Dispatch, SetStateAction} from 'react';
 
 interface AccountSideBarProps {
-	tabs: Tab[];
 	currentTab: Tab;
 	updateCurrentTab: Dispatch<SetStateAction<Tab>>;
 }
 
 const AccountSideBar = ({
 	currentTab,
-	tabs,
 	updateCurrentTab,
 }: AccountSideBarProps) => {
 	return (
@@ -27,7 +25,7 @@ const AccountSideBar = ({
 			<h1 className='font-semibold px-4'>Navigation</h1>
 
 			<ul className='space-y- mt-5'>
-				{tabs.map((tab) => (
+				{Tabs.map((tab) => (
 					<li
 						key={tab}
 						onClick={() => {

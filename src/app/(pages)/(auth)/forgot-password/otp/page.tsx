@@ -35,6 +35,22 @@ const SignInPage = () => {
 		}
 	};
 
+	const handleKeyDown = (
+		e: React.KeyboardEvent<HTMLInputElement>,
+		index: number
+	) => {
+		if (e.key === 'Backspace' || e.key === 'Delete') {
+			e.preventDefault();
+			const newOtp = [...otp];
+			newOtp[index] = ''; // Clear the input field on Backspace or Delete
+			setOtp(newOtp);
+
+			if (index > 0) {
+				inputRefs.current[index - 1]?.focus(); // Move focus to the previous input field
+			}
+		}
+	};
+
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
@@ -68,6 +84,9 @@ const SignInPage = () => {
 									value={digit}
 									onChange={(e) => {
 										handleInputChange(e, index);
+									}}
+									onKeyDown={(e) => {
+										handleKeyDown(e, index);
 									}}
 									ref={(ref) =>
 										(inputRefs.current[index] = ref)

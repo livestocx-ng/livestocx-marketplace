@@ -8,6 +8,8 @@ import {cn} from '@/lib/utils';
 import SellerInfoTab from './components/seller-info-tab';
 import ProductReviewTab from './components/product-review-tab';
 import ProductCard from '../components/product-card';
+import ProductModal from './components/product-modal';
+import {useModal} from '@/hooks/use-modal';
 
 interface ProductPageParams {
 	params: {
@@ -20,11 +22,17 @@ type Tab = 'Seller Info' | 'Review' | 'More From Seller';
 const CurrentTabs: Tab[] = ['Seller Info', 'Review', 'More From Seller'];
 
 const ProductPage = ({params: {productId}}: ProductPageParams) => {
-	console.log('[PRODUCT-ID] :: ', productId);
+	const isModalOpen = useModal((state) => state.isOpen);
+	const onModalOpen = useModal((state) => state.onOpen);
+
 	const [currentTab, setCurrentTab] = useState<Tab>('Seller Info');
 
+	console.log('[PRODUCT-ID] :: ', productId);
+
 	return (
-		<main className='w-full'>
+		<main className='w-full relative'>
+			{isModalOpen && <ProductModal />}
+
 			<AuthHeader classes='md:h-[35vh]' />
 
 			<div className='flex flex-col justify-start items-start py-10 md:px-8'>
@@ -126,7 +134,14 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 							/>
 
 							{item === 4 && (
-								<div className='absolute top-0 h-full w-full bg-[#11111190] flex items-center justify-center rounded-lg cursor-pointer'>
+								<div
+									onClick={() => {
+										if (!isModalOpen) {
+											onModalOpen();
+										}
+									}}
+									className='absolute top-0 h-full w-full bg-[#11111190] flex items-center justify-center rounded-lg cursor-pointer'
+								>
 									<p className='text-xs md:text-base text-center text-white'>
 										See more images
 									</p>

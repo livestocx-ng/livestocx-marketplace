@@ -8,6 +8,7 @@ import {Separator} from '@/components/ui/separator';
 import {Button} from '@/components/ui/button';
 import Image from 'next/image';
 import FormPasswordInput from '@/components/input/form-password-input';
+import {useRouter} from 'next/navigation';
 
 type FormData = {
 	newPassword: string;
@@ -34,6 +35,8 @@ const formReducer = (state: FormData, action: FormAction) => {
 };
 
 const SignInPage = () => {
+	const router = useRouter();
+
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,6 +50,8 @@ const SignInPage = () => {
 		event.preventDefault();
 
 		console.log('[SIGNIN-PAYLOAD] :: ', formData);
+
+		router.push('/signin');
 	};
 
 	return (

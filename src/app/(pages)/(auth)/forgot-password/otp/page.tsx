@@ -6,10 +6,13 @@ import Link from 'next/link';
 import {Separator} from '@/components/ui/separator';
 import {Button} from '@/components/ui/button';
 import AuthHeader from '../../../../../components/header/auth-header';
+import {useRouter} from 'next/navigation';
 
 const numberOfInputs = 4;
 
 const SignInPage = () => {
+	const router = useRouter();
+
 	const [otp, setOtp] = useState(Array(numberOfInputs).fill(''));
 	const inputRefs = useRef(Array(numberOfInputs).fill(null));
 
@@ -36,6 +39,8 @@ const SignInPage = () => {
 		event.preventDefault();
 
 		console.log('[OTP-PAYLOAD] :: ', otp);
+
+		router.push('/reset-password');
 	};
 
 	return (

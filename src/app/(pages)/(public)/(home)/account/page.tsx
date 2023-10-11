@@ -13,15 +13,6 @@ export type Tab =
 	| 'Settings'
 	| 'Logout';
 
-export const Tabs: Tab[] = [
-	'Dashboard',
-	'Order History',
-	'Wishlist',
-	'Shopping Cart',
-	'Settings',
-	'Logout',
-];
-
 const AccountPage = () => {
 	const [currentTab, setCurrentTab] = useState<Tab>('Dashboard');
 
@@ -32,7 +23,6 @@ const AccountPage = () => {
 			<div className='w-full flex flex-col justify-center items-center py-20 px-4 sm:px-10'>
 				<div className='flex items-start justify-between w-full'>
 					<AccountSideBar
-						tabs={Tabs}
 						currentTab={currentTab}
 						updateCurrentTab={setCurrentTab}
 					/>

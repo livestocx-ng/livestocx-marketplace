@@ -7,14 +7,23 @@ import {
 	Settings,
 	ShoppingCartIcon,
 } from 'lucide-react';
+import {Tab} from '../page';
 import {cn} from '@/lib/utils';
-import {Tab, Tabs} from '../page';
 import {Dispatch, SetStateAction} from 'react';
 
 interface AccountSideBarProps {
 	currentTab: Tab;
 	updateCurrentTab: Dispatch<SetStateAction<Tab>>;
 }
+
+const Tabs: Tab[] = [
+	'Dashboard',
+	'Order History',
+	'Wishlist',
+	'Shopping Cart',
+	'Settings',
+	'Logout',
+];
 
 const AccountSideBar = ({
 	currentTab,
@@ -36,7 +45,7 @@ const AccountSideBar = ({
 							currentTab === tab
 								? 'bg-slate-100 border-l-4 border-l-green-500'
 								: 'text-gray-500',
-								tab === 'Logout' ? 'rounded-bl-lg': ''
+							tab === 'Logout' ? 'rounded-bl-lg' : ''
 						)}
 					>
 						{tab === 'Dashboard' && (

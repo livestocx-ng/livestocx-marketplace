@@ -1,7 +1,7 @@
 import {Testimonials} from '@/data';
 import TestimonialCard from '@/components/common/testimonial-card';
 
-const TestimonialScetion = () => {
+const TestimonialSection = () => {
 	return (
 		<div className='flex items-center justify-between flex-wrap px-4 md:px-8 py-10 bg-white'>
 			{Testimonials.map((testimonial) => (
@@ -11,4 +11,4 @@ const TestimonialScetion = () => {
 	);
 };
 
-export default TestimonialScetion;
+export default TestimonialSection;

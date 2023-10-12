@@ -1,7 +1,7 @@
 import SearchForm from './components/search-form';
 import CarouselSlide from './components/carousel-slide';
 import HomeProducts from './components/home-products';
-import TestimonialScetion from '@/components/common/testimonials';
+import TestimonialSection from '@/components/common/testimonials';
 
 export default function HomePage() {
 	return (
@@ -23,7 +23,7 @@ export default function HomePage() {
 				<HomeProducts />
 			</div>
 
-			<TestimonialScetion />
+			<TestimonialSection />
 		</main>
 	);
 }

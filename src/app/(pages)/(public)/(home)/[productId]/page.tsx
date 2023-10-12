@@ -180,7 +180,8 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 						Related Products
 					</div>
 
-					<div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10 w-full'>
+					<div className='flex flex-wrap items-center justify-between w-full gap-y-4 md:gap-6 mt-10'>
+						{/* <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10 w-full'> */}
 						{[1, 2, 3, 4, 5, 6, 7].map((item) => (
 							<ProductCard key={item} />
 						))}

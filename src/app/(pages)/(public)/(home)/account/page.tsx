@@ -4,6 +4,11 @@ import AuthHeader from '@/components/header/auth-header';
 
 import {useState} from 'react';
 import AccountSideBar from './components/account-side-bar';
+import DashboardContent from './components/dashboard/dashboard-content';
+import OrderContent from './components/dashboard/order-content';
+import WishListContent from './components/dashboard/wish-list-content';
+import SettingsContent from './components/dashboard/settings-content';
+import CartContent from './components/dashboard/cart-content';
 
 export type Tab =
 	| 'Dashboard'
@@ -26,6 +31,12 @@ const AccountPage = () => {
 						currentTab={currentTab}
 						updateCurrentTab={setCurrentTab}
 					/>
+
+					{currentTab === 'Dashboard' && <DashboardContent />}
+					{currentTab === 'Order History' && <OrderContent />}
+					{currentTab === 'Wishlist' && <WishListContent />}
+					{currentTab === 'Shopping Cart' && <CartContent />}
+					{currentTab === 'Settings' && <SettingsContent />}
 				</div>
 			</div>
 		</div>

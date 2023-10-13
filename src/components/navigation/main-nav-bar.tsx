@@ -74,8 +74,8 @@ const MainNavbar = () => {
 						/>
 					</Link>
 					<Link
-						// href={'/account'}
-						href={'/signin'}
+						href={'/account'}
+						// href={'/signin'}
 						className={`h-10 w-10 ${
 							scrolling ? 'bg-white' : 'bg-main'
 						} rounded-full flex flex-col items-center justify-center`}

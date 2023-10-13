@@ -30,7 +30,7 @@ const AccountSideBar = ({
 	updateCurrentTab,
 }: AccountSideBarProps) => {
 	return (
-		<div className='w-[20%] flex flex-col pt-5 border rounded-lg'>
+		<div className='w-[20%] flex flex-col pt-3 border rounded'>
 			<h1 className='font-semibold px-4'>Navigation</h1>
 
 			<ul className='space-y- mt-5'>
@@ -45,21 +45,51 @@ const AccountSideBar = ({
 							currentTab === tab
 								? 'bg-slate-100 border-l-4 border-l-green-500'
 								: 'text-gray-500',
-							tab === 'Logout' ? 'rounded-bl-lg' : ''
+							tab === 'Logout' ? 'rounded-bl border-l-red-500' : ''
 						)}
 					>
 						{tab === 'Dashboard' && (
-							<LayoutDashboard className='h-6 w-6' />
+							<LayoutDashboard
+								className={`h-6 w-6 ${
+									currentTab == tab && 'text-green-600'
+								}`}
+							/>
 						)}
 						{tab === 'Order History' && (
-							<RefreshCcw className='h-6 w-6' />
+							<RefreshCcw
+								className={`h-6 w-6 ${
+									currentTab == tab && 'text-green-600'
+								}`}
+							/>
 						)}
-						{tab === 'Wishlist' && <Heart className='h-6 w-6' />}
+						{tab === 'Wishlist' && (
+							<Heart
+								className={`h-6 w-6 ${
+									currentTab == tab && 'text-green-600'
+								}`}
+							/>
+						)}
 						{tab === 'Shopping Cart' && (
-							<ShoppingCartIcon className='h-6 w-6' />
+							<ShoppingCartIcon
+								className={`h-6 w-6 ${
+									currentTab == tab && 'text-green-600'
+								}`}
+							/>
 						)}
-						{tab === 'Settings' && <Settings className='h-6 w-6' />}
-						{tab === 'Logout' && <LogOut className='h-6 w-6' />}
+						{tab === 'Settings' && (
+							<Settings
+								className={`h-6 w-6 ${
+									currentTab == tab && 'text-green-600'
+								}`}
+							/>
+						)}
+						{tab === 'Logout' && (
+							<LogOut
+								className={`h-6 w-6 ${
+									currentTab == tab && tab === 'Logout' && 'text-red-600'
+								}`}
+							/>
+						)}
 
 						<p
 							className={cn(

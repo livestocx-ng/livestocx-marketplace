@@ -72,7 +72,7 @@ const CarouselSlide = () => {
 				))}
 			</div>
 
-			<div className='absolute right-0 bottom-0 w-0 md:h-[200px] md:w-[400px]'>
+			<div className='absolute right-0 bottom-0 w-0 md:h-[200px] md:w-[40%]'>
 				<Image
 					fill
 					// width={400}

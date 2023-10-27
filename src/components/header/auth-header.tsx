@@ -1,5 +1,6 @@
 import {cn} from '@/lib/utils';
-import SearchForm from '../../app/(pages)/(public)/(home)/components/search-form';
+import SearchForm from '@/app/(pages)/(public)/(routes)/components/search-form';
+
 
 const AuthHeader = ({classes}: {classes?: string}) => {
 	return (

@@ -1,18 +1,21 @@
 'use client';
-
-import {useReducer} from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import {toast} from 'react-hot-toast';
+import axios, {AxiosError} from 'axios';
+import {useRouter} from 'next/navigation';
+import {useReducer, useState} from 'react';
+import {Button} from '@/components/ui/button';
+import {Separator} from '@/components/ui/separator';
 import FormTextInput from '@/components/input/form-text-input';
 import AuthHeader from '../../../../components/header/auth-header';
-import Link from 'next/link';
-import {Separator} from '@/components/ui/separator';
-import {Button} from '@/components/ui/button';
-import Image from 'next/image';
 import FormPasswordInput from '@/components/input/form-password-input';
+import ButtonLoader from '@/components/loader/button-loader';
 
 type FormData = {
 	firstName: string;
 	lastName: string;
-	phone: string;
+	phoneNumber: string;
 	email: string;
 	password: string;
 	confirmPassword: string;
@@ -26,7 +29,7 @@ type FormAction = {
 const initialState: FormData = {
 	firstName: '',
 	lastName: '',
-	phone: '',
+	phoneNumber: '',
 	email: '',
 	password: '',
 	confirmPassword: '',
@@ -42,6 +45,9 @@ const formReducer = (state: FormData, action: FormAction) => {
 };
 
 const SignUpPage = () => {
+	const router = useRouter();
+
+	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,10 +57,48 @@ const SignUpPage = () => {
 		});
 	};
 
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		console.log('[SIGNIN-PAYLOAD] :: ', formData);
+		if (
+			!formData.email ||
+			!formData.firstName ||
+			!formData.lastName ||
+			!formData.phoneNumber ||
+			!formData.password
+		) {
+			return toast.error('All fields are required!');
+		}
+		if (formData.password !== formData.confirmPassword) {
+			return toast.error('Passwords do not match');
+		}
+
+		try {
+			setLoading(true);
+			console.log('[SIGNUP-PAYLOAD] :: ', formData);
+
+			const {data} = await axios.post('/api/auth/signup', formData);
+
+			console.log('[DATA] :: ', data);
+
+			if (data?.ok == false) {
+				setLoading(false);
+
+				toast.error('An error occured');
+			} else {
+				setLoading(false);
+
+				toast.success('Account created successfully');
+
+				router.push('/signin');
+			}
+		} catch (error) {
+			setLoading(false);
+
+			console.error('[SIGNUP-ERROR]', error);
+
+			toast.error('An error occured');
+		}
 	};
 
 	return (
@@ -88,10 +132,10 @@ const SignUpPage = () => {
 							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
 						/>
 						<FormTextInput
-							name='phone'
+							name='phoneNumber'
 							type='number'
 							padding='py-4 px-4'
-							value={formData.phone}
+							value={formData.phoneNumber}
 							handleChange={handleChange}
 							placeHolder='Phone Number'
 							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
@@ -138,12 +182,21 @@ const SignUpPage = () => {
 							</div>
 						</div>
 
-						<Button
-							type='submit'
-							className='bg-green-600 text-white h-12 hover:bg-green-700 w-full rounded-full py-4'
-						>
-							Sign Up
-						</Button>
+						{loading ? (
+							<Button
+								type='button'
+								className='bg-green-700 text-white h-12 hover:bg-green-700 w-full rounded-full py-4 cursor-default'
+							>
+								<ButtonLoader />
+							</Button>
+						) : (
+							<Button
+								type='submit'
+								className='bg-green-600 text-white h-12 hover:bg-green-700 w-full rounded-full py-4'
+							>
+								Sign Up
+							</Button>
+						)}
 
 						<div className='flex items-center justify-between space-x-3'>
 							<Separator className='w-[43%]' />

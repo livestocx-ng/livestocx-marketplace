@@ -1,14 +1,12 @@
 'use client';
-import {cn} from '@/lib/utils';
-import AuthHeader from '@/components/header/auth-header';
-
 import {useState} from 'react';
+import AuthHeader from '@/components/header/auth-header';
 import AccountSideBar from './components/account-side-bar';
-import DashboardContent from './components/dashboard/dashboard-content';
-import OrderContent from './components/dashboard/order-content';
-import WishListContent from './components/dashboard/wish-list-content';
-import SettingsContent from './components/dashboard/settings-content';
 import CartContent from './components/dashboard/cart-content';
+import OrderContent from './components/dashboard/order-content';
+import SettingsContent from './components/dashboard/settings-content';
+import WishListContent from './components/dashboard/wish-list-content';
+import DashboardContent from './components/dashboard/dashboard-content';
 
 export type Tab =
 	| 'Dashboard'

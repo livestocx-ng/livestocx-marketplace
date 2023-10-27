@@ -36,7 +36,7 @@ const FormTextInput = ({
 			disabled={disabled ? disabled : false}
 			onChange={(event) => handleChange(event)}
 			className={cn(
-				'placeholder:text-[12px] text-[12px] hover:outline-none focus:outline-none focus:border-gray-600',
+				'placeholder:text-[12px] text-[12px] hover:outline-none focus:outline-none focus:border-gray-600 transition-all duration-500',
 				classes,
 				padding ? padding : 'px-5 py-4'
 			)}

@@ -1,14 +1,13 @@
 'use client';
 
-import {useReducer} from 'react';
-import FormTextInput from '@/components/input/form-text-input';
-import AuthHeader from '../../../../components/header/auth-header';
-import Link from 'next/link';
-import {Separator} from '@/components/ui/separator';
+import {toast} from 'react-hot-toast';
+import axios, {AxiosError} from 'axios';
+import {useReducer, useState} from 'react';
 import {Button} from '@/components/ui/button';
-import Image from 'next/image';
+import {useRouter, useSearchParams} from 'next/navigation';
+import AuthHeader from '../../../../components/header/auth-header';
 import FormPasswordInput from '@/components/input/form-password-input';
-import {useRouter} from 'next/navigation';
+import ButtonLoader from '@/components/loader/button-loader';
 
 type FormData = {
 	newPassword: string;
@@ -36,7 +35,12 @@ const formReducer = (state: FormData, action: FormAction) => {
 
 const SignInPage = () => {
 	const router = useRouter();
+	const searchParams = useSearchParams();
 
+	const email = searchParams.get('email');
+	const token = searchParams.get('token');
+
+	const [loading, setLoading] = useState(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,12 +50,35 @@ const SignInPage = () => {
 		});
 	};
 
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		console.log('[SIGNIN-PAYLOAD] :: ', formData);
+		if (formData.newPassword !== formData.confirmPassword) {
+			return toast.error('Passwords do not match');
+		}
 
-		router.push('/signin');
+		try {
+			setLoading(true);
+
+			await axios.patch(
+				`/api/auth/reset-password?email=${email}&token=${token}`,
+				formData
+			);
+
+			setLoading(false);
+
+			toast.success('Password reset successful', {duration: 4000});
+
+			router.push(`/signin`);
+		} catch (_error) {
+			setLoading(false);
+
+			const error = _error as AxiosError;
+
+			console.log('[ERROR]', error);
+
+			toast.error('Invalid OTP');
+		}
 	};
 
 	return (
@@ -85,12 +112,21 @@ const SignInPage = () => {
 							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
 						/>
 
-						<Button
-							type='submit'
-							className='bg-green-600 text-white h-12 hover:bg-green-700 w-full rounded-full py-4'
-						>
-							Create New Password
-						</Button>
+						{loading ? (
+							<Button
+								type='button'
+								className='bg-green-700 text-white h-12 hover:bg-green-700 w-full rounded-full py-4 cursor-default'
+							>
+								<ButtonLoader/>
+							</Button>
+						) : (
+							<Button
+								type='submit'
+								className='bg-green-600 text-white h-12 hover:bg-green-700 w-full rounded-full py-4'
+							>
+								Create New Password
+							</Button>
+						)}
 					</div>
 				</form>
 			</div>

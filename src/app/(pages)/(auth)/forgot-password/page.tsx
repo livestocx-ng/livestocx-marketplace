@@ -1,14 +1,13 @@
 'use client';
-
-import {useReducer} from 'react';
+import {toast} from 'react-hot-toast';
+import axios, {AxiosError} from 'axios';
+import {useRouter} from 'next/navigation';
+import {useReducer, useState} from 'react';
+import {Button} from '@/components/ui/button';
+import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
 import AuthHeader from '../../../../components/header/auth-header';
-import Link from 'next/link';
-import {Separator} from '@/components/ui/separator';
-import {Button} from '@/components/ui/button';
-import Image from 'next/image';
-import FormPasswordInput from '@/components/input/form-password-input';
-import {useRouter} from 'next/navigation';
+import {useUserHook} from '@/hooks/use-user';
 
 type FormData = {
 	email: string;
@@ -35,6 +34,7 @@ const formReducer = (state: FormData, action: FormAction) => {
 const SignInPage = () => {
 	const router = useRouter();
 
+	const [loading, setLoading] = useState(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,12 +44,33 @@ const SignInPage = () => {
 		});
 	};
 
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		console.log('[SIGNIN-PAYLOAD] :: ', formData);
+		try {
+			setLoading(true);
+			console.log('[SIGNIN-PAYLOAD] :: ', formData);
 
-		router.push('/forgot-password/otp');
+			await axios.post('/api/auth/forgot-password', formData);
+
+			useUserHook();
+
+			setLoading(false);
+
+			toast.success('Success, check your email for an OTP token', {
+				duration: 4000,
+			});
+
+			router.push(`/forgot-password/otp?email=${formData.email}`);
+		} catch (error) {
+			setLoading(false);
+
+			const _error = error as AxiosError;
+
+			console.log('[FORGOT-PASSWORD-ERROR] :: ', _error);
+
+			toast.error('An error occured');
+		}
 	};
 
 	return (
@@ -82,12 +103,21 @@ const SignInPage = () => {
 							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
 						/>
 
-						<Button
-							type='submit'
-							className='bg-green-600 text-white h-12 hover:bg-green-700 w-full rounded-full py-4'
-						>
-							Submit
-						</Button>
+						{loading ? (
+							<Button
+								type='button'
+								className='bg-green-700 text-white h-12 hover:bg-green-700 w-full rounded-full py-4 cursor-default'
+							>
+								<ButtonLoader />
+							</Button>
+						) : (
+							<Button
+								type='submit'
+								className='bg-green-600 text-white h-12 hover:bg-green-700 w-full rounded-full py-4'
+							>
+								Submit
+							</Button>
+						)}
 					</div>
 				</form>
 			</div>

@@ -1,15 +1,33 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
+import {toast} from 'react-hot-toast';
 import {useEffect, useState} from 'react';
-import {Menu, ShoppingCartIcon, User2} from 'lucide-react';
+import {
+	Bell,
+	LogOutIcon,
+	Mails,
+	Menu,
+	ShoppingCartIcon,
+	User2,
+} from 'lucide-react';
 
 import {NavLinks} from '@/data';
 import {Button} from '../ui/button';
+import {useUserHook} from '@/hooks/use-user';
+import {useRouter} from 'next/navigation';
+import axios from 'axios';
 
 const MainNavbar = () => {
+	const router = useRouter();
+
+	const {user} = useUserHook();
+
+	console.log('[USER] :: ', user);
+
 	const [scrolling, setScrolling] = useState<boolean>(false);
 	const [showMenu, setSetshowMenu] = useState<boolean>(false);
+	const [showAccountMenu, setSetShowAccountMenu] = useState<boolean>(false);
 
 	const toggleMenu = () => {
 		setSetshowMenu(!showMenu);
@@ -67,15 +85,141 @@ const MainNavbar = () => {
 							scrolling ? 'bg-white' : 'bg-main'
 						} rounded-full flex flex-col items-center justify-center`}
 					>
+						{/* <Image
+							width={20}
+							height={20}
+							alt='Livestocx Carrier'
+							src='/icon__carrier.svg'
+						/> */}
 						<ShoppingCartIcon
 							className={`h-5 w-5 ${
 								scrolling ? 'text-main' : 'text-white'
 							}`}
 						/>
 					</Link>
-					<Link
-						href={'/account'}
-						// href={'/signin'}
+					<div
+						// href={user ? '/account' : '/signin'}
+						onClick={() => {
+							if (!user) {
+								router.push(`${!user && '/signin'}/`);
+							} else {
+								setSetShowAccountMenu(!showAccountMenu);
+							}
+						}}
+						className={`h-10 w-10 ${
+							scrolling ? 'bg-white' : 'bg-main'
+						} rounded-full flex flex-col items-center justify-center relative`}
+					>
+						<User2
+							className={`h-5 w-5 ${
+								scrolling
+									? 'text-main'
+									: 'text-white cursor-pointer'
+							}`}
+						/>
+
+						{showAccountMenu && (
+							<div
+								onMouseLeave={() =>
+									setSetShowAccountMenu(false)
+								}
+								className='absolute right-0 top-12 w-[200px] rounded shadow-md bg-white flex flex-col space-y-6 items-start px-4 py-5'
+							>
+								<Link
+									href={'#'}
+									onClick={() => {
+										setSetShowAccountMenu(false);
+									}}
+									className={` ${
+										scrolling ? 'bg-white' : 'bg-mai'
+									} rounded-full flex items-center space-x-4 hover:translate-y-1 transition-all duration-500 ease-in`}
+								>
+									<ShoppingCartIcon
+										className={`h-5 w-5 text-main`}
+									/>
+
+									<p className='text-sm'>Desired Items</p>
+								</Link>
+								<Link
+									href={'/account'}
+									onClick={() => {
+										setSetShowAccountMenu(false);
+									}}
+									className={` ${
+										scrolling ? 'bg-white' : 'bg-mai'
+									} rounded-full flex items-center space-x-4 hover:translate-y-1 transition-all duration-500 ease-in`}
+								>
+									<User2 className={`h-5 w-5 text-main`} />
+
+									<p className='text-sm'>Manage Account</p>
+								</Link>
+								<Link
+									href={'#'}
+									onClick={() => {
+										setSetShowAccountMenu(false);
+									}}
+									className={` ${
+										scrolling ? 'bg-white' : 'bg-mai'
+									} rounded-full flex items-center space-x-4 hover:translate-y-1 transition-all duration-500 ease-in`}
+								>
+									<Mails className={`h-5 w-5 text-main`} />
+
+									<p className='text-sm'>Messages</p>
+								</Link>
+								<Link
+									href={'#'}
+									onClick={() => {
+										setSetShowAccountMenu(false);
+									}}
+									className={` ${
+										scrolling ? 'bg-white' : 'bg-mai'
+									} rounded-full flex items-center space-x-4 hover:translate-y-1 transition-all duration-500 ease-in`}
+								>
+									<Bell className={`h-5 w-5 text-main`} />
+
+									<p className='text-sm'>Notifications</p>
+								</Link>
+								<p
+									// href={'#'}
+									onClick={async () => {
+										try {
+											await axios.get(
+												'/api/auth/signout'
+											);
+
+											toast.success('Logged out!');
+
+											setSetShowAccountMenu(false);
+
+											router.push('/');
+
+											window.location.reload();
+										} catch (error) {
+											console.log(
+												'[LOGOUT-ERROR] :: ',
+												error
+											);
+
+											toast.error('Error!');
+										}
+									}}
+									className={` ${
+										scrolling ? 'bg-white' : 'bg-mai'
+									} pt-10 rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in cursor-pointer`}
+								>
+									<LogOutIcon
+										className={`h-5 w-5 text-red-500`}
+									/>
+
+									<p className='text-sm text-red-500'>
+										Logout
+									</p>
+								</p>
+							</div>
+						)}
+					</div>
+					{/* <Link
+						href={user ? '/account' : '/signin'}
 						className={`h-10 w-10 ${
 							scrolling ? 'bg-white' : 'bg-main'
 						} rounded-full flex flex-col items-center justify-center`}
@@ -85,7 +229,7 @@ const MainNavbar = () => {
 								scrolling ? 'text-main' : 'text-white'
 							}`}
 						/>
-					</Link>
+					</Link> */}
 				</div>
 			</nav>
 

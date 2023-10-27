@@ -20,6 +20,12 @@ interface TeamMember {
 	instagram: string;
 }
 
+interface FilterOption {
+	id: number;
+	title: string;
+	value: string;
+}
+
 export const NavLinks: NavLink[] = [
 	{
 		title: 'Home',
@@ -27,7 +33,11 @@ export const NavLinks: NavLink[] = [
 	},
 	{
 		title: 'Marketplace',
-		url: '#/marketplace',
+		url: '/marketplace',
+	},
+	{
+		title: 'Sellers',
+		url: '/sellers',
 	},
 	{
 		title: 'About',
@@ -36,10 +46,6 @@ export const NavLinks: NavLink[] = [
 	{
 		title: 'Contact',
 		url: '#/contact',
-	},
-	{
-		title: 'Sellers',
-		url: '#/sellers',
 	},
 ];
 
@@ -74,7 +80,8 @@ export const TeamMembers: TeamMember[] = [
 		name: 'Oghenekevwe Emadago',
 		intro: 'Founder of Livestocx is a skilled innovator and experienced entrepreneur who has achieved great success in his career. His previous business venture, Girlified, was able to secure a substantial amount of funding, which is a testament to his outstanding business acumen and strategic skills.',
 		facebook: '#',
-		linkedin: 'https://www.linkedin.com/in/oghenekevwe-emadago?miniProfileUrn=urn%3Ali%3Afs_miniProfile%3AACoAAC6nN7sB_tHEBBPhKw7AlemgLv4gM8PXzao&lipi=urn%3Ali%3Apage%3Ad_flagship3_search_srp_all%3BNaz%2FvpQPTWu7rMCohxRbTQ%3D%3D',
+		linkedin:
+			'https://www.linkedin.com/in/oghenekevwe-emadago?miniProfileUrn=urn%3Ali%3Afs_miniProfile%3AACoAAC6nN7sB_tHEBBPhKw7AlemgLv4gM8PXzao&lipi=urn%3Ali%3Apage%3Ad_flagship3_search_srp_all%3BNaz%2FvpQPTWu7rMCohxRbTQ%3D%3D',
 		instagram: '#',
 	},
 	{
@@ -86,4 +93,52 @@ export const TeamMembers: TeamMember[] = [
 		linkedin: '#',
 		instagram: '#',
 	},
-]
+];
+
+export const FilterOptions: FilterOption[] = [
+	{
+		id: 1,
+		title: 'Cow',
+		value: 'cow',
+	},
+	{
+		id: 2,
+		title: 'Goat',
+		value: 'goat',
+	},
+	{
+		id: 3,
+		title: 'Chickens',
+		value: 'chickens',
+	},
+	{
+		id: 4,
+		title: 'Pig',
+		value: 'pig',
+	},
+	{
+		id: 5,
+		title: 'Sheep',
+		value: 'sheep',
+	},
+	{
+		id: 6,
+		title: 'Dog',
+		value: 'dog',
+	},
+	{
+		id: 7,
+		title: 'Cat',
+		value: 'cat',
+	},
+	{
+		id: 8,
+		title: 'Fish',
+		value: 'fish',
+	},
+	{
+		id: 9,
+		title: 'Rabbit',
+		value: 'rabbit',
+	},
+];

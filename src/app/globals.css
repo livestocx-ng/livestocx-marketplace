@@ -1,7 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.rotate-infinite {
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* shadow templates */
+.shadow__1 {
+  box-shadow: rgba(100, 100, 111, 0.08) 0px 0px 8px 5px;
+}
+.shadow__2 {
+  box-shadow: rgba(100, 100, 111, 0.4) 0px 0px 15px 5px;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

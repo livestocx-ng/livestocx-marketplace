@@ -1,18 +1,21 @@
 'use client';
-
-import {useReducer, useRef, useState} from 'react';
-import FormTextInput from '@/components/input/form-text-input';
-import Link from 'next/link';
-import {Separator} from '@/components/ui/separator';
+import {toast} from 'react-hot-toast';
+import {useRef, useState} from 'react';
+import axios, {AxiosError} from 'axios';
 import {Button} from '@/components/ui/button';
+import {useRouter, useSearchParams} from 'next/navigation';
+import ButtonLoader from '@/components/loader/button-loader';
 import AuthHeader from '../../../../../components/header/auth-header';
-import {useRouter} from 'next/navigation';
 
 const numberOfInputs = 4;
 
 const SignInPage = () => {
 	const router = useRouter();
+	const searchParams = useSearchParams();
 
+	const email = searchParams.get('email');
+
+	const [loading, setLoading] = useState(false);
 	const [otp, setOtp] = useState(Array(numberOfInputs).fill(''));
 	const inputRefs = useRef(Array(numberOfInputs).fill(null));
 
@@ -51,12 +54,31 @@ const SignInPage = () => {
 		}
 	};
 
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		console.log('[OTP-PAYLOAD] :: ', otp);
+		try {
+			setLoading(true);
+			console.log('[OTP-PAYLOAD] :: ', otp);
+			const token = String(otp).split(',').join('');
+			console.log('[TOKEN] :: ', token);
 
-		router.push('/reset-password');
+			await axios.get(`/api/auth/verify-otp?token=${token}`);
+
+			setLoading(false);
+
+			toast.success('Success');
+
+			router.push(`/reset-password?email=${email}&token=${token}`);
+		} catch (_error) {
+			setLoading(false);
+
+			const error = _error as AxiosError;
+
+			console.log('[ERROR]', error);
+
+			toast.error('Invalid OTP');
+		}
 	};
 
 	return (
@@ -102,12 +124,21 @@ const SignInPage = () => {
 							</p>
 						</div>
 
-						<Button
-							type='submit'
-							className='bg-green-600 text-white h-12 hover:bg-green-700 w-full rounded-full py-4'
-						>
-							Submit
-						</Button>
+						{loading ? (
+							<Button
+								type='button'
+								className='bg-green-700 text-white h-12 hover:bg-green-700 w-full rounded-full py-4 cursor-default'
+							>
+								<ButtonLoader/>
+							</Button>
+						) : (
+							<Button
+								type='submit'
+								className='bg-green-600 text-white h-12 hover:bg-green-700 w-full rounded-full py-4'
+							>
+								Submit
+							</Button>
+						)}
 					</div>
 				</form>
 			</div>

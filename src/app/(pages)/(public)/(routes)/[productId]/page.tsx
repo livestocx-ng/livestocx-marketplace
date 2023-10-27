@@ -2,12 +2,12 @@
 import Image from 'next/image';
 import {useState} from 'react';
 import {Button} from '@/components/ui/button';
-import {FlagTriangleRight} from 'lucide-react';
+import {FlagTriangleRight, ThumbsDown, ThumbsUp} from 'lucide-react';
 import AuthHeader from '@/components/header/auth-header';
 import {cn} from '@/lib/utils';
 import SellerInfoTab from './components/seller-info-tab';
 import ProductReviewTab from './components/product-review-tab';
-import ProductCard from '../components/product-card';
+import ProductCard from '../../../../../components/cards/product-card';
 import ProductModal from './components/product-modal';
 import {useModal} from '@/hooks/use-modal';
 
@@ -46,9 +46,21 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 							src={'/product__2.png'}
 							className='md:rounded-lg h-full w-full'
 						/>
+
+						<div className='absolute bottom-0 right-0'>
+							<Button
+								type='button'
+								variant={'outline'}
+								className='bg-main border-0 text-white h-12 py-4 flex items-center space-x-3 rounded-none rounded-br-lg'
+							>
+								<ThumbsUp className='h-5 w-5' />{' '}
+								{/* <ThumbsDown className='h-5 w-5' />{' '} */}
+								<span>Like Product</span>
+							</Button>
+						</div>
 					</div>
 					<div className='w-full md:w-[40%] flex flex-col justify-between md:h-full px-4 md:px-0'>
-						<div className='flex flex-col justify-between h-[230px] md:h-[45%] border border-slate-500 md:rounded-tr-lg p-4'>
+						<div className='flex flex-col justify-between h-[230px md:h-[45% border border-slate-500 md:rounded-tr-lg p-4'>
 							<h1 className='text-xl md:text-2xl '>
 								&#8358;5,400 - &#8358;6,000, Negotiable
 							</h1>
@@ -72,11 +84,26 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 								</div>
 							</div>
 
-							<div className='flex items-center justify-between'>
+							<div className='flex flex-wrap items-center mt-3 gap-5 justify-between'>
 								<Button
 									type='button'
 									variant={'outline'}
-									className='border-main text-main h-12 w-[45%] rounded-full py-4'
+									className='bg-main text-white text-xs h-12 w-[45%] rounded-full py-4'
+								>
+									Add to Desired Product
+								</Button>
+
+								<Button
+									type='button'
+									variant={'outline'}
+									className='border-main text-main text-xs h-12 w-[45%] rounded-full py-4'
+								>
+									Chat with Seller
+								</Button>
+								<Button
+									type='button'
+									variant={'outline'}
+									className='border-main text-main text-xs h-12 w-[45%] rounded-full py-4'
 								>
 									Show contact
 								</Button>
@@ -84,7 +111,7 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 								<Button
 									type='button'
 									variant={'outline'}
-									className='flex items-center space-x-3 border-red-500 text-red-500 h-12 w-[45%] rounded-full py-4'
+									className='flex items-center space-x-3 border-red-500 text-red-500 text-xs h-12 w-[45%] rounded-full py-4'
 								>
 									<p>Report</p>{' '}
 									<FlagTriangleRight className='h-4 w-4 text-red-500' />
@@ -92,7 +119,7 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 							</div>
 						</div>
 
-						<div className='flex flex-col space-y-3 h-full md:h-fit border border-slate-500 p-4 mt-5 md:mt-0'>
+						<div className='flex flex-col space-y-3 h-ful md:h-fi border border-slate-500 p-4 mt-5 md:mt-0'>
 							<h1 className='text-2xl '>Safety Tips</h1>
 
 							<ul className='text-sm list-disc pl-3'>

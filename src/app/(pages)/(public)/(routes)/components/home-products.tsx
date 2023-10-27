@@ -3,7 +3,7 @@ import {RotateCw} from 'lucide-react';
 import {Fragment, useState} from 'react';
 
 import {Button} from '@/components/ui/button';
-import ProductCard from './product-card';
+import ProductCard from '../../../../../components/cards/product-card';
 
 interface Tab {
 	id: number;
@@ -53,7 +53,7 @@ const HomeProducts = () => {
 			</div>
 
 			{/* <div className='flex justify-between items-center flex-wrap gap-6 mt-10'> */}
-			<div className='flex flex-wrap items-center justify-between w-full gap-y-4 md:gap-6 mt-10'>
+			<div className='flex flex-wrap items-center w-full gap-y-10 gap-x-2 sm:gap-x-5 md:gap-x-10 mt-10'>
 				{[
 					1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 5, 6, 7, 8,
 					9, 10,

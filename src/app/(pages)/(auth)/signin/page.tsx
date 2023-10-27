@@ -1,12 +1,15 @@
 'use client';
-
-import {useReducer} from 'react';
+import axios from 'axios';
+import Link from 'next/link';
+import Image from 'next/image';
+import {toast} from 'react-hot-toast';
+import {useReducer, useState} from 'react';
+import {Button} from '@/components/ui/button';
+import {redirect, useRouter} from 'next/navigation';
+import {Separator} from '@/components/ui/separator';
+import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
 import AuthHeader from '../../../../components/header/auth-header';
-import Link from 'next/link';
-import {Separator} from '@/components/ui/separator';
-import {Button} from '@/components/ui/button';
-import Image from 'next/image';
 import FormPasswordInput from '@/components/input/form-password-input';
 
 type FormData = {
@@ -34,6 +37,9 @@ const formReducer = (state: FormData, action: FormAction) => {
 };
 
 const SignInPage = () => {
+	const router = useRouter();
+
+	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,10 +49,39 @@ const SignInPage = () => {
 		});
 	};
 
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		console.log('[SIGNIN-PAYLOAD] :: ', formData);
+		if (!formData.email || !formData.password) {
+			return toast.error('All fields are required!');
+		}
+
+		try {
+			setLoading(true);
+			console.log('[SIGNIN-PAYLOAD] :: ', formData);
+
+			const {data} = await axios.post('/api/auth/signin', formData);
+
+			console.log('[DATA] :: ', data);
+
+			if (data?.ok == false) {
+				setLoading(false);
+
+				toast.error('Invalid credentials');
+			} else {
+				setLoading(false);
+
+				toast.success('Success');
+
+				router.push('/');
+			}
+		} catch (error) {
+			setLoading(false);
+
+			console.error('[SIGNIN-ERROR]', error);
+
+			toast.error('Invalid credentials');
+		}
 	};
 
 	return (
@@ -98,12 +133,21 @@ const SignInPage = () => {
 							</Link>
 						</div>
 
-						<Button
-							type='submit'
-							className='bg-green-600 text-white h-12 hover:bg-green-700 w-full rounded-full py-4'
-						>
-							Sign In
-						</Button>
+						{loading === true ? (
+							<Button
+								type='button'
+								className='bg-green-700 text-white h-12 hover:bg-green-700 w-full rounded-full py-4 cursor-default'
+							>
+								<ButtonLoader/>
+							</Button>
+						) : (
+							<Button
+								type='submit'
+								className='bg-green-600 text-white h-12 hover:bg-green-700 w-full rounded-full py-4'
+							>
+								Sign In
+							</Button>
+						)}
 
 						<div className='flex items-center justify-between space-x-3'>
 							<Separator className='w-[43%]' />

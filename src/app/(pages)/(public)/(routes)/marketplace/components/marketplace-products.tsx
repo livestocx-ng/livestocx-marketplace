@@ -27,7 +27,7 @@ const TabItems: Tab[] = [
 const MarketplaceProducts = () => {
 	return (
 		<div className='flex flex-col w-full bg-white px-4 md:px-8'>
-			<div className='flex flex-wrap items-center gap-y-10 gap-x-2 sm:gap-x-5 md:gap-x-10 mt-10'>
+			<div className='flex flex-wrap items-center w-full justify-around gap-y-10 mt-10'>
 				{[
 					1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 5, 6, 7, 8,
 					9, 10,

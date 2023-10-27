@@ -233,6 +233,7 @@ const MainNavbar = () => {
 				</div>
 			</nav>
 
+			{/* MOBILE TOGGLEBAR */}
 			<div
 				className={`w-full py-4 px-4 pl-1 sm:pl-8 sm:px-8 sm:hidden fixed z-10 flex items-center justify-between ${
 					scrolling && 'bg-main backdrop-blur-sm'
@@ -284,6 +285,7 @@ const MainNavbar = () => {
 				</div>
 			</div>
 
+			{/* MOBILE SIDEBAR */}
 			<nav
 				style={{
 					boxShadow: 'rgba(100, 100, 111, 0.8) 0px 7px 29px 0px;',

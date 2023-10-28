@@ -7,7 +7,7 @@ import SellerInfoCard from './seller-info-card';
 const HomeSellers = () => {
 	return (
 		<Fragment>
-			<div className='flex flex-wrap items-center justify-between w-full gap-y-4 md:gap-6 mt-10'>
+			<div className='flex flex-wrap items-center justify-evenly w-full gap-y-10 md:gap-6 mt-10'>
 				{[1, 2, 3, 4, 5, 12, 6, 7, 8, 9].map((item) => (
 					<SellerInfoCard key={item} />
 				))}

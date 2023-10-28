@@ -5,7 +5,7 @@ import HomeSellers from './components/home-sellers';
 const SellersPage = () => {
 	return (
 		<main className='bg-[#28312B]'>
-			<section className='md:h-[60vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 md:pt-0'>
+			<section className='md:h-[60vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 md:pt-0 pb-20 mb:pb-0'>
 				<h1 className='text-xl md:text-5xl font-medium text-white'>
 					Best <span className='text-green-600'>deals.</span>{' '}
 					Everything <span className='text-green-600'>Livestocx</span>

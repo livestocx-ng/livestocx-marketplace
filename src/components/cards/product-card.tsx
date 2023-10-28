@@ -12,7 +12,7 @@ const ProductCard = () => {
 			onClick={() => {
 				router.push('/U9IKL9101');
 			}}
-			className='w-[140px] sm:w-[140px] flex flex-col justify-between cursor-pointer shadow__1 rounded-lg'
+			className='w-[140px] sm:w-[180px] flex flex-col justify-between cursor-pointer shadow__1 rounded-lg'
 		>
 			<div className='h-[120px] sm:h-[120px] relative rounded-t-lg'>
 				<Image

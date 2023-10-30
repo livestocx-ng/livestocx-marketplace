@@ -1,16 +1,20 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
+import {NigeriaStates} from '@/data';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
 import {useReducer, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {Separator} from '@/components/ui/separator';
+import SelectDropdown from '@/components/ui/select-dropdown';
 import FormTextInput from '@/components/input/form-text-input';
-import AuthHeader from '../../../../components/header/auth-header';
+import AuthHeader from '../../../../../components/header/auth-header';
 import FormPasswordInput from '@/components/input/form-password-input';
 import ButtonLoader from '@/components/loader/button-loader';
+import {LocationDropDownButton} from '../../components/location-dropdown-button';
+import {DropdownMenuCheckboxItemProps} from '@radix-ui/react-dropdown-menu';
 
 type FormData = {
 	firstName: string;
@@ -44,10 +48,14 @@ const formReducer = (state: FormData, action: FormAction) => {
 	}
 };
 
+type Checked = DropdownMenuCheckboxItemProps['checked'];
+
 const SignUpPage = () => {
 	const router = useRouter();
 
 	const [loading, setLoading] = useState<boolean>(false);
+	const [location, setLocation] = useState<string>('Abia');
+	const [showStatusBar, setShowStatusBar] = useState<Checked>(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -112,7 +120,7 @@ const SignUpPage = () => {
 					className='w-[90%] sm:w-[600px] py-10 px-4 sm:px-10 border rounded-lg shadow-md flex flex-col space-y-8'
 				>
 					<h1 className='text-center text-2xl font-semibold'>
-						Sign Up
+						Farmer Sign Up
 					</h1>
 					<div className='space-y-4'>
 						<FormTextInput
@@ -121,7 +129,7 @@ const SignUpPage = () => {
 							value={formData.firstName}
 							handleChange={handleChange}
 							placeHolder='First Name'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
+							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded'
 						/>
 						<FormTextInput
 							name='lastName'
@@ -129,7 +137,7 @@ const SignUpPage = () => {
 							value={formData.lastName}
 							handleChange={handleChange}
 							placeHolder='Last Name'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
+							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded'
 						/>
 						<FormTextInput
 							name='phoneNumber'
@@ -138,7 +146,7 @@ const SignUpPage = () => {
 							value={formData.phoneNumber}
 							handleChange={handleChange}
 							placeHolder='Phone Number'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
+							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded'
 						/>
 						<FormTextInput
 							name='email'
@@ -146,7 +154,7 @@ const SignUpPage = () => {
 							value={formData.email}
 							handleChange={handleChange}
 							placeHolder='Email'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
+							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded'
 						/>
 						<FormPasswordInput
 							name='password'
@@ -154,7 +162,7 @@ const SignUpPage = () => {
 							value={formData.password}
 							handleChange={handleChange}
 							placeHolder='Password'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
+							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded'
 						/>
 						<FormPasswordInput
 							name='confirmPassword'
@@ -162,7 +170,19 @@ const SignUpPage = () => {
 							value={formData.confirmPassword}
 							handleChange={handleChange}
 							placeHolder='Confirm Password'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
+							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded'
+						/>
+
+						{/* <LocationDropDownButton
+							value={location}
+							setValue={setLocation}
+							setShowStatusBar={setShowStatusBar}
+						/> */}
+
+						<SelectDropdown
+							label='Location'
+							classes='rounded py-3 text-xs'
+							data={NigeriaStates}
 						/>
 
 						<div className='flex justify-center'>
@@ -173,7 +193,7 @@ const SignUpPage = () => {
 									name='remember-me'
 									id=''
 								/>
-								<p className='text-sm'>
+								<p className='text-xs'>
 									I agree your{' '}
 									<Link href={'#'} className='text-main'>
 										Privacy Policy
@@ -220,17 +240,8 @@ const SignUpPage = () => {
 
 						<div className='flex justify-center mt-5'>
 							<Link
-								href='/farmer/signup'
-								className='text-sm text-center mx-auto'
-							>
-								Are you a farmer?{' '}
-								<span className='text-main'>Register here</span>
-							</Link>
-						</div>
-						<div className='flex justify-center mt-5'>
-							<Link
 								href='/signin'
-								className='text-sm text-center mx-auto'
+								className='text-xs text-center mx-auto'
 							>
 								Already have an account?{' '}
 								<span className='text-main'>Login</span>

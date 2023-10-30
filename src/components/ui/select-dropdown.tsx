@@ -8,23 +8,26 @@ import {
 } from '@/components/ui/select';
 
 interface SelectDropdownProps {
-	label: string;
+	label?: string;
+	classes?: string;
 	data: string[];
 }
 
-const SelectDropdown = ({label, data}: SelectDropdownProps) => {
+const SelectDropdown = ({label, data, classes}: SelectDropdownProps) => {
 	return (
 		<Select>
-			<SelectTrigger className='w-[180px'>
+			<SelectTrigger className={classes}>
 				<SelectValue placeholder={label} />
 			</SelectTrigger>
-			<SelectContent>
-				{data.map((item) => (
-					<SelectItem key={item} value='light'>
-						{item}
-					</SelectItem>
-				))}
-			</SelectContent>
+			<div className='max-h-[200px] overflow-y-auto'>
+				<SelectContent>
+					{data.map((item) => (
+						<SelectItem key={item} value='light'>
+							{item}
+						</SelectItem>
+					))}
+				</SelectContent>
+			</div>
 		</Select>
 	);
 };

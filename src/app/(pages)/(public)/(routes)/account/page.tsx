@@ -4,12 +4,16 @@ import AuthHeader from '@/components/header/auth-header';
 import AccountSideBar from './components/account-side-bar';
 import CartContent from './components/dashboard/cart-content';
 import OrderContent from './components/dashboard/order-content';
+import ProductsContent from './components/dashboard/products-content';
 import SettingsContent from './components/dashboard/settings-content';
 import WishListContent from './components/dashboard/wish-list-content';
 import DashboardContent from './components/dashboard/dashboard-content';
+import {useModal} from '@/hooks/use-modal';
+import AddProductModal from './components/dashboard/modals/add-product-modal';
 
 export type Tab =
 	| 'Dashboard'
+	| 'Products'
 	| 'Order History'
 	| 'Wishlist'
 	| 'Shopping Cart'
@@ -17,10 +21,13 @@ export type Tab =
 	| 'Logout';
 
 const AccountPage = () => {
+	const isModalOpen = useModal((state) => state.isOpen);
+	const onModalOpen = useModal((state) => state.onOpen);
+
 	const [currentTab, setCurrentTab] = useState<Tab>('Dashboard');
 
 	return (
-		<div className='w-full'>
+		<div className='w-full relative'>
 			<AuthHeader />
 
 			<div className='w-full flex flex-col justify-center items-center py-20 px-4 sm:px-10'>
@@ -31,6 +38,12 @@ const AccountPage = () => {
 					/>
 
 					{currentTab === 'Dashboard' && <DashboardContent />}
+					{currentTab === 'Products' && (
+						<ProductsContent
+							isAddProductModalOpen={isModalOpen}
+							onAddProductModalOpen={onModalOpen}
+						/>
+					)}
 					{currentTab === 'Order History' && <OrderContent />}
 					{currentTab === 'Wishlist' && <WishListContent />}
 					{currentTab === 'Shopping Cart' && <CartContent />}

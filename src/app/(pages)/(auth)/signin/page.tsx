@@ -138,7 +138,7 @@ const SignInPage = () => {
 								type='button'
 								className='bg-green-700 text-white h-12 hover:bg-green-700 w-full rounded-full py-4 cursor-default'
 							>
-								<ButtonLoader/>
+								<ButtonLoader />
 							</Button>
 						) : (
 							<Button

@@ -3,6 +3,7 @@ import {
 	Heart,
 	LayoutDashboard,
 	LogOut,
+	Package,
 	RefreshCcw,
 	Settings,
 	ShoppingCartIcon,
@@ -21,6 +22,7 @@ interface AccountSideBarProps {
 
 const Tabs: Tab[] = [
 	'Dashboard',
+	'Products',
 	'Order History',
 	'Wishlist',
 	'Shopping Cart',
@@ -71,6 +73,13 @@ const AccountSideBar = ({
 					>
 						{tab === 'Dashboard' && (
 							<LayoutDashboard
+								className={`h-6 w-6 ${
+									currentTab == tab && 'text-green-600'
+								}`}
+							/>
+						)}
+						{tab === 'Products' && (
+							<Package
 								className={`h-6 w-6 ${
 									currentTab == tab && 'text-green-600'
 								}`}

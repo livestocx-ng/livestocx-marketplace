@@ -104,7 +104,7 @@ const SignInPage = () => {
 							value={formData.email}
 							handleChange={handleChange}
 							placeHolder='Email'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
+							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded-lg'
 						/>
 						<FormPasswordInput
 							name='password'
@@ -112,7 +112,7 @@ const SignInPage = () => {
 							value={formData.password}
 							handleChange={handleChange}
 							placeHolder='Password'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
+							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded-lg'
 						/>
 
 						<div className='flex justify-between items-center'>

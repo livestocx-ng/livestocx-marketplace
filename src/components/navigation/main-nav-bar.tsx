@@ -23,7 +23,7 @@ const MainNavbar = () => {
 
 	const {user} = useUserHook();
 
-	console.log('[USER] :: ', user);
+	// console.log('[USER] :: ', user);
 
 	const [scrolling, setScrolling] = useState<boolean>(false);
 	const [showMenu, setSetshowMenu] = useState<boolean>(false);

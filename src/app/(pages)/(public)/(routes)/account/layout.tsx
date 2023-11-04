@@ -2,10 +2,13 @@
 import {Fragment} from 'react';
 import Lottie from 'lottie-react';
 import {redirect} from 'next/navigation';
-import {useUserHook} from '@/hooks/use-user';
-import LoadingAnimation from '../../../../../../public/animations/loading__animation__1.json';
 import {useModal} from '@/hooks/use-modal';
+import {useUserHook} from '@/hooks/use-user';
 import AddProductModal from './components/dashboard/modals/add-product-modal';
+import UpdateProductModal from './components/dashboard/modals/update-product-modal';
+import DeleteProductModal from './components/dashboard/modals/delete-product-modal';
+import LoadingAnimation from '../../../../../../public/animations/loading__animation__1.json';
+import {useDeleteProductModalStore, useUpdateProductModalStore} from '@/hooks/use-global-state';
 
 interface AccountLayoutProps {
 	children: React.ReactNode;
@@ -13,7 +16,14 @@ interface AccountLayoutProps {
 
 export default function AccountLayout({children}: AccountLayoutProps) {
 	const {user, error, isUserSuccess} = useUserHook();
+	
 	const isModalOpen = useModal((state) => state.isOpen);
+	const isUpdateProductModalOpen = useUpdateProductModalStore(
+		(state) => state.isOpen
+	);
+	const isDeleteProductModalOpen = useDeleteProductModalStore(
+		(state) => state.isOpen
+	);
 
 	if (error && !user) {
 		redirect('/');
@@ -38,7 +48,10 @@ export default function AccountLayout({children}: AccountLayoutProps) {
 		return (
 			<div className='relative'>
 				{' '}
-				{isModalOpen && <AddProductModal />} {children}
+				{isModalOpen && <AddProductModal />}
+				{isUpdateProductModalOpen && <UpdateProductModal />}
+				{isDeleteProductModalOpen && <DeleteProductModal />}
+				{children}
 			</div>
 		);
 	}

@@ -7,6 +7,7 @@ interface FormTextAreaInputProps {
 	name: string;
 	value: string;
 	classes?: string;
+	disabled?: boolean;
 	padding?: string;
 	placeHolder: string;
 	handleChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
@@ -17,6 +18,7 @@ const FormTextAreaInput = ({
 	name,
 	value,
 	classes,
+	disabled,
 	handleChange,
 	padding,
 	placeHolder,
@@ -25,6 +27,7 @@ const FormTextAreaInput = ({
 		<textarea
 			rows={rows}
 			name={name}
+			disabled={disabled ?? false}
 			value={value}
 			placeholder={placeHolder}
 			onChange={(event) => handleChange(event)}

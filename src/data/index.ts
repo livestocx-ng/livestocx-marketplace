@@ -99,47 +99,47 @@ export const FilterOptions: FilterOption[] = [
 	{
 		id: 1,
 		title: 'Cow',
-		value: 'cow',
+		value: 'COW',
 	},
 	{
 		id: 2,
 		title: 'Goat',
-		value: 'goat',
+		value: 'GOAT',
 	},
 	{
 		id: 3,
 		title: 'Chickens',
-		value: 'chickens',
+		value: 'CHICKEN',
 	},
 	{
 		id: 4,
 		title: 'Pig',
-		value: 'pig',
+		value: 'PIG',
 	},
 	{
 		id: 5,
 		title: 'Sheep',
-		value: 'sheep',
+		value: 'SHEEP',
 	},
 	{
 		id: 6,
 		title: 'Dog',
-		value: 'dog',
+		value: 'DOG',
 	},
 	{
 		id: 7,
 		title: 'Cat',
-		value: 'cat',
+		value: 'CAT',
 	},
 	{
 		id: 8,
 		title: 'Fish',
-		value: 'fish',
+		value: 'FISH',
 	},
 	{
 		id: 9,
 		title: 'Rabbit',
-		value: 'rabbit',
+		value: 'RABBIT',
 	},
 ];
 

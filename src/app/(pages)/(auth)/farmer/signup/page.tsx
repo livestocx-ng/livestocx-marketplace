@@ -22,6 +22,8 @@ type FormData = {
 	phoneNumber: string;
 	email: string;
 	password: string;
+	role: string;
+	location: string;
 	confirmPassword: string;
 };
 
@@ -36,6 +38,8 @@ const initialState: FormData = {
 	phoneNumber: '',
 	email: '',
 	password: '',
+	role: 'FARMER',
+	location: '',
 	confirmPassword: '',
 };
 
@@ -65,6 +69,15 @@ const SignUpPage = () => {
 		});
 	};
 
+	const handleSelectChange = (
+		event: React.ChangeEvent<HTMLSelectElement>
+	) => {
+		updateFormData({
+			type: 'UPDATE_FORMDATA',
+			payload: {[event.target.name]: event.target.value},
+		});
+	};
+
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
@@ -73,13 +86,19 @@ const SignUpPage = () => {
 			!formData.firstName ||
 			!formData.lastName ||
 			!formData.phoneNumber ||
-			!formData.password
+			!formData.password ||
+			!location
 		) {
 			return toast.error('All fields are required!');
 		}
 		if (formData.password !== formData.confirmPassword) {
 			return toast.error('Passwords do not match');
 		}
+
+		updateFormData({
+			type: 'UPDATE_FORMDATA',
+			payload: {location: location},
+		});
 
 		try {
 			setLoading(true);
@@ -102,9 +121,7 @@ const SignUpPage = () => {
 			}
 		} catch (error) {
 			setLoading(false);
-
 			console.error('[SIGNUP-ERROR]', error);
-
 			toast.error('An error occured');
 		}
 	};
@@ -173,17 +190,23 @@ const SignUpPage = () => {
 							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded'
 						/>
 
-						{/* <LocationDropDownButton
-							value={location}
-							setValue={setLocation}
-							setShowStatusBar={setShowStatusBar}
-						/> */}
-
-						<SelectDropdown
-							label='Location'
-							classes='rounded py-3 text-xs'
-							data={NigeriaStates}
-						/>
+						<div>
+							<select
+								name='location'
+								className='w-full border py-3 rounded px-3 text-xs scrollbar__1'
+								onChange={handleSelectChange}
+							>
+								{NigeriaStates.map((option) => (
+									<option
+										key={option}
+										value={option}
+										className='cursor-pointer'
+									>
+										{option}
+									</option>
+								))}
+							</select>
+						</div>
 
 						<div className='flex justify-center'>
 							<div className='space-x-3 flex items-center'>

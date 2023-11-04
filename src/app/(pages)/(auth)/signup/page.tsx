@@ -121,7 +121,7 @@ const SignUpPage = () => {
 							value={formData.firstName}
 							handleChange={handleChange}
 							placeHolder='First Name'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
+							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded-lg'
 						/>
 						<FormTextInput
 							name='lastName'
@@ -129,7 +129,7 @@ const SignUpPage = () => {
 							value={formData.lastName}
 							handleChange={handleChange}
 							placeHolder='Last Name'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
+							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded-lg'
 						/>
 						<FormTextInput
 							name='phoneNumber'
@@ -138,7 +138,7 @@ const SignUpPage = () => {
 							value={formData.phoneNumber}
 							handleChange={handleChange}
 							placeHolder='Phone Number'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
+							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded-lg'
 						/>
 						<FormTextInput
 							name='email'
@@ -146,7 +146,7 @@ const SignUpPage = () => {
 							value={formData.email}
 							handleChange={handleChange}
 							placeHolder='Email'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
+							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded-lg'
 						/>
 						<FormPasswordInput
 							name='password'
@@ -154,7 +154,7 @@ const SignUpPage = () => {
 							value={formData.password}
 							handleChange={handleChange}
 							placeHolder='Password'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
+							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded-lg'
 						/>
 						<FormPasswordInput
 							name='confirmPassword'
@@ -162,7 +162,7 @@ const SignUpPage = () => {
 							value={formData.confirmPassword}
 							handleChange={handleChange}
 							placeHolder='Confirm Password'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
+							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded-lg'
 						/>
 
 						<div className='flex justify-center'>

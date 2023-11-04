@@ -12,24 +12,29 @@ import {useRouter} from 'next/navigation';
 import {useModal} from '@/hooks/use-modal';
 import {Button} from '@/components/ui/button';
 import {Plus, UploadCloud, X} from 'lucide-react';
-import {useReducer, useRef, useState} from 'react';
+import {useEffect, useReducer, useRef, useState} from 'react';
 import {isFileSizeValid} from '@/utils/file.validation';
 import FormTextInput from '@/components/input/form-text-input';
 import FormTextAreaInput from '@/components/input/form-text-area-input';
 import {CategoryDropDownButton} from './buttons/category-dropdown-button';
 import {DropdownMenuCheckboxItemProps} from '@radix-ui/react-dropdown-menu';
-import {ValidateCreateProductFormData} from '@/utils/form-validations/product.validation';
+import {ValidateUpdateProductFormData} from '@/utils/form-validations/product.validation';
 import ButtonLoader from '@/components/loader/button-loader';
 import {createBlobImageUrls, getFilesTypeCount} from '@/utils/file.mutation';
 import {useUserHook} from '@/hooks/use-user';
+import {useUpdateProductModalStore} from '@/hooks/use-global-state';
+import {Media} from '@/types/types';
 
 export type FormData = {
-	price: string;
+	id: string;
+	price: number;
 	name: string;
-	discountPrice: string;
+	discountPrice: number;
 	description: string;
 	productCategory: string;
 	media: File[];
+	existingMedia: Media[];
+	removedMediaIds: string[];
 };
 
 type FormAction = {
@@ -38,12 +43,15 @@ type FormAction = {
 };
 
 const initialState: FormData = {
+	id: '',
 	name: '',
-	price: '',
+	price: 0,
 	description: '',
-	discountPrice: '',
+	discountPrice: 0,
 	productCategory: '',
 	media: [],
+	existingMedia: [],
+	removedMediaIds: [],
 };
 
 const formReducer = (state: FormData, action: FormAction) => {
@@ -57,11 +65,11 @@ const formReducer = (state: FormData, action: FormAction) => {
 
 type Checked = DropdownMenuCheckboxItemProps['checked'];
 
-const AddProductModal = () => {
+const UpdateProductModal = () => {
 	const router = useRouter();
 	const {user} = useUserHook();
 
-	const modal = useModal();
+	const {onClose, payload} = useUpdateProductModalStore();
 
 	const mediaImageRef = useRef<HTMLInputElement>(null);
 	const mediaVideoRef = useRef<HTMLInputElement>(null);
@@ -71,6 +79,20 @@ const AddProductModal = () => {
 	const [showStatusBar, setShowStatusBar] = useState<Checked>(false);
 	const [productCategory, setProductCategory] = useState<string>('cow');
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
+
+	useEffect(() => {
+		updateFormData({
+			type: 'UPDATE_FORMDATA',
+			payload: {
+				id: payload.id,
+				name: payload.name,
+				price: payload.price,
+				discountPrice: payload.discountPrice,
+				description: payload.description,
+				existingMedia: payload.media,
+			},
+		});
+	}, [payload]);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		updateFormData({
@@ -103,12 +125,12 @@ const AddProductModal = () => {
 
 		const totalMediaCount = media.length + selectedFiles?.length;
 
-		const imageCount = media.filter((file) =>
-			file.type.includes('image')
+		const imageCount = formData.existingMedia.filter(
+			(file) => file.mediaType === 'IMAGE'
 		).length;
 
-		const videoCount = media.filter((file) =>
-			file.type.includes('video')
+		const videoCount = formData.existingMedia.filter(
+			(file) => file.mediaType === 'VIDEO'
 		).length;
 
 		if (totalMediaCount > 12) {
@@ -182,7 +204,7 @@ const AddProductModal = () => {
 		try {
 			setLoading(true);
 
-			const validationError = ValidateCreateProductFormData(
+			const validationError = ValidateUpdateProductFormData(
 				formData,
 				productCategory
 			);
@@ -196,10 +218,10 @@ const AddProductModal = () => {
 				...formData,
 				productCategory: productCategory.toUpperCase(),
 			};
-			console.log('[CREATE-PRODUCT-PAYLOAD] :: ', FormData);
+			console.log('[UPDATE-PRODUCT-PAYLOAD] :: ', FormData);
 
-			const {data} = await axios.post(
-				`${process.env.NEXT_PUBLIC_API_URL}/products/create`,
+			const {data} = await axios.patch(
+				`${process.env.NEXT_PUBLIC_API_URL}/products/update?productId=${formData.id}`,
 				FormData,
 				{
 					headers: {
@@ -213,16 +235,16 @@ const AddProductModal = () => {
 
 			setLoading(false);
 
-			toast.success('New product created');
+			toast.success('Product updated');
 
 			// close modal
-			modal.onClose();
+			onClose();
 		} catch (error) {
 			setLoading(false);
 
 			const _error = error as AxiosError;
 
-			console.log('[CREATE-PRODUCT-ERROR]', _error);
+			console.log('[UPDATE-PRODUCT-ERROR]', _error);
 
 			toast.error('Error');
 		}
@@ -235,11 +257,11 @@ const AddProductModal = () => {
 				className='flex flex-col w-[60%] bg-white py-2 px-4 max-h-[600px] overflow-y-auto scrollbar__1'
 			>
 				<div className='flex items-center justify-between px4'>
-					<h1>Add Product</h1>
+					<h1>Update Product</h1>
 
 					<Button
 						type='button'
-						onClick={() => modal.onClose()}
+						onClick={() => onClose()}
 						className='bg-white hover:bg-white'
 					>
 						<X className='text-black h-4 w-4' />
@@ -372,7 +394,7 @@ const AddProductModal = () => {
 							value={productCategory}
 							setValue={setProductCategory}
 							setShowStatusBar={setShowStatusBar}
-							classes='bg-green-600 rounded-none hover:bg-green-600 text-white hover:text-white'
+							classes='bg-sky-600 rounded-none hover:bg-sky-600 text-white hover:text-white'
 						/>
 
 						<div className='space-y-'>
@@ -394,7 +416,7 @@ const AddProductModal = () => {
 									name='price'
 									disabled={loading}
 									padding='py-3 px-4'
-									value={formData.price}
+									value={`${formData.price}`}
 									handleChange={handleChange}
 									placeHolder='Price'
 									classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 '
@@ -408,7 +430,7 @@ const AddProductModal = () => {
 									disabled={loading}
 									handleChange={handleChange}
 									placeHolder='Discount price'
-									value={formData.discountPrice}
+									value={`${formData.discountPrice}`}
 									classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 '
 								/>
 							</div>
@@ -429,9 +451,64 @@ const AddProductModal = () => {
 						</div>
 
 						<div className='flex flex-wrap items-center w-full gap-y-3 gap-x-5'>
+							{formData.existingMedia
+								.filter((media) => media.mediaType === 'IMAGE')
+								.map((media) => (
+									<CurrentImageToolTip
+										key={media.id}
+										media={media}
+										handleImageClick={() => {
+											updateFormData({
+												type: 'UPDATE_FORMDATA',
+												payload: {
+													existingMedia:
+														formData.existingMedia.filter(
+															(_media) =>
+																_media.id !==
+																media.id
+														),
+													removedMediaIds: [
+														...formData.removedMediaIds,
+														media.mediaKey,
+													],
+												},
+											});
+										}}
+									/>
+								))}
+						</div>
+						<div className='flex flex-wrap items-center w-full gap-y-3 gap-x-5'>
 							{mediaBlobs.map((blob) => (
 								<ImageToolTip key={blob} image={blob} />
 							))}
+						</div>
+
+						<div className='flex flex-wrap items-center w-full gap-y-3 gap-x-5'>
+							{formData.existingMedia
+								.filter((media) => media.mediaType === 'VIDEO')
+								.map((media) => (
+									<CurrentVideoToolTip
+										key={media.id}
+										media={media}
+										handleVideoClick={() => {
+											updateFormData({
+												type: 'UPDATE_FORMDATA',
+												payload: {
+													existingMedia:
+														formData.existingMedia.filter(
+															(_media) =>
+																_media.id !==
+																media.id
+														),
+													removedMediaIds: [
+														...formData.removedMediaIds,
+														media.mediaKey,
+													],
+												},
+											});
+										}}
+									/>
+								))}
 						</div>
 						<div className='flex flex-wrap justify-between items-center w-full gap-y-2'>
 							{formData.media
@@ -449,7 +526,7 @@ const AddProductModal = () => {
 							disabled
 							type='button'
 							variant={'outline'}
-							className='bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
+							className='bg-sky-600 hover:bg-sky-600 text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
 						>
 							<ButtonLoader />
 						</Button>
@@ -457,7 +534,7 @@ const AddProductModal = () => {
 						<Button
 							type='submit'
 							variant={'outline'}
-							className='bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
+							className='bg-sky-600 hover:bg-sky-600 text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
 						>
 							Submit
 						</Button>
@@ -468,8 +545,53 @@ const AddProductModal = () => {
 	);
 };
 
-export default AddProductModal;
+export default UpdateProductModal;
 
+const CurrentImageToolTip = ({
+	media,
+	handleImageClick,
+}: {
+	media: Media;
+	handleImageClick: () => void;
+}) => {
+	return (
+		<TooltipProvider>
+			<Tooltip>
+				<TooltipTrigger>
+					<div className='h-[80px] w-[80px] relative'>
+						<Image
+							fill
+							src={media.mediaUrl}
+							// width={40}
+							// height={40}
+							alt={'Blob'}
+							className='object-cover h-full w-full'
+						/>
+
+						<p
+							onClick={handleImageClick}
+							className='absolute top-0 right-0 text-xs text-black p-2 h-3 w-3 bg-white flex justify-center items-center cursor-pointer'
+						>
+							x
+						</p>
+					</div>
+				</TooltipTrigger>
+				<TooltipContent>
+					<div className='h-[200px] w-[200px] relative'>
+						<Image
+							fill
+							src={media.mediaUrl}
+							// width={40}
+							// height={40}
+							alt={'Blob'}
+							className='object-cover h-full w-full'
+						/>
+					</div>
+				</TooltipContent>
+			</Tooltip>
+		</TooltipProvider>
+	);
+};
 const ImageToolTip = ({image}: {image: string}) => {
 	return (
 		<TooltipProvider>
@@ -500,6 +622,30 @@ const ImageToolTip = ({image}: {image: string}) => {
 				</TooltipContent>
 			</Tooltip>
 		</TooltipProvider>
+	);
+};
+
+const CurrentVideoToolTip = ({
+	media,
+	handleVideoClick,
+}: {
+	media: Media;
+	handleVideoClick: () => void;
+}) => {
+	return (
+		<div className='h-[180px] w-[45%] relative'>
+			<video
+				controls
+				src={media.mediaUrl}
+				className='object-cover h-full w-full'
+			/>
+			<p
+				onClick={handleVideoClick}
+				className='absolute top-0 right-0 text-xs text-white p-2 h-4 w-4 bg-red-500 flex justify-center items-center cursor-pointer'
+			>
+				x
+			</p>
+		</div>
 	);
 };
 

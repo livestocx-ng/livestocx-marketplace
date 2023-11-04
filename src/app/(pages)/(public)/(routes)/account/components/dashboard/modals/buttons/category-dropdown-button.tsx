@@ -18,11 +18,13 @@ type Checked = DropdownMenuCheckboxItemProps['checked'];
 
 interface CategoryDropDownButtonProps {
 	value: string;
+	classes?: string;
 	setValue: Dispatch<SetStateAction<string>>;
 	setShowStatusBar: Dispatch<SetStateAction<Checked>>;
 }
 
 export function CategoryDropDownButton({
+	classes,
 	value,
 	setValue,
 	setShowStatusBar,
@@ -32,18 +34,18 @@ export function CategoryDropDownButton({
 			<DropdownMenuTrigger asChild>
 				<Button
 					variant='outline'
-					className='w-fit flex items-center space-x-3 bg-green-600 rounded hover:bg-green-600 text-white hover:text-white'
+					className={`w-fit flex items-center space-x-3 ${classes}`}
 				>
 					<Plus className='h-4 w-4 text-white' />{' '}
-					<p className='text-xs'>Category</p>
+					<p className='text-xs'>Category ({value.toUpperCase()})</p>
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className='w-56'>
 				{FilterOptions.map((option) => (
 					<DropdownMenuCheckboxItem
-						key={option.id}
+						key={option.value}
 						onCheckedChange={(checked: Checked) => {
-							setValue(option.value);
+							setValue(option.value.toUpperCase());
 
 							setShowStatusBar(checked);
 						}}

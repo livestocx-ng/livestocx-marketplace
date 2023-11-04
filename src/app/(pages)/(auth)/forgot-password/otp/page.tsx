@@ -23,7 +23,7 @@ const SignInPage = () => {
 		e: React.ChangeEvent<HTMLInputElement>,
 		index: number
 	) => {
-		if (!parseInt(e.target.value)) return;
+		if (isNaN(parseInt(e.target.value, 10))) return;
 
 		const value = e.target.value;
 		const newOtp = [...otp];

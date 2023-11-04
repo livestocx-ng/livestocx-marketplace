@@ -7,7 +7,6 @@ import {Button} from '@/components/ui/button';
 import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
 import AuthHeader from '../../../../components/header/auth-header';
-import {useUserHook} from '@/hooks/use-user';
 
 type FormData = {
 	email: string;
@@ -52,8 +51,6 @@ const SignInPage = () => {
 			console.log('[SIGNIN-PAYLOAD] :: ', formData);
 
 			await axios.post('/api/auth/forgot-password', formData);
-
-			useUserHook();
 
 			setLoading(false);
 

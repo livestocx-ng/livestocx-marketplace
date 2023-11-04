@@ -125,7 +125,7 @@ const AccountSideBar = ({
 
 						<p
 							className={cn(
-								'text-sm',
+								'text-xs',
 								currentTab === tab
 									? 'text-black'
 									: 'text-gray-500'

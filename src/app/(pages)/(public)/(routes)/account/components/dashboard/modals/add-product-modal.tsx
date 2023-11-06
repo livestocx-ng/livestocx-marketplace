@@ -10,18 +10,19 @@ import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
 import {useModal} from '@/hooks/use-modal';
+import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
 import {Plus, UploadCloud, X} from 'lucide-react';
 import {useReducer, useRef, useState} from 'react';
+import {useGlobalStore} from '@/hooks/use-global-store';
 import {isFileSizeValid} from '@/utils/file.validation';
+import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
 import FormTextAreaInput from '@/components/input/form-text-area-input';
 import {CategoryDropDownButton} from './buttons/category-dropdown-button';
 import {DropdownMenuCheckboxItemProps} from '@radix-ui/react-dropdown-menu';
 import {ValidateCreateProductFormData} from '@/utils/form-validations/product.validation';
-import ButtonLoader from '@/components/loader/button-loader';
 import {createBlobImageUrls, getFilesTypeCount} from '@/utils/file.mutation';
-import {useUserHook} from '@/hooks/use-user';
 
 export type FormData = {
 	price: string;
@@ -58,8 +59,8 @@ const formReducer = (state: FormData, action: FormAction) => {
 type Checked = DropdownMenuCheckboxItemProps['checked'];
 
 const AddProductModal = () => {
-	const router = useRouter();
 	const {user} = useUserHook();
+	const {products, updateProducts} = useGlobalStore();
 
 	const modal = useModal();
 
@@ -209,14 +210,14 @@ const AddProductModal = () => {
 				}
 			);
 
-			console.log('[DATA] :: ', data);
-
 			setLoading(false);
 
 			toast.success('New product created');
 
 			// close modal
 			modal.onClose();
+
+			updateProducts([...products, data.data]);
 		} catch (error) {
 			setLoading(false);
 
@@ -430,7 +431,7 @@ const AddProductModal = () => {
 
 						<div className='flex flex-wrap items-center w-full gap-y-3 gap-x-5'>
 							{mediaBlobs.map((blob) => (
-								<ImageToolTip key={blob} image={blob} />
+								<ImageToolTip key={blob} imageUrl={blob} />
 							))}
 						</div>
 						<div className='flex flex-wrap justify-between items-center w-full gap-y-2'>
@@ -470,7 +471,7 @@ const AddProductModal = () => {
 
 export default AddProductModal;
 
-const ImageToolTip = ({image}: {image: string}) => {
+const ImageToolTip = ({imageUrl}: {imageUrl: string}) => {
 	return (
 		<TooltipProvider>
 			<Tooltip>
@@ -478,7 +479,7 @@ const ImageToolTip = ({image}: {image: string}) => {
 					<div className='h-[80px] w-[80px] relative'>
 						<Image
 							fill
-							src={image}
+							src={imageUrl}
 							// width={40}
 							// height={40}
 							alt={'Blob'}
@@ -490,7 +491,7 @@ const ImageToolTip = ({image}: {image: string}) => {
 					<div className='h-[200px] w-[200px] relative'>
 						<Image
 							fill
-							src={image}
+							src={imageUrl}
 							// width={40}
 							// height={40}
 							alt={'Blob'}

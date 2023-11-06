@@ -8,6 +8,7 @@ import {useEffect, useState} from 'react';
 import {Product} from '@/types/types';
 import axios, {AxiosError} from 'axios';
 import {User, useUserHook} from '@/hooks/use-user';
+import {useGlobalStore} from '@/hooks/use-global-store';
 
 // const Products: ProductColumn[] = [
 // 	{
@@ -30,7 +31,7 @@ const ProductsContent = ({
 	isAddProductModalOpen,
 	onAddProductModalOpen,
 }: ProductsContentProps) => {
-	const [products, setProducts] = useState<Product[]>([]);
+	const {products, updateProducts} = useGlobalStore();
 
 	const fetchProducts = async () => {
 		try {
@@ -47,7 +48,7 @@ const ProductsContent = ({
 
 			console.log('[DATA] ::  ', data);
 
-			setProducts(data.data.products);
+			updateProducts(data.data.products);
 		} catch (error) {
 			const _error = error as AxiosError;
 

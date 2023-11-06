@@ -10,7 +10,7 @@ import WishListContent from './components/dashboard/wish-list-content';
 import DashboardContent from './components/dashboard/dashboard-content';
 import {useModal} from '@/hooks/use-modal';
 import AddProductModal from './components/dashboard/modals/add-product-modal';
-import { useUserHook } from '@/hooks/use-user';
+import {useUserHook} from '@/hooks/use-user';
 
 export type Tab =
 	| 'Dashboard'
@@ -22,7 +22,7 @@ export type Tab =
 	| 'Logout';
 
 const AccountPage = () => {
-	const {user} = useUserHook()
+	const {user} = useUserHook();
 
 	const isModalOpen = useModal((state) => state.isOpen);
 	const onModalOpen = useModal((state) => state.onOpen);
@@ -43,7 +43,7 @@ const AccountPage = () => {
 					{currentTab === 'Dashboard' && <DashboardContent />}
 					{currentTab === 'Products' && (
 						<ProductsContent
-						user={user}
+							user={user}
 							isAddProductModalOpen={isModalOpen}
 							onAddProductModalOpen={onModalOpen}
 						/>

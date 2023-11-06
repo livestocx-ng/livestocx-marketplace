@@ -8,7 +8,6 @@ export interface User {
 	lastName: string;
 	phoneNumber: string;
 	email: string;
-	password: null;
 	role: string;
 	accessToken: string;
 	refreshToken: string;
@@ -16,12 +15,14 @@ export interface User {
 
 export function useUserHook() {
 	const [user, setUser] = useState<User | null>(null);
-	const [isUserSuccess, setIsUserSuccess] = useState<boolean>(false);
 	const [error, setError] = useState<AxiosError | null>(null);
+	const [isUserSuccess, setIsUserSuccess] = useState<boolean>(false);
 
 	useEffect(() => {
 		(async () => {
 			try {
+				if (user) return;
+
 				const {data} = await axios.get('/api/auth/account');
 
 				setUser(data);

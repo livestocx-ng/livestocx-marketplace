@@ -8,21 +8,22 @@ import {
 import Image from 'next/image';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
-import {useRouter} from 'next/navigation';
-import {useModal} from '@/hooks/use-modal';
+import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
 import {Plus, UploadCloud, X} from 'lucide-react';
-import {useEffect, useReducer, useRef, useState} from 'react';
 import {isFileSizeValid} from '@/utils/file.validation';
+import ButtonLoader from '@/components/loader/button-loader';
+import {useEffect, useReducer, useRef, useState} from 'react';
 import FormTextInput from '@/components/input/form-text-input';
 import FormTextAreaInput from '@/components/input/form-text-area-input';
 import {CategoryDropDownButton} from './buttons/category-dropdown-button';
 import {DropdownMenuCheckboxItemProps} from '@radix-ui/react-dropdown-menu';
-import {ValidateUpdateProductFormData} from '@/utils/form-validations/product.validation';
-import ButtonLoader from '@/components/loader/button-loader';
 import {createBlobImageUrls, getFilesTypeCount} from '@/utils/file.mutation';
-import {useUserHook} from '@/hooks/use-user';
-import {useUpdateProductModalStore} from '@/hooks/use-global-state';
+import {ValidateUpdateProductFormData} from '@/utils/form-validations/product.validation';
+import {
+	useGlobalStore,
+	useUpdateProductModalStore,
+} from '@/hooks/use-global-store';
 import {Media} from '@/types/types';
 
 export type FormData = {
@@ -66,8 +67,8 @@ const formReducer = (state: FormData, action: FormAction) => {
 type Checked = DropdownMenuCheckboxItemProps['checked'];
 
 const UpdateProductModal = () => {
-	const router = useRouter();
 	const {user} = useUserHook();
+	const {updateProduct} = useGlobalStore();
 
 	const {onClose, payload} = useUpdateProductModalStore();
 
@@ -239,6 +240,8 @@ const UpdateProductModal = () => {
 
 			// close modal
 			onClose();
+
+			updateProduct(payload.id, data.data);
 		} catch (error) {
 			setLoading(false);
 

@@ -1,28 +1,15 @@
 'use client';
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from '@/components/ui/tooltip';
-import Image from 'next/image';
+import {X} from 'lucide-react';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
-import {useRouter} from 'next/navigation';
-import {useModal} from '@/hooks/use-modal';
-import {Button} from '@/components/ui/button';
-import {Plus, UploadCloud, X} from 'lucide-react';
-import {useEffect, useReducer, useRef, useState} from 'react';
-import {isFileSizeValid} from '@/utils/file.validation';
-import FormTextInput from '@/components/input/form-text-input';
-import FormTextAreaInput from '@/components/input/form-text-area-input';
-import {CategoryDropDownButton} from './buttons/category-dropdown-button';
-import {DropdownMenuCheckboxItemProps} from '@radix-ui/react-dropdown-menu';
-import {ValidateCreateProductFormData} from '@/utils/form-validations/product.validation';
-import ButtonLoader from '@/components/loader/button-loader';
-import {createBlobImageUrls, getFilesTypeCount} from '@/utils/file.mutation';
 import {useUserHook} from '@/hooks/use-user';
-import {useDeleteProductModalStore} from '@/hooks/use-global-state';
+import {Button} from '@/components/ui/button';
+import {useEffect, useReducer, useState} from 'react';
+import ButtonLoader from '@/components/loader/button-loader';
+import {
+	useGlobalStore,
+	useDeleteProductModalStore,
+} from '@/hooks/use-global-store';
 
 export type FormData = {
 	id: string;
@@ -51,10 +38,10 @@ const formReducer = (state: FormData, action: FormAction) => {
 const DeleteProductModal = () => {
 	const {user} = useUserHook();
 
+	const {products, updateProducts} = useGlobalStore();
 	const {payload, onClose} = useDeleteProductModalStore();
 
 	const [loading, setLoading] = useState<boolean>(false);
-	const [productCategory, setProductCategory] = useState<string>('cow');
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
 
 	useEffect(() => {
@@ -73,12 +60,6 @@ const DeleteProductModal = () => {
 		try {
 			setLoading(true);
 
-			const FormData = {
-				...formData,
-				productCategory: productCategory.toUpperCase(),
-			};
-			console.log('[DELETE-PRODUCT-PAYLOAD] :: ', FormData);
-
 			const {data} = await axios.delete(
 				`${process.env.NEXT_PUBLIC_API_URL}/products/delete?productId=${formData.id}`,
 				{
@@ -96,6 +77,10 @@ const DeleteProductModal = () => {
 
 			// close modal
 			onClose();
+
+			updateProducts(
+				products.filter((product) => product.id !== payload.id)
+			);
 		} catch (error) {
 			setLoading(false);
 
@@ -158,48 +143,3 @@ const DeleteProductModal = () => {
 };
 
 export default DeleteProductModal;
-
-const ImageToolTip = ({image}: {image: string}) => {
-	return (
-		<TooltipProvider>
-			<Tooltip>
-				<TooltipTrigger>
-					<div className='h-[80px] w-[80px] relative'>
-						<Image
-							fill
-							src={image}
-							// width={40}
-							// height={40}
-							alt={'Blob'}
-							className='object-cover h-full w-full'
-						/>
-					</div>
-				</TooltipTrigger>
-				<TooltipContent>
-					<div className='h-[200px] w-[200px] relative'>
-						<Image
-							fill
-							src={image}
-							// width={40}
-							// height={40}
-							alt={'Blob'}
-							className='object-cover h-full w-full'
-						/>
-					</div>
-				</TooltipContent>
-			</Tooltip>
-		</TooltipProvider>
-	);
-};
-
-const VideoToolTip = ({file}: {file: File}) => {
-	return (
-		<div className='h-[180px] w-[45%]'>
-			<video
-				controls
-				src={URL.createObjectURL(file)}
-				className='object-cover h-full w-full'
-			/>
-		</div>
-	);
-};

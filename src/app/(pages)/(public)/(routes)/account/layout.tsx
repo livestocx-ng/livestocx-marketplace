@@ -1,5 +1,4 @@
 'use client';
-import {Fragment} from 'react';
 import Lottie from 'lottie-react';
 import {redirect} from 'next/navigation';
 import {useModal} from '@/hooks/use-modal';
@@ -8,7 +7,10 @@ import AddProductModal from './components/dashboard/modals/add-product-modal';
 import UpdateProductModal from './components/dashboard/modals/update-product-modal';
 import DeleteProductModal from './components/dashboard/modals/delete-product-modal';
 import LoadingAnimation from '../../../../../../public/animations/loading__animation__1.json';
-import {useDeleteProductModalStore, useUpdateProductModalStore} from '@/hooks/use-global-state';
+import {
+	useDeleteProductModalStore,
+	useUpdateProductModalStore,
+} from '@/hooks/use-global-store';
 
 interface AccountLayoutProps {
 	children: React.ReactNode;
@@ -16,7 +18,7 @@ interface AccountLayoutProps {
 
 export default function AccountLayout({children}: AccountLayoutProps) {
 	const {user, error, isUserSuccess} = useUserHook();
-	
+
 	const isModalOpen = useModal((state) => state.isOpen);
 	const isUpdateProductModalOpen = useUpdateProductModalStore(
 		(state) => state.isOpen

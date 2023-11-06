@@ -4,7 +4,10 @@ import {Button} from '@/components/ui/button';
 import {ColumnDef} from '@tanstack/react-table';
 import Image from 'next/image';
 import {Product} from '@/types/types';
-import {useDeleteProductModalStore, useUpdateProductModalStore} from '@/hooks/use-global-state';
+import {
+	useDeleteProductModalStore,
+	useUpdateProductModalStore,
+} from '@/hooks/use-global-store';
 import {PriceFormatter} from '@/utils/price.formatter';
 
 export interface ProductColumn extends Product {}

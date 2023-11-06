@@ -1,8 +1,11 @@
 'use client';
 import {RotateCw} from 'lucide-react';
-import {Fragment, useState} from 'react';
+import {Fragment, useEffect, useState} from 'react';
+import axios, {AxiosError} from 'axios';
 
 import {Button} from '@/components/ui/button';
+import {useUserHook} from '@/hooks/use-user';
+import {useGlobalStore} from '@/hooks/use-global-store';
 import ProductCard from '../../../../../components/cards/product-card';
 
 interface Tab {
@@ -25,7 +28,39 @@ const TabItems: Tab[] = [
 ];
 
 const HomeProducts = () => {
+	const {user} = useUserHook();
+	const {products, updateProducts} = useGlobalStore();
+
 	const [currentTab, setCurrentTab] = useState<Tab>(TabItems[0]);
+
+	const fetchProducts = async () => {
+		try {
+			if (!user) return;
+
+			console.log('[USER] ::  ', user);
+
+			const {data} = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/products/fetch-all`,
+				{
+					headers: {
+						Authorization: user?.accessToken,
+					},
+				}
+			);
+
+			console.log('[DATA] ::  ', data);
+
+			updateProducts(data.data.products);
+		} catch (error) {
+			const _error = error as AxiosError;
+
+			console.log('[FETCH-PRODUCTS-ERROR] :: ', _error);
+		}
+	};
+
+	useEffect(() => {
+		fetchProducts();
+	}, []);
 
 	return (
 		<Fragment>

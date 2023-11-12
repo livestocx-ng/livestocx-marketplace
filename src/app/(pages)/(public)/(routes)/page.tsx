@@ -31,9 +31,9 @@ export default function HomePage() {
 			updateProducts(data.data.products);
 			updatePagination(data.data.totalPages, data.data.hasNext);
 
-			setLoading(true);
+			setLoading(false);
 		} catch (error) {
-			setLoading(true);
+			setLoading(false);
 
 			const _error = error as AxiosError;
 

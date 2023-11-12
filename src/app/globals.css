@@ -39,6 +39,15 @@
 	outline: 1px solid slategrey;
 }
 
+.scrollbar__2::-webkit-scrollbar {
+	width: 6px;
+}
+
+.scrollbar__2::-webkit-scrollbar-thumb {
+	background-color: darkgrey;
+	outline: 1px solid slategrey;
+}
+
 @layer base {
 	:root {
 		--background: 0 0% 100%;

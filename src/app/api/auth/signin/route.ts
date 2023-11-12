@@ -14,7 +14,7 @@ export async function POST(req: Request) {
 			{email, password}
 		);
 
-		console.log('[CREDENTIALS-SIGNIN-DATA] :: ', data);
+		// console.log('[CREDENTIALS-SIGNIN-DATA] :: ', data);
 
 		const user = {
 			...data?.data?.user,

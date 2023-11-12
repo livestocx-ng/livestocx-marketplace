@@ -1,9 +1,13 @@
+'use client';
+import {useUserHook} from '@/hooks/use-user';
 import SearchForm from './components/search-form';
-import CarouselSlide from './components/carousel-slide';
 import HomeProducts from './components/home-products';
+import CarouselSlide from './components/carousel-slide';
 import TestimonialSection from '@/components/common/testimonials';
 
 export default function HomePage() {
+	const userStore = useUserHook();
+
 	return (
 		<main className='bg-[#28312B]'>
 			<section className='md:h-screen w-full bg-home flex flex-col items-center justify-end gap-y-16 pt-28 md:pt-0'>

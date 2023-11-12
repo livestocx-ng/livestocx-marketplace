@@ -31,20 +31,20 @@ export default function AccountLayout({children}: AccountLayoutProps) {
 		redirect('/');
 	}
 
-	if (!isUserSuccess) {
-		return (
-			<div className='h-screen w-full bg-main'>
-				<div className='h-screen grid place-content-center bg-[#ffffff] z-10 fixed w-full'>
-					<Lottie
-						loop={true}
-						className='h-full'
-						animationData={LoadingAnimation}
-						// animationData={'/animations/loading__animation.json'}
-					/>
-				</div>
-			</div>
-		);
-	}
+	// if (!isUserSuccess) {
+	// 	return (
+	// 		<div className='h-screen w-full bg-main'>
+	// 			<div className='h-screen grid place-content-center bg-[#ffffff] z-10 fixed w-full'>
+	// 				<Lottie
+	// 					loop={true}
+	// 					className='h-full'
+	// 					animationData={LoadingAnimation}
+	// 					// animationData={'/animations/loading__animation.json'}
+	// 				/>
+	// 			</div>
+	// 		</div>
+	// 	);
+	// }
 
 	if (user) {
 		return (

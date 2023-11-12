@@ -1,3 +1,4 @@
+import { Media } from '@/types/types';
 import {create} from 'zustand';
 
 interface useModalStore {

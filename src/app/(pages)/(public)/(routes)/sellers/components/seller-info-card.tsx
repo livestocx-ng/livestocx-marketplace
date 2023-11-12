@@ -1,18 +1,16 @@
 import React from 'react';
-import {useRouter} from 'next/navigation';
-import Image from 'next/image';
-import {Button} from '@/components/ui/button';
 import Link from 'next/link';
+import Image from 'next/image';
+import { Vendor } from '@/types/types';
+import {useRouter} from 'next/navigation';
+import {Button} from '@/components/ui/button';
+import { useGlobalStore } from '@/hooks/use-global-store';
 
-const SellerInfoCard = () => {
-	const router = useRouter();
+const SellerInfoCard = ({vendor}: {vendor: Vendor}) => {
+	const {updateVendor} = useGlobalStore()
 
 	return (
 		<div
-			// onClick={() => {
-			// 	router.push('/sellers/IOSJWUI');
-			// }}
-			// href={'/sellers/IOSJWUI'}
 			className='w-full sm:w-[300px] bg-green-100 flex flex-col justify-between relative cursor-pointe shadow__1 hover:shadow__2 rounded-lg px-4 py-5'
 		>
 			<div className='border-b border-b-main flex flex-col space-y-5 pb-2'>
@@ -22,31 +20,36 @@ const SellerInfoCard = () => {
 						width={60}
 						height={60}
 						className=''
+						// src={vendor?.avatar}
 						src={'/logo.svg'}
 					/>
 				</div>
 
-				<h1 className='text-sm'>MANSUR AK INTEGRATED FARM</h1>
+				<h1 className='text-sm uppercase font-medium'>{vendor.name}</h1>
 				<p className='text-xs'>
-					Unguwa uku yanawaki kano, KANO STATE, Kano, Nigeria
+					{vendor.address} {vendor.location} State.
 				</p>
 			</div>
 
 			<div className='flex flex-wrap items-center justify-between py-2'>
 				<Image
 					alt='image'
-					width={50}
-					height={50}
-					src={'/user__1.svg'}
-					className='rounded-full'
+					width={80}
+					height={80}
+					src={vendor?.avatar}
+					// src={'/user__1.svg'}
+					className='rounded-full border border-slate-500 object-fill'
 				/>
 
 				<div className='flex flex-row sm:flex-col space-x-5 sm:space-x-0 sm:space-y-2'>
-					<Link href={'/sellers/IOSJWUI'}>
+					<Link href={`/sellers/${vendor?.vendorId!.toLowerCase()}`}>
 						<Button
 							type='button'
 							variant={'outline'}
-							className='borde bg-main text-white text-xs h-12 rounded-md py-3 w-full'
+							onClick={()=>{
+								updateVendor(vendor)
+							}}
+							className='bg-main text-white hover:bg-main hover:text-white text-xs h-10 rounded-none py-3 w-full'
 						>
 							View Profile
 						</Button>
@@ -56,7 +59,7 @@ const SellerInfoCard = () => {
 						<Button
 							type='button'
 							variant={'outline'}
-							className='bg-orange-500 text-white text-xs h-12 rounded-md py-3 w-full'
+							className='bg-orange-500 text-white text-xs h-10 rounded-none py-3 w-full'
 						>
 							Chat with Seller
 						</Button>

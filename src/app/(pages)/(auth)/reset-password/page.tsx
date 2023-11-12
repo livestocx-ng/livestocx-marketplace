@@ -15,7 +15,7 @@ type FormData = {
 };
 
 type FormAction = {
-	type: 'UPDATE_FORMDATA' | 'UPDATE';
+	type: 'UPDATE_FORMDATA';
 	payload: Partial<FormData>;
 };
 
@@ -117,7 +117,7 @@ const SignInPage = () => {
 								type='button'
 								className='bg-green-700 text-white h-12 hover:bg-green-700 w-full rounded-full py-4 cursor-default'
 							>
-								<ButtonLoader/>
+								<ButtonLoader />
 							</Button>
 						) : (
 							<Button

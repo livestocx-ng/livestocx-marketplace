@@ -17,7 +17,7 @@ export type FormData = {
 };
 
 type FormAction = {
-	type: 'UPDATE_FORMDATA' | 'UPDATE';
+	type: 'UPDATE_FORMDATA';
 	payload: Partial<FormData>;
 };
 
@@ -120,10 +120,10 @@ const DeleteProductModal = () => {
 				<div className='flex justify-end'>
 					{loading ? (
 						<Button
-							disabled
+							// disabled
 							type='button'
 							variant={'outline'}
-							className='bg-red-500 hover:bg-red-500 text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
+							className='w-[200px] bg-red-500 hover:bg-red-500 text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
 						>
 							<ButtonLoader />
 						</Button>
@@ -131,9 +131,9 @@ const DeleteProductModal = () => {
 						<Button
 							type='submit'
 							variant={'outline'}
-							className='bg-red-500 hover:bg-red-600 text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
+							className='w-[200px] bg-red-500 hover:bg-red-600 text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
 						>
-							Submit
+							Delete
 						</Button>
 					)}
 				</div>

@@ -5,9 +5,9 @@ import {Button} from '@/components/ui/button';
 import {DataTable} from '@/components/ui/data-table';
 import {ProductColumn, columns} from './tables/products-column';
 import {useEffect, useState} from 'react';
-import {Product} from '@/types/types';
+import {Product, User} from '@/types/types';
 import axios, {AxiosError} from 'axios';
-import {User, useUserHook} from '@/hooks/use-user';
+import {useUserHook} from '@/hooks/use-user';
 import {useGlobalStore} from '@/hooks/use-global-store';
 
 // const Products: ProductColumn[] = [
@@ -21,17 +21,21 @@ import {useGlobalStore} from '@/hooks/use-global-store';
 // ];
 
 interface ProductsContentProps {
-	user: User | null;
-	isAddProductModalOpen: boolean;
-	onAddProductModalOpen: () => void;
+	// user: User | null;
+	// isAddProductModalOpen: boolean;
+	// onAddProductModalOpen: () => void;
 }
 
 const ProductsContent = ({
-	user,
-	isAddProductModalOpen,
-	onAddProductModalOpen,
+	// user,
+	// isAddProductModalOpen,
+	// onAddProductModalOpen,
 }: ProductsContentProps) => {
-	const {products, updateProducts} = useGlobalStore();
+
+	const isModalOpen = useModal((state) => state.isOpen);
+	const onModalOpen = useModal((state) => state.onOpen);
+
+	const {user, products, updateProducts} = useGlobalStore();
 
 	const fetchProducts = async () => {
 		try {
@@ -66,8 +70,8 @@ const ProductsContent = ({
 				<Button
 					type='button'
 					onClick={() => {
-						if (!isAddProductModalOpen) {
-							onAddProductModalOpen();
+						if (!isModalOpen) {
+							onModalOpen();
 						}
 					}}
 					className='bg-green-600 flex items-center space-x-3 text-white h-10 hover:bg-green-700 w-fit rounded py-2'

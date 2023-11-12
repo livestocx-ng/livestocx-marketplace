@@ -1,6 +1,6 @@
-import {DataTable} from '@/components/ui/data-table';
 import Image from 'next/image';
-import Link from 'next/link';
+import {DataTable} from '@/components/ui/data-table';
+import {useGlobalStore} from '@/hooks/use-global-store';
 import {RecentOrderColumn, columns} from './tables/recent-orders-columns';
 
 const RecentOrders: RecentOrderColumn[] = [
@@ -48,52 +48,66 @@ const RecentOrders: RecentOrderColumn[] = [
 	},
 ];
 
-const DashboardContent = () => {
+interface DashboardContentProps {
+	// user: User | null;
+	// updateTab: Dispatch<SetStateAction<Tab>>;
+}
+
+const DashboardContent = ({}: DashboardContentProps) => {
+	const {user, updateCurrentAccountTab} = useGlobalStore();
+
 	return (
 		<div className='w-[78%] flex flex-col gap-5'>
 			<div className='flex items-center justify-between w-full'>
-				<div className='p-10 flex flex-col items-center w-[45%] h-[280px] justify-center space-y-3 border rounded-lg'>
-					<Image
-						alt='image'
-						width={150}
-						height={150}
-						src={'/user__1.svg'}
-						className='rounded-full'
-					/>
+				<div className='p-5 flex flex-col items-center justify-between w-[45%] h-[350px] space-y-3 border rounded-lg'>
+					<div className='text-center'>
+						<div className='h-[150px] w-[150px] rounded-full border relative'>
+							<Image
+								alt='image'
+								// width={150}
+								// height={150}
+								fill
+								// src={'/user__1.svg'}
+								className='object-cover rounded-full h-full w-full'
+								src={user?.avatar ?? '/user__1.svg'}
+							/>
+						</div>
 
-					<h1 className='text-base'>Michael Jigga</h1>
-					<p className='text-sm'>Customer</p>
-					<Link
-						href={'#'}
-						className='text-main text-sm font-semibold'
+						<h1 className='text-base'>
+							{user?.lastName} {user?.firstName}
+						</h1>
+						<p className='text-sm capitalize'>{user?.role}</p>
+					</div>
+
+					<p
+						onClick={() => updateCurrentAccountTab('Settings')}
+						className='text-main text-sm font-semibold cursor-pointer'
 					>
 						Edit Profile
-					</Link>
+					</p>
 				</div>
-				<div className='p-5 flex flex-col items-start w-[45%] h-[280px] justify-between border rounded-lg'>
+				<div className='p-5 flex flex-col items-start w-[45%] h-[350px] justify-between border rounded-lg'>
 					<div className='space-y-3'>
-						<h1 className='text-base text-gray-400'>
+						<h1 className='text-base font-medium'>
 							Billing Address
 						</h1>
-						<div className='space-y-1'>
-							<h1 className='text-base'>Michael Jigga</h1>
+						<div className='space-y-1 text-gray-400'>
+							<h1 className='text-sm'>Michael Jigga</h1>
 							<p className='text-sm'>
 								New Rayfield, Road 33 Abuja Street
 							</p>
 						</div>
-						<div className='space-y-1'>
-							<h1 className='text-base'>
-								michael.jigga@gmail.com
-							</h1>
-							<h1 className='text-base'>09025605622</h1>
+						<div className='space-y-1 text-gray-400'>
+							<h1 className='text-sm'>michael.jigga@gmail.com</h1>
+							<h1 className='text-sm'>09025605622</h1>
 						</div>
 					</div>
-					<Link
-						href={'#'}
-						className='text-main text-sm font-semibold'
+					<p
+						onClick={() => updateCurrentAccountTab('Settings')}
+						className='text-main text-sm font-semibold cursor-pointer'
 					>
 						Edit Profile
-					</Link>
+					</p>
 				</div>
 			</div>
 

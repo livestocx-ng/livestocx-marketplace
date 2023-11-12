@@ -22,7 +22,7 @@ type FormData = {
 };
 
 type FormAction = {
-	type: 'UPDATE_FORMDATA' | 'UPDATE';
+	type: 'UPDATE_FORMDATA';
 	payload: Partial<FormData>;
 };
 

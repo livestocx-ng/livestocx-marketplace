@@ -28,29 +28,26 @@ const TabItems: Tab[] = [
 ];
 
 const HomeProducts = () => {
-	const {user} = useUserHook();
-	const {products, updateProducts} = useGlobalStore();
+	const {
+		products,
+		totalPages,
+		hasNextPage,
+		updateProducts,
+		updatePagination,
+	} = useGlobalStore();
 
 	const [currentTab, setCurrentTab] = useState<Tab>(TabItems[0]);
 
 	const fetchProducts = async () => {
 		try {
-			if (!user) return;
-
-			console.log('[USER] ::  ', user);
-
 			const {data} = await axios.get(
-				`${process.env.NEXT_PUBLIC_API_URL}/products/fetch-all`,
-				{
-					headers: {
-						Authorization: user?.accessToken,
-					},
-				}
+				`${process.env.NEXT_PUBLIC_API_URL}/user/products/recommended/fetch-all`
 			);
 
 			console.log('[DATA] ::  ', data);
 
 			updateProducts(data.data.products);
+			updatePagination(data.data.totalPages, data.data.hasNext);
 		} catch (error) {
 			const _error = error as AxiosError;
 
@@ -89,24 +86,23 @@ const HomeProducts = () => {
 
 			{/* <div className='flex justify-between items-center flex-wrap gap-6 mt-10'> */}
 			<div className='flex flex-wrap items-center w-full justify-around gap-y-10 gap-x-2 sm:gap-x-5 md:gap-x-10 mt-10'>
-				{[
-					1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 5, 6, 7, 8,
-					9, 10,
-				].map((item) => (
-					<ProductCard key={item} />
+				{products?.map((product) => (
+					<ProductCard key={product.id} product={product} />
 				))}
 			</div>
 
-			<div className='flex justify-center mt-10'>
-				<Button
-					type='button'
-					variant={'outline'}
-					className='flex items-center space-x-1 bg-white border hover:bg:white focus:bg-white'
-				>
-					<RotateCw />
-					<span>Load More</span>
-				</Button>
-			</div>
+			{hasNextPage && (
+				<div className='flex justify-center mt-10'>
+					<Button
+						type='button'
+						variant={'outline'}
+						className='flex items-center space-x-1 bg-white border hover:bg:white focus:bg-white'
+					>
+						<RotateCw />
+						<span>Load More</span>
+					</Button>
+				</div>
+			)}
 		</Fragment>
 	);
 };

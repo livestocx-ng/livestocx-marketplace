@@ -1,9 +1,18 @@
 'use client';
-import Image from 'next/image';
-import {useReducer} from 'react';
+import {useReducer, useState} from 'react';
+import {toast} from 'react-hot-toast';
+import axios, {AxiosError} from 'axios';
 
+import {User} from '@/types/types';
 import {Button} from '@/components/ui/button';
 import FormPasswordInput from '@/components/input/form-password-input';
+import {ValidateUpdatePasswordFormData} from '@/utils/form-validations/password.validation';
+import {useGlobalStore} from '@/hooks/use-global-store';
+import ButtonLoader from '@/components/loader/button-loader';
+
+interface PasswordSettingsProps {
+	user: User | null;
+}
 
 type FormData = {
 	newPassword: string;
@@ -12,7 +21,7 @@ type FormData = {
 };
 
 type FormAction = {
-	type: 'UPDATE_FORMDATA' | 'UPDATE';
+	type: 'UPDATE_FORMDATA';
 	payload: Partial<FormData>;
 };
 
@@ -32,6 +41,9 @@ const formReducer = (state: FormData, action: FormAction) => {
 };
 
 const PasswordSettings = () => {
+	const {user} = useGlobalStore();
+
+	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,10 +53,54 @@ const PasswordSettings = () => {
 		});
 	};
 
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		console.log('[PASSWORD-PAYLOAD] :: ', formData);
+		try {
+			setLoading(true);
+
+			const validationError = ValidateUpdatePasswordFormData(formData);
+
+			if (validationError) {
+				setLoading(false);
+				return toast.error(validationError);
+			}
+
+			console.log('[UPDATE-PASSWORD-PAYLOAD] :: ', formData);
+
+			const {data} = await axios.patch(
+				`${process.env.NEXT_PUBLIC_API_URL}/auth/update-password`,
+				formData,
+				{
+					headers: {
+						Authorization: user?.accessToken,
+					},
+				}
+			);
+
+			setLoading(false);
+
+			console.log('[PASSWORD] :: ', data);
+
+			updateFormData({
+				type: 'UPDATE_FORMDATA',
+				payload: {
+					currentPassword: '',
+					newPassword: '',
+					confirmPassword: '',
+				},
+			});
+
+			toast.success('Password updated!');
+		} catch (error) {
+			setLoading(false);
+
+			const _error = error as AxiosError;
+
+			console.log('[UPDATE-PASSWORD-ERROR]', _error);
+
+			toast.error('Error');
+		}
 	};
 
 	return (
@@ -59,7 +115,7 @@ const PasswordSettings = () => {
 					<div className='space-y-1'>
 						<p className='text-sm'>Password</p>
 						<FormPasswordInput
-							name='password'
+							name='currentPassword'
 							padding='py-4 px-4'
 							value={formData.currentPassword}
 							handleChange={handleChange}
@@ -72,7 +128,7 @@ const PasswordSettings = () => {
 						<div className='space-y-1 w-[48%]'>
 							<p className='text-sm'>New Password</p>
 							<FormPasswordInput
-								name='password'
+								name='newPassword'
 								padding='py-4 px-4'
 								value={formData.newPassword}
 								handleChange={handleChange}
@@ -83,7 +139,7 @@ const PasswordSettings = () => {
 						<div className='space-y-1 w-[48%]'>
 							<p className='text-sm'>Confirm Password</p>
 							<FormPasswordInput
-								name='password'
+								name='confirmPassword'
 								padding='py-4 px-4'
 								value={formData.confirmPassword}
 								handleChange={handleChange}
@@ -93,12 +149,22 @@ const PasswordSettings = () => {
 						</div>
 					</div>
 
-					<Button
-						type='submit'
-						className='bg-green-500 text-white hover:bg-green-600 hover:text-white w-fit px-3 rounded'
-					>
-						Save Changes
-					</Button>
+					{loading ? (
+						<Button
+							type='button'
+							disabled
+							className='bg-green-500 text-xs text-white hover:bg-green-600 hover:text-white w-fit px-3 rounded'
+						>
+							<ButtonLoader />
+						</Button>
+					) : (
+						<Button
+							type='submit'
+							className='bg-green-500 text-xs text-white hover:bg-green-600 hover:text-white w-fit px-3 rounded'
+						>
+							Save Changes
+						</Button>
+					)}
 				</form>
 			</div>
 		</div>

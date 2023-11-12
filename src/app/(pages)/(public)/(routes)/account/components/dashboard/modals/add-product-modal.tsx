@@ -8,10 +8,10 @@ import {
 import Image from 'next/image';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
-import {useRouter} from 'next/navigation';
 import {useModal} from '@/hooks/use-modal';
 import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
+import {Checkbox} from '@/components/ui/checkbox';
 import {Plus, UploadCloud, X} from 'lucide-react';
 import {useReducer, useRef, useState} from 'react';
 import {useGlobalStore} from '@/hooks/use-global-store';
@@ -21,20 +21,21 @@ import FormTextInput from '@/components/input/form-text-input';
 import FormTextAreaInput from '@/components/input/form-text-area-input';
 import {CategoryDropDownButton} from './buttons/category-dropdown-button';
 import {DropdownMenuCheckboxItemProps} from '@radix-ui/react-dropdown-menu';
-import {ValidateCreateProductFormData} from '@/utils/form-validations/product.validation';
 import {createBlobImageUrls, getFilesTypeCount} from '@/utils/file.mutation';
+import {ValidateCreateProductFormData} from '@/utils/form-validations/product.validation';
 
 export type FormData = {
 	price: string;
 	name: string;
 	discountPrice: string;
 	description: string;
-	productCategory: string;
+	category: string;
 	media: File[];
+	isNegotiable: boolean;
 };
 
 type FormAction = {
-	type: 'UPDATE_FORMDATA' | 'UPDATE';
+	type: 'UPDATE_FORMDATA';
 	payload: Partial<FormData>;
 };
 
@@ -43,8 +44,9 @@ const initialState: FormData = {
 	price: '',
 	description: '',
 	discountPrice: '',
-	productCategory: '',
+	category: '',
 	media: [],
+	isNegotiable: false,
 };
 
 const formReducer = (state: FormData, action: FormAction) => {
@@ -70,7 +72,7 @@ const AddProductModal = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [mediaBlobs, setMediaBlobs] = useState<string[]>([]);
 	const [showStatusBar, setShowStatusBar] = useState<Checked>(false);
-	const [productCategory, setProductCategory] = useState<string>('cow');
+	const [category, setProductCategory] = useState<string>('cow');
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -185,7 +187,7 @@ const AddProductModal = () => {
 
 			const validationError = ValidateCreateProductFormData(
 				formData,
-				productCategory
+				category
 			);
 
 			if (validationError) {
@@ -195,7 +197,7 @@ const AddProductModal = () => {
 
 			const FormData = {
 				...formData,
-				productCategory: productCategory.toUpperCase(),
+				category: category.toUpperCase(),
 			};
 			console.log('[CREATE-PRODUCT-PAYLOAD] :: ', FormData);
 
@@ -319,13 +321,19 @@ const AddProductModal = () => {
 												media: formData.media.filter(
 													(media) =>
 														media.type.includes(
-															'image'
+															'video'
 														)
 												),
 											},
 										});
 
-										setMediaBlobs([]);
+										setMediaBlobs(
+											createBlobImageUrls(
+												formData.media.filter((media) =>
+													media.type.includes('video')
+												)
+											)
+										);
 									}}
 									variant={'outline'}
 									className='border-0 bg-red-600 hover:bg-red-600 text-xs h-12 text-white hover:text-white rounded-none py-2 px-4 w-[200px] mx-auto'
@@ -342,13 +350,19 @@ const AddProductModal = () => {
 												media: formData.media.filter(
 													(media) =>
 														media.type.includes(
-															'video'
+															'image'
 														)
 												),
 											},
 										});
 
-										setMediaBlobs([]);
+										setMediaBlobs(
+											createBlobImageUrls(
+												formData.media.filter((media) =>
+													media.type.includes('image')
+												)
+											)
+										);
 									}}
 									variant={'outline'}
 									className='border-0 bg-red-600 hover:bg-red-600 text-xs h-12 text-white hover:text-white rounded-none py-2 px-4 w-[200px] mx-auto'
@@ -369,12 +383,14 @@ const AddProductModal = () => {
 					</div>
 
 					<div className='w-[70%] flex flex-col space-y-3 pl-8'>
-						<CategoryDropDownButton
-							value={productCategory}
-							setValue={setProductCategory}
-							setShowStatusBar={setShowStatusBar}
-							classes='bg-green-600 rounded-none hover:bg-green-600 text-white hover:text-white'
-						/>
+						<div className='flex items-center justify-between w-full'>
+							<CategoryDropDownButton
+								value={category}
+								setValue={setProductCategory}
+								setShowStatusBar={setShowStatusBar}
+								classes='bg-green-600 rounded-none hover:bg-green-600 text-white hover:text-white'
+							/>
+						</div>
 
 						<div className='space-y-'>
 							<p className='text-xs'>Name</p>
@@ -429,6 +445,25 @@ const AddProductModal = () => {
 							/>
 						</div>
 
+						<div className='flex items-center space-x-2'>
+							<Checkbox
+								id='isNegotiable'
+								checked={formData.isNegotiable}
+								onCheckedChange={(isNegotiable: boolean) => {
+									updateFormData({
+										type: 'UPDATE_FORMDATA',
+										payload: {isNegotiable},
+									});
+								}}
+							/>
+							<label
+								htmlFor='terms'
+								className='text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+							>
+								Negotiable
+							</label>
+						</div>
+
 						<div className='flex flex-wrap items-center w-full gap-y-3 gap-x-5'>
 							{mediaBlobs.map((blob) => (
 								<ImageToolTip key={blob} imageUrl={blob} />
@@ -447,10 +482,10 @@ const AddProductModal = () => {
 				<div className='flex justify-end pt-10'>
 					{loading ? (
 						<Button
-							disabled
+							// disabled
 							type='button'
 							variant={'outline'}
-							className='bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
+							className='w-[200px] bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
 						>
 							<ButtonLoader />
 						</Button>
@@ -458,7 +493,7 @@ const AddProductModal = () => {
 						<Button
 							type='submit'
 							variant={'outline'}
-							className='bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
+							className='w-[200px] bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
 						>
 							Submit
 						</Button>

@@ -1,16 +1,24 @@
 import React from 'react';
+import {User} from '@/types/types';
 import AccountSettings from './settings/account-settings';
 import BillingSettings from './settings/billing-settings';
 import PasswordSettings from './settings/password-settings';
+import VendorSettings from './settings/vendor-settings';
+
+interface SettingsContentProps {
+	user: User | null;
+}
 
 const SettingsContent = () => {
 	return (
 		<div className='w-[78%] flex flex-col gap-5'>
 			<AccountSettings />
 
-			<BillingSettings />
+			{/* <BillingSettings/> */}
 
-			<PasswordSettings />
+			<VendorSettings/>
+
+			<PasswordSettings/>
 		</div>
 	);
 };

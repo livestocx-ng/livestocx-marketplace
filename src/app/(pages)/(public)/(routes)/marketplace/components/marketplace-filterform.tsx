@@ -4,7 +4,6 @@ import {
 	SelectContent,
 	SelectGroup,
 	SelectItem,
-	SelectLabel,
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
@@ -21,7 +20,8 @@ const MarketplaceFilterForm = () => {
 
 				<Select
 					onValueChange={(value) => {
-						router.push(`/marketplace/${value}`);
+						console.log('[VALUE] :: ', value)
+						router.push(`/marketplace/${value.toLowerCase()}`);
 					}}
 				>
 					<SelectTrigger className='w-[180px]'>

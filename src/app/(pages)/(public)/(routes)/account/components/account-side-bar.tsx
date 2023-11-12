@@ -9,16 +9,15 @@ import {
 	ShoppingCartIcon,
 } from 'lucide-react';
 import axios from 'axios';
-import {Tab} from '../page';
 import {cn} from '@/lib/utils';
 import {toast} from 'react-hot-toast';
 import {Dispatch, SetStateAction} from 'react';
 import {redirect, useRouter} from 'next/navigation';
+import {useUserHook} from '@/hooks/use-user';
+import {useGlobalStore} from '@/hooks/use-global-store';
+import {Tab} from '@/types/types';
 
-interface AccountSideBarProps {
-	currentTab: Tab;
-	updateCurrentTab: Dispatch<SetStateAction<Tab>>;
-}
+interface AccountSideBarProps {}
 
 const Tabs: Tab[] = [
 	'Dashboard',
@@ -30,11 +29,9 @@ const Tabs: Tab[] = [
 	'Logout',
 ];
 
-const AccountSideBar = ({
-	currentTab,
-	updateCurrentTab,
-}: AccountSideBarProps) => {
+const AccountSideBar = ({}: AccountSideBarProps) => {
 	const router = useRouter();
+	const {updateUser,currentAccountTab, updateCurrentAccountTab} = useGlobalStore();
 
 	return (
 		<div className='w-[20%] flex flex-col pt-3 border rounded'>
@@ -46,16 +43,18 @@ const AccountSideBar = ({
 						key={tab}
 						onClick={async () => {
 							if (tab !== 'Logout') {
-								updateCurrentTab(tab);
+								updateCurrentAccountTab(tab);
 							} else {
 								try {
 									await axios.get('/api/auth/signout');
 
 									toast.success('Logged out!');
 
+									updateUser(null);
+
 									router.push('/');
 
-									window.location.reload();
+									// window.location.reload();
 								} catch (error) {
 									console.log('[LOGOUT-ERROR] :: ', error);
 								}
@@ -63,7 +62,7 @@ const AccountSideBar = ({
 						}}
 						className={cn(
 							`cursor-pointer flex items-center space-x-3 py-4 px-4`,
-							currentTab === tab
+							currentAccountTab === tab
 								? 'bg-slate-100 border-l-4 border-l-green-500'
 								: 'text-gray-500',
 							tab === 'Logout'
@@ -74,49 +73,49 @@ const AccountSideBar = ({
 						{tab === 'Dashboard' && (
 							<LayoutDashboard
 								className={`h-6 w-6 ${
-									currentTab == tab && 'text-green-600'
+									currentAccountTab == tab && 'text-green-600'
 								}`}
 							/>
 						)}
 						{tab === 'Products' && (
 							<Package
 								className={`h-6 w-6 ${
-									currentTab == tab && 'text-green-600'
+									currentAccountTab == tab && 'text-green-600'
 								}`}
 							/>
 						)}
 						{tab === 'Order History' && (
 							<RefreshCcw
 								className={`h-6 w-6 ${
-									currentTab == tab && 'text-green-600'
+									currentAccountTab == tab && 'text-green-600'
 								}`}
 							/>
 						)}
 						{tab === 'Wishlist' && (
 							<Heart
 								className={`h-6 w-6 ${
-									currentTab == tab && 'text-green-600'
+									currentAccountTab == tab && 'text-green-600'
 								}`}
 							/>
 						)}
 						{tab === 'Shopping Cart' && (
 							<ShoppingCartIcon
 								className={`h-6 w-6 ${
-									currentTab == tab && 'text-green-600'
+									currentAccountTab == tab && 'text-green-600'
 								}`}
 							/>
 						)}
 						{tab === 'Settings' && (
 							<Settings
 								className={`h-6 w-6 ${
-									currentTab == tab && 'text-green-600'
+									currentAccountTab == tab && 'text-green-600'
 								}`}
 							/>
 						)}
 						{tab === 'Logout' && (
 							<LogOut
 								className={`h-6 w-6 ${
-									currentTab == tab &&
+									currentAccountTab == tab &&
 									tab === 'Logout' &&
 									'text-red-600'
 								}`}
@@ -126,7 +125,7 @@ const AccountSideBar = ({
 						<p
 							className={cn(
 								'text-xs',
-								currentTab === tab
+								currentAccountTab === tab
 									? 'text-black'
 									: 'text-gray-500'
 							)}

@@ -1,8 +1,4 @@
 'use client';
-import Link from 'next/link';
-import Image from 'next/image';
-import {toast} from 'react-hot-toast';
-import {useEffect, useState} from 'react';
 import {
 	Bell,
 	LogOutIcon,
@@ -11,17 +7,21 @@ import {
 	ShoppingCartIcon,
 	User2,
 } from 'lucide-react';
+import Link from 'next/link';
+import Image from 'next/image';
+import {toast} from 'react-hot-toast';
+import {useEffect, useState} from 'react';
 
+import axios from 'axios';
 import {NavLinks} from '@/data';
 import {Button} from '../ui/button';
-import {useUserHook} from '@/hooks/use-user';
 import {useRouter} from 'next/navigation';
-import axios from 'axios';
+import {useUserHook} from '@/hooks/use-user';
 
 const MainNavbar = () => {
 	const router = useRouter();
 
-	const {user} = useUserHook();
+	const {user, updateUser} = useUserHook();
 
 	// console.log('[USER] :: ', user);
 
@@ -37,7 +37,7 @@ const MainNavbar = () => {
 		window.addEventListener('scroll', () => {
 			const scrollPosition = window.scrollY;
 
-			if (scrollPosition > 100) {
+			if (scrollPosition > 50) {
 				setScrolling(true);
 				// console.log('[SCROLLING]');
 			} else {
@@ -108,7 +108,7 @@ const MainNavbar = () => {
 						}}
 						className={`h-10 w-10 ${
 							scrolling ? 'bg-white' : 'bg-main'
-						} rounded-full flex flex-col items-center justify-center relative`}
+						} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
 					>
 						<User2
 							className={`h-5 w-5 ${
@@ -132,13 +132,13 @@ const MainNavbar = () => {
 									}}
 									className={` ${
 										scrolling ? 'bg-white' : 'bg-mai'
-									} rounded-full flex items-center space-x-4 hover:translate-y-1 transition-all duration-500 ease-in`}
+									} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
 								>
 									<ShoppingCartIcon
 										className={`h-5 w-5 text-main`}
 									/>
 
-									<p className='text-sm'>Desired Items</p>
+									<p className='text-xs'>Desired Items</p>
 								</Link>
 								<Link
 									href={'/account'}
@@ -147,11 +147,11 @@ const MainNavbar = () => {
 									}}
 									className={` ${
 										scrolling ? 'bg-white' : 'bg-mai'
-									} rounded-full flex items-center space-x-4 hover:translate-y-1 transition-all duration-500 ease-in`}
+									} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
 								>
 									<User2 className={`h-5 w-5 text-main`} />
 
-									<p className='text-sm'>Manage Account</p>
+									<p className='text-xs'>Manage Account</p>
 								</Link>
 								<Link
 									href={'#'}
@@ -160,11 +160,11 @@ const MainNavbar = () => {
 									}}
 									className={` ${
 										scrolling ? 'bg-white' : 'bg-mai'
-									} rounded-full flex items-center space-x-4 hover:translate-y-1 transition-all duration-500 ease-in`}
+									} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
 								>
 									<Mails className={`h-5 w-5 text-main`} />
 
-									<p className='text-sm'>Messages</p>
+									<p className='text-xs'>Messages</p>
 								</Link>
 								<Link
 									href={'#'}
@@ -173,11 +173,11 @@ const MainNavbar = () => {
 									}}
 									className={` ${
 										scrolling ? 'bg-white' : 'bg-mai'
-									} rounded-full flex items-center space-x-4 hover:translate-y-1 transition-all duration-500 ease-in`}
+									} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
 								>
 									<Bell className={`h-5 w-5 text-main`} />
 
-									<p className='text-sm'>Notifications</p>
+									<p className='text-xs'>Notifications</p>
 								</Link>
 								<p
 									// href={'#'}
@@ -189,11 +189,12 @@ const MainNavbar = () => {
 
 											toast.success('Logged out!');
 
+											updateUser(null);
 											setSetShowAccountMenu(false);
 
 											router.push('/');
 
-											window.location.reload();
+											// window.location.reload();
 										} catch (error) {
 											console.log(
 												'[LOGOUT-ERROR] :: ',
@@ -211,7 +212,7 @@ const MainNavbar = () => {
 										className={`h-5 w-5 text-red-500`}
 									/>
 
-									<p className='text-sm text-red-500'>
+									<p className='text-xs text-red-500'>
 										Logout
 									</p>
 								</p>

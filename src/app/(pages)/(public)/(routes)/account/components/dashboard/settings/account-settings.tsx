@@ -1,19 +1,32 @@
 'use client';
+import axios, {AxiosError} from 'axios';
 import Image from 'next/image';
-import {useReducer} from 'react';
+import {toast} from 'react-hot-toast';
+import {useEffect, useReducer, useRef, useState} from 'react';
 
+import {User} from '@/types/types';
+import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
 import FormTextInput from '@/components/input/form-text-input';
+import {ValidateUpdateProfileFormData} from '@/utils/form-validations/settings.validation';
+import {useGlobalStore} from '@/hooks/use-global-store';
+import ButtonLoader from '@/components/loader/button-loader';
+
+interface AccountSettingsProps {
+	user: User | null;
+}
 
 type FormData = {
 	firstName: string;
 	lastName: string;
 	email: string;
 	phoneNumber: string;
+	avatar: File | null;
+	avatarUrl: string;
 };
 
 type FormAction = {
-	type: 'UPDATE_FORMDATA' | 'UPDATE';
+	type: 'UPDATE_FORMDATA';
 	payload: Partial<FormData>;
 };
 
@@ -22,6 +35,8 @@ const initialState: FormData = {
 	lastName: '',
 	email: '',
 	phoneNumber: '',
+	avatar: null,
+	avatarUrl: '',
 };
 
 const formReducer = (state: FormData, action: FormAction) => {
@@ -33,27 +48,91 @@ const formReducer = (state: FormData, action: FormAction) => {
 	}
 };
 
+// const AccountSettings = ({user}: AccountSettingsProps) => {
 const AccountSettings = () => {
+	const {user, updateUser} = useUserHook();
+
+	const avatarRef = useRef<HTMLInputElement>(null);
+
+	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
 
+	useEffect(() => {
+		updateFormData({
+			type: 'UPDATE_FORMDATA',
+			payload: {
+				firstName: user?.firstName,
+				lastName: user?.lastName,
+				email: user?.email,
+				phoneNumber: user?.phoneNumber,
+				avatarUrl: user?.avatar,
+			},
+		});
+	}, [user]);
+
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		console.log('[EVENT] :: ', event.target.name);
+
 		updateFormData({
 			type: 'UPDATE_FORMDATA',
 			payload: {[event.target.name]: event.target.value},
 		});
 	};
 
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-
-		console.log('[ACCOUNT-PAYLOAD] :: ', formData);
+	const handleMediaUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+		updateFormData({
+			type: 'UPDATE_FORMDATA',
+			payload: {
+				avatar: event.target.files![0],
+				avatarUrl: URL.createObjectURL(event.target.files![0]),
+			},
+		});
 	};
 
-	// const handleAvatarSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-	// 	event.preventDefault();
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
 
-	// 	console.log('[ACCOUNT-AVATAR-PAYLOAD] :: ', formData);
-	// };
+		try {
+			setLoading(true);
+
+			const validationError = ValidateUpdateProfileFormData(formData);
+
+			if (validationError) {
+				setLoading(false);
+				return toast.error(validationError);
+			}
+
+			console.log('[UPDATE-PROFILE-PAYLOAD] :: ', formData);
+
+			const {data} = await axios.patch(
+				`${process.env.NEXT_PUBLIC_API_URL}/auth/update-profile`,
+				formData,
+				{
+					headers: {
+						'Content-Type': 'multipart/form-data',
+						Authorization: user?.accessToken,
+					},
+				}
+			);
+
+			await axios.patch('/api/auth/update-cookies', data.data);
+
+			setLoading(false);
+
+			console.log('[PROFILE] :: ', data);
+			await updateUser(data.data);
+
+			toast.success('Profile updated');
+		} catch (error) {
+			setLoading(false);
+
+			const _error = error as AxiosError;
+
+			console.log('[UPDATE-PROFILE-ERROR]', _error);
+
+			toast.error('Error');
+		}
+	};
 
 	return (
 		<div className='w-full py-3  flex flex-col bg-white border rounded'>
@@ -69,7 +148,8 @@ const AccountSettings = () => {
 						<FormTextInput
 							name='firstName'
 							padding='py-3 px-4'
-							value={formData.email}
+							disabled={loading}
+							value={formData.firstName}
 							handleChange={handleChange}
 							placeHolder='First name'
 							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
@@ -80,6 +160,7 @@ const AccountSettings = () => {
 						<FormTextInput
 							name='lastName'
 							padding='py-3 px-4'
+							disabled={loading}
 							value={formData.lastName}
 							handleChange={handleChange}
 							placeHolder='Last name'
@@ -91,6 +172,7 @@ const AccountSettings = () => {
 						<FormTextInput
 							name='email'
 							padding='py-3 px-4'
+							disabled={loading}
 							value={formData.email}
 							handleChange={handleChange}
 							placeHolder='Email'
@@ -102,37 +184,65 @@ const AccountSettings = () => {
 						<FormTextInput
 							name='phoneNumber'
 							padding='py-3 px-4'
-							value={formData.email}
+							disabled={loading}
+							value={formData.phoneNumber}
 							handleChange={handleChange}
 							placeHolder='Phone Number'
 							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 						/>
 					</div>
 
-					<Button
-						type='submit'
-						className='bg-green-500 text-white hover:bg-green-600 hover:text-white w-fit px-3 rounded'
-					>
-						Save Changes
-					</Button>
+					{loading ? (
+						<Button
+							disabled
+							type='button'
+							className='bg-green-500 text-white text-xs hover:bg-green-600 hover:text-white w-fit px-3 rounded'
+						>
+							<ButtonLoader />
+						</Button>
+					) : (
+						<Button
+							type='submit'
+							className='bg-green-500 text-white text-xs hover:bg-green-600 hover:text-white w-fit px-3 rounded'
+						>
+							Save Changes
+						</Button>
+					)}
 				</form>
 
 				<div
 					// onSubmit={handleAvatarSubmit}
 					className='flex flex-col items-center justify-center space-y-3 w-[45%]'
 				>
-					<Image
-						alt='image'
-						width={150}
-						height={150}
-						src={'/user__1.svg'}
-						className='rounded-full'
+					<div className='h-[150px] w-[150px] rounded-full border relative'>
+						<Image
+							alt='image'
+							// width={150}
+							// height={150}
+							fill
+							// src={'/user__1.svg'}
+							className='object-cover rounded-full h-full w-full'
+							src={
+								formData.avatarUrl
+									? formData.avatarUrl
+									: user?.avatar!
+							}
+						/>
+					</div>
+
+					<input
+						type='file'
+						name='avatar'
+						ref={avatarRef}
+						accept='.jpeg, .jpg'
+						style={{display: 'none'}}
+						onChange={handleMediaUpload}
 					/>
 
 					<Button
-						type='submit'
-						// variant={'outline'}
-						className='border border-green-500 bg-white hover:bg-white text-green-500 hover:border-green-600 hover:text-green-600 w-fit px-3 rounded'
+						type='button'
+						onClick={() => avatarRef.current?.click()}
+						className='border border-green-500 text-[10px] bg-white hover:bg-white text-green-500 hover:border-green-600 hover:text-green-600 w-[100px] px-3 rounded'
 					>
 						Choose Image
 					</Button>

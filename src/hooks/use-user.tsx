@@ -1,31 +1,21 @@
 'use client';
 import axios, {AxiosError} from 'axios';
 import {useEffect, useState} from 'react';
-
-export interface User {
-	id: string;
-	firstName: string;
-	lastName: string;
-	phoneNumber: string;
-	email: string;
-	role: string;
-	accessToken: string;
-	refreshToken: string;
-}
+import {useGlobalStore} from './use-global-store';
 
 export function useUserHook() {
-	const [user, setUser] = useState<User | null>(null);
+	const {user, updateUser} = useGlobalStore();
 	const [error, setError] = useState<AxiosError | null>(null);
 	const [isUserSuccess, setIsUserSuccess] = useState<boolean>(false);
 
 	useEffect(() => {
 		(async () => {
 			try {
-				if (user) return;
+				// if (user) return;
 
 				const {data} = await axios.get('/api/auth/account');
 
-				setUser(data);
+				updateUser(data);
 
 				setError(null);
 
@@ -33,7 +23,7 @@ export function useUserHook() {
 			} catch (error) {
 				const _error = error as AxiosError;
 
-				setUser(null);
+				updateUser(null);
 
 				setError(_error);
 
@@ -42,5 +32,5 @@ export function useUserHook() {
 		})();
 	}, []);
 
-	return {user, error, isUserSuccess};
+	return {user, updateUser, error, isUserSuccess};
 }

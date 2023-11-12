@@ -1,9 +1,36 @@
-import {FormData} from '@/app/(pages)/(public)/(routes)/account/components/dashboard/modals/add-product-modal';
-import {FormData as UpdateProductFormData} from '@/app/(pages)/(public)/(routes)/account/components/dashboard/modals/update-product-modal';
+import {Media} from '@/types/types';
+
+interface CreateProductDto {
+	price: string;
+	name: string;
+	discountPrice: string;
+	description: string;
+	category: string;
+	media: File[];
+	isNegotiable: boolean;
+}
+
+interface UpdateProductDto {
+	id: string;
+	price: number;
+	name: string;
+	discountPrice: number;
+	description: string;
+	category: string;
+	media: File[];
+	existingMedia: Media[];
+	isNegotiable: boolean;
+	removedMediaIds: string[];
+}
+
+interface ProductReviewDto {
+	rating: number;
+	description: string;
+}
 
 export function ValidateCreateProductFormData(
-	formData: FormData,
-	productCategory: string
+	formData: CreateProductDto,
+	category: string
 ): string {
 	let message = '';
 
@@ -28,7 +55,7 @@ export function ValidateCreateProductFormData(
 	if (formData.media.length == 0) {
 		return (message = 'Product image|video is required');
 	}
-	if (!productCategory) {
+	if (!category) {
 		return (message = 'Product Category is required.');
 	}
 
@@ -36,8 +63,8 @@ export function ValidateCreateProductFormData(
 }
 
 export function ValidateUpdateProductFormData(
-	formData: UpdateProductFormData,
-	productCategory: string
+	formData: UpdateProductDto,
+	category: string
 ): string {
 	let message = '';
 
@@ -53,8 +80,24 @@ export function ValidateUpdateProductFormData(
 	if (!formData.description) {
 		return (message = 'Product description is required.');
 	}
-	if (!productCategory) {
+	if (!category) {
 		return (message = 'Product Category is required.');
+	}
+
+	return message;
+}
+
+export function ValidateProductReviewFormData(
+	formData: ProductReviewDto
+): string {
+	let message = '';
+
+	if (!formData.rating) {
+		return (message = 'Review rating is required.');
+	}
+
+	if (!formData.description) {
+		return (message = 'Review description is required.');
 	}
 
 	return message;

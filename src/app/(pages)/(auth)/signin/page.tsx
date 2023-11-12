@@ -18,7 +18,7 @@ type FormData = {
 };
 
 type FormAction = {
-	type: 'UPDATE_FORMDATA' | 'UPDATE';
+	type: 'UPDATE_FORMDATA';
 	payload: Partial<FormData>;
 };
 
@@ -58,7 +58,7 @@ const SignInPage = () => {
 
 		try {
 			setLoading(true);
-			console.log('[SIGNIN-PAYLOAD] :: ', formData);
+			// console.log('[SIGNIN-PAYLOAD] :: ', formData);
 
 			const {data} = await axios.post('/api/auth/signin', formData);
 

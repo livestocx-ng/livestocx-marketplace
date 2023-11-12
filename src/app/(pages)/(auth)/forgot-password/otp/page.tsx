@@ -1,8 +1,9 @@
 'use client';
 import {toast} from 'react-hot-toast';
-import {useRef, useState} from 'react';
 import axios, {AxiosError} from 'axios';
+import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
+import {useEffect, useRef, useState} from 'react';
 import {useRouter, useSearchParams} from 'next/navigation';
 import ButtonLoader from '@/components/loader/button-loader';
 import AuthHeader from '../../../../../components/header/auth-header';
@@ -11,6 +12,7 @@ const numberOfInputs = 4;
 
 const SignInPage = () => {
 	const router = useRouter();
+	const {user} = useUserHook();
 	const searchParams = useSearchParams();
 
 	const email = searchParams.get('email');
@@ -18,6 +20,12 @@ const SignInPage = () => {
 	const [loading, setLoading] = useState(false);
 	const [otp, setOtp] = useState(Array(numberOfInputs).fill(''));
 	const inputRefs = useRef(Array(numberOfInputs).fill(null));
+
+	useEffect(() => {
+		if (user) {
+			router.push('/');
+		}
+	}, [user]);
 
 	const handleInputChange = (
 		e: React.ChangeEvent<HTMLInputElement>,
@@ -129,7 +137,7 @@ const SignInPage = () => {
 								type='button'
 								className='bg-green-700 text-white h-12 hover:bg-green-700 w-full rounded-full py-4 cursor-default'
 							>
-								<ButtonLoader/>
+								<ButtonLoader />
 							</Button>
 						) : (
 							<Button

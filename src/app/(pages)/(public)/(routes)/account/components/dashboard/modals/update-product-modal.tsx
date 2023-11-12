@@ -5,11 +5,17 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from '@/components/ui/tooltip';
+import {
+	useGlobalStore,
+	useUpdateProductModalStore,
+} from '@/hooks/use-global-store';
+import {Media} from '@/types/types';
 import Image from 'next/image';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
+import {Checkbox} from '@/components/ui/checkbox';
 import {Plus, UploadCloud, X} from 'lucide-react';
 import {isFileSizeValid} from '@/utils/file.validation';
 import ButtonLoader from '@/components/loader/button-loader';
@@ -20,11 +26,6 @@ import {CategoryDropDownButton} from './buttons/category-dropdown-button';
 import {DropdownMenuCheckboxItemProps} from '@radix-ui/react-dropdown-menu';
 import {createBlobImageUrls, getFilesTypeCount} from '@/utils/file.mutation';
 import {ValidateUpdateProductFormData} from '@/utils/form-validations/product.validation';
-import {
-	useGlobalStore,
-	useUpdateProductModalStore,
-} from '@/hooks/use-global-store';
-import {Media} from '@/types/types';
 
 export type FormData = {
 	id: string;
@@ -32,14 +33,15 @@ export type FormData = {
 	name: string;
 	discountPrice: number;
 	description: string;
-	productCategory: string;
+	category: string;
 	media: File[];
 	existingMedia: Media[];
 	removedMediaIds: string[];
+	isNegotiable: boolean;
 };
 
 type FormAction = {
-	type: 'UPDATE_FORMDATA' | 'UPDATE';
+	type: 'UPDATE_FORMDATA';
 	payload: Partial<FormData>;
 };
 
@@ -49,8 +51,9 @@ const initialState: FormData = {
 	price: 0,
 	description: '',
 	discountPrice: 0,
-	productCategory: '',
+	category: '',
 	media: [],
+	isNegotiable: false,
 	existingMedia: [],
 	removedMediaIds: [],
 };
@@ -78,19 +81,20 @@ const UpdateProductModal = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [mediaBlobs, setMediaBlobs] = useState<string[]>([]);
 	const [showStatusBar, setShowStatusBar] = useState<Checked>(false);
-	const [productCategory, setProductCategory] = useState<string>('cow');
+	const [category, setProductCategory] = useState<string>('cow');
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
 
 	useEffect(() => {
 		updateFormData({
 			type: 'UPDATE_FORMDATA',
 			payload: {
-				id: payload.id,
-				name: payload.name,
-				price: payload.price,
-				discountPrice: payload.discountPrice,
-				description: payload.description,
-				existingMedia: payload.media,
+				id: payload?.id,
+				name: payload?.name,
+				price: payload?.price,
+				discountPrice: payload?.discountPrice,
+				description: payload?.description,
+				existingMedia: payload?.media,
+				isNegotiable: payload?.isNegotiable,
 			},
 		});
 	}, [payload]);
@@ -207,7 +211,7 @@ const UpdateProductModal = () => {
 
 			const validationError = ValidateUpdateProductFormData(
 				formData,
-				productCategory
+				category
 			);
 
 			if (validationError) {
@@ -217,7 +221,7 @@ const UpdateProductModal = () => {
 
 			const FormData = {
 				...formData,
-				productCategory: productCategory.toUpperCase(),
+				category: category.toUpperCase(),
 			};
 			console.log('[UPDATE-PRODUCT-PAYLOAD] :: ', FormData);
 
@@ -343,13 +347,19 @@ const UpdateProductModal = () => {
 												media: formData.media.filter(
 													(media) =>
 														media.type.includes(
-															'image'
+															'video'
 														)
 												),
 											},
 										});
 
-										setMediaBlobs([]);
+										setMediaBlobs(
+											createBlobImageUrls(
+												formData.media.filter((media) =>
+													media.type.includes('video')
+												)
+											)
+										);
 									}}
 									variant={'outline'}
 									className='border-0 bg-red-600 hover:bg-red-600 text-xs h-12 text-white hover:text-white rounded-none py-2 px-4 w-[200px] mx-auto'
@@ -366,13 +376,19 @@ const UpdateProductModal = () => {
 												media: formData.media.filter(
 													(media) =>
 														media.type.includes(
-															'video'
+															'image'
 														)
 												),
 											},
 										});
 
-										setMediaBlobs([]);
+										setMediaBlobs(
+											createBlobImageUrls(
+												formData.media.filter((media) =>
+													media.type.includes('image')
+												)
+											)
+										);
 									}}
 									variant={'outline'}
 									className='border-0 bg-red-600 hover:bg-red-600 text-xs h-12 text-white hover:text-white rounded-none py-2 px-4 w-[200px] mx-auto'
@@ -394,7 +410,7 @@ const UpdateProductModal = () => {
 
 					<div className='w-[70%] flex flex-col space-y-3 pl-8'>
 						<CategoryDropDownButton
-							value={productCategory}
+							value={category}
 							setValue={setProductCategory}
 							setShowStatusBar={setShowStatusBar}
 							classes='bg-sky-600 rounded-none hover:bg-sky-600 text-white hover:text-white'
@@ -451,6 +467,27 @@ const UpdateProductModal = () => {
 								padding={'py-3 px-2'}
 								classes='w-full text-xs placeholder:text-xs border focus:border-slate-500  resize-none'
 							/>
+						</div>
+
+						<div className='flex items-center space-x-2'>
+							<Checkbox
+								id='isNegotiable'
+								checked={formData.isNegotiable}
+								onCheckedChange={(isNegotiable: boolean) => {
+									console.log(isNegotiable);
+
+									updateFormData({
+										type: 'UPDATE_FORMDATA',
+										payload: {isNegotiable: isNegotiable},
+									});
+								}}
+							/>
+							<label
+								htmlFor='terms'
+								className='text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+							>
+								Negotiable
+							</label>
 						</div>
 
 						<div className='flex flex-wrap items-center w-full gap-y-3 gap-x-5'>
@@ -526,10 +563,10 @@ const UpdateProductModal = () => {
 				<div className='flex justify-end pt-10'>
 					{loading ? (
 						<Button
-							disabled
+							// disabled
 							type='button'
 							variant={'outline'}
-							className='bg-sky-600 hover:bg-sky-600 text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
+							className='w-[200px] bg-sky-600 hover:bg-sky-600 text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
 						>
 							<ButtonLoader />
 						</Button>
@@ -537,9 +574,9 @@ const UpdateProductModal = () => {
 						<Button
 							type='submit'
 							variant={'outline'}
-							className='bg-sky-600 hover:bg-sky-600 text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
+							className='w-[200px] bg-sky-600 hover:bg-sky-600 text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
 						>
-							Submit
+							Update
 						</Button>
 					)}
 				</div>

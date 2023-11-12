@@ -3,13 +3,6 @@ interface NavLink {
 	url: string;
 }
 
-export interface Testimonial {
-	id: number;
-	author: string;
-	avatar: string;
-	description: string;
-}
-
 interface TeamMember {
 	id: number;
 	name: string;

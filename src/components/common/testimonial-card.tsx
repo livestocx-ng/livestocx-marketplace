@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import {Testimonial} from '@/data';
 import { FaStar } from 'react-icons/fa';
+import { Testimonial } from '@/types/types';
 
 const TestimonialCard = ({data}: {data: Testimonial}) => {
 	return (

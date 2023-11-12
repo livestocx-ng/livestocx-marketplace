@@ -116,3 +116,10 @@ export interface ProductReviewUpdate {
 	reviews: ProductInfoReview[];
 	ratings: ProductInfoRating[];
 }
+
+export interface Testimonial {
+	id: number;
+	author: string;
+	avatar: string;
+	description: string;
+}

@@ -1,9 +1,9 @@
-interface NavLink {
+export interface NavLink {
 	title: string;
 	url: string;
 }
 
-interface TeamMember {
+export interface TeamMember {
 	id: number;
 	name: string;
 	image: string;
@@ -13,7 +13,7 @@ interface TeamMember {
 	instagram: string;
 }
 
-interface FilterOption {
+export interface FilterOption {
 	id: number;
 	title: string;
 	value: string;

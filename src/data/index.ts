@@ -1,9 +1,9 @@
 import {
-	FilterOption,
 	NavLink,
 	TeamMember,
-	Testimonial,
+	FilterOption,
 } from '@/types/index.types';
+import { Testimonial } from '@/types/types';
 
 export const NavLinks: NavLink[] = [
 	{

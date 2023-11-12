@@ -6,12 +6,13 @@ import React, {useEffect, useState} from 'react';
 import SearchForm from '../components/search-form';
 import HomeSellers from './components/home-sellers';
 import {useGlobalStore} from '@/hooks/use-global-store';
-import LoadingAnimation from '../../../../../../public/animations/loading__animation__2.json';
+import EmptyAnimation from '../../../../../../public/animations/animation__3.json';
+import LoadingAnimation from '../../../../../../public/animations/loading__animation__1.json';
 
 const SellersPage = () => {
 	const userStore = useUserHook();
 
-	const {updateVendors, updatePagination} = useGlobalStore();
+	const {vendors, updateVendors, updatePagination} = useGlobalStore();
 
 	const [loading, setLoading] = useState<boolean>(true);
 
@@ -53,7 +54,7 @@ const SellersPage = () => {
 			</section>
 
 			{loading && (
-				<div className='w-full bg-white h-[100vh] flex flex-col items-center justify-center'>
+				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
 					<div className='h-[200px] w-1/2 mx-auto bg-white'>
 						<Lottie
 							loop={true}
@@ -64,7 +65,19 @@ const SellersPage = () => {
 				</div>
 			)}
 
-			{!loading && (
+			{!loading && vendors?.length === 0 && (
+				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
+					<div className='h-[200px] w-1/2 mx-auto bg-white'>
+						<Lottie
+							loop={true}
+							className='h-full'
+							animationData={EmptyAnimation}
+						/>
+					</div>
+				</div>
+			)}
+
+			{!loading && vendors?.length > 0 && (
 				<div className='flex flex-col w-full bg-white px-4 md:px-8 py-10'>
 					<HomeSellers />
 				</div>

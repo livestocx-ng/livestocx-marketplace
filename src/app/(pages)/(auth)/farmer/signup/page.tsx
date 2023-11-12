@@ -206,7 +206,7 @@ const SignUpPage = () => {
 									</option>
 								))}
 							</select>
-						</div>
+						</div>d
 
 						<div className='flex justify-center'>
 							<div className='space-x-3 flex items-center'>

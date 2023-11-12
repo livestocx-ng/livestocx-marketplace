@@ -1,37 +1,36 @@
 'use client';
 import {
 	Heart,
-	LayoutDashboard,
 	LogOut,
 	Package,
-	RefreshCcw,
 	Settings,
+	RefreshCcw,
+	LayoutDashboard,
 	ShoppingCartIcon,
 } from 'lucide-react';
 import axios from 'axios';
 import {cn} from '@/lib/utils';
-import {toast} from 'react-hot-toast';
-import {Dispatch, SetStateAction} from 'react';
-import {redirect, useRouter} from 'next/navigation';
-import {useUserHook} from '@/hooks/use-user';
-import {useGlobalStore} from '@/hooks/use-global-store';
 import {Tab} from '@/types/types';
+import {toast} from 'react-hot-toast';
+import {redirect, useRouter} from 'next/navigation';
+import {useGlobalStore} from '@/hooks/use-global-store';
 
 interface AccountSideBarProps {}
 
 const Tabs: Tab[] = [
 	'Dashboard',
 	'Products',
-	'Order History',
-	'Wishlist',
-	'Shopping Cart',
+	// 'Order History',
+	// 'Wishlist',
+	// 'Shopping Cart',
 	'Settings',
 	'Logout',
 ];
 
 const AccountSideBar = ({}: AccountSideBarProps) => {
 	const router = useRouter();
-	const {updateUser,currentAccountTab, updateCurrentAccountTab} = useGlobalStore();
+	const {updateUser, currentAccountTab, updateCurrentAccountTab} =
+		useGlobalStore();
 
 	return (
 		<div className='w-[20%] flex flex-col pt-3 border rounded'>

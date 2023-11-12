@@ -8,7 +8,7 @@ import PageBanner from '@/components/banner/page-banner';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import SellerInfoSearchForm from './components/seller-search-form';
 import SellerInfoProducts from './components/seller-info-products';
-import LoadingAnimation from '../../../../../../../public/animations/loading__animation__2.json';
+import LoadingAnimation from '../../../../../../../public/animations/loading__animation__1.json';
 
 interface SellerInfoPageProps {
 	params: {
@@ -17,7 +17,8 @@ interface SellerInfoPageProps {
 }
 
 const SellerInfoPage = ({params}: SellerInfoPageProps) => {
-	const {products, vendor, updateVendor, updateProducts, updatePagination} = useGlobalStore();
+	const {products, vendor, updateVendor, updateProducts, updatePagination} =
+		useGlobalStore();
 
 	const [loading, setLoading] = useState<boolean>(true);
 
@@ -34,15 +35,18 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 				),
 				axios.get(
 					`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/${params.sellerId}/products`
-				)
-			])
+				),
+			]);
 
 			console.log('[DATA] ::  ', vendorProfile.data);
 			console.log('[DATA] ::  ', vendorProducts.data);
 
 			updateVendor(vendorProfile.data.data);
-			updateProducts(vendorProducts.data.data.products)
-			updatePagination(vendorProducts.data.data.totalPages, vendorProducts.data.data.hasNext)
+			updateProducts(vendorProducts.data.data.products);
+			updatePagination(
+				vendorProducts.data.data.totalPages,
+				vendorProducts.data.data.hasNext
+			);
 
 			setLoading(false);
 		} catch (error) {

@@ -55,7 +55,7 @@ const SellerProductCard = ({product}: ProductCardProps) => {
 			<div
 				onClick={() => {
 					router.push(
-						`/sellers/${vendor?.vendorId!.toLowerCase()}/products/${product?.productId!}`
+						`/sellers/${vendor?.vendorId!.toLowerCase()}/products/${product?.productId!.toLowerCase()}`
 					);
 				}}
 				className='h-[120px] sm:h-[160px] relative rounded-t-lg cursor-pointer'

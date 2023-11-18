@@ -61,7 +61,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 			<div
 				// href={`${product?.productId}`}
 				onClick={() => {
-					router.push(`/${product?.productId!}`);
+					router.push(`/${product?.productId!.toLowerCase()}`);
 				}}
 				className='h-[120px] sm:h-[160px] relative rounded-t-lg cursor-pointer'
 			>

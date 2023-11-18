@@ -1,10 +1,15 @@
 export type Tab =
-	| 'Dashboard'
+	| 'Account'
 	| 'Product'
+	| 'Desired Item'
+	| 'Desired Items'
 	| 'Products'
 	| 'Order History'
 	| 'Wishlist'
 	| 'Shopping Cart'
+	| 'Advertise'
+	| 'Messages'
+	| 'Notifications'
 	| 'Settings'
 	| 'Logout';
 
@@ -61,6 +66,22 @@ export interface Product {
 	likedUsers: null | string[]; // Change the type of likedUsers accordingly
 	media: Media[];
 	createdAt: string;
+}
+
+export interface DesiredItem {
+	id: string;
+	isTransactionCompleted: boolean;
+	createdAt: string;
+	product: Product;
+}
+
+export interface DesiredItemInfo {
+	vendor: string,
+	name: string,
+	address: string,
+	avatar: string,
+	email: string,
+	phoneNumber: string,
 }
 
 export interface UserProduct extends Product {

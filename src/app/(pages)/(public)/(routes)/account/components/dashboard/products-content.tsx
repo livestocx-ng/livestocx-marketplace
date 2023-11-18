@@ -1,37 +1,14 @@
 'use client';
 import {Plus} from 'lucide-react';
+import axios, {AxiosError} from 'axios';
+import {useEffect, useState} from 'react';
 import {useModal} from '@/hooks/use-modal';
 import {Button} from '@/components/ui/button';
 import {DataTable} from '@/components/ui/data-table';
-import {ProductColumn, columns} from './tables/products-column';
-import {useEffect, useState} from 'react';
-import {Product, User} from '@/types/types';
-import axios, {AxiosError} from 'axios';
-import {useUserHook} from '@/hooks/use-user';
 import {useGlobalStore} from '@/hooks/use-global-store';
+import {ProductColumn, columns} from './tables/products-column';
 
-// const Products: ProductColumn[] = [
-// 	{
-// 		id: '1',
-// 		productName: '5 weeks old broilers',
-// 		image: '/product__2.png',
-// 		stock: 'In Stock',
-// 		price: '#13,500',
-// 	},
-// ];
-
-interface ProductsContentProps {
-	// user: User | null;
-	// isAddProductModalOpen: boolean;
-	// onAddProductModalOpen: () => void;
-}
-
-const ProductsContent = ({
-	// user,
-	// isAddProductModalOpen,
-	// onAddProductModalOpen,
-}: ProductsContentProps) => {
-
+const ProductsContent = () => {
 	const isModalOpen = useModal((state) => state.isOpen);
 	const onModalOpen = useModal((state) => state.onOpen);
 

@@ -59,7 +59,7 @@ const MarketPlaceProductCard = ({product}: ProductCardProps) => {
 			<div
 				// href={`${product?.productId}`}
 				onClick={() => {
-					router.push(`/marketplace/products/${product?.productId!}`);
+					router.push(`/marketplace/products/${product?.productId!.toLowerCase()}`);
 				}}
 				className='h-[120px] sm:h-[160px] relative rounded-t-lg cursor-pointer'
 			>

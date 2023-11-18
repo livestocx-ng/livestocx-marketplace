@@ -31,8 +31,8 @@ const Footer = () => {
 			<div className='mb-5 sm:mb-0'>
 				<Image
 					alt='logo'
-					width={50}
-					height={50}
+					width={40}
+					height={40}
 					className=''
 					src={'/logo.svg'}
 				/>
@@ -46,7 +46,7 @@ const Footer = () => {
 						<Link
 							href={link.url}
 							key={link.title}
-							className={`text-white hover:text-orange-500 hover:font-medium text-base`}
+							className={`text-white hover:text-orange-500 hover:font-medium text-sm`}
 						>
 							{link.title}
 						</Link>
@@ -56,19 +56,19 @@ const Footer = () => {
 				<div className='flex items-center text-center space-x-3'>
 					<Link
 						href={'#'}
-						className={`text-white hover:text-orange-500 hover:font-medium text-base`}
+						className={`text-white hover:text-orange-500 hover:font-medium text-sm`}
 					>
 						Privacy Policy
 					</Link>
 					<Link
 						href={'#'}
-						className={`text-white hover:text-orange-500 hover:font-medium text-base`}
+						className={`text-white hover:text-orange-500 hover:font-medium text-sm`}
 					>
 						Terms of Service
 					</Link>
 				</div>
 
-				<p className='text-sm text-white'>Copyright &copy;2023 Livestocx</p>
+				<p className='text-xs text-white'>Copyright &copy;2023 Livestocx</p>
 			</div>
 
 			<div className='flex flex-col items-center justify-center space-y-5 mt-20 sm:mt-0'>

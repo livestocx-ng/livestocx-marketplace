@@ -1,24 +1,64 @@
 'use client';
 import Image from 'next/image';
-import {Badge} from '@/components/ui/badge';
-import {PriceFormatter} from '@/utils/price.formatter';
 import {
 	useGlobalStore,
 	useProductMediaModalStore,
 } from '@/hooks/use-global-store';
+import {
+	AlertDialog,
+	AlertDialogTitle,
+	AlertDialogCancel,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogContent,
+	AlertDialogTrigger,
+	AlertDialogDescription,
+} from '@/components/ui/alert-dialog';
+import axios, {AxiosError} from 'axios';
+import {Badge} from '@/components/ui/badge';
+import {PriceFormatter} from '@/utils/price.formatter';
+import {useEffect} from 'react';
+import {DesiredItemInfo} from '@/types/types';
 
-interface ProductContentProps {
-	// product: Product;
-}
-
-const ProductContent = ({}: ProductContentProps) => {
-	const {product, updateCurrentAccountTab} = useGlobalStore();
+const DesiredItemContent = () => {
+	const {
+		desiredProductInfo,
+		user,
+		product,
+		updateCurrentAccountTab,
+		updateDesiredProductInfo,
+	} = useGlobalStore();
 
 	const isModalOpen = useProductMediaModalStore((state) => state.isOpen);
 	const onModalOpen = useProductMediaModalStore((state) => state.onOpen);
 	const updateProductModalPayload = useProductMediaModalStore(
 		(state) => state.updatePayload
 	);
+
+	const fetchDesiredProductInfo = async () => {
+		try {
+			const {data} = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/user/products/fetch-desired-product-info?productId=${product?.productId}`,
+				{
+					headers: {
+						Authorization: user?.accessToken,
+					},
+				}
+			);
+
+			console.log('[DATA] ::  ', data.data);
+
+			updateDesiredProductInfo(data.data);
+		} catch (error) {
+			const _error = error as AxiosError;
+
+			console.log('[FETCH-DESIRED-PRODUCT-INFO-ERROR] :: ', _error);
+		}
+	};
+
+	useEffect(() => {
+		fetchDesiredProductInfo();
+	}, []);
 
 	return (
 		<div className='w-[78%] flex flex-col gap-5'>
@@ -28,7 +68,7 @@ const ProductContent = ({}: ProductContentProps) => {
 				<Badge
 					variant='destructive'
 					className='cursor-pointer'
-					onClick={() => updateCurrentAccountTab('Products')}
+					onClick={() => updateCurrentAccountTab('Desired Items')}
 				>
 					Close
 				</Badge>
@@ -72,13 +112,14 @@ const ProductContent = ({}: ProductContentProps) => {
 								).length
 							} videos`}
 						/>
-						{/* <ProductRowText
-							title='Description:'
-							value={product?.description!}
-						/> */}
+
 						<ProductRowText
 							title='Date uploaded:'
 							value={product?.createdAt.slice(0, 10)!}
+						/>
+
+						<ProductContactAlertDialog
+							productInfo={desiredProductInfo}
 						/>
 					</div>
 				</div>
@@ -165,7 +206,7 @@ const ProductContent = ({}: ProductContentProps) => {
 	);
 };
 
-export default ProductContent;
+export default DesiredItemContent;
 
 const ProductRowText = ({title, value}: {title: string; value: string}) => {
 	return (
@@ -185,5 +226,45 @@ const VideoToolTip = ({videoUrl}: {videoUrl: string}) => {
 				className='object-cover h-full w-full'
 			/>
 		</div>
+	);
+};
+
+const ProductContactAlertDialog = ({
+	productInfo,
+}: {
+	productInfo: DesiredItemInfo | null;
+}) => {
+	return (
+		<AlertDialog>
+			<AlertDialogTrigger className='border border-main text-main text-xs h-10 w-[45%] rounded py-2'>
+				Contact
+			</AlertDialogTrigger>
+			<AlertDialogContent>
+				<AlertDialogHeader>
+					<AlertDialogTitle>{productInfo?.name!}</AlertDialogTitle>
+					<AlertDialogDescription className='flex flex-col py-5 text-black'>
+						<div className='relative w-[150px] h-[150px] mx-auto border'>
+							<Image
+								fill
+								alt=''
+								src={productInfo?.avatar!}
+								className='object-fill w-full h-full'
+							/>
+						</div>
+						<div className='grid grid-cols-2 gap-y-5 pt-2'>
+							<p className='font-medium text-sm'>Email</p>
+							<p>{productInfo?.email}</p>
+							<p className='font-medium text-sm'>
+								Contact number
+							</p>
+							<p>{productInfo?.phoneNumber}</p>
+						</div>
+					</AlertDialogDescription>
+				</AlertDialogHeader>
+				<AlertDialogFooter>
+					<AlertDialogCancel>Close</AlertDialogCancel>
+				</AlertDialogFooter>
+			</AlertDialogContent>
+		</AlertDialog>
 	);
 };

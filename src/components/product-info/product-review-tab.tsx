@@ -219,7 +219,7 @@ const ProductReviewTab = () => {
 							handleChange={handleChange}
 							value={formData.description}
 							placeHolder='Write your review here'
-							classes='w-full text-xs placeholder:text-xs border border-orange-500 focus:border-orange-500 rounded resize-none scrollbar__2'
+							classes='w-full text-xs placeholder:text-xs border border-main focus:border-main rounded resize-none scrollbar__2'
 						/>
 
 						{loading ? (

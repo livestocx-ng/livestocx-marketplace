@@ -1,47 +1,52 @@
+import {useState} from 'react';
 import Image from 'next/image';
+import {toast} from 'react-hot-toast';
+import axios, {AxiosError} from 'axios';
+import {Button} from '@/components/ui/button';
 import {DataTable} from '@/components/ui/data-table';
 import {useGlobalStore} from '@/hooks/use-global-store';
+import ButtonLoader from '@/components/loader/button-loader';
 import {RecentOrderColumn, columns} from './tables/recent-orders-columns';
 
 const RecentOrders: RecentOrderColumn[] = [
 	{
 		id: '1',
-		orderId: '#123',
+		productId: '#123',
 		date: '8 Sep, 2023',
 		total: '₦13,500 (2 Products)',
 		status: 'Processing',
 	},
 	{
 		id: '2',
-		orderId: '#259',
+		productId: '#259',
 		date: '8 Sep, 2023',
 		total: '₦17,500 (2 Products)',
 		status: 'Delivered',
 	},
 	{
 		id: '3',
-		orderId: '#260',
+		productId: '#260',
 		date: '8 Oct, 2023',
 		total: '₦14,500 (2 Products)',
 		status: 'Delivered',
 	},
 	{
 		id: '4',
-		orderId: '#460',
+		productId: '#460',
 		date: '8 Sep, 2023',
 		total: '₦13,500 (2 Products)',
 		status: 'Processing',
 	},
 	{
 		id: '5',
-		orderId: '#782',
+		productId: '#782',
 		date: '8 Sep, 2023',
 		total: '₦17,500 (2 Products)',
 		status: 'Delivered',
 	},
 	{
 		id: '6',
-		orderId: '#030',
+		productId: '#030',
 		date: '8 Oct, 2023',
 		total: '₦14,500 (2 Products)',
 		status: 'Delivered',
@@ -54,7 +59,45 @@ interface DashboardContentProps {
 }
 
 const DashboardContent = ({}: DashboardContentProps) => {
-	const {user, updateCurrentAccountTab} = useGlobalStore();
+	const {user, updateUser, updateCurrentAccountTab} = useGlobalStore();
+
+	const [loading, setLoading] = useState<boolean>(false);
+
+	const handleUpdateUserRole = async (role: string) => {
+		try {
+			setLoading(true);
+
+			console.log('[UPDATE-USER-ROLE-PAYLOAD] :: ', user);
+			console.log('[UPDATE-USER-ROLE-PAYLOAD] :: ', role);
+
+			const {data} = await axios.patch(
+				`${process.env.NEXT_PUBLIC_API_URL}/auth/update-user-role`,
+				{role},
+				{
+					headers: {
+						Authorization: user?.accessToken,
+					},
+				}
+			);
+
+			const cookieUpdate = await axios.patch('/api/auth/update-cookies', data.data);
+
+			setLoading(false);
+
+			// console.log('[USER-ROLE] :: ', cookieUpdate.data);
+			await updateUser(cookieUpdate.data);
+
+			toast.success('User role updated!');
+		} catch (error) {
+			setLoading(false);
+
+			const _error = error as AxiosError;
+
+			console.log('[UPDATE-USER-ROLE-ERROR]', _error);
+
+			toast.error('Error');
+		}
+	};
 
 	return (
 		<div className='w-[78%] flex flex-col gap-5'>
@@ -76,7 +119,7 @@ const DashboardContent = ({}: DashboardContentProps) => {
 						<h1 className='text-base'>
 							{user?.lastName} {user?.firstName}
 						</h1>
-						<p className='text-sm capitalize'>{user?.role}</p>
+						<p className='text-sm capitalize text-red-600 underline'>{user?.role}</p>
 					</div>
 
 					<p
@@ -86,28 +129,58 @@ const DashboardContent = ({}: DashboardContentProps) => {
 						Edit Profile
 					</p>
 				</div>
-				<div className='p-5 flex flex-col items-start w-[45%] h-[350px] justify-between border rounded-lg'>
-					<div className='space-y-3'>
-						<h1 className='text-base font-medium'>
-							Billing Address
-						</h1>
-						<div className='space-y-1 text-gray-400'>
-							<h1 className='text-sm'>Michael Jigga</h1>
-							<p className='text-sm'>
-								New Rayfield, Road 33 Abuja Street
-							</p>
+				<div className='flex flex-col items-start justify-between h-[350px] w-[45%]'>
+					<div className='p-5 flex flex-col items-start w-full h-[300px] justify-between border rounded-lg'>
+						<div className='space-y-3'>
+							<h1 className='text-base font-medium'>
+								Billing Address
+							</h1>
+							<div className='space-y-1 '>
+								<h1 className='text-sm'>Michael Jigga</h1>
+								<p className='text-sm'>
+									New Rayfield, Road 33 Abuja Street
+								</p>
+							</div>
+							<div className='space-y-1 '>
+								<h1 className='text-sm'>
+									michael.jigga@gmail.com
+								</h1>
+								<h1 className='text-sm'>09025605622</h1>
+							</div>
 						</div>
-						<div className='space-y-1 text-gray-400'>
-							<h1 className='text-sm'>michael.jigga@gmail.com</h1>
-							<h1 className='text-sm'>09025605622</h1>
-						</div>
+						<p
+							onClick={() => updateCurrentAccountTab('Settings')}
+							className='text-main text-sm font-semibold cursor-pointer'
+						>
+							Edit Profile
+						</p>
 					</div>
-					<p
-						onClick={() => updateCurrentAccountTab('Settings')}
-						className='text-main text-sm font-semibold cursor-pointer'
-					>
-						Edit Profile
-					</p>
+
+					{loading ? (
+						<Button
+							type='button'
+							className='bg-main text-white text-xs hover:bg-main hover:text-white w-full px-3 rounded-lg'
+						>
+							<ButtonLoader />
+						</Button>
+					) : (
+						<Button
+							type='button'
+							onClick={() => {
+								if (user?.role === 'FARMER') {
+									return handleUpdateUserRole('CUSTOMER');
+								}
+								if (user?.role === 'CUSTOMER') {
+									return handleUpdateUserRole('FARMER');
+								}
+							}}
+							className='bg-main text-white text-xs hover:bg-main hover:text-white w-full px-3 rounded-lg'
+						>
+							{user?.role === 'FARMER'
+								? 'Become a Customer'
+								: 'Become a Seller'}
+						</Button>
+					)}
 				</div>
 			</div>
 

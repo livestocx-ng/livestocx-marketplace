@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export type RecentOrderColumn = {
 	id: string;
-	orderId: string;
+	productId: string;
 	date: string;
 	total: string;
 	status: string;
@@ -13,8 +13,8 @@ export type RecentOrderColumn = {
 
 export const columns: ColumnDef<RecentOrderColumn>[] = [
 	{
-		accessorKey: 'orderId',
-		header: 'Order ID',
+		accessorKey: 'productId',
+		header: 'Product ID',
 	},
 	{
 		accessorKey: 'date',

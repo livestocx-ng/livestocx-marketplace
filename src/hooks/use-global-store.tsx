@@ -1,6 +1,8 @@
 import {create} from 'zustand';
 import {
 	Billing,
+	DesiredItem,
+	DesiredItemInfo,
 	Media,
 	Product,
 	ProductInfo,
@@ -15,11 +17,17 @@ interface GlobalStore {
 	vendors: Vendor[];
 	billing: Billing | null;
 	product: Product | null;
+	desiredProductInfo: DesiredItemInfo | null;
+	desiredProduct: DesiredItem | null;
+	desiredProducts: DesiredItem[];
 	productInfo: ProductInfo | null;
 	products: Product[];
 	totalPages: number;
 	hasNextPage: boolean;
 	currentAccountTab: Tab | 'Dashboard';
+	updateDesiredProductInfo: (value: DesiredItemInfo) => void;
+	updateDesiredProduct: (value: DesiredItem) => void;
+	updateDesiredProducts: (value: DesiredItem[]) => void;
 	updateVendors: (value: Vendor[]) => void;
 	updateCurrentAccountTab: (value: Tab) => void;
 	updatePayload: (value: Product) => void;
@@ -102,6 +110,9 @@ export const useProductMediaModalStore = create<ProductModal>((set) => ({
 
 export const useGlobalStore = create<GlobalStore>((set) => ({
 	user: null,
+	desiredProductInfo: null,
+	desiredProduct: null,
+	desiredProducts: [],
 	vendors: [],
 	billing: null,
 	vendor: null,
@@ -111,6 +122,12 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	hasNextPage: false,
 	productInfo: null,
 	currentAccountTab: 'Dashboard',
+	updateDesiredProductInfo: (value: DesiredItemInfo) =>
+		set({desiredProductInfo: value}),
+	updateDesiredProduct: (value: DesiredItem) =>
+		set({desiredProduct: value}),
+	updateDesiredProducts: (value: DesiredItem[]) =>
+		set({desiredProducts: value}),
 	updateVendors: (value: Vendor[]) => set({vendors: value}),
 	updateCurrentAccountTab: (value: Tab) => set({currentAccountTab: value}),
 	updateProductInfo: (value: ProductInfo) => set({productInfo: value}),

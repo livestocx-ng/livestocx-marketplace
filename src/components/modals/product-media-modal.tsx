@@ -1,14 +1,12 @@
 'use client';
+import {
+	Maximize2,
+	ChevronLeftCircle,
+	ChevronRightCircle,
+} from 'lucide-react';
 import Image from 'next/image';
 import {useEffect, useState} from 'react';
 import {useProductMediaModalStore} from '@/hooks/use-global-store';
-import {
-	ChevronLeftCircle,
-	ChevronRightCircle,
-	Maximize2,
-	Maximize2Icon,
-	Shrink,
-} from 'lucide-react';
 
 const ProductMediaModal = () => {
 	const modal = useProductMediaModalStore();
@@ -56,7 +54,7 @@ const ProductMediaModal = () => {
 					className='text-orange-400 h-8 w-8 bg-white rounded-full cursor-pointer block sm:hidden absolute top-30 left-5 z-10'
 				/>
 
-				<div className='h-[300px] md:h-screen w-[300px] md:w-full relative'>
+				<div className='h-[300px] md:h-[600px] w-[300px] md:w-[600px] relative'>
 					<Image
 						fill
 						alt={'product'}
@@ -66,7 +64,7 @@ const ProductMediaModal = () => {
 
 					<p
 						onClick={handleModalClose}
-						className='absolute top-0 right-0 text-white p-4 bg-red-0 flex justify-center items-center cursor-pointer'
+						className='absolute top-0 right-0 bg-red-400 p-2 bg-red-0 flex justify-center items-center cursor-pointer'
 					>
 						<Maximize2
 							className='text-white h-6 w-6'

@@ -245,7 +245,7 @@ const AddProductModal = () => {
 						onClick={() => modal.onClose()}
 						className='bg-white hover:bg-white'
 					>
-						<X className='text-black h-4 w-4' />
+						<X className='text-red-500 h-4 w-4' />
 					</Button>
 				</div>
 

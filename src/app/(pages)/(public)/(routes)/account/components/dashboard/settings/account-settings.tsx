@@ -115,12 +115,12 @@ const AccountSettings = () => {
 				}
 			);
 
-			await axios.patch('/api/auth/update-cookies', data.data);
+			const cookieUpdate = await axios.patch('/api/auth/update-cookies', data.data);
 
 			setLoading(false);
 
-			console.log('[PROFILE] :: ', data);
-			await updateUser(data.data);
+			// console.log('[PROFILE] :: ', cookieUpdate.data);
+			await updateUser(cookieUpdate.data);
 
 			toast.success('Profile updated');
 		} catch (error) {

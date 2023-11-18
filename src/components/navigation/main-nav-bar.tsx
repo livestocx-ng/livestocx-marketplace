@@ -1,29 +1,28 @@
 'use client';
 import {
 	Bell,
-	LogOutIcon,
-	Mails,
-	Menu,
-	ShoppingCartIcon,
 	User2,
+	Mails,
+	Package,
+	Settings,
+	Megaphone,
+	LogOutIcon,
+	ShoppingCartIcon,
 } from 'lucide-react';
+import axios from 'axios';
 import Link from 'next/link';
 import Image from 'next/image';
-import {toast} from 'react-hot-toast';
-import {useEffect, useState} from 'react';
-
-import axios from 'axios';
 import {NavLinks} from '@/data';
 import {Button} from '../ui/button';
+import {toast} from 'react-hot-toast';
 import {useRouter} from 'next/navigation';
-import {useUserHook} from '@/hooks/use-user';
+import {useEffect, useState} from 'react';
+import {useGlobalStore} from '@/hooks/use-global-store';
 
 const MainNavbar = () => {
 	const router = useRouter();
 
-	const {user, updateUser} = useUserHook();
-
-	// console.log('[USER] :: ', user);
+	const {user, updateUser, updateCurrentAccountTab} = useGlobalStore();
 
 	const [scrolling, setScrolling] = useState<boolean>(false);
 	const [showMenu, setSetshowMenu] = useState<boolean>(false);
@@ -57,8 +56,8 @@ const MainNavbar = () => {
 				<Link href={'/'}>
 					<Image
 						alt='logo'
-						width={50}
-						height={50}
+						width={40}
+						height={40}
 						className=''
 						src={'/logo.svg'}
 					/>
@@ -126,24 +125,11 @@ const MainNavbar = () => {
 								className='absolute right-0 top-12 w-[200px] rounded shadow-md bg-white flex flex-col space-y-6 items-start px-4 py-5'
 							>
 								<Link
-									href={'#'}
-									onClick={() => {
-										setSetShowAccountMenu(false);
-									}}
-									className={` ${
-										scrolling ? 'bg-white' : 'bg-mai'
-									} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
-								>
-									<ShoppingCartIcon
-										className={`h-5 w-5 text-main`}
-									/>
-
-									<p className='text-xs'>Desired Items</p>
-								</Link>
-								<Link
 									href={'/account'}
 									onClick={() => {
 										setSetShowAccountMenu(false);
+
+										updateCurrentAccountTab('Account');
 									}}
 									className={` ${
 										scrolling ? 'bg-white' : 'bg-mai'
@@ -151,12 +137,77 @@ const MainNavbar = () => {
 								>
 									<User2 className={`h-5 w-5 text-main`} />
 
-									<p className='text-xs'>Manage Account</p>
+									<p className='text-xs'>Account</p>
 								</Link>
+								{user?.role === 'CUSTOMER' && (
+									<Link
+										href={'/account'}
+										onClick={() => {
+											setSetShowAccountMenu(false);
+
+											router.push('/account');
+
+											updateCurrentAccountTab(
+												'Desired Items'
+											);
+										}}
+										className={` ${
+											scrolling ? 'bg-white' : 'bg-mai'
+										} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
+									>
+										<ShoppingCartIcon
+											className={`h-5 w-5 text-main`}
+										/>
+
+										<p className='text-xs'>Desired Items</p>
+									</Link>
+								)}
+								{user?.role === 'FARMER' && (
+									<Link
+										href={'/account'}
+										onClick={() => {
+											setSetShowAccountMenu(false);
+
+											updateCurrentAccountTab('Products');
+										}}
+										className={` ${
+											scrolling ? 'bg-white' : 'bg-mai'
+										} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
+									>
+										<Package
+											className={`h-5 w-5 text-main`}
+										/>
+
+										<p className='text-xs'>Products</p>
+									</Link>
+								)}
+								{user?.role === 'FARMER' && (
+									<Link
+										href={'/account'}
+										onClick={() => {
+											setSetShowAccountMenu(false);
+
+											updateCurrentAccountTab(
+												'Advertise'
+											);
+										}}
+										className={` ${
+											scrolling ? 'bg-white' : 'bg-mai'
+										} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
+									>
+										<Megaphone
+											className={`h-5 w-5 text-main`}
+										/>
+
+										<p className='text-xs'>Advertise</p>
+									</Link>
+								)}
 								<Link
-									href={'#'}
+									href={'/account'}
 									onClick={() => {
 										setSetShowAccountMenu(false);
+
+										updateCurrentAccountTab('Messages');
 									}}
 									className={` ${
 										scrolling ? 'bg-white' : 'bg-mai'
@@ -167,9 +218,13 @@ const MainNavbar = () => {
 									<p className='text-xs'>Messages</p>
 								</Link>
 								<Link
-									href={'#'}
+									href={'/account'}
 									onClick={() => {
 										setSetShowAccountMenu(false);
+
+										updateCurrentAccountTab(
+											'Notifications'
+										);
 									}}
 									className={` ${
 										scrolling ? 'bg-white' : 'bg-mai'
@@ -178,6 +233,21 @@ const MainNavbar = () => {
 									<Bell className={`h-5 w-5 text-main`} />
 
 									<p className='text-xs'>Notifications</p>
+								</Link>
+								<Link
+									href={'/account'}
+									onClick={() => {
+										setSetShowAccountMenu(false);
+
+										updateCurrentAccountTab('Settings');
+									}}
+									className={` ${
+										scrolling ? 'bg-white' : 'bg-mai'
+									} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
+								>
+									<Settings className={`h-5 w-5 text-main`} />
+
+									<p className='text-xs'>Settings</p>
 								</Link>
 								<p
 									// href={'#'}

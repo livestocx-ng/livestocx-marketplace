@@ -22,6 +22,11 @@ export default function HomePage() {
 		try {
 			setLoading(true);
 
+			const emailAvailability = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/auth/email-availability?email=farmer@gmail.com`
+			);
+
+
 			const {data} = await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/recommended/fetch-all`
 			);

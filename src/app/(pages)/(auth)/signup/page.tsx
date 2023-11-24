@@ -1,16 +1,19 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
+import {NigeriaStates} from '@/data';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
 import {useReducer, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {Separator} from '@/components/ui/separator';
+import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
 import AuthHeader from '../../../../components/header/auth-header';
 import FormPasswordInput from '@/components/input/form-password-input';
-import ButtonLoader from '@/components/loader/button-loader';
+import {ValidateSignupFormData} from '@/utils/form-validations/auth.validation';
+import {useUpdateWelcomeFarmerModalStore} from '@/hooks/use-global-store';
 
 type FormData = {
 	firstName: string;
@@ -18,6 +21,8 @@ type FormData = {
 	phoneNumber: string;
 	email: string;
 	password: string;
+	role: 'FARMER' | 'CUSTOMER';
+	location: string;
 	confirmPassword: string;
 };
 
@@ -32,6 +37,8 @@ const initialState: FormData = {
 	phoneNumber: '',
 	email: '',
 	password: '',
+	location: '',
+	role: 'CUSTOMER',
 	confirmPassword: '',
 };
 
@@ -47,6 +54,8 @@ const formReducer = (state: FormData, action: FormAction) => {
 const SignUpPage = () => {
 	const router = useRouter();
 
+	const welcomeFarmerModal = useUpdateWelcomeFarmerModalStore();
+
 	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
 
@@ -57,25 +66,38 @@ const SignUpPage = () => {
 		});
 	};
 
+	const handleSelectChange = (
+		event: React.ChangeEvent<HTMLSelectElement>
+	) => {
+		updateFormData({
+			type: 'UPDATE_FORMDATA',
+			payload: {[event.target.name]: event.target.value},
+		});
+	};
+
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		if (
-			!formData.email ||
-			!formData.firstName ||
-			!formData.lastName ||
-			!formData.phoneNumber ||
-			!formData.password
-		) {
-			return toast.error('All fields are required!');
-		}
-		if (formData.password !== formData.confirmPassword) {
-			return toast.error('Passwords do not match');
-		}
-
 		try {
 			setLoading(true);
+
+			const validationError = ValidateSignupFormData(formData);
+
+			if (validationError) {
+				setLoading(false);
+				return toast.error(validationError, {duration: 10000});
+			}
+
 			console.log('[SIGNUP-PAYLOAD] :: ', formData);
+
+			const emailAvailability = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/auth/email-availability?email=${formData.email}`
+			);
+
+			if (!emailAvailability.data.data) {
+				setLoading(false);
+				return toast.error('Email already exists', {duration: 10000});
+			}
 
 			const {data} = await axios.post('/api/auth/signup', formData);
 
@@ -91,6 +113,12 @@ const SignUpPage = () => {
 				toast.success('Account created successfully');
 
 				router.push('/signin');
+
+				setTimeout(() => {
+					if (formData.role === 'FARMER') {
+						welcomeFarmerModal.onOpen();
+					}
+				}, 2000);
 			}
 		} catch (error) {
 			setLoading(false);
@@ -109,7 +137,7 @@ const SignUpPage = () => {
 				<form
 					autoComplete='off'
 					onSubmit={handleSubmit}
-					className='w-[90%] sm:w-[600px] py-10 px-4 sm:px-10 border rounded-lg shadow-md flex flex-col space-y-8'
+					className='w-[90%] sm:w-[600px] py-10 px-4 sm:px-10 border rounded shadow-md flex flex-col space-y-8'
 				>
 					<h1 className='text-center text-2xl font-semibold'>
 						Sign Up
@@ -117,53 +145,119 @@ const SignUpPage = () => {
 					<div className='space-y-4'>
 						<FormTextInput
 							name='firstName'
-							padding='py-3 px-4'
+							padding='py-4 px-4'
 							value={formData.firstName}
 							handleChange={handleChange}
 							placeHolder='First Name'
-							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded-lg'
+							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 						/>
 						<FormTextInput
 							name='lastName'
-							padding='py-3 px-4'
+							padding='py-4 px-4'
 							value={formData.lastName}
 							handleChange={handleChange}
 							placeHolder='Last Name'
-							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded-lg'
+							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 						/>
 						<FormTextInput
 							name='phoneNumber'
 							type='number'
-							padding='py-3 px-4'
+							padding='py-4 px-4'
 							value={formData.phoneNumber}
 							handleChange={handleChange}
 							placeHolder='Phone Number'
-							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded-lg'
+							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 						/>
 						<FormTextInput
 							name='email'
-							padding='py-3 px-4'
+							padding='py-4 px-4'
 							value={formData.email}
 							handleChange={handleChange}
 							placeHolder='Email'
-							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded-lg'
+							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 						/>
+
+						<div>
+							<select
+								name='location'
+								className='w-full border py-4 rounded px-3 text-sm scrollbar__1'
+								onChange={handleSelectChange}
+							>
+								<option value=''>Location</option>
+								{NigeriaStates.map((option) => (
+									<option
+										key={option}
+										value={option}
+										className='cursor-pointer'
+									>
+										{option}
+									</option>
+								))}
+							</select>
+						</div>
+
 						<FormPasswordInput
 							name='password'
-							padding='py-3 px-4'
+							padding='py-4 px-4'
 							value={formData.password}
 							handleChange={handleChange}
 							placeHolder='Password'
-							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded-lg'
+							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 						/>
 						<FormPasswordInput
 							name='confirmPassword'
-							padding='py-3 px-4'
+							padding='py-4 px-4'
 							value={formData.confirmPassword}
 							handleChange={handleChange}
 							placeHolder='Confirm Password'
-							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded-lg'
+							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 						/>
+
+						<div className='flex flex-col space-y-5'>
+							<p className='text-sm text-center'>
+								Do you want to signup as a
+							</p>
+							<div className='flex justify-center space-x-10'>
+								<div className='space-x-3 flex items-center'>
+									<p className='text-sm'>Buyer</p>
+									<input
+										name='role'
+										value={'CUSTOMER'}
+										checked={formData.role === 'CUSTOMER'}
+										type='radio'
+										onChange={(
+											event: React.ChangeEvent<HTMLInputElement>
+										) => {
+											updateFormData({
+												type: 'UPDATE_FORMDATA',
+												payload: {
+													role: 'CUSTOMER',
+												},
+											});
+										}}
+									/>
+								</div>
+								<div className='space-x-3 flex items-center'>
+									<p className='text-sm'>Seller</p>
+									<input
+										name='role'
+										value={'FARMER'}
+										checked={formData.role === 'FARMER'}
+										type='radio'
+										onChange={(
+											event: React.ChangeEvent<HTMLInputElement>
+										) => {
+											updateFormData({
+												type: 'UPDATE_FORMDATA',
+												payload: {
+													role: 'FARMER',
+												},
+											});
+										}}
+									/>
+								</div>
+							</div>
+						</div>
 
 						<div className='flex justify-center'>
 							<div className='space-x-3 flex items-center'>
@@ -218,7 +312,7 @@ const SignUpPage = () => {
 							<p>Continue with Google</p>
 						</Button>
 
-						<div className='flex justify-center mt-5'>
+						{/* <div className='flex justify-center mt-5'>
 							<Link
 								href='/farmer/signup'
 								className='text-sm text-center mx-auto'
@@ -226,7 +320,7 @@ const SignUpPage = () => {
 								Are you a farmer?{' '}
 								<span className='text-main'>Register here</span>
 							</Link>
-						</div>
+						</div> */}
 						<div className='flex justify-center mt-5'>
 							<Link
 								href='/signin'

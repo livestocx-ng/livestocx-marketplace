@@ -18,6 +18,7 @@ import {Tab} from '@/types/types';
 import {toast} from 'react-hot-toast';
 import {redirect, useRouter} from 'next/navigation';
 import {useGlobalStore} from '@/hooks/use-global-store';
+import Image from 'next/image';
 
 interface AccountSideBarProps {}
 
@@ -96,6 +97,13 @@ const AccountSideBar = ({}: AccountSideBarProps) => {
 								/>
 							)}
 							{tab === 'Desired Items' && (
+								// <Image
+								// 	width={20}
+								// 	height={20}
+								// 	alt='Livestocx Carrier'
+								// 	src='/shopping__icon.png'
+								// 	className='text-white'
+								// />
 								<ShoppingBasket
 									className={`h-6 w-6 ${
 										currentAccountTab == tab &&

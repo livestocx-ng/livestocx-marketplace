@@ -299,6 +299,11 @@ const SellerProductPage = ({params: {productId}}: SellerProductPageParams) => {
 									<Button
 										type='button'
 										variant={'outline'}
+										onClick={() => {
+											const chatLink = `https://wa.me/+234${productInfo?.phoneNumber}`;
+
+											window.open(chatLink, '_blank');
+										}}
 										className='border-main text-main text-[10px] md:text-xs h-10 w-[45%] rounded-full py-2'
 									>
 										Chat with Seller

@@ -36,7 +36,6 @@ interface GlobalStore {
 	updateUser: (products: User | null) => void;
 	updateProducts: (products: Product[]) => void;
 	updateProductInfo: (value: ProductInfo) => void;
-	// updateProductReview: (value: ProductReviewUpdate) => void;
 	updateProduct: (productId: string, product: Product) => void;
 	updatePagination: (totalPages: number, hasNextPage: boolean) => void;
 }
@@ -47,6 +46,12 @@ interface ProductModal {
 	onOpen: () => void;
 	onClose: () => void;
 	updatePayload: (value: Media[]) => void;
+}
+
+interface WelcomeFarmerModal {
+	isOpen: boolean;
+	onOpen: () => void;
+	onClose: () => void;
 }
 
 interface UpdateProductModal {
@@ -64,6 +69,12 @@ interface DeleteProductModal {
 	onClose: () => void;
 	updatePayload: (value: Product) => void;
 }
+
+export const useUpdateWelcomeFarmerModalStore = create<WelcomeFarmerModal>((set) => ({
+	isOpen: false,
+	onOpen: () => set({isOpen: true}),
+	onClose: () => set({isOpen: false}),
+}));
 
 export const useUpdateProductModalStore = create<UpdateProductModal>((set) => ({
 	isOpen: false,

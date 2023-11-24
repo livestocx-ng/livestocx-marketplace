@@ -19,6 +19,7 @@ import {Badge} from '@/components/ui/badge';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {useEffect} from 'react';
 import {DesiredItemInfo} from '@/types/types';
+import { Button } from '@/components/ui/button';
 
 const DesiredItemContent = () => {
 	const {
@@ -121,6 +122,20 @@ const DesiredItemContent = () => {
 						<ProductContactAlertDialog
 							productInfo={desiredProductInfo}
 						/>
+
+						<Button
+							type='button'
+							variant={'outline'}
+							onClick={() => {
+								console.log(desiredProductInfo)
+								const chatLink = `https://wa.me/+234${desiredProductInfo?.phoneNumber}`;
+
+								window.open(chatLink, '_blank');
+							}}
+							className='border-main text-main text-[10px] md:text-xs h-10 w-[45%] rounded-full py-2'
+						>
+							Chat with Seller
+						</Button>
 					</div>
 				</div>
 
@@ -236,7 +251,7 @@ const ProductContactAlertDialog = ({
 }) => {
 	return (
 		<AlertDialog>
-			<AlertDialogTrigger className='border border-main text-main text-xs h-10 w-[45%] rounded py-2'>
+			<AlertDialogTrigger className='border border-main text-main font-medium text-xs h-10 w-[45%] rounded-full py-2'>
 				Contact
 			</AlertDialogTrigger>
 			<AlertDialogContent>

@@ -1,16 +1,14 @@
 'use client';
-import Lottie from 'lottie-react';
-import {redirect} from 'next/navigation';
-import {useModal} from '@/hooks/use-modal';
-import {useUserHook} from '@/hooks/use-user';
-import AddProductModal from './components/dashboard/modals/add-product-modal';
-import UpdateProductModal from './components/dashboard/modals/update-product-modal';
-import DeleteProductModal from './components/dashboard/modals/delete-product-modal';
-import LoadingAnimation from '../../../../../../public/animations/loading__animation__1.json';
 import {
 	useDeleteProductModalStore,
 	useUpdateProductModalStore,
 } from '@/hooks/use-global-store';
+import {redirect} from 'next/navigation';
+import {useModal} from '@/hooks/use-modal';
+import {useUserHook} from '@/hooks/use-user';
+import AddProductModal from '@/components/modals/product/add-product-modal';
+import UpdateProductModal from '@/components/modals/product/update-product-modal';
+import DeleteProductModal from '@/components/modals/product/delete-product-modal';
 
 interface AccountLayoutProps {
 	children: React.ReactNode;

@@ -88,7 +88,8 @@ const MainNavbar = () => {
 							width={20}
 							height={20}
 							alt='Livestocx Carrier'
-							src='/icon__carrier.svg'
+							src='/shopping__icon.png'
+							className='text-white'
 						/> */}
 						<ShoppingCartIcon
 							className={`h-5 w-5 ${

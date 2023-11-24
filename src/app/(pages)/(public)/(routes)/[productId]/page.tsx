@@ -78,7 +78,7 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 			]);
 
 			console.log('[DATA] ::  ', _product.data.data);
-			// console.log('[DATA] ::  ', data);
+			console.log('[DATA] ::  ', _productInfo.data.data);
 
 			updatePayload(_product.data.data);
 			updateProductInfo(_productInfo.data.data);
@@ -128,7 +128,7 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 
 			if (loading) return;
 
-			setLoading(true);
+			// setLoading(true);
 
 			console.log('[ADD-DESIRED-PRODUCT] :: ');
 
@@ -144,7 +144,7 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 
 			console.log('[ADD-DESIRED-PRODUCT-SUCCESS] :: ', data);
 
-			setLoading(false);
+			// setLoading(false);
 
 			if (data.data === false) {
 				return toast.success('Product already added to desired items');
@@ -152,7 +152,7 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 				return toast.success('Product added to desired items');
 			}
 		} catch (error) {
-			setLoading(false);
+			// setLoading(false);
 			const _error = error as AxiosError;
 
 			console.log('[ERROR] :: ', _error);
@@ -299,6 +299,11 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 									<Button
 										type='button'
 										variant={'outline'}
+										onClick={() => {
+											const chatLink = `https://wa.me/+234${productInfo?.phoneNumber}`;
+
+											window.open(chatLink, '_blank');
+										}}
 										className='border-main text-main text-[10px] md:text-xs h-10 w-[45%] rounded-full py-2'
 									>
 										Chat with Seller

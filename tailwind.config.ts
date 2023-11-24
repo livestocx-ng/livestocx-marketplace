@@ -15,7 +15,7 @@ module.exports = {
 			center: true,
 			padding: '2rem',
 			screens: {
-				'xs': '380px',
+				xs: '380px',
 				'2xl': '1400px',
 			},
 		},
@@ -70,6 +70,9 @@ module.exports = {
 					from: {height: 'var(--radix-accordion-content-height)'},
 					to: {height: 0},
 				},
+			},
+			transitionDuration: {
+				'3000': '3000ms',
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',

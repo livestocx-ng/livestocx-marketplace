@@ -11,6 +11,7 @@ import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
 import AuthHeader from '../../../../components/header/auth-header';
 import FormPasswordInput from '@/components/input/form-password-input';
+import {ValidateSigninFormData} from '@/utils/form-validations/auth.validation';
 
 type FormData = {
 	email: string;
@@ -52,8 +53,11 @@ const SignInPage = () => {
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		if (!formData.email || !formData.password) {
-			return toast.error('All fields are required!');
+		const validationError = ValidateSigninFormData(formData);
+
+		if (validationError) {
+			setLoading(false);
+			return toast.error(validationError, {duration: 10000});
 		}
 
 		try {
@@ -104,7 +108,7 @@ const SignInPage = () => {
 							value={formData.email}
 							handleChange={handleChange}
 							placeHolder='Email'
-							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded-lg'
+							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 						/>
 						<FormPasswordInput
 							name='password'
@@ -112,7 +116,7 @@ const SignInPage = () => {
 							value={formData.password}
 							handleChange={handleChange}
 							placeHolder='Password'
-							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 rounded-lg'
+							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 						/>
 
 						<div className='flex justify-between items-center'>
@@ -129,7 +133,7 @@ const SignInPage = () => {
 								href='/forgot-password'
 								className='text-sm text-green-600'
 							>
-								Forgot Password?
+								Forgot password?
 							</Link>
 						</div>
 

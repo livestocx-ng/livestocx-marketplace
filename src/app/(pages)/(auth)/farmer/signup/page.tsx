@@ -8,12 +8,10 @@ import {useRouter} from 'next/navigation';
 import {useReducer, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {Separator} from '@/components/ui/separator';
-import SelectDropdown from '@/components/ui/select-dropdown';
+import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
 import AuthHeader from '../../../../../components/header/auth-header';
 import FormPasswordInput from '@/components/input/form-password-input';
-import ButtonLoader from '@/components/loader/button-loader';
-import {LocationDropDownButton} from '../../components/location-dropdown-button';
 import {DropdownMenuCheckboxItemProps} from '@radix-ui/react-dropdown-menu';
 
 type FormData = {
@@ -206,7 +204,7 @@ const SignUpPage = () => {
 									</option>
 								))}
 							</select>
-						</div>d
+						</div>
 
 						<div className='flex justify-center'>
 							<div className='space-x-3 flex items-center'>

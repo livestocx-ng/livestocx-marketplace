@@ -1,3 +1,11 @@
+import { Tab } from "./types";
+
+export interface FooterNavLink {
+	title: string;
+	url: string;
+	currentTab?: Tab;
+}
+
 export interface NavLink {
 	title: string;
 	url: string;
@@ -10,11 +18,17 @@ export interface TeamMember {
 	intro: string;
 	facebook: string;
 	linkedin: string;
-	instagram: string;
+	twitter: string;
 }
 
 export interface FilterOption {
 	id: number;
 	title: string;
 	value: string;
+}
+
+export interface Feature {
+	icon: string;
+	title: string;
+	description: string;
 }

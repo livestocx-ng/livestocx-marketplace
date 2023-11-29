@@ -2,8 +2,10 @@ import {
 	NavLink,
 	TeamMember,
 	FilterOption,
+	FooterNavLink,
+	Feature,
 } from '@/types/index.types';
-import { Testimonial } from '@/types/types';
+import {Testimonial} from '@/types/types';
 
 export const NavLinks: NavLink[] = [
 	{
@@ -19,12 +21,72 @@ export const NavLinks: NavLink[] = [
 		url: '/sellers',
 	},
 	{
+		title: 'About Us',
+		url: '/about-us',
+	},
+	{
+		title: 'Contact Us',
+		url: '/contact-us',
+	},
+];
+
+export const AccountNavLinks: FooterNavLink[] = [
+	{
+		title: 'Manage Account',
+		url: '/account',
+		currentTab: 'Account',
+	},
+	{
+		title: 'Products',
+		url: '/account',
+		currentTab: 'Products',
+	},
+	{
+		title: 'Desired Items',
+		url: '/account',
+		currentTab: 'Desired Items',
+	},
+	{
+		title: 'Sellers',
+		url: '/sellers',
+	},
+];
+
+export const HelpNavLinks: NavLink[] = [
+	{
+		title: 'Contact Us',
+		url: '/contact-us',
+	},
+	{
+		title: 'FAQs',
+		url: '/contact-us',
+	},
+	{
+		title: 'Terms & Conditions',
+		url: '#',
+	},
+	{
+		title: 'Privacy Policy',
+		url: '#',
+	},
+];
+
+export const OtherNavLinks: NavLink[] = [
+	{
 		title: 'About',
 		url: '/about-us',
 	},
 	{
-		title: 'Contact',
-		url: '#/contact',
+		title: 'Sitemap',
+		url: '#',
+	},
+	{
+		title: 'Login',
+		url: '/signin',
+	},
+	{
+		title: 'Register',
+		url: '/signup',
 	},
 ];
 
@@ -58,19 +120,20 @@ export const TeamMembers: TeamMember[] = [
 		image: '/about__1.png',
 		name: 'Oghenekevwe Emadago',
 		intro: 'Founder of Livestocx is a skilled innovator and experienced entrepreneur who has achieved great success in his career. His previous business venture, Girlified, was able to secure a substantial amount of funding, which is a testament to his outstanding business acumen and strategic skills.',
-		facebook: '#',
+		facebook:
+			'https://www.facebook.com/oghenekevwe.emadago?mibextid=kFxxJD',
 		linkedin:
 			'https://www.linkedin.com/in/oghenekevwe-emadago?miniProfileUrn=urn%3Ali%3Afs_miniProfile%3AACoAAC6nN7sB_tHEBBPhKw7AlemgLv4gM8PXzao&lipi=urn%3Ali%3Apage%3Ad_flagship3_search_srp_all%3BNaz%2FvpQPTWu7rMCohxRbTQ%3D%3D',
-		instagram: '#',
+		twitter: 'https://twitter.com/emadagokevwe',
 	},
 	{
 		id: 2,
 		image: '/about__2.png',
 		name: 'Idokoh Divine',
 		intro: 'Founder of Livestocx is a skilled innovator and experienced entrepreneur who has achieved great success in his career. His previous business venture, Girlified, was able to secure a substantial amount of funding, which is a testament to his outstanding business acumen and strategic skills.',
-		facebook: '#',
-		linkedin: '#',
-		instagram: '#',
+		facebook: 'https://www.facebook.com/chide2001?mibextid=ZbWKwL',
+		linkedin: 'https://ng.linkedin.com/in/divine-idokoh',
+		twitter: 'https://x.com/ojo__chide?s=09',
 	},
 ];
 
@@ -160,6 +223,33 @@ export const SellerFilterOptions: SellerFilterOption[] = [
 		id: 5,
 		title: 'Highest Price First',
 		value: 'highestPrice',
+	},
+];
+
+export const Features: Feature[] = [
+	{
+		icon: '/icon__feature__1.svg',
+		title: 'Co-ordination and Logistics',
+		description:
+			'Livestocx integrates a logistics module, streamlining the coordination of transportation for livestock. Farmers can easily schedule transportation services directly through our platform, optimizing routes to minimize environmental impact and reduce the huge carbon footprint of the transportation process',
+	},
+	{
+		icon: '/icon__feature__2.svg',
+		title: 'Farmer Empowerment',
+		description:
+			'We are committed to empowering local farmers by eliminating unnecessary middlemen, reducing transaction costs, and ensuring fair pricing. By providing direct access to buyers and market information, our platform enhances the financial resilience of farmers, making them better equipped to adapt to climate-related challenges.',
+	},
+	{
+		icon: '/icon__feature__3.svg',
+		title: 'Real-time Data Analytics',
+		description:
+			'Our platform includes robust data analytics tools that provide insights into market trends, pricing, and demand patterns. Local farmers can make informed decisions, reducing the risk of overproduction and aligning their activities with climate-resilient agricultural practices.',
+	},
+	{
+		icon: '/icon__feature__4.svg',
+		title: 'Climate-Resilient Practices',
+		description:
+			'As a future goal, we are putting measures in place to encourage and incentivize climate-resilient farming practices. We will reward farmers who adopt eco-friendly methods, contributing to the overall climate resilience of the agricultural sector.',
 	},
 ];
 

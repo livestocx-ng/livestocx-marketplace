@@ -98,7 +98,7 @@ const AboutUsPage = () => {
 				</div>
 			</div>
 
-			<div className='bg-[#0EBE52] w-full py-8 my-10 sm:my-20 flex flex-col sm:flex-row justify-center items-center px-5 sm:px-0 sm:space-x-20'>
+			<div className='bg-[#0EBE52] w-full py-8 mt-10 sm:mt-20 flex flex-col sm:flex-row justify-center items-center px-5 sm:px-0 sm:space-x-20'>
 				<div className='w-full sm:w-[60%] text-white'>
 					We simplify the entire livestock trading process, reducing
 					costs, eliminating middlemen, losses, and unsustainable
@@ -115,8 +115,8 @@ const AboutUsPage = () => {
 				</div>
 			</div>
 
-			<div className='bg-about bg-cover bg-center bg-no-repeat w-full py-8 my-10 sm:my-20 flex flex-col items-end pr-5 sm:pr-10 relative'>
-				<div className='flex flex-col space-y-10 justify-end px-5 pr-0 sm:pr-10 w-full sm:w-[40%]'>
+			<div className='bg-about bg-cover bg-center bg-no-repeat w-full py-8 mb-10 sm:mb-20 flex flex-col items-end pr-5 sm:pr-10 relative'>
+				<div className='flex flex-col space-y-10 justify-end px-5 pr-0 sm:pr-10 w-full sm:w-[40%] py-5'>
 					<div className='border border-main p-3'>
 						<h1 className='text-orange-500 text-base sm:text-xl font-semibold text-center'>
 							Our Vision
@@ -234,8 +234,8 @@ const AboutUsPage = () => {
 					</div>
 				))}
 			</div>
-
-			<TestimonialScetion />
+{/* 
+			<TestimonialScetion /> */}
 		</main>
 	);
 };

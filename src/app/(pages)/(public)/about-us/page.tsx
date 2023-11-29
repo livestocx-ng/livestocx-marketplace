@@ -99,7 +99,7 @@ const AboutUsPage = () => {
 			</div>
 
 			<div className='bg-[#0EBE52] w-full py-8 mt-10 sm:mt-20 flex flex-col sm:flex-row justify-center items-center px-5 sm:px-0 sm:space-x-20'>
-				<div className='w-full sm:w-[60%] text-white'>
+				<div className='w-full sm:w-[60%] text-white text-base sm:text-xl'>
 					We simplify the entire livestock trading process, reducing
 					costs, eliminating middlemen, losses, and unsustainable
 					transport systems; improving market access, and increasing

@@ -80,6 +80,7 @@ module.exports = {
 			},
 			backgroundImage: {
 				home: "url('/home.jpg')",
+				about: "url('/about__art__4.png')",
 			},
 		},
 	},

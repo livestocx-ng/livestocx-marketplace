@@ -17,12 +17,17 @@ import {Button} from '../ui/button';
 import {toast} from 'react-hot-toast';
 import {useRouter} from 'next/navigation';
 import {useEffect, useState} from 'react';
-import {useGlobalStore} from '@/hooks/use-global-store';
+import {
+	useGlobalStore,
+	useUpdateUserRoleModalStore,
+} from '@/hooks/use-global-store';
 
 const MainNavbar = () => {
 	const router = useRouter();
 
 	const {user, updateUser, updateCurrentAccountTab} = useGlobalStore();
+
+	const updateUserRoleModal = useUpdateUserRoleModalStore();
 
 	const [scrolling, setScrolling] = useState<boolean>(false);
 	const [showMenu, setSetshowMenu] = useState<boolean>(false);
@@ -101,7 +106,7 @@ const MainNavbar = () => {
 						// href={user ? '/account' : '/signin'}
 						onClick={() => {
 							if (!user) {
-								router.push(`${!user && '/signin'}/`);
+								router.push(`${!user && '/signin'}`);
 							} else {
 								setSetShowAccountMenu(!showAccountMenu);
 							}
@@ -290,18 +295,33 @@ const MainNavbar = () => {
 							</div>
 						)}
 					</div>
-					{/* <Link
-						href={user ? '/account' : '/signin'}
-						className={`h-10 w-10 ${
-							scrolling ? 'bg-white' : 'bg-main'
-						} rounded-full flex flex-col items-center justify-center`}
+
+					<div
+						onClick={() => {
+							if (!user) {
+								router.push(`/signup?seller=true`);
+							}
+
+							if (user && user?.role === 'CUSTOMER') {
+								updateUserRoleModal.onOpen();
+
+								console.log('[UPDATE-USER-ROLE]');
+								console.log(
+									'[UPDATE-USER-ROLE] :: ',
+									updateUserRoleModal
+								);
+							}
+
+							if (user && user?.role === 'FARMER') {
+								updateCurrentAccountTab('Products');
+
+								router.push('/account');
+							}
+						}}
+						className={`h-10 bg-orange-400 w-[80px] text-white text-sm flex flex-col items-center justify-center cursor-pointer`}
 					>
-						<User2
-							className={`h-5 w-5 ${
-								scrolling ? 'text-main' : 'text-white'
-							}`}
-						/>
-					</Link> */}
+						Sell
+					</div>
 				</div>
 			</nav>
 
@@ -354,6 +374,32 @@ const MainNavbar = () => {
 							}`}
 						/>
 					</Link>
+					<div
+						onClick={() => {
+							if (!user) {
+								router.push(`/signup?seller=true`);
+							}
+
+							if (user && user?.role === 'CUSTOMER') {
+								updateUserRoleModal.onOpen();
+
+								console.log('[UPDATE-USER-ROLE]');
+								console.log(
+									'[UPDATE-USER-ROLE] :: ',
+									updateUserRoleModal
+								);
+							}
+
+							if (user && user?.role === 'FARMER') {
+								updateCurrentAccountTab('Products');
+
+								router.push('/account');
+							}
+						}}
+						className={`h-10 bg-orange-400 w-[80px] text-white text-sm flex flex-col items-center justify-center cursor-pointer`}
+					>
+						Sell
+					</div>
 				</div>
 			</div>
 

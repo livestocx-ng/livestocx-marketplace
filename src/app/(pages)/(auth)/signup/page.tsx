@@ -4,16 +4,16 @@ import Image from 'next/image';
 import {NigeriaStates} from '@/data';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
-import {useRouter} from 'next/navigation';
-import {useReducer, useState} from 'react';
+import {useRouter, useSearchParams} from 'next/navigation';
+import {useEffect, useReducer, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {Separator} from '@/components/ui/separator';
 import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
 import AuthHeader from '../../../../components/header/auth-header';
 import FormPasswordInput from '@/components/input/form-password-input';
-import {ValidateSignupFormData} from '@/utils/form-validations/auth.validation';
 import {useUpdateWelcomeFarmerModalStore} from '@/hooks/use-global-store';
+import {ValidateSignupFormData} from '@/utils/form-validations/auth.validation';
 
 type FormData = {
 	firstName: string;
@@ -53,11 +53,21 @@ const formReducer = (state: FormData, action: FormAction) => {
 
 const SignUpPage = () => {
 	const router = useRouter();
+	const searchParams = useSearchParams();
 
 	const welcomeFarmerModal = useUpdateWelcomeFarmerModalStore();
 
 	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
+
+	useEffect(() => {
+		if (searchParams.get('seller')) {
+			updateFormData({
+				type: 'UPDATE_FORMDATA',
+				payload: {role: 'FARMER'},
+			});
+		}
+	}, [searchParams.get('seller')]);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		updateFormData({

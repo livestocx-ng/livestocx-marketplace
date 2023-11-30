@@ -4,6 +4,7 @@ import {
 	FilterOption,
 	FooterNavLink,
 	Feature,
+	FaqOption,
 } from '@/types/index.types';
 import {Testimonial} from '@/types/types';
 
@@ -250,6 +251,43 @@ export const Features: Feature[] = [
 		title: 'Climate-Resilient Practices',
 		description:
 			'As a future goal, we are putting measures in place to encourage and incentivize climate-resilient farming practices. We will reward farmers who adopt eco-friendly methods, contributing to the overall climate resilience of the agricultural sector.',
+	},
+];
+
+export const FaqItems: FaqOption[] = [
+	{
+		id: 1,
+		title: 'What can Livestocx do for me as a farmer?',
+		description:
+			'Livestocx will help you get more customers easily and faster by giving you and your business increased visibility all over Nigeria and beyond. This is through our unique features to promote small-holder livestock farmers all over Africa.',
+	},
+	{
+		id: 2,
+		title: 'Do I need to pay to post my product on Livestocx?',
+		description:
+			'Posting on Livestocx, like posting on Facebook, is totally free of charge. But for farmers who want to stand out among others in search, we charge a small premium fee of 500 Naira for advertisement.',
+	},
+	{
+		id: 3,
+		title: 'Why do I have to upload my means of identification when registering?',
+		description:
+			'This is one of our steps to reduce the number of scammers on our platform. We only use your means of identification to verify that you are an actual and legitimate livestock farmer.',
+	},
+	{
+		id: 4,
+		title: 'What other steps are you taking to prevent scammers on your platform?',
+		description:
+			'We are currently working on a chat-like feature where buyers and sellers can converse in-app so that in cases of fraudulent activities, we can properly investigate it.',
+		first_description:
+			'We take a strong stance against all forms of camming and fraud. To this end, in addition to collecting your details for verification, we are creating a badge system for trusted sellers who have shown credibility over time. This will help buyers avoid less credible sellers.',
+		second_description:
+			'We have created a means for reporting all unethical or fraudulent activities to us. This will help us take necessary action on the sellers involved.',
+	},
+	{
+		id: 5,
+		title: 'Do you have a mobile app I can download on my phone?',
+		description:
+			'We are currently developing our mobile app that you can download on your phone. In the meantime, you should be able to do everything through our site: www.livestocx.com',
 	},
 ];
 

@@ -32,3 +32,11 @@ export interface Feature {
 	title: string;
 	description: string;
 }
+
+export interface FaqOption {
+	id: number;
+	title: string;
+	description: string;
+	first_description?: string;
+	second_description?: string;
+}

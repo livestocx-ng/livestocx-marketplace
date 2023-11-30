@@ -7,7 +7,7 @@ import {
 	Settings,
 	Megaphone,
 	LogOutIcon,
-	ShoppingCartIcon,
+	ShoppingBasket,
 } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link';
@@ -91,7 +91,7 @@ const MainNavbar = () => {
 							src='/shopping__icon.png'
 							className='text-white'
 						/> */}
-						<ShoppingCartIcon
+						<ShoppingBasket
 							className={`h-5 w-5 ${
 								scrolling ? 'text-main' : 'text-white'
 							}`}
@@ -156,7 +156,7 @@ const MainNavbar = () => {
 											scrolling ? 'bg-white' : 'bg-mai'
 										} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
 									>
-										<ShoppingCartIcon
+										<ShoppingBasket
 											className={`h-5 w-5 text-main`}
 										/>
 
@@ -336,7 +336,7 @@ const MainNavbar = () => {
 							scrolling ? 'bg-white' : 'bg-main'
 						} rounded-full flex flex-col items-center justify-center`}
 					>
-						<ShoppingCartIcon
+						<ShoppingBasket
 							className={`h-5 w-5 ${
 								scrolling ? 'text-main' : 'text-white'
 							}`}

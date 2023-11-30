@@ -17,14 +17,17 @@ import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
 import {Checkbox} from '@/components/ui/checkbox';
 import {Plus, UploadCloud, X} from 'lucide-react';
-import {isFileSizeValid} from '@/utils/file.validation';
+import {isFileSizeValid} from '@/utils/media/file.validation';
 import ButtonLoader from '@/components/loader/button-loader';
 import {useEffect, useReducer, useRef, useState} from 'react';
 import FormTextInput from '@/components/input/form-text-input';
 import FormTextAreaInput from '@/components/input/form-text-area-input';
 import {CategoryDropDownButton} from '../buttons/category-dropdown-button';
 import {DropdownMenuCheckboxItemProps} from '@radix-ui/react-dropdown-menu';
-import {createBlobImageUrls, getFilesTypeCount} from '@/utils/file.mutation';
+import {
+	createBlobImageUrls,
+	getFilesTypeCount,
+} from '@/utils/media/file.mutation';
 import {ValidateUpdateProductFormData} from '@/utils/form-validations/product.validation';
 
 export type FormData = {

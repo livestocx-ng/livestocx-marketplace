@@ -1,7 +1,8 @@
-import TestimonialScetion from '@/components/common/testimonials';
-import {Features, TeamMembers} from '@/data';
-import Image from 'next/image';
+'use client';
 import Link from 'next/link';
+import Image from 'next/image';
+import {Features, TeamMembers} from '@/data';
+import YoutubeVideoPlayer from '@/components/media/youtube-video-player';
 
 const AboutUsPage = () => {
 	return (
@@ -55,12 +56,14 @@ const AboutUsPage = () => {
 					</p>
 				</div>
 				<div className='w-full sm:w-[28%] h-[300px] relative'>
-					<Image
+					{/* <Image
 						fill
 						alt=''
 						src={'/about__art__2.svg'}
 						className='object-fill w-full h-full'
-					/>
+					/> */}
+
+					<YoutubeVideoPlayer videoId='5TZLUmUupt8' />
 				</div>
 			</div>
 
@@ -105,18 +108,19 @@ const AboutUsPage = () => {
 					transport systems; improving market access, and increasing
 					profits for local farmers.
 				</div>
-				<div className='w-full sm:w-[28%] h-[300px] relative'>
-					<Image
+				<div className='w-full sm:w-[28%] h-[300px] relative mt-10 sm:mt-0'>
+					{/* <Image
 						fill
 						alt=''
 						src={'/about__art__3.svg'}
 						className='object-fill w-full h-full'
-					/>
+					/> */}
+					<YoutubeVideoPlayer videoId='nVgwthbr9qs' />
 				</div>
 			</div>
 
 			<div className='bg-about bg-cover bg-center bg-no-repeat w-full py-8 mb-10 sm:mb-20 flex flex-col items-end pr-5 sm:pr-10 relative'>
-				<div className='flex flex-col space-y-10 justify-end px-5 pr-0 sm:pr-10 w-full sm:w-[40%] py-5'>
+				<div className='flex flex-col space-y-10 justify-end px-5 pr-0 sm:pr-10 w-full sm:w-[60%] py-5'>
 					<div className='border border-main p-3'>
 						<h1 className='text-orange-500 text-base sm:text-xl font-semibold text-center'>
 							Our Vision
@@ -162,23 +166,23 @@ const AboutUsPage = () => {
 				</h1>
 			</div>
 
-			<div className='space-y-20 px-8 py-10 pb-20 w-full'>
+			<div className='space-y-20 md:space-y-0 px-8 py-10 pb-20 w-full flex flex-col md:flex-row justify-between items-start'>
 				{TeamMembers.map((member) => (
 					<div
 						key={member.id}
-						className='flex flex-col md:flex-row sm:space-x-5 items-start w-full'
+						className='flex flex-col md:flex-row md:space-x-5 items-start w-full md:w-[45%]'
 					>
-						<div className='w-full sm:w-[20%] h-[250px] relative'>
+						<div className='w-full sm:w-[30%] h-[240px] md:h-[200px] relative mb-10 sm:mb-0'>
 							<Image
 								fill
 								alt={member.name}
 								src={member.image}
 								className='object-cover h-full w-full absolute z-[5]'
 							/>
-							<div className='absolute top-5 -left-3 sm:w-[100%] h-[240px] bg-green-600' />
+							<div className='absolute top-5 -left-3 sm:w-[100%] h-[190px] bg-green-600' />
 						</div>
 
-						<div className='space-y-5 w-full sm:w-[70%] mt-10 sm:mt-0'>
+						<div className='lspace-y-5 w-full md:w-[70%] t-10 sm:mt-0'>
 							<h1 className='text-main font-bold text-xl'>
 								{member.name}
 							</h1>
@@ -186,7 +190,7 @@ const AboutUsPage = () => {
 								{member.intro}
 							</p>
 
-							<div className='flex items-center space-x-5'>
+							<div className='flex items-center space-x-5 mt-5 sm:mt-0'>
 								<Link
 									target='_blank'
 									href={member.facebook}
@@ -234,7 +238,7 @@ const AboutUsPage = () => {
 					</div>
 				))}
 			</div>
-{/* 
+			{/* 
 			<TestimonialScetion /> */}
 		</main>
 	);

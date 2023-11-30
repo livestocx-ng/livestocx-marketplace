@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import {Button} from '@/components/ui/button';
 import {useState} from 'react';
+import {useRouter} from 'next/navigation';
 
 interface Slide {
 	id: number;
@@ -29,6 +30,8 @@ const CarouselSlideItems: Slide[] = [
 ];
 
 const CarouselSlide = () => {
+	const router = useRouter();
+
 	const [currentSlide, setCurrentSlide] = useState<Slide>(
 		CarouselSlideItems[0]
 	);
@@ -45,6 +48,7 @@ const CarouselSlide = () => {
 
 					<Button
 						type='button'
+						onClick={() => router.push('/about-us')}
 						className='text-black bg-white hover:bg-white'
 					>
 						Learn More

@@ -48,6 +48,10 @@
 	outline: 1px solid slategrey;
 }
 
+.ReactCollapse--collapse {
+	transition: height 1200ms;
+}
+
 @layer base {
 	:root {
 		--background: 0 0% 100%;

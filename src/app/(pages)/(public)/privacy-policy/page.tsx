@@ -206,7 +206,7 @@ const PrivacyPolicyPage = () => {
 					</li>
 				</ol>
 
-				<p className='text-sm'>
+				<p className='text-sm leading-7'>
 					Please review this Privacy Policy periodically for any
 					updates or changes. By continuing to use our Website, you
 					acknowledge that you have read and understood this Policy

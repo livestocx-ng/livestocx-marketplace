@@ -64,11 +64,11 @@ export const HelpNavLinks: NavLink[] = [
 	},
 	{
 		title: 'Terms & Conditions',
-		url: '#',
+		url: '/terms-of-service',
 	},
 	{
 		title: 'Privacy Policy',
-		url: '#',
+		url: '/privacy-policy',
 	},
 ];
 

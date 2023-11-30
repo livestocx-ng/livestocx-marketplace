@@ -54,6 +54,12 @@ interface WelcomeFarmerModal {
 	onClose: () => void;
 }
 
+interface UpdateUserRoleModal {
+	isOpen: boolean;
+	onOpen: () => void;
+	onClose: () => void;
+}
+
 interface UpdateProductModal {
 	isOpen: boolean;
 	payload: Product;
@@ -71,6 +77,12 @@ interface DeleteProductModal {
 }
 
 export const useUpdateWelcomeFarmerModalStore = create<WelcomeFarmerModal>((set) => ({
+	isOpen: false,
+	onOpen: () => set({isOpen: true}),
+	onClose: () => set({isOpen: false}),
+}));
+
+export const useUpdateUserRoleModalStore = create<UpdateUserRoleModal>((set) => ({
 	isOpen: false,
 	onOpen: () => set({isOpen: true}),
 	onClose: () => set({isOpen: false}),

@@ -1,15 +1,15 @@
 'use client';
 import {X} from 'lucide-react';
+import {
+	useGlobalStore,
+	useDeleteProductModalStore,
+} from '@/hooks/use-global-store';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
 import {useEffect, useReducer, useState} from 'react';
 import ButtonLoader from '@/components/loader/button-loader';
-import {
-	useGlobalStore,
-	useDeleteProductModalStore,
-} from '@/hooks/use-global-store';
 
 export type FormData = {
 	id: string;

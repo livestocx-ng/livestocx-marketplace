@@ -5,23 +5,28 @@ interface ContactUsDto {
 	message: string;
 }
 
+const emailRegEX = new RegExp(/^\S+@\S+\.\S+$/);
+
 export function ValidateContactUsFormData(formData: ContactUsDto): string {
 	let message = '';
 
 	if (!formData.firstName) {
-		return (message = 'Current password is required.');
+		return (message = 'First name is required.');
 	}
 
 	if (!formData.lastName) {
-		return (message = 'Confirm password is required.');
+		return (message = 'Last name is required.');
 	}
 
 	if (!formData.email) {
-		return (message = 'New password is required.');
+		return (message = 'Email is required.');
+	}
+	if (!emailRegEX.test(formData.email)) {
+		return (message = 'Invalid email input.');
 	}
 
 	if (!formData.message) {
-		return (message = 'Confirm password is required.');
+		return (message = 'Message is required.');
 	}
 
 	return message;

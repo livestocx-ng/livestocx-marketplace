@@ -12,6 +12,7 @@ import Link from 'next/link';
 import {Plus} from 'lucide-react';
 import {FaqItems} from '@/data';
 import FaqAccordionCard from '@/components/cards/faq-accordion-card';
+import axios, {AxiosError} from 'axios';
 
 type FormData = {
 	email: string;
@@ -79,13 +80,38 @@ const ContactUsPage = () => {
 
 		try {
 			setLoading(true);
-			// console.log('[SIGNIN-PAYLOAD] :: ', formData);
+			console.log('[CONTACT-US-PAYLOAD] :: ', formData);
+
+			const {data} = await axios.post(
+				`${process.env.NEXT_PUBLIC_API_URL}/notifications/contact-us`,
+				formData
+			);
+
+			console.log('[DATA] :: ', data);
+
+			toast.success(
+				'Thank you for your message, we will reply you shortly.'
+			);
+
+			setLoading(false);
+
+			updateFormData({
+				type: 'UPDATE_FORMDATA',
+				payload: {
+					email: '',
+					message: '',
+					lastName: '',
+					firstName: '',
+				},
+			});
 		} catch (error) {
 			setLoading(false);
 
-			console.error('[SIGNIN-ERROR]', error);
+			const _error = error as AxiosError;
 
-			toast.error('Invalid credentials');
+			console.error('[SIGNIN-ERROR]', _error);
+
+			toast.error('An error occured!');
 		}
 	};
 
@@ -113,6 +139,7 @@ const ContactUsPage = () => {
 							<h1 className='text-sm'>First Name</h1>
 							<FormTextInput
 								name='firstName'
+								disabled={loading}
 								padding='py-4 px-4'
 								value={formData.firstName}
 								handleChange={handleChange}
@@ -124,6 +151,7 @@ const ContactUsPage = () => {
 							<h1 className='text-sm'>Last Name</h1>
 							<FormTextInput
 								name='lastName'
+								disabled={loading}
 								padding='py-4 px-4'
 								value={formData.lastName}
 								handleChange={handleChange}
@@ -136,6 +164,7 @@ const ContactUsPage = () => {
 						<h1 className='text-sm'>Email</h1>
 						<FormTextInput
 							name='email'
+							disabled={loading}
 							padding='py-4 px-4'
 							value={formData.email}
 							handleChange={handleChange}
@@ -148,6 +177,7 @@ const ContactUsPage = () => {
 						<FormTextAreaInput
 							rows={8}
 							name='message'
+							disabled={loading}
 							padding='py-4 px-4'
 							value={formData.message}
 							handleChange={handleChange}
@@ -265,11 +295,8 @@ const ContactUsPage = () => {
 				</div>
 			</div>
 
-
 			<div className='w-full pt-20 pb-10 text-center'>
-				<h1 className='text-2xl font-semibold text-mai'>
-					FAQs
-				</h1>
+				<h1 className='text-2xl font-semibold text-mai'>FAQs</h1>
 			</div>
 
 			<div className='w-full px-4 md:px-8 pb-20'>

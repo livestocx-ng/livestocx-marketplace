@@ -6,8 +6,9 @@ const YoutubeVideoPlayer = ({videoId}: {videoId: string}) => {
 		width: '100%',
 		height: '100%',
 		playerVars: {
+			rel: 0,
 			autoplay: 0,
-            mute: 1
+			mute: 1,
 		},
 	};
 
@@ -23,11 +24,11 @@ const YoutubeVideoPlayer = ({videoId}: {videoId: string}) => {
 
 	return (
 		<YouTube
-        opts={opts}
+			opts={opts}
 			videoId={videoId}
 			onReady={onReady}
 			onError={onError}
-            className='object-cover h-full w-full absolute'
+			className='object-cover h-full w-full absolute'
 		/>
 	);
 };

@@ -279,7 +279,7 @@ export const FaqItems: FaqOption[] = [
 		description:
 			'We are currently working on a chat-like feature where buyers and sellers can converse in-app so that in cases of fraudulent activities, we can properly investigate it.',
 		first_description:
-			'We take a strong stance against all forms of camming and fraud. To this end, in addition to collecting your details for verification, we are creating a badge system for trusted sellers who have shown credibility over time. This will help buyers avoid less credible sellers.',
+			'We take a strong stance against all forms of scamming and fraud. To this end, in addition to collecting your details for verification, we are creating a badge system for trusted sellers who have shown credibility over time. This will help buyers avoid less credible sellers.',
 		second_description:
 			'We have created a means for reporting all unethical or fraudulent activities to us. This will help us take necessary action on the sellers involved.',
 	},

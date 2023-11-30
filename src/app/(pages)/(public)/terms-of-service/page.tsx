@@ -149,7 +149,7 @@ const TermsOfServicePage = () => {
 					</li>
 				</ol>
 
-				<p className='text-sm'>
+				<p className='text-sm leading-7'>
 					Please read these Terms carefully before using the Website.
 					By using the Website, you signify your acceptance of these
 					Terms.

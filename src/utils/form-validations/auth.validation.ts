@@ -11,6 +11,7 @@ interface SignupDto {
 	password: string;
 	role: 'FARMER' | 'CUSTOMER';
 	location: string;
+	acceptedTerms: boolean;
 	confirmPassword: string;
 }
 
@@ -75,6 +76,9 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 
 	if (formData.role === 'FARMER' && !formData.location) {
 		return (message = 'Location is required.');
+	}
+	if (formData.acceptedTerms === false) {
+		return (message = 'Please accept our terms of service and privacy policy.');
 	}
 
 	return message;

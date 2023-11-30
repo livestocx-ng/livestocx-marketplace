@@ -4,10 +4,10 @@ import Image from 'next/image';
 import {NigeriaStates} from '@/data';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
-import {useRouter, useSearchParams} from 'next/navigation';
-import {useEffect, useReducer, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {Separator} from '@/components/ui/separator';
+import {useEffect, useReducer, useState} from 'react';
+import {useRouter, useSearchParams} from 'next/navigation';
 import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
 import AuthHeader from '../../../../components/header/auth-header';
@@ -23,6 +23,7 @@ type FormData = {
 	password: string;
 	role: 'FARMER' | 'CUSTOMER';
 	location: string;
+	acceptedTerms: boolean;
 	confirmPassword: string;
 };
 
@@ -39,6 +40,7 @@ const initialState: FormData = {
 	password: '',
 	location: '',
 	role: 'CUSTOMER',
+	acceptedTerms: false,
 	confirmPassword: '',
 };
 
@@ -274,12 +276,33 @@ const SignUpPage = () => {
 								{' '}
 								<input
 									type='checkbox'
-									name='remember-me'
-									id=''
+									disabled={loading}
+									checked={formData.acceptedTerms}
+									onChange={() => {
+										updateFormData({
+											type: 'UPDATE_FORMDATA',
+											payload: {
+												acceptedTerms:
+													!formData.acceptedTerms,
+											},
+										});
+									}}
 								/>
 								<p className='text-sm'>
 									I agree your{' '}
-									<Link href={'#'} className='text-main'>
+									<Link
+										target='_blank'
+										className='text-main'
+										href={'/terms-of-service'}
+									>
+										Terms of service
+									</Link>{' '}
+									and{' '}
+									<Link
+										target='_blank'
+										className='text-main'
+										href={'/privacy-policy'}
+									>
 										Privacy Policy
 									</Link>
 								</p>

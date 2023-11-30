@@ -177,8 +177,8 @@ const ContactUsPage = () => {
 			</div>
 
 			<div className='w-full px-4 md:px-8 mt-20 sm:mt-0'>
-				<div className='border border-main flex flex-wrap items-center justify-between p-10 gap-10'>
-					<div className='flex flex-col items-center w-[240px] md:w-[300px] space-y-5 bg-white shadow-lg rounde py-10'>
+				<div className='border border-main flex flex-wrap items-center justify-between p-5 md:p-10 gap-10'>
+					<div className='flex flex-col items-center w-[300px] space-y-5 bg-white shadow-lg rounde py-10'>
 						<Image
 							alt=''
 							width={40}

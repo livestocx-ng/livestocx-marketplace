@@ -172,7 +172,7 @@ const AboutUsPage = () => {
 						key={member.id}
 						className='flex flex-col md:flex-row md:space-x-5 items-start w-full md:w-[45%]'
 					>
-						<div className='w-full sm:w-[30%] h-[240px] md:h-[200px] relative mb-10 sm:mb-0'>
+						<div className='w-full sm:w-[30%] h-[280px] md:h-[200px] relative mb-10 sm:mb-0'>
 							<Image
 								fill
 								alt={member.name}

@@ -27,7 +27,7 @@ const SellerInfoCard = ({vendor}: {vendor: Vendor}) => {
 
 				<h1 className='text-sm uppercase font-medium'>{vendor.name}</h1>
 				<p className='text-xs'>
-					{vendor.address} {vendor.location} State.
+					{vendor.address} {vendor.state} State.
 				</p>
 			</div>
 

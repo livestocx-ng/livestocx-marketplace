@@ -21,6 +21,8 @@ export interface User {
 	phoneNumber: string;
 	email: string;
 	role: string;
+	isProfileUpdated: boolean;
+	isVendorProfileUpdated: boolean;
 	accessToken: string;
 	refreshToken: string;
 }
@@ -41,7 +43,8 @@ export interface Vendor {
 	id: string;
 	vendorId?: string;
 	name: string;
-	location?: string;
+	state?: string;
+	city?: string;
 	address: string;
 	avatar: string;
 	avatarKey: string;
@@ -76,12 +79,12 @@ export interface DesiredItem {
 }
 
 export interface DesiredItemInfo {
-	vendor: string,
-	name: string,
-	address: string,
-	avatar: string,
-	email: string,
-	phoneNumber: string,
+	vendor: string;
+	name: string;
+	address: string;
+	avatar: string;
+	email: string;
+	phoneNumber: string;
 }
 
 export interface UserProduct extends Product {

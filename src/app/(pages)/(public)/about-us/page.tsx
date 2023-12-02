@@ -14,14 +14,14 @@ const AboutUsPage = () => {
 			</section>
 
 			<div className='flex flex-wrap items-center justify-between w-full px-8 sm:py-10 mt-10 sm:mt-0'>
-				<div className='w-full sm:w-[40%] text-base sm:text-xl'>
+				<div className='w-full sm:w-[50%] text-base sm:text-xl leading-8'>
 					Livestocx is an AI-powered livestock marketplace connecting
 					small-holder livestock farmers directly to sellers, evading
 					middlemen and managing all their logistics while reducing
 					trade inefficiencies, low customer reach, unsustainable
 					transport services, and hence losses
 				</div>
-				<div className='w-[300px] h-[200px] sm:w-[60%] sm:h-[400px] relative'>
+				<div className='w-[300px] h-[200px] sm:w-[50%] sm:h-[400px] relative'>
 					<Image
 						alt=''
 						fill

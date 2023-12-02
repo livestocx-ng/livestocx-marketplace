@@ -1,6 +1,7 @@
 interface UpdateVendorProfileDto {
 	name: string;
-	location?: string;
+	state: string;
+	city: string;
 	address: string;
 	avatar: File | null;
 	avatarUrl: string;
@@ -18,8 +19,12 @@ export function ValidateUpdateVendorProfileFormData(
 		return (message = 'Vendor name is required.');
 	}
 
-	if (!formData.location) {
-		return (message = 'Vendor location is required.');
+	if (!formData.state) {
+		return (message = 'Vendor state is required.');
+	}
+
+	if (!formData.city) {
+		return (message = 'Vendor city is required.');
 	}
 
 	if (!formData.address) {

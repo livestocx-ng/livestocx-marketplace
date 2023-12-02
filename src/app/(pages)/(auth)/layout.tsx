@@ -19,8 +19,11 @@ const PagesLayout = ({children}: AuthPagesLayoutProps) => {
 	const welcomeFarmerModal = useUpdateWelcomeFarmerModalStore();
 
 	useEffect(() => {
-		if (user) {
+		if (user && user?.isProfileUpdated && user?.isVendorProfileUpdated) {
 			router.push('/');
+		}
+		if (user && user?.isProfileUpdated && !user?.isVendorProfileUpdated) {
+			router.push('/compliance');
 		}
 	}, [user]);
 

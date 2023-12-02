@@ -297,7 +297,7 @@ const CompliancePage = () => {
 							name='socials'
 							padding='py-3 px-4'
 							disabled={loading}
-							value={formData.socials}
+							value={formData?.socials!}
 							handleChange={handleChange}
 							placeHolder='website, facebook, instagram'
 							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'

@@ -12,6 +12,7 @@ import {ValidateUpdateProfileFormData} from '@/utils/form-validations/settings.v
 import {useGlobalStore} from '@/hooks/use-global-store';
 import ButtonLoader from '@/components/loader/button-loader';
 import {ValidateUpdateVendorProfileFormData} from '@/utils/form-validations/vendor.profile.validation';
+import {NigeriaCities, NigeriaStates} from '@/data';
 
 interface AccountSettingsProps {
 	user: User | null;
@@ -19,7 +20,8 @@ interface AccountSettingsProps {
 
 type FormData = {
 	name: string;
-	location?: string;
+	state: string;
+	city: string;
 	address: string;
 	avatar: File | null;
 	avatarUrl: string;
@@ -35,7 +37,8 @@ type FormAction = {
 
 const initialState: FormData = {
 	name: '',
-	location: '',
+	state: '',
+	city: '',
 	address: '',
 	avatar: null,
 	avatarUrl: '',
@@ -59,6 +62,7 @@ const VendorSettings = () => {
 
 	const avatarRef = useRef<HTMLInputElement>(null);
 
+	const [cities, setCities] = useState<string[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
 
@@ -92,7 +96,8 @@ const VendorSettings = () => {
 			type: 'UPDATE_FORMDATA',
 			payload: {
 				name: vendor?.name,
-				location: vendor?.location,
+				state: vendor?.state,
+				city: vendor?.city,
 				address: vendor?.address,
 				avatarUrl: vendor?.avatar,
 				email: vendor?.email,
@@ -100,7 +105,11 @@ const VendorSettings = () => {
 				isUpdated: vendor?.isUpdated,
 			},
 		});
+
+		setCities(NigeriaCities[vendor?.state!]);
 	}, [vendor]);
+
+	console.log(vendor);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		console.log('[EVENT] :: ', event.target.name);
@@ -118,6 +127,15 @@ const VendorSettings = () => {
 				avatar: event.target.files![0],
 				avatarUrl: URL.createObjectURL(event.target.files![0]),
 			},
+		});
+	};
+
+	const handleSelectChange = (
+		event: React.ChangeEvent<HTMLSelectElement>
+	) => {
+		updateFormData({
+			type: 'UPDATE_FORMDATA',
+			payload: {[event.target.name]: event.target.value},
 		});
 	};
 
@@ -187,16 +205,46 @@ const VendorSettings = () => {
 						/>
 					</div>
 					<div className='space-y-1'>
-						<p className='text-sm'>Location</p>
-						<FormTextInput
-							name='location'
-							padding='py-3 px-4'
-							disabled={loading}
-							value={formData.location!}
-							handleChange={handleChange}
-							placeHolder='Location'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-						/>
+						<p className='text-sm'>State</p>
+						<select
+							name='state'
+							className='w-full border py-3 rounded px-3 text-sm scrollbar__1'
+							onChange={handleSelectChange}
+						>
+							<option value={formData.state}>
+								{formData.state}
+							</option>
+							{NigeriaStates.map((option) => (
+								<option
+									key={option}
+									value={option}
+									className='cursor-pointer'
+								>
+									{option}
+								</option>
+							))}
+						</select>
+					</div>
+					<div className='space-y-1'>
+						<p className='text-sm'>City</p>
+						<select
+							name='city'
+							className='w-full border py-3 rounded px-3 text-sm scrollbar__1'
+							onChange={handleSelectChange}
+						>
+							<option value={formData.city}>
+								{formData.city}
+							</option>
+							{cities?.map((option) => (
+								<option
+									key={option}
+									value={option}
+									className='cursor-pointer'
+								>
+									{option}
+								</option>
+							))}
+						</select>
 					</div>
 					<div className='space-y-1'>
 						<p className='text-sm'>Address</p>

@@ -284,7 +284,7 @@ const ContactUsPage = () => {
 							alt=''
 							width={40}
 							height={40}
-							src={'/icon__phone.svg'}
+							src={'/icon__sms.svg'}
 						/>
 						<h1 className='font-semibold text-main'>
 							Send us an Email!

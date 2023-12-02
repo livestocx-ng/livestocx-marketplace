@@ -117,10 +117,11 @@ const AccountSettings = () => {
 
 			const cookieUpdate = await axios.patch('/api/auth/update-cookies', data.data);
 
+			await updateUser(cookieUpdate.data);
+			
 			setLoading(false);
 
 			// console.log('[PROFILE] :: ', cookieUpdate.data);
-			await updateUser(cookieUpdate.data);
 
 			toast.success('Profile updated');
 		} catch (error) {

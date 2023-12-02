@@ -17,6 +17,8 @@ interface SignupDto {
 
 const phoneRegEX = new RegExp(/^\d{11}$/);
 
+const isNumberRegEX = new RegExp(/^[0-9]+$/);
+
 const emailRegEX = new RegExp(/^\S+@\S+\.\S+$/);
 
 const passwordRegEX = new RegExp(
@@ -58,6 +60,9 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 		return (message = 'Phone number is required.');
 	}
 	if (!phoneRegEX.test(formData.phoneNumber)) {
+		return (message = 'Phone number must be at least 11 characters.');
+	}
+	if (!isNumberRegEX.test(formData.phoneNumber)) {
 		return (message = 'Invalid phone number.');
 	}
 	if (!formData.password) {

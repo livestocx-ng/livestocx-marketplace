@@ -3,15 +3,16 @@ import axios from 'axios';
 import Link from 'next/link';
 import Image from 'next/image';
 import {toast} from 'react-hot-toast';
-import {useReducer, useState} from 'react';
+import {useEffect, useReducer, useState} from 'react';
 import {Button} from '@/components/ui/button';
-import {redirect, useRouter} from 'next/navigation';
+import {redirect, useRouter, useSearchParams} from 'next/navigation';
 import {Separator} from '@/components/ui/separator';
 import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
 import AuthHeader from '../../../../components/header/auth-header';
 import FormPasswordInput from '@/components/input/form-password-input';
 import {ValidateSigninFormData} from '@/utils/form-validations/auth.validation';
+import {useGlobalStore} from '@/hooks/use-global-store';
 
 type FormData = {
 	email: string;
@@ -39,6 +40,9 @@ const formReducer = (state: FormData, action: FormAction) => {
 
 const SignInPage = () => {
 	const router = useRouter();
+	const searchParams = useSearchParams();
+
+	const {user, updateUser} = useGlobalStore();
 
 	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
@@ -74,10 +78,15 @@ const SignInPage = () => {
 				toast.error('Invalid credentials');
 			} else {
 				setLoading(false);
+				updateUser(data);
 
 				toast.success('Success');
 
-				router.push('/');
+				if (searchParams.get('redirect_to')) {
+					return router.push(`/${searchParams.get('redirect_to')}`);
+				} else {
+				return router.push('/');
+				}
 			}
 		} catch (error) {
 			setLoading(false);

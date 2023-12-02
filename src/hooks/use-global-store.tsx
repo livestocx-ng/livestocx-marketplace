@@ -24,7 +24,7 @@ interface GlobalStore {
 	products: Product[];
 	totalPages: number;
 	hasNextPage: boolean;
-	currentAccountTab: Tab | 'Dashboard';
+	currentAccountTab: Tab | 'Account' | null;
 	updateDesiredProductInfo: (value: DesiredItemInfo) => void;
 	updateDesiredProduct: (value: DesiredItem) => void;
 	updateDesiredProducts: (value: DesiredItem[]) => void;
@@ -33,7 +33,7 @@ interface GlobalStore {
 	updatePayload: (value: Product) => void;
 	updateVendor: (value: Vendor | null) => void;
 	updateBilling: (value: Billing | null) => void;
-	updateUser: (products: User | null) => void;
+	updateUser: (value: User | null) => void;
 	updateProducts: (products: Product[]) => void;
 	updateProductInfo: (value: ProductInfo) => void;
 	updateProduct: (productId: string, product: Product) => void;
@@ -144,7 +144,7 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	product: null,
 	hasNextPage: false,
 	productInfo: null,
-	currentAccountTab: 'Dashboard',
+	currentAccountTab: 'Account',
 	updateDesiredProductInfo: (value: DesiredItemInfo) =>
 		set({desiredProductInfo: value}),
 	updateDesiredProduct: (value: DesiredItem) =>

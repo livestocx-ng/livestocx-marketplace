@@ -30,7 +30,7 @@ const SellerBanner = () => {
 					<p>
 						Location:{' '}
 						<span className='text-orange-500'>
-							{vendor?.address}, {vendor?.location} State, Nigeria
+							{vendor?.address}, {vendor?.state} State, Nigeria
 						</span>
 					</p>
 					<p>

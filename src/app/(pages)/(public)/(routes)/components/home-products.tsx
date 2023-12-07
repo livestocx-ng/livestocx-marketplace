@@ -1,16 +1,22 @@
 'use client';
 import {RotateCw} from 'lucide-react';
-import {Fragment, useEffect, useState} from 'react';
+import {Dispatch, Fragment, SetStateAction, useEffect, useState} from 'react';
 import axios, {AxiosError} from 'axios';
 
 import {Button} from '@/components/ui/button';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import ProductCard from '../../../../../components/cards/product-card';
+import PaginationButton from '@/components/utils/pagination-button';
 
 interface Tab {
 	id: number;
 	title: string;
 	value: string;
+}
+
+interface HomeProductsProps {
+	currentPage: number;
+	updateCurrentPage: Dispatch<SetStateAction<number>>;
 }
 
 const TabItems: Tab[] = [
@@ -26,15 +32,11 @@ const TabItems: Tab[] = [
 	},
 ];
 
-const HomeProducts = () => {
-	const {
-		products,
-		hasNextPage,
-	} = useGlobalStore();
+const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
+	const {products, totalPages, hasNextPage} = useGlobalStore();
 
 	const [currentTab, setCurrentTab] = useState<Tab>(TabItems[0]);
 
-	
 	return (
 		<Fragment>
 			<div className='flex item-center space-x-4'>
@@ -67,11 +69,29 @@ const HomeProducts = () => {
 				))}
 			</div>
 
+			{!hasNextPage && totalPages > 1 && (
+				<div className='flex justify-center mt-10'>
+					<Button
+						type='button'
+						variant={'outline'}
+						onClick={() => {
+							updateCurrentPage(1);
+						}}
+						className='flex items-center space-x-1 bg-white border hover:bg:white focus:bg-white'
+					>
+						<RotateCw />
+						<span>Reset</span>
+					</Button>
+				</div>
+			)}
 			{hasNextPage && (
 				<div className='flex justify-center mt-10'>
 					<Button
 						type='button'
 						variant={'outline'}
+						onClick={() => {
+							updateCurrentPage(currentPage + 1);
+						}}
 						className='flex items-center space-x-1 bg-white border hover:bg:white focus:bg-white'
 					>
 						<RotateCw />

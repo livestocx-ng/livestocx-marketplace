@@ -3,16 +3,23 @@ interface SigninDto {
 	password: string;
 }
 
-interface SignupDto {
+interface GoogleProfileDto {
 	firstName: string;
 	lastName: string;
 	phoneNumber: string;
+	location: string;
+};
+
+interface SignupDto {
+	firstName: string;
+	lastName: string;
 	email: string;
 	password: string;
-	role: 'FARMER' | 'CUSTOMER';
 	location: string;
+	phoneNumber: string;
 	acceptedTerms: boolean;
 	confirmPassword: string;
+	role: 'FARMER' | 'CUSTOMER';
 }
 
 const phoneRegEX = new RegExp(/^\d{11}$/);
@@ -84,6 +91,31 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 	}
 	if (formData.acceptedTerms === false) {
 		return (message = 'Please accept our terms of service and privacy policy.');
+	}
+
+	return message;
+}
+
+export function ValidateGoogleProfileFormData(formData: GoogleProfileDto): string {
+	let message = '';
+
+	if (!formData.firstName) {
+		return (message = 'First name is required.');
+	}
+
+	if (!formData.lastName) {
+		return (message = 'Last name is required.');
+	}
+
+	if (!formData.phoneNumber) {
+		return (message = 'Phone number is required.');
+	}
+	if (!isNumberRegEX.test(formData.phoneNumber)) {
+		return (message = 'Invalid phone number.');
+	}
+
+	if (!formData.location) {
+		return (message = 'Location is required.');
 	}
 
 	return message;

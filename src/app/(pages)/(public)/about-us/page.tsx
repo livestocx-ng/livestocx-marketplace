@@ -56,14 +56,14 @@ const AboutUsPage = () => {
 					</p>
 				</div>
 				<div className='w-full sm:w-[28%] h-[300px] relative'>
-					{/* <Image
+					<Image
 						fill
 						alt=''
 						src={'/about__art__2.svg'}
 						className='object-fill w-full h-full'
-					/> */}
+					/>
 
-					<YoutubeVideoPlayer videoId='5TZLUmUupt8' />
+					{/* <YoutubeVideoPlayer videoId='5TZLUmUupt8' /> */}
 				</div>
 			</div>
 
@@ -109,13 +109,13 @@ const AboutUsPage = () => {
 					profits for local farmers.
 				</div>
 				<div className='w-full sm:w-[28%] h-[300px] relative mt-10 sm:mt-0'>
-					{/* <Image
+					<Image
 						fill
 						alt=''
 						src={'/about__art__3.svg'}
 						className='object-fill w-full h-full'
-					/> */}
-					<YoutubeVideoPlayer videoId='nVgwthbr9qs' />
+					/>
+					{/* <YoutubeVideoPlayer videoId='nVgwthbr9qs' /> */}
 				</div>
 			</div>
 

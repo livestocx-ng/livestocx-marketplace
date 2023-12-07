@@ -7,17 +7,17 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from '@/components/ui/tooltip';
-import {NigeriaCities, NigeriaStates} from '@/data';
 import {toast} from 'react-hot-toast';
 import {FileImage} from 'lucide-react';
 import {useRouter} from 'next/navigation';
+import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
+import {NigeriaCities, NigeriaStates} from '@/data';
 import {useGlobalStore} from '@/hooks/use-global-store';
-import React, {useEffect, useReducer, useRef, useState} from 'react';
 import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
+import React, {useEffect, useReducer, useRef, useState} from 'react';
 import {ValidateComplianceFormData} from '@/utils/form-validations/compliance.validation';
-import {useUserHook} from '@/hooks/use-user';
 
 type FormData = {
 	name: string;

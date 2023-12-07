@@ -1,14 +1,15 @@
 import {create} from 'zustand';
 import {
-	Billing,
-	DesiredItem,
-	DesiredItemInfo,
-	Media,
-	Product,
-	ProductInfo,
 	Tab,
 	User,
+	Media,
 	Vendor,
+	Billing,
+	Product,
+	ProductInfo,
+	DesiredItem,
+	Notification,
+	DesiredItemInfo,
 } from '@/types/types';
 
 interface GlobalStore {
@@ -17,6 +18,7 @@ interface GlobalStore {
 	vendors: Vendor[];
 	billing: Billing | null;
 	product: Product | null;
+	notifications: Notification[];
 	desiredProductInfo: DesiredItemInfo | null;
 	desiredProduct: DesiredItem | null;
 	desiredProducts: DesiredItem[];
@@ -25,6 +27,8 @@ interface GlobalStore {
 	totalPages: number;
 	hasNextPage: boolean;
 	currentAccountTab: Tab | 'Account' | null;
+	updateNotification: (notificationId: number, value: Notification) => void;
+	updateNotifications: (value: Notification[]) => void;
 	updateDesiredProductInfo: (value: DesiredItemInfo) => void;
 	updateDesiredProduct: (value: DesiredItem) => void;
 	updateDesiredProducts: (value: DesiredItem[]) => void;
@@ -40,18 +44,32 @@ interface GlobalStore {
 	updatePagination: (totalPages: number, hasNextPage: boolean) => void;
 }
 
-interface ProductModal {
+interface UpdateGoogleProfileModal {
 	isOpen: boolean;
-	payload: Media[];
 	onOpen: () => void;
 	onClose: () => void;
-	updatePayload: (value: Media[]) => void;
+}
+
+interface ReadNotificationModal {
+	isOpen: boolean;
+	payload: Notification | null;
+	onOpen: () => void;
+	onClose: () => void;
+	updatePayload: (value: Notification) => void;
 }
 
 interface WelcomeFarmerModal {
 	isOpen: boolean;
 	onOpen: () => void;
 	onClose: () => void;
+}
+
+interface ProductModal {
+	isOpen: boolean;
+	payload: Media[];
+	onOpen: () => void;
+	onClose: () => void;
+	updatePayload: (value: Media[]) => void;
 }
 
 interface UpdateUserRoleModal {
@@ -76,17 +94,38 @@ interface DeleteProductModal {
 	updatePayload: (value: Product) => void;
 }
 
-export const useUpdateWelcomeFarmerModalStore = create<WelcomeFarmerModal>((set) => ({
-	isOpen: false,
-	onOpen: () => set({isOpen: true}),
-	onClose: () => set({isOpen: false}),
-}));
+export const useUpdateGoogleProfileModalStore =
+	create<UpdateGoogleProfileModal>((set) => ({
+		isOpen: false,
+		onOpen: () => set({isOpen: true}),
+		onClose: () => set({isOpen: false}),
+	}));
 
-export const useUpdateUserRoleModalStore = create<UpdateUserRoleModal>((set) => ({
-	isOpen: false,
-	onOpen: () => set({isOpen: true}),
-	onClose: () => set({isOpen: false}),
-}));
+export const useReadNotificationModalStore = create<ReadNotificationModal>(
+	(set) => ({
+		isOpen: false,
+		payload: null,
+		onOpen: () => set({isOpen: true}),
+		onClose: () => set({isOpen: false}),
+		updatePayload: (value: Notification) => set({payload: value}),
+	})
+);
+
+export const useUpdateWelcomeFarmerModalStore = create<WelcomeFarmerModal>(
+	(set) => ({
+		isOpen: false,
+		onOpen: () => set({isOpen: true}),
+		onClose: () => set({isOpen: false}),
+	})
+);
+
+export const useUpdateUserRoleModalStore = create<UpdateUserRoleModal>(
+	(set) => ({
+		isOpen: false,
+		onOpen: () => set({isOpen: true}),
+		onClose: () => set({isOpen: false}),
+	})
+);
 
 export const useUpdateProductModalStore = create<UpdateProductModal>((set) => ({
 	isOpen: false,
@@ -136,6 +175,7 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	desiredProductInfo: null,
 	desiredProduct: null,
 	desiredProducts: [],
+	notifications: [],
 	vendors: [],
 	billing: null,
 	vendor: null,
@@ -145,10 +185,10 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	hasNextPage: false,
 	productInfo: null,
 	currentAccountTab: 'Account',
+	updateNotifications: (value: Notification[]) => set({notifications: value}),
 	updateDesiredProductInfo: (value: DesiredItemInfo) =>
 		set({desiredProductInfo: value}),
-	updateDesiredProduct: (value: DesiredItem) =>
-		set({desiredProduct: value}),
+	updateDesiredProduct: (value: DesiredItem) => set({desiredProduct: value}),
 	updateDesiredProducts: (value: DesiredItem[]) =>
 		set({desiredProducts: value}),
 	updateVendors: (value: Vendor[]) => set({vendors: value}),
@@ -170,9 +210,22 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 			return {products: updatedProducts};
 		});
 	},
+	updateNotification: (
+		notificationId: number,
+		notification: Notification
+	) => {
+		set((state) => {
+			const index = state.notifications.findIndex(
+				(notification) => notification.id === notificationId
+			);
+
+			const updatedNotifications = [...state.notifications];
+			updatedNotifications[index] = notification;
+
+			return {notifications: updatedNotifications};
+		});
+	},
 	updatePagination: (totalPages: number, hasNextPage: boolean) =>
 		set({totalPages: totalPages, hasNextPage: hasNextPage}),
 	updateProducts: (products: Product[]) => set({products: products}),
-	// updateProductReview: (value: ProductReviewUpdate) =>
-	// 	set({productInfo: value}),
 }));

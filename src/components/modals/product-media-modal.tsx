@@ -42,7 +42,7 @@ const ProductMediaModal = () => {
 	};
 
 	return (
-		<div className='fixed h-screen flex flex-col items-center justify-center w-full bg-[#11111190] backdrop-blur-sm z-10'>
+		<div className='fixed h-screen flex flex-col items-center justify-center w-full bg-[#11111195] backdrop-blur-sm z-10'>
 			<div className='flex items-center justify-center sm:space-x- w-full relative'>
 				<ChevronLeftCircle
 					onClick={() => handleImageChange(-1)}

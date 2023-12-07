@@ -28,6 +28,8 @@ interface ProductReviewDto {
 	description: string;
 }
 
+const isNumberRegEX = new RegExp(/^[0-9]+$/);
+
 export function ValidateCreateProductFormData(
 	formData: CreateProductDto,
 	category: string
@@ -40,14 +42,14 @@ export function ValidateCreateProductFormData(
 	if (!formData.price) {
 		return (message = 'Product price is required.');
 	}
-	if (!parseInt(formData.price)) {
+	if (!isNumberRegEX.test(formData.price)) {
 		return (message = 'Product price must be a number.');
 	}
 	if (!formData.discountPrice) {
 		return (message = 'Product discount price is required.');
 	}
-	if (!parseInt(formData.discountPrice)) {
-		return (message = 'Product discount must be a number..');
+	if (!isNumberRegEX.test(formData.discountPrice)) {
+		return (message = 'Product discount price must be a number..');
 	}
 	if (!formData.description) {
 		return (message = 'Product description is required.');

@@ -7,6 +7,8 @@ export async function GET(req: Request) {
 	const cookieStore = cookies();
 
 	await cookieStore.delete(COOKIE_NAME);
+	await cookieStore.delete('next-auth.csrf-token');
+	await cookieStore.delete('next-auth.session-token');
 
 	return NextResponse.json(
 		{message: 'SUCCESS'},

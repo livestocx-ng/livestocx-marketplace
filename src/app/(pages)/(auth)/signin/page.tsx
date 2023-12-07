@@ -3,16 +3,17 @@ import axios from 'axios';
 import Link from 'next/link';
 import Image from 'next/image';
 import {toast} from 'react-hot-toast';
-import {useEffect, useReducer, useState} from 'react';
+import {signIn} from 'next-auth/react';
+import {useReducer, useState} from 'react';
 import {Button} from '@/components/ui/button';
-import {redirect, useRouter, useSearchParams} from 'next/navigation';
 import {Separator} from '@/components/ui/separator';
+import {useGlobalStore} from '@/hooks/use-global-store';
+import {useRouter, useSearchParams} from 'next/navigation';
 import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
 import AuthHeader from '../../../../components/header/auth-header';
 import FormPasswordInput from '@/components/input/form-password-input';
 import {ValidateSigninFormData} from '@/utils/form-validations/auth.validation';
-import {useGlobalStore} from '@/hooks/use-global-store';
 
 type FormData = {
 	email: string;
@@ -85,7 +86,7 @@ const SignInPage = () => {
 				if (searchParams.get('redirect_to')) {
 					return router.push(`/${searchParams.get('redirect_to')}`);
 				} else {
-				return router.push('/');
+					return router.push('/');
 				}
 			}
 		} catch (error) {
@@ -171,6 +172,7 @@ const SignInPage = () => {
 						<Button
 							type='button'
 							variant={'outline'}
+							onClick={()=> signIn('google')}
 							className='flex items-center gap-x-4 h-12 justify-center w-full rounded-full py-4'
 						>
 							<Image

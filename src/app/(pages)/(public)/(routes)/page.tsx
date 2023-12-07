@@ -17,18 +17,14 @@ export default function HomePage() {
 	const {products, updateProducts, updatePagination} = useGlobalStore();
 
 	const [loading, setLoading] = useState(true);
+	const [currentPage, setCurrentPage] = useState<number>(1)
 
 	const fetchProducts = async () => {
 		try {
 			setLoading(true);
 
-			const emailAvailability = await axios.get(
-				`${process.env.NEXT_PUBLIC_API_URL}/auth/email-availability?email=farmer@gmail.com`
-			);
-
-
 			const {data} = await axios.get(
-				`${process.env.NEXT_PUBLIC_API_URL}/user/products/recommended/fetch-all`
+				`${process.env.NEXT_PUBLIC_API_URL}/user/products/recommended/fetch-all?page=${currentPage}`
 			);
 
 			console.log('[DATA] ::  ', data);
@@ -48,7 +44,7 @@ export default function HomePage() {
 
 	useEffect(() => {
 		fetchProducts();
-	}, []);
+	}, [currentPage]);
 
 	return (
 		<main className='bg-[#28312B]'>
@@ -91,7 +87,7 @@ export default function HomePage() {
 
 			{!loading && products?.length > 0 && (
 				<div className='flex flex-col w-full bg-white px-4 md:px-8 py-10'>
-					<HomeProducts />
+					<HomeProducts currentPage={currentPage} updateCurrentPage={setCurrentPage}/>
 				</div>
 			)}
 

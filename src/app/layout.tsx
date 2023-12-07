@@ -23,11 +23,11 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 	return (
 		<html lang='en'>
 			<body className={poppins.className}>
-				{/* <AuthProvider> */}
-				<ToastProvider />
-				<Toaster />
-				{children}
-				{/* </AuthProvider> */}
+				<AuthProvider>
+					<ToastProvider />
+					<Toaster />
+					{children}
+				</AuthProvider>
 			</body>
 		</html>
 	);

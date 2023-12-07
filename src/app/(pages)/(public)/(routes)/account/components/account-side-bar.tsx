@@ -10,15 +10,16 @@ import {
 	Bell,
 	Mails,
 	Megaphone,
-	ShoppingBasket,
+	ShoppingCart,
 } from 'lucide-react';
 import axios from 'axios';
 import {cn} from '@/lib/utils';
+import Image from 'next/image';
 import {Tab} from '@/types/types';
 import {toast} from 'react-hot-toast';
+import { signOut } from 'next-auth/react';
 import {redirect, useRouter} from 'next/navigation';
 import {useGlobalStore} from '@/hooks/use-global-store';
-import Image from 'next/image';
 
 interface AccountSideBarProps {}
 
@@ -51,6 +52,8 @@ const AccountSideBar = ({}: AccountSideBarProps) => {
 			updateCurrentAccountTab(tab);
 		} else {
 			try {
+				await signOut();
+
 				await axios.get('/api/auth/signout');
 
 				toast.success('Logged out!');
@@ -104,7 +107,7 @@ const AccountSideBar = ({}: AccountSideBarProps) => {
 								// 	src='/shopping__icon.png'
 								// 	className='text-white'
 								// />
-								<ShoppingBasket
+								<ShoppingCart
 									className={`h-6 w-6 ${
 										currentAccountTab == tab &&
 										'text-green-600'

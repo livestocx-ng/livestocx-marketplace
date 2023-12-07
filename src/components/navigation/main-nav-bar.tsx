@@ -7,23 +7,25 @@ import {
 	Settings,
 	Megaphone,
 	LogOutIcon,
-	ShoppingBasket,
+	ShoppingCart,
 } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link';
 import Image from 'next/image';
 import {NavLinks} from '@/data';
-import {Button} from '../ui/button';
-import {toast} from 'react-hot-toast';
-import {useRouter} from 'next/navigation';
-import {useEffect, useState} from 'react';
 import {
 	useGlobalStore,
 	useUpdateUserRoleModalStore,
 } from '@/hooks/use-global-store';
+import {Button} from '../ui/button';
+import {toast} from 'react-hot-toast';
+import {useRouter} from 'next/navigation';
+import {useEffect, useState} from 'react';
+import {signOut, useSession} from 'next-auth/react';
 
 const MainNavbar = () => {
 	const router = useRouter();
+	const session = useSession();
 
 	const {user, updateUser, updateCurrentAccountTab} = useGlobalStore();
 
@@ -37,7 +39,19 @@ const MainNavbar = () => {
 		setSetshowMenu(!showMenu);
 	};
 
+	const handleScrollHeight = () => {
+		const scrollPosition = window.scrollY;
+
+		if (scrollPosition > 50 && !scrolling) {
+			setScrolling(true);
+		} else if (scrollPosition <= 50 && scrolling) {
+			setScrolling(false);
+		}
+	};
+
 	useEffect(() => {
+		handleScrollHeight();
+
 		window.addEventListener('scroll', () => {
 			const scrollPosition = window.scrollY;
 
@@ -96,7 +110,7 @@ const MainNavbar = () => {
 							src='/shopping__icon.png'
 							className='text-white'
 						/> */}
-						<ShoppingBasket
+						<ShoppingCart
 							className={`h-5 w-5 ${
 								scrolling ? 'text-main' : 'text-white'
 							}`}
@@ -161,7 +175,7 @@ const MainNavbar = () => {
 											scrolling ? 'bg-white' : 'bg-mai'
 										} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
 									>
-										<ShoppingBasket
+										<ShoppingCart
 											className={`h-5 w-5 text-main`}
 										/>
 
@@ -356,7 +370,7 @@ const MainNavbar = () => {
 							scrolling ? 'bg-white' : 'bg-main'
 						} rounded-full flex flex-col items-center justify-center`}
 					>
-						<ShoppingBasket
+						<ShoppingCart
 							className={`h-5 w-5 ${
 								scrolling ? 'text-main' : 'text-white'
 							}`}

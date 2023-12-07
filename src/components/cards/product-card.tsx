@@ -63,7 +63,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 				onClick={() => {
 					router.push(`/${product?.productId!.toLowerCase()}`);
 				}}
-				className='h-[120px] sm:h-[160px] relative rounded-t-lg cursor-pointer'
+				className='h-[120px] sm:h-[160px] relative rounded-t-lg cursor-pointer rela'
 			>
 				<Image
 					fill
@@ -72,7 +72,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 					className='object-fill rounded-t-lg'
 				/>
 
-				{product?.isNegotiable && (
+				{product?.isNegotiable === true && (
 					<div className='absolute top-0 left-0 bg-[#11111180] px-4 rounded-tl-lg'>
 						<p className='text-[10px] text-white'>Negotiable</p>
 					</div>
@@ -80,6 +80,9 @@ const ProductCard = ({product}: ProductCardProps) => {
 			</div>
 
 			<div className='flex flex-col justify-end bg-orange-100 px-1 sm:px-2 py-6 rounded-b-lg relative'>
+				<div className='text-xs text-right sm:text-xs font-medium border-b border-t-black'>
+					{product?.vendor?.name}
+				</div>
 				<div className='text-xs sm:text-sm font-semibold'>
 					{product?.name}
 				</div>
@@ -101,7 +104,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 
 							handleLikeUnlikeProduct(formData);
 						}}
-						className='absolute right-14 bottom-[70px] flex items-center justify-center h-6 sm:h-8 w-6 sm:w-8 bg-main rounded-full cursor-pointer'
+						className='absolute right-14 bottom-[95px] flex items-center justify-center h-6 sm:h-8 w-6 sm:w-8 bg-main rounded-full cursor-pointer'
 					>
 						{product?.likedUsers?.includes(user?.id!) ? (
 							<ThumbsDown className='h-3 sm:h-4 w-3 sm:w-4 text-white' />
@@ -110,21 +113,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 						)}
 					</div>
 				)}
-				{/* {product?.likedUsers?.includes(parseInt(user?.id!)) && (
-					<div
-						onClick={() => {
-							const formData: {value: boolean} = {
-								value: false,
-							};
-
-							handleLikeUnlikeProduct(formData);
-						}}
-						className='absolute right-14 bottom-[70px] flex items-center justify-center h-6 sm:h-8 w-6 sm:w-8 bg-main rounded-full cursor-pointer'
-					>
-						<ThumbsDown className='h-3 sm:h-4 w-3 sm:w-4 text-white' />
-					</div>
-				)} */}
-				<div className='absolute right-4 bottom-[70px] flex items-center justify-center h-6 sm:h-8 w-6 sm:w-8 bg-main rounded-full'>
+				<div className='absolute right-4 bottom-[95px] flex items-center justify-center h-6 sm:h-8 w-6 sm:w-8 bg-main rounded-full'>
 					<ShoppingCartIcon className='h-3 sm:h-4 w-3 sm:w-4 text-white' />
 				</div>
 			</div>

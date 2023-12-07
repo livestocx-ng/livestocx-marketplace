@@ -69,6 +69,7 @@ export interface Product {
 	likedUsers: null | string[]; // Change the type of likedUsers accordingly
 	media: Media[];
 	createdAt: string;
+	vendor?: Vendor;
 }
 
 export interface DesiredItem {
@@ -146,4 +147,13 @@ export interface Testimonial {
 	author: string;
 	avatar: string;
 	description: string;
+}
+
+export interface Notification {
+	id: number;
+	title: string;
+	message: string;
+	isRead: boolean;
+	notificationType: string;
+	product: Product | null;
 }

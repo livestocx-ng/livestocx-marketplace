@@ -132,7 +132,7 @@ const ContactUsPage = () => {
 			<div className='flex flex-wrap items-start justify-between w-full px-4 md:px-8 sm:py-10 mt-10 sm:mt-0'>
 				<form
 					onSubmit={handleSubmit}
-					className='w-full sm:w-[50%] flex flex-col space-y-5 md:pr-5'
+					className='w-full sm:w-[60%] flex flex-col space-y-5 md:pr-5'
 				>
 					<div className='w-full flex flex-col md:flex-row justify-between items-center'>
 						<div className='w-full md:w-[48%]'>
@@ -201,8 +201,14 @@ const ContactUsPage = () => {
 						</Button>
 					)}
 				</form>
-				<div className='w-full h-[300px] md:w-[50%] md:h-[480px] mt-10 sm:mt-0 relative'>
-					<YoutubeVideoPlayer videoId='_EoteodbpbU' />
+				<div className='w-full h-[300px] md:w-[40%] md:h-[480px] mt-10 sm:mt-0 relative'>
+					{/* <YoutubeVideoPlayer videoId='_EoteodbpbU' /> */}
+					<Image
+						fill
+						alt=''
+						src={'/about__art__4.svg'}
+						className='object-fill w-full h-full'
+					/>
 				</div>
 			</div>
 

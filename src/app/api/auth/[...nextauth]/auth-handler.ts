@@ -1,6 +1,5 @@
 import axios from 'axios';
 import {cookies} from 'next/headers';
-import {AuthOptions} from 'next-auth';
 import NextAuth from 'next-auth/next';
 import GoogleProvider from 'next-auth/providers/google';
 import {COOKIE_MAX_AGE, COOKIE_NAME} from '@/lib/constants';
@@ -60,4 +59,4 @@ const handler = NextAuth({
 	},
 });
 
-export {handler as GET, handler as POST};
+export default handler;

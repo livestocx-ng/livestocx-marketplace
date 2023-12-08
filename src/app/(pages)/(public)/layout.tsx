@@ -26,9 +26,9 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const updateGoogleProfileModal = useUpdateGoogleProfileModalStore();
 
 	useEffect(() => {
-		if (user && !user?.isProfileUpdated && !user?.isVendorProfileUpdated) {
-			updateGoogleProfileModal.onOpen();
-		}
+		// if (user && !user?.isProfileUpdated && !user?.isVendorProfileUpdated) {
+		// 	updateGoogleProfileModal.onOpen();
+		// }
 		if (
 			user &&
 			user?.isProfileUpdated &&

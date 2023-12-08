@@ -80,9 +80,9 @@ const ProductCard = ({product}: ProductCardProps) => {
 			</div>
 
 			<div className='flex flex-col justify-end bg-orange-100 px-1 sm:px-2 py-6 rounded-b-lg relative'>
-				<div className='text-xs text-right sm:text-xs font-medium border-b border-t-black'>
+				{/* <div className='text-xs text-right sm:text-xs font-medium border-b border-t-black'>
 					{product?.vendor?.name}
-				</div>
+				</div> */}
 				<div className='text-xs sm:text-sm font-semibold'>
 					{product?.name}
 				</div>

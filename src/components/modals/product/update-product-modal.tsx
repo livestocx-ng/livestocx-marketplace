@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import {
 	Tooltip,
 	TooltipContent,
@@ -10,24 +11,23 @@ import {
 	useUpdateProductModalStore,
 } from '@/hooks/use-global-store';
 import {Media} from '@/types/types';
-import Image from 'next/image';
+import {
+	createBlobImageUrls,
+	getFilesTypeCount,
+} from '@/utils/media/file.mutation';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
 import {Checkbox} from '@/components/ui/checkbox';
 import {Plus, UploadCloud, X} from 'lucide-react';
-import {isFileSizeValid} from '@/utils/media/file.validation';
 import ButtonLoader from '@/components/loader/button-loader';
 import {useEffect, useReducer, useRef, useState} from 'react';
+import {isFileSizeValid} from '@/utils/media/file.validation';
 import FormTextInput from '@/components/input/form-text-input';
 import FormTextAreaInput from '@/components/input/form-text-area-input';
 import {CategoryDropDownButton} from '../buttons/category-dropdown-button';
 import {DropdownMenuCheckboxItemProps} from '@radix-ui/react-dropdown-menu';
-import {
-	createBlobImageUrls,
-	getFilesTypeCount,
-} from '@/utils/media/file.mutation';
 import {ValidateUpdateProductFormData} from '@/utils/form-validations/product.validation';
 
 export type FormData = {

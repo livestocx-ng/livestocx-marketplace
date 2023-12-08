@@ -280,10 +280,11 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 
 									<div className='flex flex-col space-y-3'>
 										<p className='text-sm font-medium'>
-											{productInfo?.name!}
+											{productInfo?.name! ?? ''}
 										</p>
 										<p className='text-[10px] px-2 py-1 text-center bg-gray-200 rounded-md'>
-											Replies in 2 days
+											{productInfo?.name &&
+												'Replies in 2 days'}
 										</p>
 									</div>
 								</div>
@@ -365,15 +366,15 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 						</div>
 					</div>
 
-					<div className='mt-10'>
+					<div className='mt-10 px-4 md:px-8'>
 						<h1 className='font-medium text-xl'>Description</h1>
 						<p>{product?.description}</p>
 					</div>
 
-					<div className='mt-5'>
+					<div className='mt-5 w-full px-4 md:px-8'>
 						<h1 className='font-medium text-xl'>Images</h1>
 
-						<div className='grid grid-cols-2 gap-5 md:gap-5 md:flex items-center justify-start w-full rounded-lg px-4 md:px-0'>
+						<div className='grid grid-cols-2 gap-5 md:gap-5 md:flex items-center justify-start w-full rounded-lg'>
 							{product?.media
 								?.filter((media) => media.mediaType === 'IMAGE')
 								?.slice(0, 6)
@@ -423,7 +424,7 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 						</div>
 					</div>
 
-					<div className='mt-5'>
+					<div className='mt-5 px-4 md:px-8'>
 						<h1 className='font-medium text-xl'>Videos</h1>
 
 						<div className='grid grid-cols-2 gap-5 md:gap-5 md:flex items-center justify-start w-full rounded-lg px-4 md:px-0'>

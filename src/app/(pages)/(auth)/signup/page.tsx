@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {NigeriaStates} from '@/data';
 import {toast} from 'react-hot-toast';
+import {signIn} from 'next-auth/react';
 import axios, {AxiosError} from 'axios';
 import {Button} from '@/components/ui/button';
 import {Separator} from '@/components/ui/separator';
@@ -113,7 +114,7 @@ const SignUpPage = () => {
 
 			const {data} = await axios.post('/api/auth/signup', formData);
 
-			console.log('[DATA] :: ', data);
+			// console.log('[DATA] :: ', data);
 
 			if (data?.ok == false) {
 				setLoading(false);
@@ -124,7 +125,7 @@ const SignUpPage = () => {
 
 				toast.success('Account created successfully');
 
-				router.push('/signin');
+				router.push('/');
 
 				setTimeout(() => {
 					if (formData.role === 'FARMER') {
@@ -334,6 +335,7 @@ const SignUpPage = () => {
 						<Button
 							type='button'
 							variant={'outline'}
+							onClick={() => signIn('google')}
 							className='flex items-center gap-x-4 h-12 justify-center w-full rounded-full py-3'
 						>
 							<Image

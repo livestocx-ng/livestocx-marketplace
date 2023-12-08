@@ -17,7 +17,7 @@ const handler = NextAuth({
 					access_type: 'online',
 				},
 			},
-		})
+		}),
 	],
 	callbacks: {
 		async signIn({account, profile}) {
@@ -26,12 +26,16 @@ const handler = NextAuth({
 				console.log(`[USER] :: `, profile);
 
 				try {
+					const name = profile?.name ? profile?.name?.split(' ') : ['', ''];
+					
 					const {data} = await axios.post(
 						`${process.env.NEXT_PUBLIC_API_URL}/auth/google-signin`,
-						{email: profile?.email}
+						{
+							email: profile?.email,
+							firstName: name[0],
+							lastName: name[1],
+						}
 					);
-
-					// console.log('[DATA] :: ', data.data);
 
 					cookies().set({
 						name: COOKIE_NAME,

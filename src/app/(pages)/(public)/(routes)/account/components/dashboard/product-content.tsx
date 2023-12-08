@@ -1,11 +1,11 @@
 'use client';
 import Image from 'next/image';
-import {Badge} from '@/components/ui/badge';
-import {PriceFormatter} from '@/utils/price.formatter';
 import {
 	useGlobalStore,
 	useProductMediaModalStore,
 } from '@/hooks/use-global-store';
+import {Badge} from '@/components/ui/badge';
+import {PriceFormatter} from '@/utils/price.formatter';
 
 interface ProductContentProps {
 	// product: Product;

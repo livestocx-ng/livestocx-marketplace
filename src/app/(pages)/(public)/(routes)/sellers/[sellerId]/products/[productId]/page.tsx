@@ -250,10 +250,12 @@ const SellerProductPage = ({params: {productId}}: SellerProductPageParams) => {
 							<div className='flex flex-col justify-between border border-slate-500 md:rounded-tr-lg p-4'>
 								<div className='flex items-center justify-between w-full'>
 									<h1 className='text-sm font-medium'>
-										{PriceFormatter(
-											product?.discountPrice!
-										)}{' '}
-										- {PriceFormatter(product?.price!)}
+										{product.isNegotiable &&
+											PriceFormatter(
+												product?.discountPrice!
+											)}
+										{product.isNegotiable && ' - '}
+										{PriceFormatter(product?.price!)}
 									</h1>
 
 									{product?.isNegotiable && (

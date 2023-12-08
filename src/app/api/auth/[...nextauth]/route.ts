@@ -17,7 +17,7 @@ const handler = NextAuth({
 					access_type: 'online',
 				},
 			},
-		}),
+		})
 	],
 	callbacks: {
 		async signIn({account, profile}) {

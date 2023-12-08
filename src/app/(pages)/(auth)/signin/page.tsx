@@ -71,7 +71,7 @@ const SignInPage = () => {
 
 			const {data} = await axios.post('/api/auth/signin', formData);
 
-			console.log('[DATA] :: ', data);
+			// console.log('[DATA] :: ', data);
 
 			if (data?.ok == false) {
 				setLoading(false);

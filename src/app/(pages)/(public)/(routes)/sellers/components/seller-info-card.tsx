@@ -32,14 +32,15 @@ const SellerInfoCard = ({vendor}: {vendor: Vendor}) => {
 			</div>
 
 			<div className='flex flex-wrap items-center justify-between py-2'>
+				<div className="h-[80px] w-[80px] rounded-full border border-slate-500 relative">
 				<Image
+					fill
 					alt='image'
-					width={80}
-					height={80}
 					src={vendor?.avatar}
 					// src={'/user__1.svg'}
-					className='rounded-full border border-slate-500 object-fill'
+					className='object-fill h-full w-full absolute rounded-full'
 				/>
+				</div>
 
 				<div className='flex flex-row sm:flex-col space-x-5 sm:space-x-0 sm:space-y-2'>
 					<Link href={`/sellers/${vendor?.vendorId!.toLowerCase()}`}>

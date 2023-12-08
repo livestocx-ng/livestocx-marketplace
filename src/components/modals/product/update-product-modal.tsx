@@ -34,7 +34,7 @@ export type FormData = {
 	id: string;
 	price: number;
 	name: string;
-	discountPrice: number;
+	discountPrice: string;
 	description: string;
 	category: string;
 	media: File[];

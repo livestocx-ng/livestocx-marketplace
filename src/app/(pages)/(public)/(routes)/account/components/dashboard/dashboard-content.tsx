@@ -80,7 +80,10 @@ const DashboardContent = ({}: DashboardContentProps) => {
 				}
 			);
 
-			const cookieUpdate = await axios.patch('/api/auth/update-cookies', data.data);
+			const cookieUpdate = await axios.patch(
+				'/api/auth/update-cookies',
+				data.data
+			);
 
 			setLoading(false);
 
@@ -119,7 +122,9 @@ const DashboardContent = ({}: DashboardContentProps) => {
 						<h1 className='text-base'>
 							{user?.lastName} {user?.firstName}
 						</h1>
-						<p className='text-sm capitalize text-red-600 underline'>{user?.role}</p>
+						<p className='text-sm capitalize text-red-600 underline'>
+							{user?.role}
+						</p>
 					</div>
 
 					<p
@@ -132,20 +137,19 @@ const DashboardContent = ({}: DashboardContentProps) => {
 				<div className='flex flex-col items-start justify-between h-[350px] w-[45%]'>
 					<div className='p-5 flex flex-col items-start w-full h-[300px] justify-between border rounded-lg'>
 						<div className='space-y-3'>
-							<h1 className='text-base font-medium'>
-								Billing Address
-							</h1>
-							<div className='space-y-1 '>
-								<h1 className='text-sm'>Michael Jigga</h1>
-								<p className='text-sm'>
-									New Rayfield, Road 33 Abuja Street
-								</p>
-							</div>
+							<h1 className='text-base font-medium'>Profile</h1>
 							<div className='space-y-1 '>
 								<h1 className='text-sm'>
-									michael.jigga@gmail.com
+									<span className='font-medium'>Name: </span>
+									{user?.lastName} {user?.firstName}
 								</h1>
-								<h1 className='text-sm'>09025605622</h1>
+							</div>
+							<div className='space-y-3'>
+								<h1 className='text-sm'>
+									<span className='font-medium'>Email: </span>
+									{user?.email}
+								</h1>
+								<h1 className='text-sm'><span className="font-medium">Phone: </span>{user?.phoneNumber}</h1>
 							</div>
 						</div>
 						<p
@@ -184,7 +188,7 @@ const DashboardContent = ({}: DashboardContentProps) => {
 				</div>
 			</div>
 
-			<DataTable columns={columns} data={RecentOrders} />
+			{/* <DataTable columns={columns} data={RecentOrders} /> */}
 		</div>
 	);
 };

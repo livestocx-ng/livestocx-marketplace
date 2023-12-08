@@ -14,7 +14,7 @@ interface UpdateProductDto {
 	id: string;
 	price: number;
 	name: string;
-	discountPrice: number;
+	discountPrice: string;
 	description: string;
 	category: string;
 	media: File[];
@@ -45,10 +45,10 @@ export function ValidateCreateProductFormData(
 	if (!isNumberRegEX.test(formData.price)) {
 		return (message = 'Product price must be a number.');
 	}
-	if (!formData.discountPrice) {
-		return (message = 'Product discount price is required.');
-	}
-	if (!isNumberRegEX.test(formData.discountPrice)) {
+	// if (!formData.discountPrice) {
+	// 	return (message = 'Product discount price is required.');
+	// }
+	if (formData.discountPrice && !isNumberRegEX.test(formData.discountPrice)) {
 		return (message = 'Product discount price must be a number..');
 	}
 	if (!formData.description) {
@@ -76,8 +76,11 @@ export function ValidateUpdateProductFormData(
 	if (!formData.price) {
 		return (message = 'Product price is required.');
 	}
-	if (!formData.discountPrice) {
-		return (message = 'Product discount price is required.');
+	// if (!formData.discountPrice) {
+	// 	return (message = 'Product discount price is required.');
+	// }
+	if (formData.discountPrice && !isNumberRegEX.test(formData.discountPrice)) {
+		return (message = 'Product discount price must be a number..');
 	}
 	if (!formData.description) {
 		return (message = 'Product description is required.');

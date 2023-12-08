@@ -1,7 +1,7 @@
 interface ComplianceDto {
 	name: string;
-	state?: string;
-	city?: string;
+	state: string;
+	city: string;
 	address: string;
 	avatar: File | null;
 	identificationDocument: File | null;
@@ -20,6 +20,14 @@ export function ValidateComplianceFormData(formData: ComplianceDto): string {
 	if (!formData.name) {
 		return (message = 'Brand name is required.');
 	}
+	
+		if (!formData.email) {
+			return (message = 'Email is required.');
+		}
+	
+		if (!emailRegEX.test(formData.email)) {
+			return (message = 'Invalid email address.');
+		}
 
 	if (!formData.state) {
 		return (message = 'State is required.');
@@ -31,14 +39,6 @@ export function ValidateComplianceFormData(formData: ComplianceDto): string {
 
 	if (!formData.address) {
 		return (message = 'Address is required.');
-	}
-
-	if (!formData.email) {
-		return (message = 'Email is required.');
-	}
-
-	if (!emailRegEX.test(formData.email)) {
-		return (message = 'Invalid email address.');
 	}
 
 	if (!formData.phoneNumber) {

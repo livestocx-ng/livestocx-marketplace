@@ -1,16 +1,10 @@
 'use client';
 import axios from 'axios';
 import Image from 'next/image';
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from '@/components/ui/tooltip';
+import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {toast} from 'react-hot-toast';
 import {FileImage} from 'lucide-react';
 import {useRouter} from 'next/navigation';
-import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
 import {NigeriaCities, NigeriaStates} from '@/data';
 import {useGlobalStore} from '@/hooks/use-global-store';
@@ -18,6 +12,7 @@ import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
 import React, {useEffect, useReducer, useRef, useState} from 'react';
 import {ValidateComplianceFormData} from '@/utils/form-validations/compliance.validation';
+import Link from 'next/link';
 
 type FormData = {
 	name: string;
@@ -449,20 +444,25 @@ const CompliancePage = () => {
 									<p className='text-xs text-slate-400'>
 										CAC/SCUML/Business Name.
 									</p>
-									<TooltipProvider>
-										<Tooltip>
-											<TooltipTrigger>
-												<p className='text-sm text-main italic'>
-													What's this?
-												</p>
-											</TooltipTrigger>
-											<TooltipContent>
-												<p className='text-sm'>
-													https://www.cac.gov.ng/
-												</p>
-											</TooltipContent>
-										</Tooltip>
-									</TooltipProvider>
+									<Popover>
+										<PopoverTrigger asChild>
+											<Button
+												variant='outline'
+												className='border-0 bg-white hover:bg-white text-main'
+											>
+												What's this?
+											</Button>
+										</PopoverTrigger>
+										<PopoverContent>
+											<Link
+												className=''
+												target='_blank'
+												href={'https://www.cac.gov.ng'}
+											>
+												https://www.cac.gov.ng/
+											</Link>
+										</PopoverContent>
+									</Popover>
 								</div>
 
 								<div className='w-[80px] h-[80px] rounded border flex items-center justify-center relative'>

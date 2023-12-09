@@ -72,7 +72,7 @@ const AccountSideBar = ({}: AccountSideBarProps) => {
 	console.log(user?.role);
 
 	return (
-		<div className='w-[20%] flex flex-col pt-3 border rounded'>
+		<div className='hidden w-[20%] md:flex flex-col pt-3 border rounded'>
 			<h1 className='font-semibold px-4'>Navigation</h1>
 
 			{user && user?.role === 'CUSTOMER' && (

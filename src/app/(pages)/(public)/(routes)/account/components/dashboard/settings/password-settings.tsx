@@ -1,14 +1,13 @@
 'use client';
-import {useReducer, useState} from 'react';
+import {User} from '@/types/types';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
-
-import {User} from '@/types/types';
+import {useReducer, useState} from 'react';
 import {Button} from '@/components/ui/button';
-import FormPasswordInput from '@/components/input/form-password-input';
-import {ValidateUpdatePasswordFormData} from '@/utils/form-validations/password.validation';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import ButtonLoader from '@/components/loader/button-loader';
+import FormPasswordInput from '@/components/input/form-password-input';
+import {ValidateUpdatePasswordFormData} from '@/utils/form-validations/password.validation';
 
 interface PasswordSettingsProps {
 	user: User | null;
@@ -104,7 +103,7 @@ const PasswordSettings = () => {
 	};
 
 	return (
-		<div className='w-full py-3  flex flex-col bg-white border rounded'>
+		<div className='w-full py-3 flex flex-col bg-white border rounded'>
 			<h1 className='font-medium text-base px-4'>Password Settings</h1>
 
 			<div className='flex items-start justify-between w-full border-t mt-2 py-4 px-4'>
@@ -124,8 +123,8 @@ const PasswordSettings = () => {
 						/>
 					</div>
 
-					<div className='flex items-center justify-between w-full'>
-						<div className='space-y-1 w-[48%]'>
+					<div className='flex flex-col md:flex-row items-center justify-between w-full'>
+						<div className='space-y-1 w-full md:w-[48%] mb-3 md:mb-0'>
 							<p className='text-sm'>New Password</p>
 							<FormPasswordInput
 								name='newPassword'
@@ -136,7 +135,7 @@ const PasswordSettings = () => {
 								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
 							/>
 						</div>
-						<div className='space-y-1 w-[48%]'>
+						<div className='space-y-1 w-full md:w-[48%]'>
 							<p className='text-sm'>Confirm Password</p>
 							<FormPasswordInput
 								name='confirmPassword'
@@ -153,14 +152,14 @@ const PasswordSettings = () => {
 						<Button
 							type='button'
 							disabled
-							className='bg-green-500 text-xs text-white hover:bg-green-600 hover:text-white w-fit px-3 rounded'
+							className='bg-green-500 text-xs text-white hover:bg-green-600 hover:text-white w-full md:w-fit px-3 rounded'
 						>
 							<ButtonLoader />
 						</Button>
 					) : (
 						<Button
 							type='submit'
-							className='bg-green-500 text-xs text-white hover:bg-green-600 hover:text-white w-fit px-3 rounded'
+							className='bg-green-500 text-xs text-white hover:bg-green-600 hover:text-white w-full md:w-fit px-3 rounded'
 						>
 							Save Changes
 						</Button>

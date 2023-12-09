@@ -21,7 +21,7 @@ const ProductContent = ({}: ProductContentProps) => {
 	);
 
 	return (
-		<div className='w-[78%] flex flex-col gap-5'>
+		<div className='w-full md:w-[78%] flex flex-col gap-5'>
 			<div className='flex items-center justify-between w-full'>
 				<h1 className='font-medium text-xl'>{product?.name}</h1>
 
@@ -35,8 +35,8 @@ const ProductContent = ({}: ProductContentProps) => {
 			</div>
 
 			<div className='flex flex-col gap-y-5 w-full'>
-				<div className='flex items-start justify-between w-full'>
-					<div className='w-[45%] h-[400px] border rounded border-slate-400 relative'>
+				<div className='flex flex-col md:flex-row items-start justify-between w-full'>
+					<div className='w-full md:w-[45%] h-[400px] border rounded border-slate-400 relative'>
 						<Image
 							alt='product image'
 							fill
@@ -45,7 +45,7 @@ const ProductContent = ({}: ProductContentProps) => {
 						/>
 					</div>
 
-					<div className='w-[55%] flex flex-col gap-y-5 pl-5'>
+					<div className='w-full md:w-[55%] flex flex-col gap-y-5 md:pl-5'>
 						<ProductRowText
 							title='Product Name:'
 							value={product?.name!}
@@ -83,16 +83,16 @@ const ProductContent = ({}: ProductContentProps) => {
 					</div>
 				</div>
 
-				<div>
+				<div className='w-full'>
 					<h1 className='font-medium text-xl'>Description</h1>
 
 					<p>{product?.description}</p>
 				</div>
 
-				<div>
+				<div className='w-full'>
 					<h1 className='font-medium text-xl'>Images</h1>
 
-					<div className='grid grid-cols-2 gap-5 md:gap-0 md:flex items-center justify-between w-full mt-4 rounded-lg px-4 md:px-0'>
+					<div className='grid grid-cols-2 gap-5 md:gap-0 md:flex items-center justify-between w-full mt-4 rounded-lg '>
 						{product?.media
 							?.filter((media) => media.mediaType === 'IMAGE')
 							?.slice(0, 6)
@@ -141,7 +141,7 @@ const ProductContent = ({}: ProductContentProps) => {
 				<div>
 					<h1 className='font-medium text-xl'>Videos</h1>
 
-					<div className='flex items-center justify-start w-full mt-4 rounded-lg px-4 md:px-0'>
+					<div className='flex items-center justify-start w-full mt-4 rounded-lg '>
 						{product?.media?.filter(
 							(media) => media.mediaType === 'VIDEO'
 						).length === 0 && (

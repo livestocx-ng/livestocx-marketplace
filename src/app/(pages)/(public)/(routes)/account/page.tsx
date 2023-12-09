@@ -15,6 +15,7 @@ import DesiredItemContent from './components/dashboard/desired-item-content';
 import DesiredItemsContent from './components/dashboard/desired-items-content';
 import AdvertisementContent from './components/dashboard/advertisement-content';
 import NotificationsContent from './components/dashboard/notifications-content';
+import MobileAccountSideBar from './components/mobile-account-sidebar';
 
 const AccountPage = () => {
 	const {currentAccountTab} = useGlobalStore();
@@ -29,7 +30,11 @@ const AccountPage = () => {
 
 			<AuthHeader />
 
-			<div className='w-full flex flex-col justify-center items-center py-20 px-4 sm:px-10'>
+			<div className='w-full flex flex-col justify-center items-center py-10 md:py-20 px-4 sm:px-10'>
+				<div className='flex w-full'>
+					<MobileAccountSideBar />
+				</div>
+				
 				<div className='flex items-start justify-between w-full'>
 					<AccountSideBar />
 
@@ -39,15 +44,23 @@ const AccountPage = () => {
 
 					{currentAccountTab === 'Product' && <ProductContent />}
 
-					{currentAccountTab === 'Desired Items' && <DesiredItemsContent /> }
+					{currentAccountTab === 'Desired Items' && (
+						<DesiredItemsContent />
+					)}
 
-					{currentAccountTab === 'Desired Item' && <DesiredItemContent />}
+					{currentAccountTab === 'Desired Item' && (
+						<DesiredItemContent />
+					)}
 
-					{currentAccountTab === 'Advertise' && 	<AdvertisementContent /> }
+					{currentAccountTab === 'Advertise' && (
+						<AdvertisementContent />
+					)}
 
 					{currentAccountTab === 'Messages' && <MessagesContent />}
 
-					{currentAccountTab === 'Notifications' && <NotificationsContent /> }
+					{currentAccountTab === 'Notifications' && (
+						<NotificationsContent />
+					)}
 
 					{currentAccountTab === 'Settings' && <SettingsContent />}
 

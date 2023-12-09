@@ -15,14 +15,13 @@ import {
 } from 'lucide-react';
 import axios from 'axios';
 import {cn} from '@/lib/utils';
-import Image from 'next/image';
+import {useState} from 'react';
 import {Tab} from '@/types/types';
 import {toast} from 'react-hot-toast';
 import {signOut} from 'next-auth/react';
+import {Button} from '@/components/ui/button';
 import {redirect, useRouter} from 'next/navigation';
 import {useGlobalStore} from '@/hooks/use-global-store';
-import {Button} from '@/components/ui/button';
-import {useState} from 'react';
 
 interface AccountSideBarProps {}
 
@@ -90,7 +89,12 @@ const MobileAccountSideBar = ({}: AccountSideBarProps) => {
 				Menu
 			</Button>
 			{showAccountMenu && (
-				<div className='block w-[200px] md:hidden fixed z-[15] top-0 left-0 h-screen bg-white'>
+				<div
+					style={{
+						boxShadow: 'rgba(100, 100, 111, 0.8) 0px 7px 29px 0px;',
+					}}
+					className='block w-[80%] md:hidden fixed z-[15] top-0 left-0 h-screen bg-white border-r'
+				>
 					<div className='flex justify-end'>
 						<Button
 							type='button'
@@ -103,7 +107,7 @@ const MobileAccountSideBar = ({}: AccountSideBarProps) => {
 							x
 						</Button>
 					</div>
-					<div className='flex flex-col pt-3 border-b rounded'>
+					<div className='flex flex-col pt-3 rounded'>
 						<h1 className='font-semibold px-4'>Navigation</h1>
 
 						{user && user?.role === 'CUSTOMER' && (
@@ -113,7 +117,7 @@ const MobileAccountSideBar = ({}: AccountSideBarProps) => {
 										key={tab}
 										onClick={() => handleTabClick(tab)}
 										className={cn(
-											`cursor-pointer flex items-center space-x-3 py-4 px-4`,
+											`cursor-pointer flex items-center space-x-3 py-6 px-4`,
 											currentAccountTab === tab
 												? 'bg-slate-100 border-l-4 border-l-green-500'
 												: 'text-gray-500',
@@ -200,7 +204,7 @@ const MobileAccountSideBar = ({}: AccountSideBarProps) => {
 										key={tab}
 										onClick={() => handleTabClick(tab)}
 										className={cn(
-											`cursor-pointer flex items-center space-x-3 py-4 px-4`,
+											`cursor-pointer flex items-center space-x-3 py-6 px-4`,
 											currentAccountTab === tab
 												? 'bg-slate-100 border-l-4 border-l-green-500'
 												: 'text-gray-500',

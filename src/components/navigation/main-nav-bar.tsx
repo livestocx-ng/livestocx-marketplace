@@ -376,18 +376,200 @@ const MainNavbar = () => {
 							}`}
 						/>
 					</Link>
-					<Link
-						href={'/signin'}
+					<div
+						// href={user ? '/account' : '/signin'}
+						onClick={() => {
+							if (!user) {
+								router.push(`${!user && '/signin'}`);
+							} else {
+								setSetShowAccountMenu(!showAccountMenu);
+							}
+						}}
 						className={`h-10 w-10 ${
 							scrolling ? 'bg-white' : 'bg-main'
-						} rounded-full flex flex-col items-center justify-center`}
+						} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
 					>
 						<User2
 							className={`h-5 w-5 ${
-								scrolling ? 'text-main' : 'text-white'
+								scrolling
+									? 'text-main'
+									: 'text-white cursor-pointer'
 							}`}
 						/>
-					</Link>
+
+						{showAccountMenu && (
+							<div
+								onMouseLeave={() =>
+									setSetShowAccountMenu(false)
+								}
+								className='absolute right-0 top-12 w-[200px] rounded shadow-md bg-white flex flex-col space-y-6 items-start px-4 py-5'
+							>
+								<Link
+									href={'/account'}
+									onClick={() => {
+										setSetShowAccountMenu(false);
+
+										updateCurrentAccountTab('Account');
+									}}
+									className={` ${
+										scrolling ? 'bg-white' : 'bg-mai'
+									} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
+								>
+									<User2 className={`h-5 w-5 text-main`} />
+
+									<p className='text-xs'>Account</p>
+								</Link>
+								{user?.role === 'CUSTOMER' && (
+									<Link
+										href={'/account'}
+										onClick={() => {
+											setSetShowAccountMenu(false);
+
+											router.push('/account');
+
+											updateCurrentAccountTab(
+												'Desired Items'
+											);
+										}}
+										className={` ${
+											scrolling ? 'bg-white' : 'bg-mai'
+										} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
+									>
+										<ShoppingCart
+											className={`h-5 w-5 text-main`}
+										/>
+
+										<p className='text-xs'>Desired Items</p>
+									</Link>
+								)}
+								{user?.role === 'FARMER' && (
+									<Link
+										href={'/account'}
+										onClick={() => {
+											setSetShowAccountMenu(false);
+
+											updateCurrentAccountTab('Products');
+										}}
+										className={` ${
+											scrolling ? 'bg-white' : 'bg-mai'
+										} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
+									>
+										<Package
+											className={`h-5 w-5 text-main`}
+										/>
+
+										<p className='text-xs'>Products</p>
+									</Link>
+								)}
+								{user?.role === 'FARMER' && (
+									<Link
+										href={'/account'}
+										onClick={() => {
+											setSetShowAccountMenu(false);
+
+											updateCurrentAccountTab(
+												'Advertise'
+											);
+										}}
+										className={` ${
+											scrolling ? 'bg-white' : 'bg-mai'
+										} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
+									>
+										<Megaphone
+											className={`h-5 w-5 text-main`}
+										/>
+
+										<p className='text-xs'>Advertise</p>
+									</Link>
+								)}
+								<Link
+									href={'/account'}
+									onClick={() => {
+										setSetShowAccountMenu(false);
+
+										updateCurrentAccountTab('Messages');
+									}}
+									className={` ${
+										scrolling ? 'bg-white' : 'bg-mai'
+									} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
+								>
+									<Mails className={`h-5 w-5 text-main`} />
+
+									<p className='text-xs'>Messages</p>
+								</Link>
+								<Link
+									href={'/account'}
+									onClick={() => {
+										setSetShowAccountMenu(false);
+
+										updateCurrentAccountTab(
+											'Notifications'
+										);
+									}}
+									className={` ${
+										scrolling ? 'bg-white' : 'bg-mai'
+									} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
+								>
+									<Bell className={`h-5 w-5 text-main`} />
+
+									<p className='text-xs'>Notifications</p>
+								</Link>
+								<Link
+									href={'/account'}
+									onClick={() => {
+										setSetShowAccountMenu(false);
+
+										updateCurrentAccountTab('Settings');
+									}}
+									className={` ${
+										scrolling ? 'bg-white' : 'bg-mai'
+									} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
+								>
+									<Settings className={`h-5 w-5 text-main`} />
+
+									<p className='text-xs'>Settings</p>
+								</Link>
+								<p
+									// href={'#'}
+									onClick={async () => {
+										try {
+											await axios.get(
+												'/api/auth/signout'
+											);
+
+											toast.success('Logged out!');
+
+											updateUser(null);
+											setSetShowAccountMenu(false);
+
+											router.push('/');
+
+											// window.location.reload();
+										} catch (error) {
+											console.log(
+												'[LOGOUT-ERROR] :: ',
+												error
+											);
+
+											toast.error('Error!');
+										}
+									}}
+									className={` ${
+										scrolling ? 'bg-white' : 'bg-mai'
+									} pt-10 rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in cursor-pointer`}
+								>
+									<LogOutIcon
+										className={`h-5 w-5 text-red-500`}
+									/>
+
+									<p className='text-xs text-red-500'>
+										Logout
+									</p>
+								</p>
+							</div>
+						)}
+					</div>
+					
 					<div
 						onClick={() => {
 							if (!user) {

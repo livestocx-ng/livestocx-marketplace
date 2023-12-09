@@ -37,20 +37,23 @@ const DesiredItemsContent = () => {
 	}, []);
 
 	return (
-		<div className='w-[78%] flex flex-col gap-5'>
-			{/* <div className='flex flex-col items-center justify-center py-20'>
-				<Image
-					alt='logo'
-					width={150}
-					height={150}
-					src={'/logo.svg'}
-					className='opacity-50'
-				/>
-			</div> */}
-			<div className="flex flex-col w-full space-y-5">
-				{desiredProducts?.map((item)=>(
-					<DesiredItemCard key={item.id} item={item}/>
-				))}
+		<div className='w-full md:w-[78%] flex flex-col gap-5'>
+			{desiredProducts?.length === 0 && (
+				<div className='flex flex-col items-center justify-center py-20'>
+					<Image
+						alt='logo'
+						width={150}
+						height={150}
+						src={'/logo.svg'}
+						className='opacity-50'
+					/>
+				</div>
+			)}
+			<div className='flex flex-col w-full space-y-5'>
+				{desiredProducts?.length > 0 &&
+					desiredProducts?.map((item) => (
+						<DesiredItemCard key={item.id} item={item} />
+					))}
 			</div>
 		</div>
 	);

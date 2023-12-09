@@ -103,9 +103,9 @@ const DashboardContent = ({}: DashboardContentProps) => {
 	};
 
 	return (
-		<div className='w-[78%] flex flex-col gap-5'>
-			<div className='flex items-center justify-between w-full'>
-				<div className='p-5 flex flex-col items-center justify-between w-[45%] h-[350px] space-y-3 border rounded-lg'>
+		<div className='w-full md:w-[78%] flex flex-col gap-5'>
+			<div className='flex flex-col md:flex-row items-center justify-between w-full'>
+				<div className='p-5 flex flex-col items-center justify-between w-full md:w-[45%] h-[350px] space-y-3 border rounded-lg'>
 					<div className='text-center'>
 						<div className='h-[150px] w-[150px] rounded-full border relative'>
 							<Image
@@ -134,7 +134,7 @@ const DashboardContent = ({}: DashboardContentProps) => {
 						Edit Profile
 					</p>
 				</div>
-				<div className='flex flex-col items-start justify-between h-[350px] w-[45%]'>
+				<div className='flex flex-col items-start justify-between h-[350px] w-full md:w-[45%]'>
 					<div className='p-5 flex flex-col items-start w-full h-[300px] justify-between border rounded-lg'>
 						<div className='space-y-3'>
 							<h1 className='text-base font-medium'>Profile</h1>

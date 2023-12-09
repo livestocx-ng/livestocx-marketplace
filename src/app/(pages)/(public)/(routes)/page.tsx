@@ -10,7 +10,6 @@ import CarouselSlide from './components/carousel-slide';
 import TestimonialSection from '@/components/common/testimonials';
 import EmptyAnimation from '../../../../../public/animations/animation__3.json';
 import LoadingAnimation from '../../../../../public/animations/loading__animation__1.json';
-import Image from 'next/image';
 
 export default function HomePage() {
 	const userStore = useUserHook();
@@ -27,7 +26,7 @@ export default function HomePage() {
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/recommended/fetch-all?page=${currentPage}`
 			);
 
-			console.log('[DATA] ::  ', data);
+			// console.log('[DATA] ::  ', data);
 
 			updateProducts(data.data.products);
 			updatePagination(data.data.totalPages, data.data.hasNext);

@@ -39,13 +39,20 @@ const SellerBanner = () => {
 					</p>
 					<p>
 						Contact:{' '}
-						<span className='text-orange-500'>{vendor?.phoneNumber}</span>
+						<span className='text-orange-500'>
+							{vendor?.phoneNumber}
+						</span>
 					</p>
 
 					<div className='w-full flex justify-end'>
 						<Button
 							type='button'
 							variant={'outline'}
+							onClick={() => {
+								const chatLink = `https://wa.me/+234${vendor?.phoneNumber}`;
+
+								window.open(chatLink, '_blank');
+							}}
 							className='border border-main text-xs h-12 rounded-md py-3 w-fit'
 						>
 							Chat with Seller

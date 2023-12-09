@@ -184,15 +184,15 @@ const VendorSettings = () => {
 	};
 
 	return (
-		<div className='w-full py-2  flex flex-col bg-white border rounded'>
+		<div className='w-full py-3 flex flex-col bg-white border rounded'>
 			<h1 className='font-medium text-base px-4'>Vendor Settings</h1>
 
-			<div className='flex items-start justify-between w-full border-t mt-2 py-4 px-4'>
+			<div className='flex flex-col-reverse md:flex-row items-start justify-between w-full border-t mt-2 py-4 px-4'>
 				<form
 					onSubmit={handleSubmit}
-					className='w-[55%] flex flex-col space-y-3'
+					className='w-full md:w-[55%] flex flex-col space-y-3'
 				>
-					<div className='space-y-1'>
+					<div className='space-y-1 w-full'>
 						<p className='text-sm'>Name</p>
 						<FormTextInput
 							name='name'
@@ -204,7 +204,7 @@ const VendorSettings = () => {
 							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 						/>
 					</div>
-					<div className='space-y-1'>
+					<div className='space-y-1 w-full'>
 						<p className='text-sm'>State</p>
 						<select
 							name='state'
@@ -225,7 +225,7 @@ const VendorSettings = () => {
 							))}
 						</select>
 					</div>
-					<div className='space-y-1'>
+					<div className='space-y-1 w-full'>
 						<p className='text-sm'>City</p>
 						<select
 							name='city'
@@ -246,7 +246,7 @@ const VendorSettings = () => {
 							))}
 						</select>
 					</div>
-					<div className='space-y-1'>
+					<div className='space-y-1 w-full'>
 						<p className='text-sm'>Address</p>
 						<FormTextInput
 							name='address'
@@ -258,7 +258,7 @@ const VendorSettings = () => {
 							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 						/>
 					</div>
-					<div className='space-y-1'>
+					<div className='space-y-1 w-full'>
 						<p className='text-sm'>Email</p>
 						<FormTextInput
 							name='email'
@@ -270,7 +270,7 @@ const VendorSettings = () => {
 							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 						/>
 					</div>
-					<div className='space-y-1'>
+					<div className='space-y-1 w-full'>
 						<p className='text-sm'>Phone Number</p>
 						<FormTextInput
 							name='phoneNumber'
@@ -287,14 +287,14 @@ const VendorSettings = () => {
 						<Button
 							disabled
 							type='button'
-							className='bg-green-500 text-white text-sm hover:bg-green-600 hover:text-white w-fit px-3 rounded'
+							className='bg-green-500 text-white text-sm hover:bg-green-600 hover:text-white w-full md:w-fit px-3 rounded'
 						>
 							<ButtonLoader />
 						</Button>
 					) : (
 						<Button
 							type='submit'
-							className='bg-green-500 text-white text-sm hover:bg-green-600 hover:text-white w-fit px-3 rounded'
+							className='bg-green-500 text-white text-sm hover:bg-green-600 hover:text-white w-full md:w-fit px-3 rounded'
 						>
 							Save Changes
 						</Button>
@@ -303,7 +303,7 @@ const VendorSettings = () => {
 
 				<div
 					// onSubmit={handleAvatarSubmit}
-					className='flex flex-col items-center justify-center space-y-3 w-[45%]'
+					className='flex flex-col items-center justify-center space-y-3 w-full md:w-[45%]'
 				>
 					<div className='h-[150px] w-[150px] rounded-full border relative'>
 						<Image

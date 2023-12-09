@@ -11,7 +11,7 @@ interface SettingsContentProps {
 
 const SettingsContent = () => {
 	return (
-		<div className='w-[78%] flex flex-col gap-5'>
+		<div className='w-full md:w-[78%] flex flex-col gap-5'>
 			<AccountSettings />
 
 			{/* <BillingSettings/> */}

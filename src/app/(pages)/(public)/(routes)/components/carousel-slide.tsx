@@ -79,11 +79,9 @@ const CarouselSlide = () => {
 			<div className='absolute right-0 bottom-0 w-0 md:h-[200px] md:w-[40%]'>
 				<Image
 					fill
-					// width={400}
-					// height={300}
 					src={currentSlide.image}
+					alt={`Livestocx - ${currentSlide.description}`}
 					className='rounded-tr-lg object-cover h-full w-full'
-					alt={`LiveStocx Carousel - ${currentSlide.description}`}
 				/>
 			</div>
 		</div>

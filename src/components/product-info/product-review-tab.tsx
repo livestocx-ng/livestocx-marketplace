@@ -58,7 +58,7 @@ const ProductReviewTab = () => {
 				?.count || 0;
 		const percentage = (ratingCount / totalCount) * 100;
 
-		console.log(`[PERCENTAGE] :: ${percentage + '%'}`);
+		// console.log(`[PERCENTAGE] :: ${percentage + '%'}`);
 
 		return isNaN(percentage) ? 0 : Number(percentage.toFixed(2));
 		// return isNaN(percentage) ? '0%' : percentage.toFixed(2) + '%';

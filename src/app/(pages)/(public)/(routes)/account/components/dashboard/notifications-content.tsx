@@ -42,7 +42,7 @@ const NotificationsContent = () => {
 	console.log(notifications);
 
 	return (
-		<div className='w-[78%] flex flex-col gap-5'>
+		<div className='w-full md:w-[78%] flex flex-col gap-5'>
 			{notifications.length === 0 && (
 				<div className='flex flex-col items-center justify-center py-20'>
 					<Image
@@ -56,7 +56,7 @@ const NotificationsContent = () => {
 			)}
 
 			{notifications.length > 0 && (
-				<div className='flex flex-col space-y-5 px-8 pb-10'>
+				<div className='flex flex-col space-y-5 md:px-8 pb-10'>
 					{notifications.map((notification) => (
 						<div
 							onClick={() => {

@@ -17,11 +17,9 @@ interface SellerInfoPageProps {
 }
 
 const SellerInfoPage = ({params}: SellerInfoPageProps) => {
-	const [currentPage, setCurrentPage] = useState<number>(1)
-
 	const {products, vendor, updateVendor, updateProducts, updatePagination} =
 		useGlobalStore();
-
+	const [currentPage, setCurrentPage] = useState<number>(1)
 	const [loading, setLoading] = useState<boolean>(true);
 
 	// console.log('[PARAMS] :: ', params);
@@ -61,7 +59,7 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 
 	useEffect(() => {
 		fetchSeller();
-	}, []);
+	}, [currentPage]);
 
 	return (
 		<main className='bg-[#28312B]'>

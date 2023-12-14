@@ -1,7 +1,7 @@
 'use client';
 import Lottie from 'lottie-react';
-import React, {useEffect} from 'react';
 import axios, {AxiosError} from 'axios';
+import React, {useEffect, useState} from 'react';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import AuthHeader from '@/components/header/auth-header';
 import MarketplaceProducts from '../components/marketplace-products';
@@ -15,18 +15,19 @@ interface MarketPlaceFilterPageProps {
 }
 
 const MarketPlaceFilterPage = ({params}: MarketPlaceFilterPageProps) => {
-	console.log('[PARAMS] :: ', params);
 	const {products, updateProducts, updatePagination} = useGlobalStore();
+
+	const [currentPage, setCurrentPage] = useState<number>(1);
 
 	const fetchMarketPlaceFilteredProducts = async () => {
 		try {
 			const {data} = await axios.get(
 				`${
 					process.env.NEXT_PUBLIC_API_URL
-				}/user/products/marketplace/fetch-all?category=${params.category.toUpperCase()}`
+				}/user/products/marketplace/fetch-all?category=${params.category.toUpperCase()}&page=${currentPage}`
 			);
 
-			console.log('[DATA] ::  ', data);
+			// console.log('[DATA] ::  ', data);
 
 			updateProducts(data.data.products);
 			updatePagination(data.data.totalPages, data.data.hasNext);
@@ -58,18 +59,21 @@ const MarketPlaceFilterPage = ({params}: MarketPlaceFilterPageProps) => {
 
 				{products && products?.length === 0 && (
 					<div className='h-[400px] w-1/2 mx-auto'>
-							<Lottie
-								loop={true}
-								className='h-full'
-								animationData={Animation1}
-								// animationData={'/animations/animation__1.json'}
-								// animationData={'/animations/loading__animation.json'}
-							/>
+						<Lottie
+							loop={true}
+							className='h-full'
+							animationData={Animation1}
+							// animationData={'/animations/animation__1.json'}
+							// animationData={'/animations/loading__animation.json'}
+						/>
 					</div>
 				)}
 
 				{products && products?.length > 0 && (
-					<MarketplaceProducts products={products} />
+					<MarketplaceProducts
+						currentPage={currentPage}
+						updateCurrentPage={setCurrentPage}
+					/>
 				)}
 			</div>
 		</div>

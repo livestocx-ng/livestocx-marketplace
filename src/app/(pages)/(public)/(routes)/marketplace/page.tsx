@@ -10,6 +10,7 @@ import MarketplaceProducts from './components/marketplace-products';
 import MarketplaceFilterForm from './components/marketplace-filterform';
 import EmptyAnimation from '../../../../../../public/animations/animation__3.json';
 import LoadingAnimation from '../../../../../../public/animations/loading__animation__1.json';
+import SearchForm from '../components/search-form';
 
 const MarketPlacePage = () => {
 	const userStore = useUserHook();
@@ -25,7 +26,7 @@ const MarketPlacePage = () => {
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/marketplace/fetch-all`
 			);
 
-			console.log('[DATA] ::  ', data);
+			// console.log('[DATA] ::  ', data);
 
 			updateProducts(data.data.products);
 			updatePagination(data.data.totalPages, data.data.hasNext);
@@ -44,7 +45,13 @@ const MarketPlacePage = () => {
 
 	return (
 		<div className='w-full'>
-			<AuthHeader />
+			<section className='h-[35vh] md:h-[50vh] w-full bg-home flex flex-col items-center justify-end gap-y-10 md:gap-y-16 py-5 md:py-10 md:pt-0'>
+				<h1 className='text-xl md:text-5xl font-medium text-white'>
+					Marketplace
+				</h1>
+
+				<SearchForm />
+			</section>
 
 			<div className='w-full flex flex-col pb-20'>
 				<MarketplaceFilterForm />

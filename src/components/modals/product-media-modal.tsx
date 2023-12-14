@@ -1,9 +1,5 @@
 'use client';
-import {
-	Maximize2,
-	ChevronLeftCircle,
-	ChevronRightCircle,
-} from 'lucide-react';
+import {Maximize2, ChevronLeftCircle, ChevronRightCircle} from 'lucide-react';
 import Image from 'next/image';
 import {useEffect, useState} from 'react';
 import {useProductMediaModalStore} from '@/hooks/use-global-store';
@@ -59,7 +55,7 @@ const ProductMediaModal = () => {
 						fill
 						alt={'product'}
 						src={mediaUrl}
-						className='h-full w-full object-fill'
+						className='object-cover h-full w-full'
 					/>
 
 					<p

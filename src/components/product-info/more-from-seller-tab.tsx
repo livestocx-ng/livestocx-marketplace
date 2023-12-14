@@ -13,17 +13,17 @@ const MoreFromSellerTab = () => {
 	const {productInfo} = useGlobalStore();
 
 	return (
-		<div className='flex flex-wrap items-center justify-between w-full gap-y-4 md:gap-6 mt-10'>
+		<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2 mt-5'>
 			{productInfo?.moreProducts?.slice(0, 10).map((product) => {
-				if (!pathName.includes('marketplace')) {
-					return <ProductCard key={product.id} product={product} />;
-				}
-				if (pathName.includes('marketplace')) {
-					return <MarketPlaceProductCard key={product.id} product={product} />;
-				}
-				if (pathName.includes('sellers')) {
-					return <SellerProductCard key={product.id} product={product} />;
-				}
+				return <ProductCard key={product.id} product={product} />;
+				// if (!pathName.includes('marketplace')) {
+				// }
+				// if (pathName.includes('marketplace')) {
+				// 	return <MarketPlaceProductCard key={product.id} product={product} />;
+				// }
+				// if (pathName.includes('sellers')) {
+				// 	return <SellerProductCard key={product.id} product={product} />;
+				// }
 			})}
 		</div>
 	);

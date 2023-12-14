@@ -184,6 +184,21 @@ export const FilterOptions: FilterOption[] = [
 		title: 'Rabbit',
 		value: 'RABBIT',
 	},
+	{
+		id: 9,
+		title: 'Turkey',
+		value: 'TURKEY',
+	},
+	{
+		id: 9,
+		title: 'Grass Cutter',
+		value: 'GRASS-CUTTER',
+	},
+	{
+		id: 9,
+		title: 'Bird',
+		value: 'BIRD',
+	},
 ];
 
 export type SellerFilterOptionsValue =

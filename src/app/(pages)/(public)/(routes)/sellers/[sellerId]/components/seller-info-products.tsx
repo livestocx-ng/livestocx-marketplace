@@ -1,6 +1,6 @@
 'use client';
 import {useGlobalStore} from '@/hooks/use-global-store';
-import SellerProductCard from '@/components/cards/seller-product-card';
+import ProductCard from '@/components/cards/product-card';
 
 
 const SellerInfoProducts = () => {
@@ -8,9 +8,9 @@ const SellerInfoProducts = () => {
 
 	return (
 		<div className='flex flex-col w-full bg-white '>
-			<div className='flex flex-wrap items-center w-full justify-start gap-y-10 gap-x-2 sm:gap-x-5 md:gap-x-10 mt-1'>
+			<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2 mt-5'>
 				{products?.map((product) => (
-					<SellerProductCard key={product.id} product={product} />
+					<ProductCard key={product.id} product={product} />
 				))}
 			</div>
 		</div>

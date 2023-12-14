@@ -1,16 +1,18 @@
 'use client';
+import {
+	useGlobalStore,
+	useCreateProductModalStore,
+} from '@/hooks/use-global-store';
+import {useEffect} from 'react';
 import {Plus} from 'lucide-react';
 import axios, {AxiosError} from 'axios';
-import {useEffect, useState} from 'react';
-import {useModal} from '@/hooks/use-modal';
 import {Button} from '@/components/ui/button';
+import {columns} from './tables/products-column';
 import {DataTable} from '@/components/ui/data-table';
-import {useGlobalStore} from '@/hooks/use-global-store';
-import {ProductColumn, columns} from './tables/products-column';
 
 const ProductsContent = () => {
-	const isModalOpen = useModal((state) => state.isOpen);
-	const onModalOpen = useModal((state) => state.onOpen);
+	const isModalOpen = useCreateProductModalStore((state) => state.isOpen);
+	const onModalOpen = useCreateProductModalStore((state) => state.onOpen);
 
 	const {user, products, updateProducts} = useGlobalStore();
 

@@ -113,7 +113,7 @@ const UpdateGoogleProfileModal = () => {
 
 	return (
 		<div className='fixed h-screen flex flex-col items-center justify-center w-full bg-[#11111190] backdrop-blur-sm z-[15]'>
-			<div className='flex flex-col w-[40%] bg-white py-2 px-4 rounded overflow-y-auto scrollbar__1'>
+			<div className='flex flex-col w-[90%] md:w-[40%] bg-white py-2 px-4 rounded overflow-y-auto scrollbar__1'>
 				<div className='flex items-center justify-between px4'>
 					<h1 className='font-semibold'>Update Profile</h1>
 
@@ -208,7 +208,7 @@ const UpdateGoogleProfileModal = () => {
 							// disabled
 							type='button'
 							variant={'outline'}
-							className='w-[200px] bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0'
+							className='w-full md:w-[200px] bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0'
 						>
 							<ButtonLoader />
 						</Button>
@@ -217,7 +217,7 @@ const UpdateGoogleProfileModal = () => {
 							type='button'
 							variant={'outline'}
 							onClick={handleSubmit}
-							className='w-[200px] bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0'
+							className='w-full md:w-[200px] bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0'
 						>
 							Submit
 						</Button>

@@ -50,7 +50,7 @@ const SellerInfoCard = ({vendor}: {vendor: Vendor}) => {
 							}}
 							className='bg-main text-white hover:bg-main hover:text-white text-xs h-10 rounded-none py-3 w-full'
 						>
-							View Profile
+							Profile
 						</Button>
 					</Link>
 

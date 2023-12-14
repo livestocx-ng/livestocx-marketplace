@@ -1,10 +1,13 @@
 'use client';
-import React, {useReducer} from 'react';
+import React, {useReducer, useState} from 'react';
 import {Search} from 'lucide-react';
 import {Button} from '@/components/ui/button';
 import FormTextInput from '@/components/input/form-text-input';
+import ButtonLoader from '@/components/loader/button-loader';
 
 const SearchForm = () => {
+	const [loading, setLoading] = useState<boolean>(false);
+
 	const [formData, updateFormData] = useReducer(
 		(prev: {}, next: any) => {
 			return {...prev, ...next};
@@ -23,7 +26,7 @@ const SearchForm = () => {
 	const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		console.log('[PAYLOAD] :: ');
+		// console.log('[PAYLOAD] :: ');
 	};
 
 	return (
@@ -37,9 +40,21 @@ const SearchForm = () => {
 					classes='w-[70%] sm:w-[60%] bg-[#00A65120] text-white text-sm placeholder:text-sm placeholder:italic border-2 border-green-600 focus:border-green-600 rounded-full'
 				/>
 
-				<Button className='bg-main rounded-full w-12 h-12'>
-					<Search className='h-12 w-12 text-white' />
-				</Button>
+				{loading ? (
+					<Button
+						type='button'
+						className='bg-main hover:bg-main rounded-full w-12 h-12'
+					>
+						<ButtonLoader />
+					</Button>
+				) : (
+					<Button
+						type='submit'
+						className='bg-main hover:bg-main rounded-full w-12 h-12'
+					>
+						<Search className='h-12 w-12 text-white' />
+					</Button>
+				)}
 			</div>
 		</form>
 	);

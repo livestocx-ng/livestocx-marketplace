@@ -21,6 +21,36 @@ const SellerInfoProducts = ({currentPage, updateCurrentPage}: SellerInfoProducts
 					<SellerProductCard key={product.id} product={product} />
 				))}
 			</div>
+			{/* {!hasNextPage && totalPages > 1 && (
+				<div className='flex justify-center mt-10'>
+					<Button
+						type='button'
+						variant={'outline'}
+						onClick={() => {
+							updateCurrentPage(1);
+						}}
+						className='flex items-center space-x-1 bg-white border hover:bg:white focus:bg-white'
+					>
+						<RotateCw />
+						<span>Reset</span>
+					</Button>
+				</div>
+			)}
+			{hasNextPage && (
+				<div className='flex justify-center mt-10'>
+					<Button
+						type='button'
+						variant={'outline'}
+						onClick={() => {
+							updateCurrentPage(currentPage + 1);
+						}}
+						className='flex items-center space-x-1 bg-white border hover:bg:white focus:bg-white'
+					>
+						<RotateCw />
+						<span>Load More</span>
+					</Button>
+				</div>
+			)} */}
 			{!hasNextPage && totalPages > 1 && (
 				<div className='flex justify-center mt-10'>
 					<Button

@@ -47,7 +47,7 @@ export default function HomePage() {
 
 	return (
 		<main className='bg-[#28312B]'>
-			<section className='md:h-screen w-full bg-home flex flex-col items-center justify-end gap-y-16 pt-28 md:pt-0'>
+			<section className='h-[35vh] md:h-[50vh] w-full bg-home flex flex-col items-center justify-end gap-y-10 md:gap-y-16 py-5 md:py-10 md:pt-0'>
 				<h1 className='text-xl md:text-5xl font-medium text-white'>
 					Best <span className='text-green-600'>deals.</span>{' '}
 					Everything <span className='text-green-600'>Livestocx</span>
@@ -55,9 +55,9 @@ export default function HomePage() {
 
 				<SearchForm />
 
-				<div className='md:px-8 pb-10 w-full'>
+				{/* <div className='md:px-8 pb-10 w-full'>
 					<CarouselSlide />
-				</div>
+				</div> */}
 			</section>
 
 			{loading && (
@@ -85,7 +85,7 @@ export default function HomePage() {
 			)}
 
 			{!loading && products?.length > 0 && (
-				<div className='flex flex-col w-full bg-white px-4 md:px-8 py-10'>
+				<div className='flex flex-col w-full bg-white px-4 md:px-8 pt-5 pb-10'>
 					<HomeProducts currentPage={currentPage} updateCurrentPage={setCurrentPage}/>
 				</div>
 			)}

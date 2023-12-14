@@ -1,4 +1,3 @@
-import {create} from 'zustand';
 import {
 	Tab,
 	User,
@@ -11,6 +10,7 @@ import {
 	Notification,
 	DesiredItemInfo,
 } from '@/types/types';
+import {create} from 'zustand';
 
 interface GlobalStore {
 	user: User | null;
@@ -78,6 +78,12 @@ interface UpdateUserRoleModal {
 	onClose: () => void;
 }
 
+interface CreateProductModal {
+	isOpen: boolean;
+	onOpen: () => void;
+	onClose: () => void;
+}
+
 interface UpdateProductModal {
 	isOpen: boolean;
 	payload: Product;
@@ -127,6 +133,12 @@ export const useUpdateUserRoleModalStore = create<UpdateUserRoleModal>(
 	})
 );
 
+export const useCreateProductModalStore = create<CreateProductModal>((set) => ({
+	isOpen: false,
+	onOpen: () => set({isOpen: true}),
+	onClose: () => set({isOpen: false}),
+}));
+
 export const useUpdateProductModalStore = create<UpdateProductModal>((set) => ({
 	isOpen: false,
 	payload: {
@@ -137,6 +149,7 @@ export const useUpdateProductModalStore = create<UpdateProductModal>((set) => ({
 		discountPrice: 0,
 		category: '',
 		description: '',
+		inStock: false,
 		isNegotiable: false,
 		totalReviews: 0,
 		viewCount: 0,

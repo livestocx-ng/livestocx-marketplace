@@ -62,8 +62,7 @@ const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 				))}
 			</div>
 
-			{/* <div className='flex justify-between items-center flex-wrap gap-6 mt-10'> */}
-			<div className='flex flex-wrap items-center w-full justify-around gap-y-10 gap-x-2 sm:gap-x-5 md:gap-x-10 mt-10'>
+			<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2 mt-5'>
 				{products?.map((product) => (
 					<ProductCard key={product.id} product={product} />
 				))}

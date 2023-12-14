@@ -87,6 +87,25 @@
 			},
 		},
 		{
+			accessorKey: 'inStock',
+			header: 'In Stock',
+			cell: ({row}) => {
+				const {updatePayload, updateCurrentAccountTab} = useGlobalStore();
+
+				return (
+					<p
+						onClick={() => {
+							updatePayload(row.original);
+							updateCurrentAccountTab('Product');
+						}}
+						className='cursor-pointer'
+					>
+						{row.original.inStock === true ? 'True' : 'False'}
+					</p>
+				);
+			},
+		},
+		{
 			accessorKey: 'isNegotiable',
 			header: 'Negotiable',
 			cell: ({row}) => {

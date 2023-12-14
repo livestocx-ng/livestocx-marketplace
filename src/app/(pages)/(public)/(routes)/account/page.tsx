@@ -9,13 +9,13 @@ import ProductContent from './components/dashboard/product-content';
 import ProductsContent from './components/dashboard/products-content';
 import SettingsContent from './components/dashboard/settings-content';
 import MessagesContent from './components/dashboard/messages-content';
+import MobileAccountSideBar from './components/mobile-account-sidebar';
 import DashboardContent from './components/dashboard/dashboard-content';
 import ProductMediaModal from '@/components/modals/product-media-modal';
 import DesiredItemContent from './components/dashboard/desired-item-content';
 import DesiredItemsContent from './components/dashboard/desired-items-content';
 import AdvertisementContent from './components/dashboard/advertisement-content';
 import NotificationsContent from './components/dashboard/notifications-content';
-import MobileAccountSideBar from './components/mobile-account-sidebar';
 
 const AccountPage = () => {
 	const {currentAccountTab} = useGlobalStore();
@@ -28,7 +28,11 @@ const AccountPage = () => {
 		<div className='w-full relative'>
 			{isProductMediaModalOpen && <ProductMediaModal />}
 
-			<AuthHeader />
+			<section className='h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
+				<h1 className='text-xl md:text-5xl font-medium text-white'>
+					{currentAccountTab}
+				</h1>
+			</section>
 
 			<div className='w-full flex flex-col justify-center items-center py-10 md:py-20 px-4 sm:px-10'>
 				<div className='flex w-full'>

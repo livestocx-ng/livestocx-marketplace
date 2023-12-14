@@ -8,7 +8,7 @@ const WelcomeFarmerModal = () => {
 
 	return (
 		<div className='fixed h-screen flex flex-col items-center justify-center w-full bg-[#11111190] backdrop-blur-sm z-20'>
-			<div className='bg-white py-6  px-5 w-[50%] transition-all duration-700 ease-in-out translate-x-3'>
+			<div className='bg-white py-6 px-5 w-[90%] md:w-[50%] transition-all duration-700 ease-in-out md:translate-x-3'>
 				<div className='flex items-center justify-between'>
 					<h1 className='text-xl font-medium'>
 						Welcome to Livestocx!

@@ -7,6 +7,7 @@ interface CreateProductDto {
 	description: string;
 	category: string;
 	media: File[];
+	inStock: boolean;
 	isNegotiable: boolean;
 }
 
@@ -19,6 +20,7 @@ interface UpdateProductDto {
 	category: string;
 	media: File[];
 	existingMedia: Media[];
+	inStock: boolean;
 	isNegotiable: boolean;
 	removedMediaIds: string[];
 }

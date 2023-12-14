@@ -26,7 +26,7 @@ import SellerInfoTab from '../product-info/seller-info-tab';
 import SellerProductCard from '../cards/seller-product-card';
 import ProductReviewTab from '../product-info/product-review-tab';
 import MoreFromSellerTab from '../product-info/more-from-seller-tab';
-import {FlagTriangleRight, ThumbsDown, ThumbsUp} from 'lucide-react';
+import {FlagTriangleRight, Phone, ThumbsDown, ThumbsUp} from 'lucide-react';
 import MarketPlaceProductCard from '../cards/marketplace-product-card';
 
 interface SingleProductContentProps {
@@ -67,17 +67,17 @@ const SingleProductContent = ({
 
 	return (
 		<div className='flex flex-col justify-start items-start py-10 md:px-8'>
-			<h1 className='text-orange-500 text-3xl font-medium mb-4'>
+			<h1 className='text-orange-500 text-3xl font-medium mb-4 px-4 md:px-0'>
 				{product?.name}
 			</h1>
 
 			<div className='flex flex-wrap justify-between items-start md:h-[500px] w-full'>
-				<div className='w-full md:w-[55%] h-[350px] md:h-full relative mb-5 md:mb-0 md:rounded-l-l'>
+				<div className='w-full md:w-[55%] h-[350px] md:h-full relative mb-5 md:mb-0 rounded-none md:rounded-l-l'>
 					<Image
 						fill
 						alt={'product'}
 						src={product?.media[0]?.mediaUrl!}
-						className='object-fill h-full w-full md:rounded-l-l border border-gray-600'
+						className='object-cover h-full w-full md:rounded-l-l border-0 md:border border-gray-600'
 					/>
 
 					{user && (
@@ -164,7 +164,7 @@ const SingleProductContent = ({
 								Add to Desired Product
 							</Button>
 
-							<Button
+							{/* <Button
 								type='button'
 								variant={'outline'}
 								onClick={() => {
@@ -175,8 +175,11 @@ const SingleProductContent = ({
 								className='border-main text-main text-[10px] md:text-xs h-10 w-[45%] rounded-full py-2'
 							>
 								Chat with Seller
-							</Button>
+							</Button> */}
 
+							<ContactVendorAlertDialog
+								productInfo={productInfo}
+							/>
 							<ProductContactAlertDialog
 								productInfo={productInfo}
 							/>
@@ -241,7 +244,7 @@ const SingleProductContent = ({
 						?.map((media, index) => (
 							<div
 								key={media.id}
-								className='h-[150px] md:h-[150px] w-full md:w-[150px] relative'
+								className='h-[150px] md:h-[150px] w-full md:w-[150px] relative border border-slate-400'
 							>
 								<Image
 									fill
@@ -256,7 +259,7 @@ const SingleProductContent = ({
 											);
 										}
 									}}
-									className='rounded-g h-full w-full cursor-pointer'
+									className='object-cover rounded-g h-full w-full cursor-pointer'
 								/>
 
 								{index === 5 && (
@@ -289,7 +292,7 @@ const SingleProductContent = ({
 					{product?.media
 						?.filter((media) => media.mediaType === 'VIDEO')
 						?.map((media, index) => (
-							<div className='h-[250px] w-[45%] relative'>
+							<div className='h-[250px] w-[45%] relative border border-slate-400'>
 								<video
 									controls
 									src={media.mediaUrl}
@@ -335,32 +338,29 @@ const SingleProductContent = ({
 					{products
 						?.filter((prd) => prd.id !== product?.id)
 						?.slice(0, 10)
-						.map((product) => {
-							if (!pathName.includes('marketplace')) {
-								return (
-									<ProductCard
-										key={product.id}
-										product={product}
-									/>
-								);
-							}
-							if (pathName.includes('marketplace')) {
-								return (
-									<MarketPlaceProductCard
-										key={product.id}
-										product={product}
-									/>
-								);
-							}
-							if (pathName.includes('sellers')) {
-								return (
-									<SellerProductCard
-										key={product.id}
-										product={product}
-									/>
-								);
-							}
-						})}
+						.map((product) => (
+							<ProductCard key={product.id} product={product} />
+							// if (!pathName.includes('marketplace')) {
+							// 	return (
+							// 	);
+							// }
+							// if (pathName.includes('marketplace')) {
+							// 	return (
+							// 		<MarketPlaceProductCard
+							// 			key={product.id}
+							// 			product={product}
+							// 		/>
+							// 	);
+							// }
+							// if (pathName.includes('sellers')) {
+							// 	return (
+							// 		<SellerProductCard
+							// 			key={product.id}
+							// 			product={product}
+							// 		/>
+							// 	);
+							// }
+						))}
 				</div>
 			</div>
 		</div>
@@ -388,7 +388,7 @@ const ProductContactAlertDialog = ({
 								fill
 								alt=''
 								src={productInfo?.avatar!}
-								className='object-fill w-full h-full'
+								className='object-cover w-full h-full'
 							/>
 						</div>
 						<div className='grid grid-cols-2 gap-y-5 pt-2'>
@@ -399,6 +399,44 @@ const ProductContactAlertDialog = ({
 							</p>
 							<p>{productInfo?.phoneNumber}</p>
 						</div>
+					</AlertDialogDescription>
+				</AlertDialogHeader>
+				<AlertDialogFooter>
+					<AlertDialogCancel>Close</AlertDialogCancel>
+				</AlertDialogFooter>
+			</AlertDialogContent>
+		</AlertDialog>
+	);
+};
+
+const ContactVendorAlertDialog = ({
+	productInfo,
+}: {
+	productInfo: ProductInfo | null;
+}) => {
+	return (
+		<AlertDialog>
+			<AlertDialogTrigger className='border border-main text-main text-xs h-10 w-[45%] rounded-full py-2'>
+				Chat With Seller
+			</AlertDialogTrigger>
+			<AlertDialogContent>
+				<AlertDialogHeader>
+					<AlertDialogTitle>Vendor Contact</AlertDialogTitle>
+					<AlertDialogDescription className='flex flex-col items-center justify-center py-5 text-black'>
+						<Button
+							variant={'outline'}
+							onClick={() => {
+								const chatLink = `https://wa.me/+234${productInfo?.phoneNumber}`;
+
+								window.open(chatLink, '_blank');
+							}}
+							className='bg-main border-0 text-white hover:bg-main hover:text-white text-xs h-10 py-4 flex items-center space-x-3 rounded-full'
+						>
+							<Phone className='h-6 w-6' />{' '}
+							<p className='text-sm'>
+								{productInfo?.phoneNumber}
+							</p>
+						</Button>
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>

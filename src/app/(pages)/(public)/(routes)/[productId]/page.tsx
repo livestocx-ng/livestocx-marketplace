@@ -96,7 +96,7 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 		try {
 			setLoading(true);
 
-			console.log('[LIKE-UNLIKE-PRODUCT-PAYLOAD] :: ', formData);
+			// console.log('[LIKE-UNLIKE-PRODUCT-PAYLOAD] :: ', formData);
 
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/like-unlike-product?productId=${product?.productId}`,
@@ -108,7 +108,7 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 				}
 			);
 
-			console.log('[LIKE-UNLIKE-PRODUCT-SUCCESS] :: ', data);
+			// console.log('[LIKE-UNLIKE-PRODUCT-SUCCESS] :: ', data);
 
 			setLoading(false);
 
@@ -129,7 +129,7 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 
 			// setLoading(true);
 
-			console.log('[ADD-DESIRED-PRODUCT] :: ');
+			// console.log('[ADD-DESIRED-PRODUCT] :: ');
 
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-desired-product?productId=${product?.productId}`,
@@ -141,7 +141,7 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 				}
 			);
 
-			console.log('[ADD-DESIRED-PRODUCT-SUCCESS] :: ', data);
+			// console.log('[ADD-DESIRED-PRODUCT-SUCCESS] :: ', data);
 
 			// setLoading(false);
 

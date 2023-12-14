@@ -38,8 +38,8 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 				),
 			]);
 
-			console.log('[DATA] ::  ', vendorProfile.data);
-			console.log('[DATA] ::  ', vendorProducts.data);
+			// console.log('[DATA] ::  ', vendorProfile.data);
+			// console.log('[DATA] ::  ', vendorProducts.data);
 
 			updateVendor(vendorProfile.data.data);
 			updateProducts(vendorProducts.data.data.products);
@@ -63,13 +63,12 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 
 	return (
 		<main className='bg-[#28312B]'>
-			<section className='sm:h-[60vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 pb-20 sm:pb-0 md:pt-0'>
+			<section className='sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 pb-20 sm:pb-0 md:pt-0'>
 				<h1 className='text-xl md:text-5xl font-medium text-white'>
-					Best <span className='text-green-600'>deals.</span>{' '}
-					Everything <span className='text-green-600'>Livestocx</span>
+					{vendor?.name}
 				</h1>
 
-				<SearchForm />
+				{/* <SearchForm /> */}
 			</section>
 
 			{loading && (
@@ -85,7 +84,7 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 			)}
 
 			{!loading && vendor && (
-				<div className='flex flex-col w-full bg-white px-4 md:px-8 py-10 space-y-8'>
+				<div className='flex flex-col w-full bg-white px-4 md:px-8 py-5 space-y-5'>
 					<SellerBanner />
 
 					{/* <PageBanner text='Products of Jigga Farms' /> */}

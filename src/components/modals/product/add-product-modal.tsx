@@ -12,13 +12,15 @@ import {
 } from '@/utils/media/file.mutation';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
-import {useModal} from '@/hooks/use-modal';
 import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
 import {Checkbox} from '@/components/ui/checkbox';
 import {Plus, UploadCloud, X} from 'lucide-react';
 import {useReducer, useRef, useState} from 'react';
-import {useGlobalStore} from '@/hooks/use-global-store';
+import {
+	useCreateProductModalStore,
+	useGlobalStore,
+} from '@/hooks/use-global-store';
 import {isFileSizeValid} from '@/utils/media/file.validation';
 import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
@@ -34,6 +36,7 @@ export type FormData = {
 	description: string;
 	category: string;
 	media: File[];
+	inStock: boolean;
 	isNegotiable: boolean;
 };
 
@@ -49,6 +52,7 @@ const initialState: FormData = {
 	discountPrice: '',
 	category: '',
 	media: [],
+	inStock: false,
 	isNegotiable: false,
 };
 
@@ -67,7 +71,7 @@ const AddProductModal = () => {
 	const {user} = useUserHook();
 	const {products, updateProducts} = useGlobalStore();
 
-	const modal = useModal();
+	const modal = useCreateProductModalStore();
 
 	const mediaImageRef = useRef<HTMLInputElement>(null);
 	const mediaVideoRef = useRef<HTMLInputElement>(null);
@@ -238,10 +242,10 @@ const AddProductModal = () => {
 		<div className='fixed h-screen flex flex-col items-center justify-center w-full bg-[#11111190] backdrop-blur-sm z-10'>
 			<form
 				onSubmit={handleSubmit}
-				className='flex flex-col w-[60%] bg-white py-2 px-4 max-h-[600px] overflow-y-auto scrollbar__1'
+				className='flex flex-col w-[90%] md:w-[60%] bg-white py-2 px-4 max-h-[600px] overflow-y-auto scrollbar__1'
 			>
-				<div className='flex items-center justify-between px4'>
-					<h1>Add Product</h1>
+				<div className='flex items-center justify-between px4 w-full'>
+					<h1 className='font-medium'>Add Product</h1>
 
 					<Button
 						type='button'
@@ -252,8 +256,8 @@ const AddProductModal = () => {
 					</Button>
 				</div>
 
-				<div className='flex items-start justify-between w-full'>
-					<div className='w-[30%] flex flex-col space-y-5'>
+				<div className='flex flex-col-reverse md:flex-row items-start justify-between w-full'>
+					<div className='w-full md:w-[30%] flex flex-col space-y-5'>
 						<div
 							onClick={openImageFileInput}
 							className='w-full bg-slate-200  flex flex-col items-center justify-center space-y-3 px-4 py-8 cursor-pointer'
@@ -313,7 +317,7 @@ const AddProductModal = () => {
 						</div>
 
 						{formData.media.length > 0 && (
-							<div className='flex flex-col justify-center space-y-3 mx-auto'>
+							<div className='flex flex-col justify-center space-y-3 mx-auto w-full'>
 								<Button
 									type='button'
 									disabled={loading}
@@ -339,7 +343,7 @@ const AddProductModal = () => {
 										);
 									}}
 									variant={'outline'}
-									className='border-0 bg-red-600 hover:bg-red-600 text-xs h-12 text-white hover:text-white rounded-none py-2 px-4 w-[200px] mx-auto'
+									className='border-0 bg-red-600 hover:bg-red-600 text-xs h-12 text-white hover:text-white rounded-none py-2 px-4 w-full md:w-[200px] mx-auto'
 								>
 									Reset Uploaded Images
 								</Button>
@@ -368,7 +372,7 @@ const AddProductModal = () => {
 										);
 									}}
 									variant={'outline'}
-									className='border-0 bg-red-600 hover:bg-red-600 text-xs h-12 text-white hover:text-white rounded-none py-2 px-4 w-[200px] mx-auto'
+									className='border-0 bg-red-600 hover:bg-red-600 text-xs h-12 text-white hover:text-white rounded-none py-2 px-4 w-full md:w-[200px] mx-auto'
 								>
 									Reset Uploaded Videos
 								</Button>
@@ -385,13 +389,13 @@ const AddProductModal = () => {
 						)}
 					</div>
 
-					<div className='w-[70%] flex flex-col space-y-3 pl-8'>
+					<div className='w-full md:w-[70%] flex flex-col space-y-3 md:pl-8 mb-5 md:mb-0'>
 						<div className='flex items-center justify-between w-full'>
 							<CategoryDropDownButton
 								value={category}
 								setValue={setProductCategory}
 								setShowStatusBar={setShowStatusBar}
-								classes='bg-green-600 rounded-none hover:bg-green-600 text-white hover:text-white'
+								classes='bg-green-600 rounded-none hover:bg-green-600 text-white hover:text-white w-full md:w-fit'
 							/>
 						</div>
 
@@ -448,23 +452,45 @@ const AddProductModal = () => {
 							/>
 						</div>
 
-						<div className='flex items-center space-x-2'>
-							<Checkbox
-								id='isNegotiable'
-								checked={formData.isNegotiable}
-								onCheckedChange={(isNegotiable: boolean) => {
-									updateFormData({
-										type: 'UPDATE_FORMDATA',
-										payload: {isNegotiable},
-									});
-								}}
-							/>
-							<label
-								htmlFor='terms'
-								className='text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-							>
-								Negotiable
-							</label>
+						<div className='flex items-center space-x-5'>
+							<div className='flex items-center space-x-2'>
+								<Checkbox
+									id='isNegotiable'
+									checked={formData.isNegotiable}
+									onCheckedChange={(
+										isNegotiable: boolean
+									) => {
+										updateFormData({
+											type: 'UPDATE_FORMDATA',
+											payload: {isNegotiable},
+										});
+									}}
+								/>
+								<label
+									htmlFor='terms'
+									className='text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+								>
+									Negotiable
+								</label>
+							</div>
+							<div className='flex items-center space-x-2'>
+								<Checkbox
+									id='inStock'
+									checked={formData.inStock}
+									onCheckedChange={(inStock: boolean) => {
+										updateFormData({
+											type: 'UPDATE_FORMDATA',
+											payload: {inStock},
+										});
+									}}
+								/>
+								<label
+									htmlFor='terms'
+									className='text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+								>
+									In Stock
+								</label>
+							</div>
 						</div>
 
 						<div className='flex flex-wrap items-center w-full gap-y-3 gap-x-5'>
@@ -488,7 +514,7 @@ const AddProductModal = () => {
 							// disabled
 							type='button'
 							variant={'outline'}
-							className='w-[200px] bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
+							className='w-full md:w-[200px] bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
 						>
 							<ButtonLoader />
 						</Button>
@@ -496,7 +522,7 @@ const AddProductModal = () => {
 						<Button
 							type='submit'
 							variant={'outline'}
-							className='w-[200px] bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
+							className='w-full md:w-[200px] bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
 						>
 							Submit
 						</Button>

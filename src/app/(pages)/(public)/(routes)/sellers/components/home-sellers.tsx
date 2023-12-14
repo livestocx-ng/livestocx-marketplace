@@ -1,12 +1,17 @@
 'use client';
-import React, {Fragment} from 'react';
+import React, {Dispatch, Fragment, SetStateAction} from 'react';
 import {RotateCw} from 'lucide-react';
 import {Button} from '@/components/ui/button';
 import SellerInfoCard from './seller-info-card';
 import {useGlobalStore} from '@/hooks/use-global-store';
 
-const HomeSellers = () => {
-	const {hasNextPage, vendors} = useGlobalStore();
+interface HomeSellerProps {
+	currentPage: number;
+	updateCurrentPage: Dispatch<SetStateAction<number>>;
+}
+
+const HomeSellers = ({currentPage, updateCurrentPage}:HomeSellerProps) => {
+	const {hasNextPage, totalPages,vendors} = useGlobalStore();
 
 	return (
 		<Fragment>
@@ -16,11 +21,29 @@ const HomeSellers = () => {
 				))}
 			</div>
 
+			{!hasNextPage && totalPages > 1 && (
+				<div className='flex justify-center mt-10'>
+					<Button
+						type='button'
+						variant={'outline'}
+						onClick={() => {
+							updateCurrentPage(1);
+						}}
+						className='flex items-center space-x-1 bg-white border hover:bg:white focus:bg-white'
+					>
+						<RotateCw />
+						<span>Reset</span>
+					</Button>
+				</div>
+			)}
 			{hasNextPage && (
 				<div className='flex justify-center mt-10'>
 					<Button
 						type='button'
 						variant={'outline'}
+						onClick={() => {
+							updateCurrentPage(currentPage + 1);
+						}}
 						className='flex items-center space-x-1 bg-white border hover:bg:white focus:bg-white'
 					>
 						<RotateCw />

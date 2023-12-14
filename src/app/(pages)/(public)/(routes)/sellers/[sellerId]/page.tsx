@@ -19,7 +19,7 @@ interface SellerInfoPageProps {
 const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 	const {products, vendor, updateVendor, updateProducts, updatePagination} =
 		useGlobalStore();
-
+	const [currentPage, setCurrentPage] = useState<number>(1)
 	const [loading, setLoading] = useState<boolean>(true);
 
 	// console.log('[PARAMS] :: ', params);
@@ -34,7 +34,7 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 					`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/${params.sellerId}`
 				),
 				axios.get(
-					`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/${params.sellerId}/products`
+					`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/${params.sellerId}/products?page=${currentPage}`
 				),
 			]);
 
@@ -59,7 +59,7 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 
 	useEffect(() => {
 		fetchSeller();
-	}, []);
+	}, [currentPage]);
 
 	return (
 		<main className='bg-[#28312B]'>
@@ -107,7 +107,7 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 					<p className='mt-2 italic'>No Results Found</p>
 				</div> */}
 
-					<SellerInfoProducts />
+					<SellerInfoProducts currentPage={currentPage} updateCurrentPage={setCurrentPage}/>
 				</div>
 			)}
 		</main>

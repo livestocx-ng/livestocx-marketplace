@@ -1,20 +1,20 @@
 'use client';
-import React, {useState} from 'react';
 import {useEffect} from 'react';
 import Lottie from 'lottie-react';
+import React, {useState} from 'react';
 import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';
+import SearchForm from '../components/search-form';
 import {useGlobalStore} from '@/hooks/use-global-store';
-import AuthHeader from '@/components/header/auth-header';
 import MarketplaceProducts from './components/marketplace-products';
 import MarketplaceFilterForm from './components/marketplace-filterform';
 import EmptyAnimation from '../../../../../../public/animations/animation__3.json';
 import LoadingAnimation from '../../../../../../public/animations/loading__animation__1.json';
-import SearchForm from '../components/search-form';
 
 const MarketPlacePage = () => {
 	const userStore = useUserHook();
 	const {products, updateProducts, updatePagination} = useGlobalStore();
+	const [currentPage, setCurrentPage] = useState<number>(1);
 
 	const [loading, setLoading] = useState(true);
 
@@ -23,7 +23,7 @@ const MarketPlacePage = () => {
 			setLoading(true);
 
 			const {data} = await axios.get(
-				`${process.env.NEXT_PUBLIC_API_URL}/user/products/marketplace/fetch-all`
+				`${process.env.NEXT_PUBLIC_API_URL}/user/products/marketplace/fetch-all?page=${currentPage}`
 			);
 
 			// console.log('[DATA] ::  ', data);
@@ -41,7 +41,7 @@ const MarketPlacePage = () => {
 
 	useEffect(() => {
 		fetchMarketPlaceProducts();
-	}, []);
+	}, [currentPage]);
 
 	return (
 		<div className='w-full'>
@@ -81,8 +81,17 @@ const MarketPlacePage = () => {
 				)}
 
 				{!loading && products?.length > 0 && (
-					<MarketplaceProducts products={products} />
+					<div className='flex flex-col w-full bg-white px-4 md:px-8 py-10'>
+						<MarketplaceProducts
+							currentPage={currentPage}
+							updateCurrentPage={setCurrentPage}
+						/>
+					</div>
 				)}
+
+				{/* {!loading && products?.length > 0 && (
+					<MarketplaceProducts currentPage={currentPage} updateCurrentPage={setCurrentPage} />
+				)} */}
 			</div>
 		</div>
 	);

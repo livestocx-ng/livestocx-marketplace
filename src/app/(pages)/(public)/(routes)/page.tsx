@@ -9,13 +9,15 @@ import {useGlobalStore} from '@/hooks/use-global-store';
 import TestimonialSection from '@/components/common/testimonials';
 import EmptyAnimation from '../../../../../public/animations/animation__3.json';
 import LoadingAnimation from '../../../../../public/animations/loading__animation__1.json';
+import {useRouter} from 'next/navigation';
 
 export default function HomePage() {
+	const router = useRouter();
 	const userStore = useUserHook();
-	const {products, updateProducts, updatePagination} = useGlobalStore();
+	const {user, products, updateProducts, updatePagination} = useGlobalStore();
 
 	const [loading, setLoading] = useState(true);
-	const [currentPage, setCurrentPage] = useState<number>(1)
+	const [currentPage, setCurrentPage] = useState<number>(1);
 
 	const fetchProducts = async () => {
 		try {
@@ -85,7 +87,10 @@ export default function HomePage() {
 
 			{!loading && products?.length > 0 && (
 				<div className='flex flex-col w-full bg-white px-4 md:px-8 pt-5 pb-10'>
-					<HomeProducts currentPage={currentPage} updateCurrentPage={setCurrentPage}/>
+					<HomeProducts
+						currentPage={currentPage}
+						updateCurrentPage={setCurrentPage}
+					/>
 				</div>
 			)}
 

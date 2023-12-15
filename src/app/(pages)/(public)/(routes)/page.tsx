@@ -41,7 +41,7 @@ export default function HomePage() {
 			console.log('[FETCH-PRODUCTS-ERROR] :: ', _error);
 		}
 	};
-
+	console.log(user);
 	useEffect(() => {
 		fetchProducts();
 	}, [currentPage]);

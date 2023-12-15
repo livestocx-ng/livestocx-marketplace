@@ -34,7 +34,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 		) {
 			router.push('/compliance');
 		}
-	}, []);
+	}, [user]);
 
 	return (
 		<div className='relative'>

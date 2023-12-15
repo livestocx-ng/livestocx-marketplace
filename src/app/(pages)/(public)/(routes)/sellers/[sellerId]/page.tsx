@@ -17,10 +17,16 @@ interface SellerInfoPageProps {
 }
 
 const SellerInfoPage = ({params}: SellerInfoPageProps) => {
-	const {products, vendor, updateVendor, updateProducts, updatePagination} =
-		useGlobalStore();
-	const [currentPage, setCurrentPage] = useState<number>(1)
+	const {
+		vendor,
+		updateVendor,
+		sellerProducts,
+		updateSellerPagination,
+		updateSellerProducts,
+	} = useGlobalStore();
+
 	const [loading, setLoading] = useState<boolean>(true);
+	const [currentPage, setCurrentPage] = useState<number>(1);
 
 	// console.log('[PARAMS] :: ', params);
 	// console.log('[VENDOR] :: ', vendor);
@@ -29,7 +35,7 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 		try {
 			setLoading(true);
 
-			const [vendorProfile, vendorProducts] = await Promise.all([
+			const [profile, products] = await Promise.all([
 				axios.get(
 					`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/${params.sellerId}`
 				),
@@ -38,14 +44,14 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 				),
 			]);
 
-			// console.log('[DATA] ::  ', vendorProfile.data);
-			// console.log('[DATA] ::  ', vendorProducts.data);
+			// console.log('[DATA] ::  ', profile.data);
+			console.log('[DATA] ::  ', products.data);
 
-			updateVendor(vendorProfile.data.data);
-			updateProducts(vendorProducts.data.data.products);
-			updatePagination(
-				vendorProducts.data.data.totalPages,
-				vendorProducts.data.data.hasNext
+			updateVendor(profile.data.data);
+			updateSellerProducts(products.data.data.products);
+			updateSellerPagination(
+				products.data.data.totalPages,
+				products.data.data.hasNext
 			);
 
 			setLoading(false);
@@ -89,25 +95,18 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 
 					{/* <PageBanner text='Products of Jigga Farms' /> */}
 
-					<div className='flex items-center justify-between'>
+					<div className='flex items-center justify-between w-full'>
 						<SellerInfoSearchForm />
 					</div>
 
-					<PageBanner text={`${products?.length} Products Found`} />
-
-					{/* <div className='flex flex-col items-center justify-center py-20'>
-					<Image
-						alt='logo'
-						width={150}
-						height={150}
-						src={'/logo.svg'}
-						className='opacity-50'
+					<PageBanner
+						text={`${sellerProducts?.length} Products Found`}
 					/>
 
-					<p className='mt-2 italic'>No Results Found</p>
-				</div> */}
-
-					<SellerInfoProducts currentPage={currentPage} updateCurrentPage={setCurrentPage}/>
+					<SellerInfoProducts
+						currentPage={currentPage}
+						updateCurrentPage={setCurrentPage}
+					/>
 				</div>
 			)}
 		</main>

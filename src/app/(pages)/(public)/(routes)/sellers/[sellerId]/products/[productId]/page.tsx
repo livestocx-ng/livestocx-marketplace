@@ -16,21 +16,13 @@ import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useEffect, useState} from 'react';
 import {ProductInfo} from '@/types/types';
-import {Badge} from '@/components/ui/badge';
-import {Button} from '@/components/ui/button';
-import {PriceFormatter} from '@/utils/price.formatter';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import AuthHeader from '@/components/header/auth-header';
 import {useProductMediaModalStore} from '@/hooks/use-global-store';
-import {FlagTriangleRight, ThumbsDown, ThumbsUp} from 'lucide-react';
-import EmptyAnimation from '../../../../../../../../../public/animations/animation__2.json';
-import SellerInfoTab from '../../../../../../../../components/product-info/seller-info-tab';
-import SellerProductCard from '../../../../../../../../components/cards/seller-product-card';
-import ProductMediaModal from '../../../../../../../../components/modals/product-media-modal';
-import ProductReviewTab from '../../../../../../../../components/product-info/product-review-tab';
-import MoreFromSellerTab from '../../../../../../../../components/product-info/more-from-seller-tab';
-import LoadingAnimation from '../../../../../../../../../public/animations/loading__animation__1.json';
 import SingleProductContent from '@/components/product/single-product-content';
+import EmptyAnimation from '../../../../../../../../../public/animations/animation__2.json';
+import ProductMediaModal from '../../../../../../../../components/modals/product-media-modal';
+import LoadingAnimation from '../../../../../../../../../public/animations/loading__animation__1.json';
 
 interface SellerProductPageParams {
 	params: {
@@ -46,19 +38,13 @@ const SellerProductPage = ({params: {productId}}: SellerProductPageParams) => {
 	const isProductMediaModalOpen = useProductMediaModalStore(
 		(state) => state.isOpen
 	);
-	const onProductMediaModalOpen = useProductMediaModalStore(
-		(state) => state.onOpen
-	);
-	const updateProductModalPayload = useProductMediaModalStore(
-		(state) => state.updatePayload
-	);
 
 	const {
 		user,
 		product,
-		products,
-		updatePayload,
+		vendor,
 		productInfo,
+		updatePayload,
 		updateProductInfo,
 	} = useGlobalStore();
 
@@ -164,7 +150,11 @@ const SellerProductPage = ({params: {productId}}: SellerProductPageParams) => {
 		<main className='w-full relative'>
 			{isProductMediaModalOpen && <ProductMediaModal />}
 
-			<AuthHeader classes='md:h-[35vh]' />
+			<section className='sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 pb-20 sm:pb-0 md:pt-0'>
+				<h1 className='text-xl md:text-5xl font-medium text-white'>
+					{vendor?.name}
+				</h1>
+			</section>
 
 			{loading && (
 				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
@@ -206,43 +196,3 @@ const SellerProductPage = ({params: {productId}}: SellerProductPageParams) => {
 };
 
 export default SellerProductPage;
-
-const ProductContactAlertDialog = ({
-	productInfo,
-}: {
-	productInfo: ProductInfo | null;
-}) => {
-	return (
-		<AlertDialog>
-			<AlertDialogTrigger className='border border-main text-main text-xs h-10 w-[45%] rounded-full py-2'>
-				Show Contact
-			</AlertDialogTrigger>
-			<AlertDialogContent>
-				<AlertDialogHeader>
-					<AlertDialogTitle>{productInfo?.name!}</AlertDialogTitle>
-					<AlertDialogDescription className='flex flex-col py-5 text-black'>
-						<div className='relative w-[150px] h-[150px] mx-auto border'>
-							<Image
-								fill
-								alt=''
-								src={productInfo?.avatar!}
-								className='object-fill w-full h-full'
-							/>
-						</div>
-						<div className='grid grid-cols-2 gap-y-5 pt-2'>
-							<p className='font-medium text-sm'>Email</p>
-							<p>{productInfo?.email}</p>
-							<p className='font-medium text-sm'>
-								Contact number
-							</p>
-							<p>{productInfo?.phoneNumber}</p>
-						</div>
-					</AlertDialogDescription>
-				</AlertDialogHeader>
-				<AlertDialogFooter>
-					<AlertDialogCancel>Close</AlertDialogCancel>
-				</AlertDialogFooter>
-			</AlertDialogContent>
-		</AlertDialog>
-	);
-};

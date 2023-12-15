@@ -1,14 +1,13 @@
 'use client';
-import Link from 'next/link';
 import Image from 'next/image';
+import {useState} from 'react';
 import {toast} from 'react-hot-toast';
 import {Product} from '@/types/types';
 import axios, {AxiosError} from 'axios';
+import {usePathname, useRouter} from 'next/navigation';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import {ShoppingCartIcon, ThumbsDown, ThumbsUp} from 'lucide-react';
-import {useState} from 'react';
-import {usePathname, useRouter} from 'next/navigation';
 
 interface ProductCardProps {
 	product: Product | null;
@@ -160,14 +159,22 @@ const ProductCard = ({product}: ProductCardProps) => {
 					{product?.vendor?.name}
 				</div> */}
 				<div className='text-xs sm:text-sm font-semibold'>
-					{product?.name}
+					{product?.name.length! > 15
+						? `${product?.name.slice(0, 15)}...`
+						: product?.name}
 				</div>
 				{product?.isNegotiable && (
 					<div className='text-xs sm:text-sm text-main font-medium'>
 						{PriceFormatter(product?.discountPrice!)}
 					</div>
 				)}
-				<div className={`text-xs sm:text-sm text-main font-medium ${product?.isNegotiable && 'line-through'}`}>
+				<div
+					className={`text-xs sm:text-sm font-medium ${
+						product?.isNegotiable
+							? 'line-through text-slate-500'
+							: 'text-main'
+					}`}
+				>
 					{PriceFormatter(product?.price!)}
 				</div>
 			</div>

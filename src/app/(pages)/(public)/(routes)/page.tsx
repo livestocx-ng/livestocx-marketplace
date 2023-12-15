@@ -6,7 +6,6 @@ import {useUserHook} from '@/hooks/use-user';
 import SearchForm from './components/search-form';
 import HomeProducts from './components/home-products';
 import {useGlobalStore} from '@/hooks/use-global-store';
-import CarouselSlide from './components/carousel-slide';
 import TestimonialSection from '@/components/common/testimonials';
 import EmptyAnimation from '../../../../../public/animations/animation__3.json';
 import LoadingAnimation from '../../../../../public/animations/loading__animation__1.json';
@@ -20,7 +19,7 @@ export default function HomePage() {
 
 	const fetchProducts = async () => {
 		try {
-			setLoading(true);
+			setLoading(false);
 
 			const {data} = await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/recommended/fetch-all?page=${currentPage}`
@@ -60,7 +59,7 @@ export default function HomePage() {
 				</div> */}
 			</section>
 
-			{loading && (
+			{/* {loading && (
 				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
 					<div className='h-[200px] w-1/2 mx-auto bg-white'>
 						<Lottie
@@ -70,13 +69,13 @@ export default function HomePage() {
 						/>
 					</div>
 				</div>
-			)}
+			)} */}
 
 			{!loading && products?.length === 0 && (
 				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
 					<div className='h-[200px] w-1/2 mx-auto bg-white'>
 						<Lottie
-							loop={true}
+							loop={false}
 							className='h-full'
 							animationData={EmptyAnimation}
 						/>

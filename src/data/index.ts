@@ -192,7 +192,7 @@ export const FilterOptions: FilterOption[] = [
 	{
 		id: 9,
 		title: 'Grass Cutter',
-		value: 'GRASS-CUTTER',
+		value: 'GRASSCUTTER',
 	},
 	{
 		id: 9,

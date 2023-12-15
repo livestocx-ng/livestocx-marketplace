@@ -43,14 +43,14 @@ const SellerInfoSearchForm = () => {
 		try {
 			setLoading(true);
 
-			console.log('[PAYLOAD] ::  ', search);
-			console.log('[PAYLOAD] ::  ', formData);
+			// console.log('[PAYLOAD] ::  ', search);
+			// console.log('[PAYLOAD] ::  ', formData);
 
 			const {data} = await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/${vendor?.vendorId}/filter-products?search=${search}&recommended=${formData.recommended}&newest=${formData.newest}&oldest=${formData.oldest}&lowestPrice=${formData.lowestPrice}&highestPrice=${formData.highestPrice}`
 			);
 
-			console.log('[DATA] ::  ', data.data);
+			// console.log('[DATA] ::  ', data.data);
 
 			updateProducts(data.data.products);
 			updatePagination(data.data.totalPages, data.data.hasNext);
@@ -68,7 +68,7 @@ const SellerInfoSearchForm = () => {
 			setLoading(false);
 			const _error = error as AxiosError;
 
-			console.log('[FILTER-SELLER-PRODUCTS-ERROR] :: ', _error);
+			// console.log('[FILTER-SELLER-PRODUCTS-ERROR] :: ', _error);
 		}
 	};
 
@@ -96,7 +96,7 @@ const SellerInfoSearchForm = () => {
 				</Button>
 			</div>
 
-			<div>
+			<div className='w-full sm:w-fit'>
 				<select
 					name='search'
 					className='w-full border py-3 rounded px-3 text-xs scrollbar__1'

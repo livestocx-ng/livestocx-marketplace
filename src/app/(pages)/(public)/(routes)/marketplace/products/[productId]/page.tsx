@@ -5,6 +5,7 @@ import {
 	useGlobalStore,
 	useProductMediaModalStore,
 } from '@/hooks/use-global-store';
+import Lottie from 'lottie-react';
 import {
 	AlertDialog,
 	AlertDialogCancel,
@@ -15,25 +16,15 @@ import {
 	AlertDialogTrigger,
 	AlertDialogDescription,
 } from '@/components/ui/alert-dialog';
-import Lottie from 'lottie-react';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useEffect, useState} from 'react';
 import {ProductInfo} from '@/types/types';
-import {Badge} from '@/components/ui/badge';
-import {Button} from '@/components/ui/button';
-import {PriceFormatter} from '@/utils/price.formatter';
 import AuthHeader from '@/components/header/auth-header';
-import ProductCard from '@/components/cards/product-card';
-import SellerInfoTab from '@/components/product-info/seller-info-tab';
-import {FlagTriangleRight, ThumbsDown, ThumbsUp} from 'lucide-react';
 import ProductMediaModal from '@/components/modals/product-media-modal';
-import ProductReviewTab from '@/components/product-info/product-review-tab';
-import MoreFromSellerTab from '@/components/product-info/more-from-seller-tab';
-import MarketPlaceProductCard from '@/components/cards/marketplace-product-card';
+import SingleProductContent from '@/components/product/single-product-content';
 import EmptyAnimation from '../../../../../../../../public/animations/animation__2.json';
 import LoadingAnimation from '../../../../../../../../public/animations/loading__animation__1.json';
-import SingleProductContent from '@/components/product/single-product-content';
 
 interface ProductPageParams {
 	params: {
@@ -48,12 +39,6 @@ const CurrentTabs: Tab[] = ['Seller Info', 'Review', 'More From Seller'];
 const MarketPlaceProductPage = ({params: {productId}}: ProductPageParams) => {
 	const isProductMediaModalOpen = useProductMediaModalStore(
 		(state) => state.isOpen
-	);
-	const onProductMediaModalOpen = useProductMediaModalStore(
-		(state) => state.onOpen
-	);
-	const updateProductModalPayload = useProductMediaModalStore(
-		(state) => state.updatePayload
 	);
 
 	const {
@@ -167,7 +152,13 @@ const MarketPlaceProductPage = ({params: {productId}}: ProductPageParams) => {
 		<main className='w-full relative'>
 			{isProductMediaModalOpen && <ProductMediaModal />}
 
-			<AuthHeader classes='md:h-[35vh]' />
+			<section className='sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 pb-20 sm:pb-0 md:pt-0'>
+				<h1 className='text-xl md:text-5xl font-medium text-white capitalize'>
+					{product?.name}
+				</h1>
+
+				{/* <SearchForm /> */}
+			</section>
 
 			{loading && (
 				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>

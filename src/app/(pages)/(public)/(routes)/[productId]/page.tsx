@@ -162,7 +162,13 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 		<main className='w-full relative'>
 			{isProductMediaModalOpen && <ProductMediaModal />}
 
-			<AuthHeader classes='md:h-[35vh]' />
+			<section className='sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 pb-20 sm:pb-0 md:pt-0'>
+				<h1 className='text-xl md:text-5xl font-medium text-white'>
+					{product?.name}
+				</h1>
+
+				{/* <SearchForm /> */}
+			</section>
 
 			{loading && (
 				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>

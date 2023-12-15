@@ -44,7 +44,7 @@ const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 					<Button
 						key={tab.id}
 						type='button'
-						className={`border  bg-white hover:bg-white ${
+						className={`border bg-white hover:bg-white rounded-none ${
 							currentTab.id === tab.id
 								? 'border-main text-main'
 								: 'border-black text-black'
@@ -75,6 +75,10 @@ const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 						variant={'outline'}
 						onClick={() => {
 							updateCurrentPage(1);
+							window.scrollTo({
+								top: 50,
+								behavior: 'smooth',
+							});
 						}}
 						className='flex items-center space-x-1 bg-white border hover:bg:white focus:bg-white'
 					>
@@ -90,6 +94,10 @@ const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 						variant={'outline'}
 						onClick={() => {
 							updateCurrentPage(currentPage + 1);
+							window.scrollTo({
+								top: 50,
+								behavior: 'smooth',
+							});
 						}}
 						className='flex items-center space-x-1 bg-white border hover:bg:white focus:bg-white'
 					>

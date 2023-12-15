@@ -13,6 +13,7 @@ import FormTextInput from '@/components/input/form-text-input';
 import React, {useEffect, useReducer, useRef, useState} from 'react';
 import {ValidateComplianceFormData} from '@/utils/form-validations/compliance.validation';
 import Link from 'next/link';
+import {isFileSizeValid} from '@/utils/media/file.validation';
 
 type FormData = {
 	name: string;
@@ -396,6 +397,15 @@ const CompliancePage = () => {
 									onChange={(
 										event: React.ChangeEvent<HTMLInputElement>
 									) => {
+										if (
+											!isFileSizeValid(
+												event.target.files![0]
+											)
+										)
+											return toast.error(
+												'File size must be below 500kb'
+											);
+
 										updateFormData({
 											type: 'UPDATE_FORMDATA',
 											payload: {
@@ -466,6 +476,15 @@ const CompliancePage = () => {
 									onChange={(
 										event: React.ChangeEvent<HTMLInputElement>
 									) => {
+										if (
+											!isFileSizeValid(
+												event.target.files![0]
+											)
+										)
+											return toast.error(
+												'File size must be below 500kb'
+											);
+
 										updateFormData({
 											type: 'UPDATE_FORMDATA',
 											payload: {
@@ -558,6 +577,15 @@ const CompliancePage = () => {
 									onChange={(
 										event: React.ChangeEvent<HTMLInputElement>
 									) => {
+										if (
+											!isFileSizeValid(
+												event.target.files![0]
+											)
+										)
+											return toast.error(
+												'File size must be below 500kb'
+											);
+
 										updateFormData({
 											type: 'UPDATE_FORMDATA',
 											payload: {

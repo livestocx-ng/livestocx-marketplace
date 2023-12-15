@@ -138,7 +138,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 						);
 					}
 				}}
-				className='h-[120px] sm:h-[160px] relative rounde-t cursor-pointer rela'
+				className='h-[160px] relative rounde-t cursor-pointer rela'
 			>
 				<Image
 					fill
@@ -154,7 +154,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 				)}
 			</div>
 
-			<div className='flex flex-col justify-end bg-orange-100 border border-t-0 border-slate-400 px-1 sm:px-2 py-6 rounde-b relative h-[120px]'>
+			<div className='flex flex-col justify-end bg-orange-100 border border-t-0 border-slate-400 px-1 sm:px-2 py-6 rounde-b relative h-[100px]'>
 				{/* <div className='text-xs text-right sm:text-xs font-medium border-b border-t-black'>
 					{product?.vendor?.name}
 				</div> */}

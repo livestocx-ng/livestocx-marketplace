@@ -100,8 +100,12 @@ const SignInPage = () => {
 
 	return (
 		<div className='w-full'>
-			<AuthHeader />
-
+			<section className='h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
+				<h1 className='text-xl md:text-5xl font-medium text-white'>
+					Sign In
+				</h1>
+			</section>
+			
 			<div className='flex flex-col justify-center items-center py-20'>
 				<form
 					autoComplete='off'
@@ -172,7 +176,7 @@ const SignInPage = () => {
 						<Button
 							type='button'
 							variant={'outline'}
-							onClick={()=> signIn('google')}
+							onClick={() => signIn('google')}
 							className='flex items-center gap-x-4 h-12 justify-center w-full rounded-full py-4'
 						>
 							<Image

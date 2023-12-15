@@ -21,6 +21,9 @@ const MarketPlacePage = () => {
 	const fetchMarketPlaceProducts = async () => {
 		try {
 			setLoading(true);
+			
+			if (currentPage > 1) setLoading(false);
+			
 
 			const {data} = await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/marketplace/fetch-all?page=${currentPage}`
@@ -45,7 +48,7 @@ const MarketPlacePage = () => {
 
 	return (
 		<div className='w-full'>
-			<section className='h-[35vh] md:h-[50vh] w-full bg-home flex flex-col items-center justify-end gap-y-10 md:gap-y-16 py-5 md:py-10 md:pt-0'>
+			<section className='h-[35vh] md:h-[40vh] w-full bg-home flex flex-col items-center justify-end gap-y-10 py-5 md:py-8 md:pt-0'>
 				<h1 className='text-xl md:text-5xl font-medium text-white'>
 					Marketplace
 				</h1>
@@ -81,7 +84,7 @@ const MarketPlacePage = () => {
 				)}
 
 				{!loading && products?.length > 0 && (
-					<div className='flex flex-col w-full bg-white px-4 md:px-8 py-10'>
+					<div className='flex flex-col w-full bg-white px-4 md:px-8 pt-2 pb-10'>
 						<MarketplaceProducts
 							currentPage={currentPage}
 							updateCurrentPage={setCurrentPage}

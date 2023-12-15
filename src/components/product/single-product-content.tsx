@@ -23,11 +23,9 @@ import {Product, ProductInfo} from '@/types/types';
 import React, {Dispatch, SetStateAction} from 'react';
 import {PriceFormatter} from '@/utils/price.formatter';
 import SellerInfoTab from '../product-info/seller-info-tab';
-import SellerProductCard from '../cards/seller-product-card';
 import ProductReviewTab from '../product-info/product-review-tab';
 import MoreFromSellerTab from '../product-info/more-from-seller-tab';
 import {FlagTriangleRight, Phone, ThumbsDown, ThumbsUp} from 'lucide-react';
-import MarketPlaceProductCard from '../cards/marketplace-product-card';
 
 interface SingleProductContentProps {
 	currentTab: Tab;
@@ -136,8 +134,8 @@ const SingleProductContent = ({
 
 						<div className='flex items-center space-x-3 py-3'>
 							<Image
-								width={60}
-								height={60}
+								width={40}
+								height={40}
 								alt={productInfo?.name!}
 								src={productInfo?.avatar ?? '/icon__user.svg'}
 								// src={'/icon__user.svg'}
@@ -145,12 +143,12 @@ const SingleProductContent = ({
 							/>
 
 							<div className='flex flex-col space-y-3'>
-								<p className='text-sm font-medium'>
+								<p className='text-xs font-medium'>
 									{productInfo?.name! ?? ''}
 								</p>
-								<p className='text-[10px] px-2 py-1 text-center bg-gray-200 rounded-md'>
+								{/* <p className='text-[10px] px-2 py-1 text-center bg-gray-200 rounded-md'>
 									{productInfo?.name && 'Replies in 2 days'}
-								</p>
+								</p> */}
 							</div>
 						</div>
 

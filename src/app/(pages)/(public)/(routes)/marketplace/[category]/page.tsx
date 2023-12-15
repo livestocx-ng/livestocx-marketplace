@@ -27,7 +27,7 @@ const MarketPlaceFilterPage = ({params}: MarketPlaceFilterPageProps) => {
 				}/user/products/marketplace/fetch-all?category=${params.category.toUpperCase()}&page=${currentPage}`
 			);
 
-			// console.log('[DATA] ::  ', data);
+			console.log('[DATA] ::  ', data);
 
 			updateProducts(data.data.products);
 			updatePagination(data.data.totalPages, data.data.hasNext);
@@ -44,18 +44,26 @@ const MarketPlaceFilterPage = ({params}: MarketPlaceFilterPageProps) => {
 
 	return (
 		<div className='w-full'>
-			<AuthHeader />
-
-			<div className='w-full flex flex-col pb-20'>
-				<h1 className='px-4 pt-5 text-lg'>
-					You searched for "
-					<span className='text-main capitalize'>
-						{params.category}
-					</span>
-					"
+			<section className='sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 pb-20 sm:pb-0 md:pt-0'>
+				<h1 className='text-xl md:text-5xl font-medium text-white capitalize'>
+					{params?.category}
 				</h1>
 
-				<MarketplaceFilterForm />
+				{/* <SearchForm /> */}
+			</section>
+
+			<div className='w-full flex flex-col pb-20'>
+				<div className='flex items-center justify-between w-full mb-3'>
+					<h1 className='px-4 pt-5 text-lg'>
+						You searched for "
+						<span className='text-main capitalize'>
+							{params.category}
+						</span>
+						"
+					</h1>
+
+					<MarketplaceFilterForm />
+				</div>
 
 				{products && products?.length === 0 && (
 					<div className='h-[400px] w-1/2 mx-auto'>

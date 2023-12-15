@@ -24,8 +24,11 @@ interface GlobalStore {
 	desiredProducts: DesiredItem[];
 	productInfo: ProductInfo | null;
 	products: Product[];
+	sellerProducts: Product[];
 	totalPages: number;
 	hasNextPage: boolean;
+	sellerTotalPages: number;
+	sellerHasNextPage: boolean;
 	currentAccountTab: Tab | 'Account' | null;
 	updateNotification: (notificationId: number, value: Notification) => void;
 	updateNotifications: (value: Notification[]) => void;
@@ -39,9 +42,11 @@ interface GlobalStore {
 	updateBilling: (value: Billing | null) => void;
 	updateUser: (value: User | null) => void;
 	updateProducts: (products: Product[]) => void;
+	updateSellerProducts: (products: Product[]) => void;
 	updateProductInfo: (value: ProductInfo) => void;
 	updateProduct: (productId: string, product: Product) => void;
 	updatePagination: (totalPages: number, hasNextPage: boolean) => void;
+	updateSellerPagination: (totalPages: number, hasNextPage: boolean) => void;
 }
 
 interface UpdateGoogleProfileModal {
@@ -193,7 +198,10 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	billing: null,
 	vendor: null,
 	products: [],
-	totalPages: 1,
+	sellerProducts: [],
+	totalPages: 0,
+	sellerTotalPages: 0,
+	sellerHasNextPage: false,
 	product: null,
 	hasNextPage: false,
 	productInfo: null,
@@ -240,5 +248,9 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	},
 	updatePagination: (totalPages: number, hasNextPage: boolean) =>
 		set({totalPages: totalPages, hasNextPage: hasNextPage}),
+	updateSellerPagination: (totalPages: number, hasNextPage: boolean) =>
+		set({sellerTotalPages: totalPages, sellerHasNextPage: hasNextPage}),
 	updateProducts: (products: Product[]) => set({products: products}),
+	updateSellerProducts: (products: Product[]) =>
+		set({sellerProducts: products}),
 }));

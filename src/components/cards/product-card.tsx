@@ -102,7 +102,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 
 					handleLikeUnlikeProduct(formData);
 				}}
-				className='absolute right-14 bottom-[105px] z-[3] flex items-center justify-center h-6 sm:h-8 w-6 sm:w-8 bg-main rounded-full cursor-pointer'
+				className='absolute right-14 bottom-[110px] z-[3] flex items-center justify-center h-6 sm:h-8 w-6 sm:w-8 bg-main rounded-full cursor-pointer'
 			>
 				{product?.likedUsers?.includes(user?.id!) ? (
 					<ThumbsDown className='h-3 sm:h-4 w-3 sm:w-4 text-white' />
@@ -113,7 +113,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 
 			<div
 				onClick={handleAddToDesiredProducts}
-				className='absolute right-4 bottom-[105px] z-[3] flex items-center justify-center h-6 sm:h-8 w-6 sm:w-8 bg-main rounded-full'
+				className='absolute right-4 bottom-[110px] z-[3] flex items-center justify-center h-6 sm:h-8 w-6 sm:w-8 bg-main rounded-full'
 			>
 				<ShoppingCartIcon className='h-3 sm:h-4 w-3 sm:w-4 text-white' />
 			</div>

@@ -149,7 +149,10 @@ const DashboardContent = ({}: DashboardContentProps) => {
 									<span className='font-medium'>Email: </span>
 									{user?.email}
 								</h1>
-								<h1 className='text-sm'><span className="font-medium">Phone: </span>{user?.phoneNumber}</h1>
+								<h1 className='text-sm'>
+									<span className='font-medium'>Phone: </span>
+									{user?.phoneNumber}
+								</h1>
 							</div>
 						</div>
 						<p
@@ -172,17 +175,19 @@ const DashboardContent = ({}: DashboardContentProps) => {
 							type='button'
 							onClick={() => {
 								if (user?.role === 'FARMER') {
-									return handleUpdateUserRole('CUSTOMER');
+									return;
+									// return handleUpdateUserRole('CUSTOMER');
 								}
+								
 								if (user?.role === 'CUSTOMER') {
 									return handleUpdateUserRole('FARMER');
 								}
 							}}
 							className='bg-main text-white text-xs hover:bg-main hover:text-white w-full px-3 rounded-lg'
 						>
-							{user?.role === 'FARMER'
-								? 'Become a Customer'
-								: 'Become a Seller'}
+							{user?.role === 'CUSTOMER'
+								? 'Become a Seller'
+								: 'Seller'}
 						</Button>
 					)}
 				</div>

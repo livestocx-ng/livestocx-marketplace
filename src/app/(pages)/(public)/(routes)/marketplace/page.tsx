@@ -75,7 +75,7 @@ const MarketPlacePage = () => {
 					<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
 						<div className='h-[200px] w-1/2 mx-auto bg-white'>
 							<Lottie
-								loop={true}
+								loop={false}
 								className='h-full'
 								animationData={EmptyAnimation}
 							/>

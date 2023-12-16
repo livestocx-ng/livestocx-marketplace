@@ -7,23 +7,23 @@ import {
 	TooltipTrigger,
 } from '@/components/ui/tooltip';
 import {
-	createBlobImageUrls,
+	useGlobalStore,
+	useCreateProductModalStore,
+} from '@/hooks/use-global-store';
+import {
 	getFilesTypeCount,
+	createBlobImageUrls,
 } from '@/utils/media/file.mutation';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
 import {Checkbox} from '@/components/ui/checkbox';
-import {Plus, UploadCloud, X} from 'lucide-react';
 import {useReducer, useRef, useState} from 'react';
-import {
-	useCreateProductModalStore,
-	useGlobalStore,
-} from '@/hooks/use-global-store';
 import {isFileSizeValid} from '@/utils/media/file.validation';
 import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
+import {FileImage, FileVideo, Plus, UploadCloud, X} from 'lucide-react';
 import FormTextAreaInput from '@/components/input/form-text-area-input';
 import {CategoryDropDownButton} from '../buttons/category-dropdown-button';
 import {DropdownMenuCheckboxItemProps} from '@radix-ui/react-dropdown-menu';
@@ -297,10 +297,10 @@ const AddProductModal = () => {
 								onClick={openImageFileInput}
 								className='p-3 border text-center cursor-pointer'
 							>
-								<Plus className='text-black' />
+								<FileImage className='text-black' />
 							</div>
-							<p className='text-xs'>
-								Add pictures of product (maximum of 10 images)
+							<p className='text-xs text-red-500'>
+								Add pictures of product (maximum of 10 images 500KB each)
 							</p>
 						</div>
 
@@ -309,10 +309,10 @@ const AddProductModal = () => {
 								onClick={openVideoFileInput}
 								className='p-3 border text-center cursor-pointer'
 							>
-								<Plus className='text-black' />
+								<FileVideo className='text-black' />
 							</div>
-							<p className='text-xs'>
-								Add videos of product (maximum of 2 videos)
+							<p className='text-xs text-red-500'>
+								Add videos of product (maximum of 2 videos 2MB each)
 							</p>
 						</div>
 

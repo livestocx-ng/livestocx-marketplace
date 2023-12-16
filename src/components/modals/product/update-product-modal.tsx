@@ -12,19 +12,19 @@ import {
 } from '@/hooks/use-global-store';
 import {Media} from '@/types/types';
 import {
-	createBlobImageUrls,
 	getFilesTypeCount,
+	createBlobImageUrls,
 } from '@/utils/media/file.mutation';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
 import {Checkbox} from '@/components/ui/checkbox';
-import {Plus, UploadCloud, X} from 'lucide-react';
 import ButtonLoader from '@/components/loader/button-loader';
 import {useEffect, useReducer, useRef, useState} from 'react';
 import {isFileSizeValid} from '@/utils/media/file.validation';
 import FormTextInput from '@/components/input/form-text-input';
+import {FileImage, FileVideo, Plus, UploadCloud, X} from 'lucide-react';
 import FormTextAreaInput from '@/components/input/form-text-area-input';
 import {CategoryDropDownButton} from '../buttons/category-dropdown-button';
 import {DropdownMenuCheckboxItemProps} from '@radix-ui/react-dropdown-menu';
@@ -326,10 +326,11 @@ const UpdateProductModal = () => {
 								onClick={openImageFileInput}
 								className='p-3 border text-center cursor-pointer'
 							>
-								<Plus className='text-black' />
+								<FileImage className='text-black' />
 							</div>
-							<p className='text-xs'>
-								Add pictures of product (maximum of 10 images)
+							<p className='text-xs text-red-500'>
+								Add pictures of product (maximum of 10 images
+								500KB each)
 							</p>
 						</div>
 
@@ -338,10 +339,11 @@ const UpdateProductModal = () => {
 								onClick={openVideoFileInput}
 								className='p-3 border text-center cursor-pointer'
 							>
-								<Plus className='text-black' />
+								<FileVideo className='text-black' />
 							</div>
-							<p className='text-xs'>
-								Add videos of product (maximum of 2 videos)
+							<p className='text-xs text-red-500'>
+								Add videos of product (maximum of 2 videos 2MB
+								each)
 							</p>
 						</div>
 

@@ -24,6 +24,7 @@ interface GlobalStore {
 	desiredProducts: DesiredItem[];
 	productInfo: ProductInfo | null;
 	products: Product[];
+	searchProducts: Product[];
 	sellerProducts: Product[];
 	totalPages: number;
 	hasNextPage: boolean;
@@ -42,6 +43,7 @@ interface GlobalStore {
 	updateBilling: (value: Billing | null) => void;
 	updateUser: (value: User | null) => void;
 	updateProducts: (products: Product[]) => void;
+	updateSearchProducts: (products: Product[]) => void;
 	updateSellerProducts: (products: Product[]) => void;
 	updateProductInfo: (value: ProductInfo) => void;
 	updateProduct: (productId: string, product: Product) => void;
@@ -197,6 +199,7 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	vendors: [],
 	billing: null,
 	vendor: null,
+	searchProducts: [],
 	products: [],
 	sellerProducts: [],
 	totalPages: 0,
@@ -251,6 +254,7 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	updateSellerPagination: (totalPages: number, hasNextPage: boolean) =>
 		set({sellerTotalPages: totalPages, sellerHasNextPage: hasNextPage}),
 	updateProducts: (products: Product[]) => set({products: products}),
+	updateSearchProducts: (products: Product[]) => set({searchProducts: products}),
 	updateSellerProducts: (products: Product[]) =>
 		set({sellerProducts: products}),
 }));

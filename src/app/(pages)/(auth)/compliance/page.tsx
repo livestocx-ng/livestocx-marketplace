@@ -1,7 +1,7 @@
 'use client';
 import axios from 'axios';
+import Link from 'next/link';
 import Image from 'next/image';
-import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {toast} from 'react-hot-toast';
 import {FileImage} from 'lucide-react';
 import {useRouter} from 'next/navigation';
@@ -9,11 +9,11 @@ import {Button} from '@/components/ui/button';
 import {NigeriaCities, NigeriaStates} from '@/data';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import ButtonLoader from '@/components/loader/button-loader';
+import {isFileSizeValid} from '@/utils/media/file.validation';
 import FormTextInput from '@/components/input/form-text-input';
 import React, {useEffect, useReducer, useRef, useState} from 'react';
+import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {ValidateComplianceFormData} from '@/utils/form-validations/compliance.validation';
-import Link from 'next/link';
-import {isFileSizeValid} from '@/utils/media/file.validation';
 
 type FormData = {
 	name: string;
@@ -240,7 +240,6 @@ const CompliancePage = () => {
 								className='w-full border py-3 rounded px-3 text-sm scrollbar__1'
 								onChange={handleSelectChange}
 							>
-								{/* <option value=''>{NigeriaStates[0]}</option> */}
 								{NigeriaStates.map((option) => (
 									<option
 										key={option}
@@ -264,9 +263,7 @@ const CompliancePage = () => {
 								className='w-full border py-3 rounded px-3 text-sm scrollbar__1'
 								onChange={handleSelectChange}
 							>
-								{/* <option value=''>
-									{NigeriaCities[formData.state ?? 'Abia'][0]}
-								</option> */}
+								<option value=''>City</option>
 								{NigeriaCities[formData.state].map((option) => (
 									<option
 										key={option}

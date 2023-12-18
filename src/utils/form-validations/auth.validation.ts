@@ -3,11 +3,13 @@ interface SigninDto {
 	password: string;
 }
 
-interface GoogleProfileDto {
-	firstName: string;
-	lastName: string;
+interface VendorProfileDto {
+	name: string;
+	email: string;
+	address: string;
+	state: string;
+	city: string;
 	phoneNumber: string;
-	location: string;
 };
 
 interface SignupDto {
@@ -16,6 +18,10 @@ interface SignupDto {
 	email: string;
 	password: string;
 	location: string;
+	businessName: string;
+	businessAddress: string;
+	businessState: string;
+	businessCity: string;
 	phoneNumber: string;
 	acceptedTerms: boolean;
 	confirmPassword: string;
@@ -86,9 +92,23 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 			'Password must be at least 8 characters, include an uppercase and lowecase character.');
 	}
 
-	if (formData.role === 'FARMER' && !formData.location) {
+	if (formData.role === 'CUSTOMER' && !formData.location) {
 		return (message = 'Location is required.');
 	}
+
+	if (formData.role === 'FARMER' && !formData.businessName) {
+		return (message = 'Business name is required.');
+	}
+	if (formData.role === 'FARMER' && !formData.businessAddress) {
+		return (message = 'Business address is required.');
+	}
+	if (formData.role === 'FARMER' && !formData.businessState) {
+		return (message = 'Business state is required.');
+	}
+	if (formData.role === 'FARMER' && !formData.businessCity) {
+		return (message = 'Business city is required.');
+	}
+
 	if (formData.acceptedTerms === false) {
 		return (message = 'Please accept our terms of service and privacy policy.');
 	}
@@ -96,15 +116,18 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 	return message;
 }
 
-export function ValidateGoogleProfileFormData(formData: GoogleProfileDto): string {
+export function ValidateVendorProfileFormData(formData: VendorProfileDto): string {
 	let message = '';
 
-	if (!formData.firstName) {
-		return (message = 'First name is required.');
+	if (!formData.name) {
+		return (message = 'Business name is required.');
 	}
 
-	if (!formData.lastName) {
-		return (message = 'Last name is required.');
+	if (!formData.email) {
+		return (message = 'Business email is required.');
+	}
+	if (!emailRegEX.test(formData.email)) {
+		return (message = 'Invalid email input.');
 	}
 
 	if (!formData.phoneNumber) {
@@ -114,8 +137,16 @@ export function ValidateGoogleProfileFormData(formData: GoogleProfileDto): strin
 		return (message = 'Invalid phone number.');
 	}
 
-	if (!formData.location) {
-		return (message = 'Location is required.');
+	if (!formData.address) {
+		return (message = 'Business address is required.');
+	}
+
+	if (!formData.state) {
+		return (message = 'Business state is required.');
+	}
+
+	if (!formData.city) {
+		return (message = 'Business city is required.');
 	}
 
 	return message;

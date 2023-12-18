@@ -3,21 +3,23 @@ import {useReducer, useState} from 'react';
 import {X} from 'lucide-react';
 import {
 	useGlobalStore,
-	useUpdateGoogleProfileModalStore,
+	useUpdateVendorProfileModalStore,
 } from '@/hooks/use-global-store';
-import {NigeriaStates} from '@/data';
+import {NigeriaCities, NigeriaStates} from '@/data';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {Button} from '@/components/ui/button';
 import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
-import { ValidateGoogleProfileFormData } from '@/utils/form-validations/auth.validation';
+import {ValidateVendorProfileFormData} from '@/utils/form-validations/auth.validation';
 
 type FormData = {
-	firstName: string;
-	lastName: string;
+	name: string;
+	email: string;
 	phoneNumber: string;
-	location: string;
+	address: string;
+	state: string;
+	city: string;
 };
 
 type FormAction = {
@@ -26,10 +28,12 @@ type FormAction = {
 };
 
 const initialState: FormData = {
-	firstName: '',
-	lastName: '',
+	name: '',
+	email: '',
 	phoneNumber: '',
-	location: '',
+	address: '',
+	state: 'Abia',
+	city: '',
 };
 
 const formReducer = (state: FormData, action: FormAction) => {
@@ -41,10 +45,10 @@ const formReducer = (state: FormData, action: FormAction) => {
 	}
 };
 
-const UpdateGoogleProfileModal = () => {
+const UpdateVendorProfileModal = () => {
 	const {user, updateUser} = useGlobalStore();
 
-	const {onClose} = useUpdateGoogleProfileModalStore();
+	const {onClose} = useUpdateVendorProfileModalStore();
 
 	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
@@ -69,33 +73,35 @@ const UpdateGoogleProfileModal = () => {
 		try {
 			setLoading(true);
 
-            const validationError = ValidateGoogleProfileFormData(formData);
+			const validationError = ValidateVendorProfileFormData(formData);
 
 			if (validationError) {
 				setLoading(false);
 				return toast.error(validationError, {duration: 10000});
 			}
 
-			const {data} = await axios.patch(
-				`${process.env.NEXT_PUBLIC_API_URL}/auth/update-google-profile`,
+			await axios.patch(
+				`${process.env.NEXT_PUBLIC_API_URL}/vendor/update-profile`,
 				formData,
 				{
 					headers: {
+						'Content-Type': 'multipart/form-data',
 						Authorization: user?.accessToken,
 					},
 				}
 			);
-			const cookieUpdate = await axios.patch(
-				'/api/auth/update-cookies',
-				data.data
-			);
+			const cookieUpdate = await axios.patch('/api/auth/update-cookies', {
+				isVendorProfileUpdated: true,
+			});
 
 			await updateUser(cookieUpdate.data);
 
-			console.log('[DATA] :: ', data);
+			console.log('[DATA] :: ', cookieUpdate);
 
 			setLoading(false);
 
+			updateUser(cookieUpdate.data);
+			
 			toast.success('Success');
 
 			// close modal
@@ -113,9 +119,9 @@ const UpdateGoogleProfileModal = () => {
 
 	return (
 		<div className='fixed h-screen flex flex-col items-center justify-center w-full bg-[#11111190] backdrop-blur-sm z-[15]'>
-			<div className='flex flex-col w-[90%] md:w-[40%] bg-white py-2 px-4 rounded overflow-y-auto scrollbar__1'>
+			<div className='flex flex-col w-[90%] md:w-[40%] bg-white py-2 px-4 overflow-y-auto scrollbar__1'>
 				<div className='flex items-center justify-between px4'>
-					<h1 className='font-semibold'>Update Profile</h1>
+					<h1 className='font-medium'>Update Business Profile</h1>
 
 					<Button
 						type='button'
@@ -133,14 +139,15 @@ const UpdateGoogleProfileModal = () => {
 				<div className='flex flex-col space-y-2 w-full py-5'>
 					<div className='w-full'>
 						<p className='text-sm font-medium'>
-							First Name <span className='text-red-500'>*</span>
+							Business Name{' '}
+							<span className='text-red-500'>*</span>
 						</p>
 						<FormTextInput
-							name='firstName'
+							name='name'
 							disabled={loading}
 							padding='py-4 px-4'
-							placeHolder='First Name'
-							value={formData.firstName}
+							placeHolder='Business Name'
+							value={formData.name}
 							handleChange={handleChange}
 							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 						/>
@@ -148,14 +155,15 @@ const UpdateGoogleProfileModal = () => {
 
 					<div className='w-full'>
 						<p className='text-sm font-medium'>
-							Last Name <span className='text-red-500'>*</span>
+							Business Email{' '}
+							<span className='text-red-500'>*</span>
 						</p>
 						<FormTextInput
-							name='lastName'
+							name='email'
 							disabled={loading}
 							padding='py-4 px-4'
-							placeHolder='Last Name'
-							value={formData.lastName}
+							placeHolder='Business Email'
+							value={formData.email}
 							handleChange={handleChange}
 							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 						/>
@@ -179,16 +187,58 @@ const UpdateGoogleProfileModal = () => {
 
 					<div className='w-full'>
 						<p className='text-sm font-medium'>
-							Location <span className='text-red-500'>*</span>
+							Business Address{' '}
+							<span className='text-red-500'>*</span>
+						</p>
+						<FormTextInput
+							type='text'
+							name='address'
+							padding='py-3 px-4'
+							disabled={loading}
+							placeHolder='Business Address'
+							value={formData.address}
+							handleChange={handleChange}
+							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+						/>
+					</div>
+
+					<div className='w-full'>
+						<p className='text-sm font-medium'>
+							Business State{' '}
+							<span className='text-red-500'>*</span>
 						</p>
 						<div>
 							<select
-								name='location'
+								name='state'
 								className='w-full border py-4 rounded px-3 text-sm scrollbar__1'
 								onChange={handleSelectChange}
 							>
-								<option value=''>Location</option>
+								<option value=''>Business State</option>
 								{NigeriaStates.map((option) => (
+									<option
+										key={option}
+										value={option}
+										className='cursor-pointer'
+									>
+										{option}
+									</option>
+								))}
+							</select>
+						</div>
+					</div>
+					<div className='w-full'>
+						<p className='text-sm font-medium'>
+							Business City{' '}
+							<span className='text-red-500'>*</span>
+						</p>
+						<div>
+							<select
+								name='city'
+								className='w-full border py-4 rounded px-3 text-sm scrollbar__1'
+								onChange={handleSelectChange}
+							>
+								<option value=''>Business City</option>
+								{NigeriaCities[formData.state].map((option) => (
 									<option
 										key={option}
 										value={option}
@@ -208,7 +258,7 @@ const UpdateGoogleProfileModal = () => {
 							// disabled
 							type='button'
 							variant={'outline'}
-							className='w-full md:w-[200px] bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0'
+							className='w-full bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0'
 						>
 							<ButtonLoader />
 						</Button>
@@ -217,7 +267,7 @@ const UpdateGoogleProfileModal = () => {
 							type='button'
 							variant={'outline'}
 							onClick={handleSubmit}
-							className='w-full md:w-[200px] bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0'
+							className='w-full bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0'
 						>
 							Submit
 						</Button>
@@ -228,4 +278,4 @@ const UpdateGoogleProfileModal = () => {
 	);
 };
 
-export default UpdateGoogleProfileModal;
+export default UpdateVendorProfileModal;

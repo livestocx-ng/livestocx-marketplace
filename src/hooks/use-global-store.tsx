@@ -51,7 +51,7 @@ interface GlobalStore {
 	updateSellerPagination: (totalPages: number, hasNextPage: boolean) => void;
 }
 
-interface UpdateGoogleProfileModal {
+interface UpdateVendorProfileModal {
 	isOpen: boolean;
 	onOpen: () => void;
 	onClose: () => void;
@@ -107,8 +107,8 @@ interface DeleteProductModal {
 	updatePayload: (value: Product) => void;
 }
 
-export const useUpdateGoogleProfileModalStore =
-	create<UpdateGoogleProfileModal>((set) => ({
+export const useUpdateVendorProfileModalStore =
+	create<UpdateVendorProfileModal>((set) => ({
 		isOpen: false,
 		onOpen: () => set({isOpen: true}),
 		onClose: () => set({isOpen: false}),

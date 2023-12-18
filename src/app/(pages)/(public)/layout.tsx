@@ -2,8 +2,8 @@
 import {useEffect} from 'react';
 import {
 	useUpdateUserRoleModalStore,
-	useUpdateGoogleProfileModalStore,
 	useReadNotificationModalStore,
+	useUpdateVendorProfileModalStore,
 } from '@/hooks/use-global-store';
 import {toast} from 'react-hot-toast';
 import {useRouter} from 'next/navigation';
@@ -11,7 +11,7 @@ import {useUserHook} from '@/hooks/use-user';
 import Footer from '@/components/navigation/footer';
 import Navbar from '@/components/navigation/main-nav-bar';
 import UpdateUserRoleModal from '@/components/modals/user/update-user-role-modal';
-import UpdateGoogleProfileModal from '@/components/modals/user/update-google-profile-modal';
+import UpdateVendorProfileModal from '@/components/modals/user/update-vendor-profile-modal';
 import NotificationModal from '@/components/modals/notifications/notification-modal';
 
 interface PagesLayoutProps {
@@ -24,15 +24,16 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 
 	const updateUserRoleModal = useUpdateUserRoleModalStore();
 	const readNotificationModal = useReadNotificationModalStore();
-	const updateGoogleProfileModal = useUpdateGoogleProfileModalStore();
+	const updateVendorProfileModal = useUpdateVendorProfileModalStore();
 
 	useEffect(() => {
 		if (
 			user &&
-			user?.isVendorProfileUpdated === false &&
-			user?.role === 'FARMER'
+			user?.role === 'FARMER' &&
+			user?.isVendorProfileUpdated === false
 		) {
-			router.push('/compliance');
+			// router.push('/compliance');
+			updateVendorProfileModal.onOpen();
 		}
 	}, [user]);
 
@@ -40,7 +41,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 		<div className='relative'>
 			{updateUserRoleModal.isOpen && <UpdateUserRoleModal />}
 			{readNotificationModal.isOpen && <NotificationModal />}
-			{updateGoogleProfileModal.isOpen && <UpdateGoogleProfileModal />}
+			{updateVendorProfileModal.isOpen && <UpdateVendorProfileModal />}
 
 			<Navbar />
 			{children}

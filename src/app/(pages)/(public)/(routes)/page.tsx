@@ -2,6 +2,7 @@
 import Lottie from 'lottie-react';
 import {useEffect, useState} from 'react';
 import axios, {AxiosError} from 'axios';
+import {useRouter} from 'next/navigation';
 import {useUserHook} from '@/hooks/use-user';
 import SearchForm from './components/search-form';
 import HomeProducts from './components/home-products';
@@ -9,7 +10,6 @@ import {useGlobalStore} from '@/hooks/use-global-store';
 import TestimonialSection from '@/components/common/testimonials';
 import EmptyAnimation from '../../../../../public/animations/animation__3.json';
 import LoadingAnimation from '../../../../../public/animations/loading__animation__1.json';
-import {useRouter} from 'next/navigation';
 
 export default function HomePage() {
 	const router = useRouter();

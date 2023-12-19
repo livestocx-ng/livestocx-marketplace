@@ -6,6 +6,7 @@ import {Toaster} from '@/components/ui/toaster';
 import './globals.css';
 import {ToastProvider} from '@/providers';
 import AuthProvider from '@/providers/auth-provider';
+import Head from 'next/head';
 
 const poppins = Poppins({
 	subsets: ['latin'],
@@ -23,6 +24,24 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
 	return (
 		<html lang='en'>
+			<Head>
+				<script
+					async
+					src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_GOOGLE_ANALYTICS_MEASUREMENT_ID}`}
+				></script>
+				<script
+					dangerouslySetInnerHTML={{
+						__html: `
+							window.dataLayer = window.dataLayer || [];
+							function gtag(){dataLayer.push(arguments);}
+							gtag('js', new Date());
+							gtag('config', ${process.env.NEXT_GOOGLE_ANALYTICS_MEASUREMENT_ID}, {
+							page_path: window.location.pathname,
+							});
+						`,
+					}}
+				/>
+			</Head>
 			<body className={poppins.className}>
 				<AuthProvider>
 					<ToastProvider />

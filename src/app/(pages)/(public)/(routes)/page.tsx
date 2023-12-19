@@ -1,5 +1,4 @@
 'use client';
-import ReactGA from 'react-ga';
 import Lottie from 'lottie-react';
 import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
@@ -10,7 +9,6 @@ import HomeProducts from './components/home-products';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import TestimonialSection from '@/components/common/testimonials';
 import EmptyAnimation from '../../../../../public/animations/animation__3.json';
-import useGoogleAnalyticsEventTracker from '@/providers/google-analytics-provider';
 import LoadingAnimation from '../../../../../public/animations/loading__animation__1.json';
 
 export default function HomePage() {
@@ -43,12 +41,6 @@ export default function HomePage() {
 			console.log('[FETCH-PRODUCTS-ERROR] :: ', _error);
 		}
 	};
-
-	useEffect(() => {
-		// Google Analytics
-		ReactGA.pageview('Home');
-		useGoogleAnalyticsEventTracker('Home');
-	}, []);
 
 	useEffect(() => {
 		fetchProducts();

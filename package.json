@@ -52,6 +52,7 @@
     "zustand": "^4.4.3"
   },
   "devDependencies": {
+    "@types/gtag.js": "^0.0.18",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-collapse": "^5.0.4",

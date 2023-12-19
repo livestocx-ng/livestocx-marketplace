@@ -7,6 +7,8 @@ import './globals.css';
 import {ToastProvider} from '@/providers';
 import AuthProvider from '@/providers/auth-provider';
 import Head from 'next/head';
+import GoogleAnalyticsProvider from '@/providers/google-analytics-provider';
+import CookieBannerProvider from '@/providers/cookie-banner-provider';
 
 const poppins = Poppins({
 	subsets: ['latin'],
@@ -24,30 +26,15 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
 	return (
 		<html lang='en'>
-			<Head>
-				<script
-					async
-					src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`}
-				></script>
-				<script
-					dangerouslySetInnerHTML={{
-						__html: `
-							window.dataLayer = window.dataLayer || [];
-							function gtag(){dataLayer.push(arguments);}
-							gtag('js', new Date());
-							gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}', {
-								page_path: window.location.pathname,
-							});
-						`,
-					}}
-				/>
-			</Head>
+			<GoogleAnalyticsProvider />
 			<body className={poppins.className}>
 				<AuthProvider>
 					<ToastProvider />
 					<Toaster />
 					{children}
 				</AuthProvider>
+
+				<CookieBannerProvider />
 			</body>
 		</html>
 	);

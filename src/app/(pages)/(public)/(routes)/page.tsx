@@ -1,5 +1,5 @@
 'use client';
-import ReactGA from 'react-ga4';
+import ReactGA from 'react-ga';
 import Lottie from 'lottie-react';
 import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
@@ -46,6 +46,7 @@ export default function HomePage() {
 
 	useEffect(() => {
 		// Google Analytics
+		ReactGA.pageview('Home');
 		useGoogleAnalyticsEventTracker('Home');
 	}, []);
 

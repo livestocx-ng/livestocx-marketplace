@@ -1,4 +1,5 @@
 'use client';
+import ReactGA from 'react-ga4';
 import Lottie from 'lottie-react';
 import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
@@ -15,10 +16,6 @@ import LoadingAnimation from '../../../../../public/animations/loading__animatio
 export default function HomePage() {
 	const router = useRouter();
 	const userStore = useUserHook();
-	
-	// Google Analytics
-	const AnalyticsTracker = useGoogleAnalyticsEventTracker('Home');
-	
 	const {user, products, updateProducts, updatePagination} = useGlobalStore();
 
 	const [loading, setLoading] = useState(true);
@@ -46,7 +43,12 @@ export default function HomePage() {
 			console.log('[FETCH-PRODUCTS-ERROR] :: ', _error);
 		}
 	};
-	console.log(user);
+
+	useEffect(() => {
+		// Google Analytics
+		useGoogleAnalyticsEventTracker('Home');
+	}, []);
+
 	useEffect(() => {
 		fetchProducts();
 	}, [currentPage]);

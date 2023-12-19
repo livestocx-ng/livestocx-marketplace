@@ -123,7 +123,7 @@ const DashboardContent = ({}: DashboardContentProps) => {
 							{user?.lastName} {user?.firstName}
 						</h1>
 						<p className='text-sm capitalize text-red-600 underline'>
-							{user?.role}
+							{user?.role === 'CUSTOMER' ? 'CUSTOMER' : 'SELLER'}
 						</p>
 					</div>
 

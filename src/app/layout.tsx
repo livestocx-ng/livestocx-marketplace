@@ -14,7 +14,7 @@ const poppins = Poppins({
 });
 
 // Initialize Google Analytics
-ReactGA.initialize(process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID ?? '');
+// ReactGA.initialize(process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID ?? '');
 
 export const metadata: Metadata = {
 	title: 'Livestocx - Best deals, Everything Livestocx',
@@ -36,7 +36,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 							function gtag(){dataLayer.push(arguments);}
 							gtag('js', new Date());
 							gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}', {
-							page_path: window.location.pathname,
+								page_path: window.location.pathname,
 							});
 						`,
 					}}

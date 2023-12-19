@@ -1,7 +1,7 @@
+import ReactGA from 'react-ga4';
 import type {Metadata} from 'next';
 import {Poppins} from 'next/font/google';
 import {Toaster} from '@/components/ui/toaster';
-// import {Philosopher} from 'next/font/google';
 
 import './globals.css';
 import {ToastProvider} from '@/providers';
@@ -12,7 +12,8 @@ const poppins = Poppins({
 	weight: ['400', '500', '600', '700', '800'],
 });
 
-// const poppins = Philosopher({weight: ['400', '700'], subsets: ['latin']});
+// Initialize Google Analytics
+ReactGA.initialize(process.env.NEXT_GOOGLE_ANALYTICS_MEASUREMENT_ID ?? '');
 
 export const metadata: Metadata = {
 	title: 'Livestocx - Best deals, Everything Livestocx',

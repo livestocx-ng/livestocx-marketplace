@@ -37,7 +37,9 @@ export function CategoryDropDownButton({
 					className={`w-fit flex items-center space-x-3 ${classes}`}
 				>
 					<Plus className='h-4 w-4 text-white' />{' '}
-					<p className='text-xs'>Category ({value.toUpperCase()})</p>
+					<p className='text-xs'>
+						{value ? value.toUpperCase() : 'Category'}
+					</p>
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className='w-56'>

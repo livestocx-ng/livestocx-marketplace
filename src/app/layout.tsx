@@ -14,7 +14,7 @@ const poppins = Poppins({
 });
 
 // Initialize Google Analytics
-ReactGA.initialize(process.env.NEXT_GOOGLE_ANALYTICS_MEASUREMENT_ID ?? '');
+ReactGA.initialize(process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID ?? '');
 
 export const metadata: Metadata = {
 	title: 'Livestocx - Best deals, Everything Livestocx',

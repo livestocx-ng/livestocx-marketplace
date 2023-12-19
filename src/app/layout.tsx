@@ -27,7 +27,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 			<Head>
 				<script
 					async
-					src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_GOOGLE_ANALYTICS_MEASUREMENT_ID}`}
+					src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`}
 				></script>
 				<script
 					dangerouslySetInnerHTML={{
@@ -35,7 +35,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 							window.dataLayer = window.dataLayer || [];
 							function gtag(){dataLayer.push(arguments);}
 							gtag('js', new Date());
-							gtag('config', '${process.env.NEXT_GOOGLE_ANALYTICS_MEASUREMENT_ID}', {
+							gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}', {
 							page_path: window.location.pathname,
 							});
 						`,

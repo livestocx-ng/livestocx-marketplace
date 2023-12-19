@@ -1,6 +1,6 @@
 export function isFileSizeValid(file: File): boolean {
-	const maxSizeImageKB = 500 * 1024; // 500KB
-	const maxSizeVideoMB = 2000 * 1024; // 2MB in KB
+	const maxSizeImageKB = 3000 * 1024; // 3MB
+	const maxSizeVideoMB = 5200 * 1024; // 5MB in KB
 
 	const fileSizeKB = file.size; // Convert file size to KB
 

@@ -283,14 +283,14 @@ const SingleProductContent = ({
 				</div>
 			</div>
 
-			<div className='mt-5 px-4 md:px-0'>
+			<div className='mt-5 px-4 md:px-0 w-full'>
 				<h1 className='font-medium text-xl'>Videos</h1>
 
-				<div className='grid grid-cols-2 gap-5 md:gap-5 md:flex items-center justify-start w-full rounded-lg px-4 md:px-0'>
+				<div className='grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-5 md:flex items-center justify-start w-full rounded-lg'>
 					{product?.media
 						?.filter((media) => media.mediaType === 'VIDEO')
 						?.map((media, index) => (
-							<div className='h-[250px] w-[45%] relative border border-slate-400'>
+							<div className='h-[250px] w-full md:w-[25%] relative border border-slate-400'>
 								<video
 									controls
 									src={media.mediaUrl}

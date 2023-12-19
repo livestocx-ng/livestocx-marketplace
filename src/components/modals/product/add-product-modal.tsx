@@ -79,7 +79,7 @@ const AddProductModal = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [mediaBlobs, setMediaBlobs] = useState<string[]>([]);
 	const [showStatusBar, setShowStatusBar] = useState<Checked>(false);
-	const [category, setProductCategory] = useState<string>('cow');
+	const [category, setProductCategory] = useState<string>('');
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -121,30 +121,30 @@ const AddProductModal = () => {
 			file.type.includes('video')
 		).length;
 
-		if (totalMediaCount > 12) {
+		if (totalMediaCount > 4) {
 			return toast.error(
-				'You have reached the maximum of 12 files allowed for upload.'
+				'You have reached the maximum of 4 files allowed for upload.'
 			);
 		}
 
 		if (uploadType === 'IMAGE') {
 			if (
-				(imageCount && imageCount > 10) ||
-				imageCount + selectedFiles.length > 10
+				(imageCount && imageCount > 3) ||
+				imageCount + selectedFiles.length > 3
 			) {
 				return toast.error(
-					'You have exceeded the maximum allowed number of images(10).'
+					'You have exceeded the maximum allowed number of images(3).'
 				);
 			}
 		}
 
 		if (uploadType !== 'IMAGE') {
 			if (
-				(videoCount && videoCount > 2) ||
-				videoCount + selectedFiles.length > 2
+				(videoCount && videoCount > 1) ||
+				videoCount + selectedFiles.length > 1
 			) {
 				return toast.error(
-					'You have exceeded the maximum allowed number of videos(2).'
+					'You have exceeded the maximum allowed number of videos(1).'
 				);
 			}
 		}
@@ -152,8 +152,6 @@ const AddProductModal = () => {
 		if (selectedFiles) {
 			for (let index = 0; index < selectedFiles.length; index++) {
 				if (isFileSizeValid(selectedFiles[index])) {
-					// console.log('[FILE-SIZE] :: ', selectedFiles[index].size);
-
 					media.push(selectedFiles[index]);
 				} else {
 					exceededSize = true;
@@ -163,7 +161,7 @@ const AddProductModal = () => {
 
 		if (exceededSize) {
 			return toast.error(
-				'One or more image | video files exceed the file size limit of 500KB | 10MB '
+				'One or more image | video files exceed the file size limit of 3MB for images | 5MB for videos'
 			);
 		} else {
 			updateFormData({
@@ -258,7 +256,7 @@ const AddProductModal = () => {
 
 				<div className='flex flex-col-reverse sm:flex-row items-start justify-between w-full'>
 					<div className='w-full sm:w-[30%] flex flex-col space-y-5'>
-						<div
+						{/* <div
 							onClick={openImageFileInput}
 							className='w-full bg-slate-200  flex flex-col items-center justify-center space-y-3 px-4 py-8 cursor-pointer'
 						>
@@ -266,7 +264,7 @@ const AddProductModal = () => {
 							<p className='text-center text-xs'>
 								Upload picture of product
 							</p>
-						</div>
+						</div> */}
 
 						<input
 							type='file'
@@ -300,7 +298,8 @@ const AddProductModal = () => {
 								<FileImage className='text-black' />
 							</div>
 							<p className='text-xs text-red-500'>
-								Add pictures of product (maximum of 10 images 500KB each)
+								Add pictures of product (maximum of 3 images 3MB
+								each)
 							</p>
 						</div>
 
@@ -312,7 +311,7 @@ const AddProductModal = () => {
 								<FileVideo className='text-black' />
 							</div>
 							<p className='text-xs text-red-500'>
-								Add videos of product (maximum of 2 videos 2MB each)
+								Add video of product (maximum of 1 video 5MB)
 							</p>
 						</div>
 

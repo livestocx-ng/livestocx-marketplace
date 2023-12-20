@@ -1,6 +1,5 @@
 import axios from 'axios';
 import {cookies} from 'next/headers';
-import {AuthOptions} from 'next-auth';
 import NextAuth from 'next-auth/next';
 import GoogleProvider from 'next-auth/providers/google';
 import {COOKIE_MAX_AGE, COOKIE_NAME} from '@/lib/constants';
@@ -22,8 +21,8 @@ const handler = NextAuth({
 	callbacks: {
 		async signIn({account, profile}) {
 			if (account?.provider === 'google') {
-				console.log('[GOOGLE-SIGNIN-SUCCESS]');
-				console.log(`[USER] :: `, profile);
+				// console.log('[GOOGLE-SIGNIN-SUCCESS]');
+				// console.log(`[USER] :: `, profile);
 
 				try {
 					const name = profile?.name ? profile?.name?.split(' ') : ['', ''];

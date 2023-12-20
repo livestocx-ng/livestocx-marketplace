@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import Image from 'next/image';
 import {
 	Tooltip,
@@ -14,18 +15,18 @@ import {
 	getFilesTypeCount,
 	createBlobImageUrls,
 } from '@/utils/media/file.mutation';
+import {FilterOptions} from '@/data';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
 import {Checkbox} from '@/components/ui/checkbox';
 import {useReducer, useRef, useState} from 'react';
+import {FileImage, FileVideo, X} from 'lucide-react';
 import {isFileSizeValid} from '@/utils/media/file.validation';
 import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
-import {FileImage, FileVideo, Plus, UploadCloud, X} from 'lucide-react';
 import FormTextAreaInput from '@/components/input/form-text-area-input';
-import {CategoryDropDownButton} from '../buttons/category-dropdown-button';
 import {DropdownMenuCheckboxItemProps} from '@radix-ui/react-dropdown-menu';
 import {ValidateCreateProductFormData} from '@/utils/form-validations/product.validation';
 
@@ -184,16 +185,22 @@ const AddProductModal = () => {
 		});
 	};
 
+	const handleSelectChange = (
+		event: React.ChangeEvent<HTMLSelectElement>
+	) => {
+		updateFormData({
+			type: 'UPDATE_FORMDATA',
+			payload: {[event.target.name]: event.target.value},
+		});
+	};
+
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
 		try {
 			setLoading(true);
 
-			const validationError = ValidateCreateProductFormData(
-				formData,
-				category
-			);
+			const validationError = ValidateCreateProductFormData(formData);
 
 			if (validationError) {
 				setLoading(false);
@@ -299,7 +306,17 @@ const AddProductModal = () => {
 							</div>
 							<p className='text-xs text-red-500'>
 								Add pictures of product (maximum of 3 images 3MB
-								each)
+								each).{' '}
+								<span className='text-black'>
+									You can resize your image{' '}
+									<Link
+										href={'https://www.reduceimages.com/'}
+										target='_blank'
+										className='text-sky-500 font-medium'
+									>
+										here
+									</Link>{' '}
+								</span>
 							</p>
 						</div>
 
@@ -389,13 +406,35 @@ const AddProductModal = () => {
 					</div>
 
 					<div className='w-full sm:w-[70%] flex flex-col space-y-3 sm:pl-8 mb-5 sm:mb-0'>
-						<div className='flex items-center justify-between w-full'>
+						{/* <div className='flex items-center justify-between w-full'>
 							<CategoryDropDownButton
 								value={category}
 								setValue={setProductCategory}
 								setShowStatusBar={setShowStatusBar}
 								classes='bg-green-600 rounded-none hover:bg-green-600 text-white hover:text-white w-full sm:w-fit'
 							/>
+						</div> */}
+
+						<div className='w-full'>
+							<p className='text-xs'>Product Category</p>
+							<select
+								name='category'
+								className='w-full border py-3 rounde px-3 text-xs scrollbar__1'
+								onChange={handleSelectChange}
+							>
+								<option value='' className='text-xs'>
+									Product Category
+								</option>
+								{FilterOptions.map((option) => (
+									<option
+										key={option.id}
+										className='cursor-pointer text-xs'
+										value={option.value.toUpperCase()}
+									>
+										{option.title}
+									</option>
+								))}
+							</select>
 						</div>
 
 						<div className='space-y-'>

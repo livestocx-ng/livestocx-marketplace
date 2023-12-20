@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import Image from 'next/image';
 import {
 	Tooltip,
@@ -15,6 +16,7 @@ import {
 	getFilesTypeCount,
 	createBlobImageUrls,
 } from '@/utils/media/file.mutation';
+import {FilterOptions} from '@/data';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';
@@ -96,6 +98,7 @@ const UpdateProductModal = () => {
 				id: payload?.id,
 				name: payload?.name,
 				price: payload?.price,
+				category: payload?.category,
 				discountPrice: payload?.discountPrice.toString(),
 				description: payload?.description,
 				existingMedia: payload?.media,
@@ -207,6 +210,15 @@ const UpdateProductModal = () => {
 		});
 	};
 
+	const handleSelectChange = (
+		event: React.ChangeEvent<HTMLSelectElement>
+	) => {
+		updateFormData({
+			type: 'UPDATE_FORMDATA',
+			payload: {[event.target.name]: event.target.value},
+		});
+	};
+
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
@@ -217,10 +229,7 @@ const UpdateProductModal = () => {
 		try {
 			setLoading(true);
 
-			const validationError = ValidateUpdateProductFormData(
-				formData,
-				category
-			);
+			const validationError = ValidateUpdateProductFormData(formData);
 
 			if (validationError) {
 				setLoading(false);
@@ -285,7 +294,7 @@ const UpdateProductModal = () => {
 
 				<div className='flex flex-col-reverse md:flex-row items-start justify-between w-full'>
 					<div className='w-full md:w-[30%] flex flex-col space-y-5'>
-						<div
+						{/* <div
 							onClick={openImageFileInput}
 							className='w-full bg-slate-200  flex flex-col items-center justify-center space-y-3 px-4 py-8 cursor-pointer'
 						>
@@ -293,7 +302,7 @@ const UpdateProductModal = () => {
 							<p className='text-center text-xs'>
 								Upload picture of product
 							</p>
-						</div>
+						</div> */}
 
 						<input
 							type='file'
@@ -327,8 +336,18 @@ const UpdateProductModal = () => {
 								<FileImage className='text-black' />
 							</div>
 							<p className='text-xs text-red-500'>
-								Add pictures of product (maximum of 3 images
-								3MB each)
+								Add pictures of product (maximum of 3 images 3MB
+								each).{' '}
+								<span className='text-black'>
+									You can resize your image{' '}
+									<Link
+										href={'https://www.reduceimages.com/'}
+										target='_blank'
+										className='text-sky-500 font-medium'
+									>
+										here
+									</Link>{' '}
+								</span>
 							</p>
 						</div>
 
@@ -418,12 +437,34 @@ const UpdateProductModal = () => {
 					</div>
 
 					<div className='w-full md:w-[70%] flex flex-col space-y-3 md:pl-8'>
-						<CategoryDropDownButton
+						{/* <CategoryDropDownButton
 							value={category}
 							setValue={setProductCategory}
 							setShowStatusBar={setShowStatusBar}
 							classes='bg-sky-600 rounded-none hover:bg-sky-600 text-white hover:text-white w-full md:w-fit'
-						/>
+						/> */}
+						<div className='w-full'>
+							<p className='text-xs'>Product Category</p>
+							<select
+								name='category'
+								value={formData.category}
+								className='w-full border py-3 rounde px-3 text-xs scrollbar__1'
+								onChange={handleSelectChange}
+							>
+								<option value='' className='text-xs'>
+									Product Category
+								</option>
+								{FilterOptions.map((option) => (
+									<option
+										key={option.id}
+										className='cursor-pointer text-xs'
+										value={option.value.toUpperCase()}
+									>
+										{option.title}
+									</option>
+								))}
+							</select>
+						</div>
 
 						<div className='space-y-'>
 							<p className='text-xs'>Name</p>

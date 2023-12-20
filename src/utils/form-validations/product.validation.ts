@@ -33,11 +33,13 @@ interface ProductReviewDto {
 const isNumberRegEX = new RegExp(/^[0-9]+$/);
 
 export function ValidateCreateProductFormData(
-	formData: CreateProductDto,
-	category: string
+	formData: CreateProductDto
 ): string {
 	let message = '';
 
+	if (!formData.category) {
+		return (message = 'Product category is required.');
+	}
 	if (!formData.name) {
 		return (message = 'Product name is required.');
 	}
@@ -59,19 +61,18 @@ export function ValidateCreateProductFormData(
 	if (formData.media.length == 0) {
 		return (message = 'Product image|video is required');
 	}
-	if (!category) {
-		return (message = 'Product Category is required.');
-	}
 
 	return message;
 }
 
 export function ValidateUpdateProductFormData(
-	formData: UpdateProductDto,
-	category: string
+	formData: UpdateProductDto
 ): string {
 	let message = '';
 
+	if (!formData.category) {
+		return (message = 'Product category is required.');
+	}
 	if (!formData.name) {
 		return (message = 'Product name is required.');
 	}
@@ -86,9 +87,6 @@ export function ValidateUpdateProductFormData(
 	}
 	if (!formData.description) {
 		return (message = 'Product description is required.');
-	}
-	if (!category) {
-		return (message = 'Product Category is required.');
 	}
 
 	return message;

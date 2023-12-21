@@ -236,15 +236,9 @@ const UpdateProductModal = () => {
 				return toast.error(validationError);
 			}
 
-			const FormData = {
-				...formData,
-				category: category.toUpperCase(),
-			};
-			console.log('[UPDATE-PRODUCT-PAYLOAD] :: ', FormData);
-
 			const {data} = await axios.patch(
 				`${process.env.NEXT_PUBLIC_API_URL}/products/update?productId=${formData.id}`,
-				FormData,
+				formData,
 				{
 					headers: {
 						'Content-Type': 'multipart/form-data',

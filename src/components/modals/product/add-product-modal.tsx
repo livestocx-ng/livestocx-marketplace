@@ -207,15 +207,11 @@ const AddProductModal = () => {
 				return toast.error(validationError);
 			}
 
-			const FormData = {
-				...formData,
-				category: category.toUpperCase(),
-			};
 			console.log('[CREATE-PRODUCT-PAYLOAD] :: ', FormData);
 
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/products/create`,
-				FormData,
+				formData,
 				{
 					headers: {
 						'Content-Type': 'multipart/form-data',

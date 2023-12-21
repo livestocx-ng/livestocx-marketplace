@@ -243,7 +243,7 @@ const AddProductModal = () => {
 		<div className='fixed h-screen flex flex-col items-center justify-center w-full bg-[#11111190] backdrop-blur-sm z-10'>
 			<form
 				onSubmit={handleSubmit}
-				className='flex flex-col w-[90%] sm:w-[60%] bg-white py-2 px-4 max-h-[600px] overflow-y-auto scrollbar__1'
+				className='flex flex-col w-[90%] lg:w-[60%] bg-white py-2 px-4 max-h-[600px] overflow-y-auto scrollbar__1'
 			>
 				<div className='flex items-center justify-between px4 w-full'>
 					<h1 className='font-medium'>Add Product</h1>
@@ -257,8 +257,8 @@ const AddProductModal = () => {
 					</Button>
 				</div>
 
-				<div className='flex flex-col-reverse sm:flex-row items-start justify-between w-full'>
-					<div className='w-full sm:w-[30%] flex flex-col space-y-5'>
+				<div className='flex flex-col-reverse lg:flex-row items-start justify-between w-full'>
+					<div className='w-full lg:w-[30%] flex flex-col space-y-5'>
 						{/* <div
 							onClick={openImageFileInput}
 							className='w-full bg-slate-200  flex flex-col items-center justify-center space-y-3 px-4 py-8 cursor-pointer'
@@ -355,7 +355,7 @@ const AddProductModal = () => {
 										);
 									}}
 									variant={'outline'}
-									className='border-0 bg-red-600 hover:bg-red-600 text-xs h-12 text-white hover:text-white rounded-none py-2 px-4 w-full sm:w-[200px] mx-auto'
+									className='border-0 bg-red-600 hover:bg-red-600 text-xs h-12 text-white hover:text-white rounded-none py-2 px-4 w-full lg:w-[200px] mx-auto'
 								>
 									Reset Uploaded Images
 								</Button>
@@ -384,7 +384,7 @@ const AddProductModal = () => {
 										);
 									}}
 									variant={'outline'}
-									className='border-0 bg-red-600 hover:bg-red-600 text-xs h-12 text-white hover:text-white rounded-none py-2 px-4 w-full sm:w-[200px] mx-auto'
+									className='border-0 bg-red-600 hover:bg-red-600 text-xs h-12 text-white hover:text-white rounded-none py-2 px-4 w-full lg:w-[200px] mx-auto'
 								>
 									Reset Uploaded Videos
 								</Button>
@@ -401,13 +401,13 @@ const AddProductModal = () => {
 						)}
 					</div>
 
-					<div className='w-full sm:w-[70%] flex flex-col space-y-3 sm:pl-8 mb-5 sm:mb-0'>
+					<div className='w-full lg:w-[70%] flex flex-col space-y-3 lg:pl-8 mb-5 lg:mb-0'>
 						{/* <div className='flex items-center justify-between w-full'>
 							<CategoryDropDownButton
 								value={category}
 								setValue={setProductCategory}
 								setShowStatusBar={setShowStatusBar}
-								classes='bg-green-600 rounded-none hover:bg-green-600 text-white hover:text-white w-full sm:w-fit'
+								classes='bg-green-600 rounded-none hover:bg-green-600 text-white hover:text-white w-full lg:w-fit'
 							/>
 						</div> */}
 
@@ -548,7 +548,7 @@ const AddProductModal = () => {
 							// disabled
 							type='button'
 							variant={'outline'}
-							className='w-full sm:w-[200px] bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
+							className='w-full lg:w-[200px] bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
 						>
 							<ButtonLoader />
 						</Button>
@@ -556,7 +556,7 @@ const AddProductModal = () => {
 						<Button
 							type='submit'
 							variant={'outline'}
-							className='w-full sm:w-[200px] bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
+							className='w-full lg:w-[200px] bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
 						>
 							Submit
 						</Button>

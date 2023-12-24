@@ -48,7 +48,7 @@ const MarketPlacePage = () => {
 
 	return (
 		<div className='w-full'>
-			<section className='h-[35vh] md:h-[40vh] w-full bg-home flex flex-col items-center justify-end gap-y-10 py-5 md:py-8 md:pt-0'>
+			<section className='h-[40vh] md:h-[50vh] w-full bg-home flex flex-col items-center justify-end gap-y-5 md:gap-y-16 py-5 md:py-10 md:pt-0'>
 				<h1 className='text-xl md:text-5xl font-medium text-white'>
 					Marketplace
 				</h1>

@@ -68,7 +68,7 @@ const MainNavbar = () => {
 	return (
 		<div className='relative'>
 			<nav
-				className={`w-full py-2 px-8 hidden fixed z-10 md:flex items-center justify-between ${
+				className={`w-full py-2 px-8 hidden fixed z-10 lg:flex items-center justify-between ${
 					scrolling && 'bg-main backdrop-blur-sm'
 				}`}
 			>
@@ -341,7 +341,7 @@ const MainNavbar = () => {
 
 			{/* MOBILE TOGGLEBAR */}
 			<div
-				className={`w-full py-4 px-4 pl-1 md:pl-8 md:px-8 md:hidden fixed z-10 flex items-center justify-between ${
+				className={`w-full py-4 px-4 pl-1 lg:pl-8 lg:px-8 lg:hidden fixed z-10 flex items-center justify-between ${
 					scrolling && 'bg-main backdrop-blur-sm'
 				}`}
 			>

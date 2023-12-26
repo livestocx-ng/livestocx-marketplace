@@ -25,7 +25,14 @@ import {PriceFormatter} from '@/utils/price.formatter';
 import SellerInfoTab from '../product-info/seller-info-tab';
 import ProductReviewTab from '../product-info/product-review-tab';
 import MoreFromSellerTab from '../product-info/more-from-seller-tab';
-import {FlagTriangleRight, Phone, ThumbsDown, ThumbsUp} from 'lucide-react';
+import {
+	FlagTriangleRight,
+	MessageCircle,
+	Phone,
+	ThumbsDown,
+	ThumbsUp,
+} from 'lucide-react';
+import Link from 'next/link';
 
 interface SingleProductContentProps {
 	currentTab: Tab;
@@ -301,6 +308,21 @@ const SingleProductContent = ({
 				</div>
 			</div>
 
+			<div className='mt-5 px-4 md:px-0 w-full flex space-x-5 items-center justify-end'>
+				<h1 className='font-bold text-sm'>Share on:</h1>
+				<div className='flex space-x-2'>
+					<MessageCircle
+						onClick={() => {
+							const link = document.createElement('a');
+							link.href = `whatsapp://send?text=Check out this awesome product on Livestocx: ${window.location.toString()}`;
+							link.target = '_blank';
+
+							link.click();
+						}}
+						className='cursor-pointer text-green-500 h-6 w-6'
+					/>
+				</div>
+			</div>
 			<div className='flex items-center justify-between w-full mt-10 border-b border-b-orange-500 px-4 md:px-0'>
 				{CurrentTabs.map((item) => (
 					<div

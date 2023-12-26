@@ -1,5 +1,5 @@
 'use client';
-import {useReducer, useState} from 'react';
+import {useEffect, useReducer, useState} from 'react';
 import {X} from 'lucide-react';
 import {
 	useGlobalStore,
@@ -46,12 +46,51 @@ const formReducer = (state: FormData, action: FormAction) => {
 };
 
 const UpdateVendorProfileModal = () => {
-	const {user, updateUser} = useGlobalStore();
+	const {user, vendor, updateUser, updateVendor} = useGlobalStore();
 
 	const {onClose} = useUpdateVendorProfileModalStore();
 
 	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
+
+	const fetchVendorProfile = async () => {
+		try {
+			const {data} = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/vendor/profile`,
+				{
+					headers: {
+						Authorization: user?.accessToken,
+					},
+				}
+			);
+
+			console.log('[DATA] ::  ', data);
+
+			updateVendor(data.data);
+		} catch (error) {
+			const _error = error as AxiosError;
+
+			console.log('[FETCH-VENDOR-PROFILE-ERROR] :: ', _error);
+		}
+	};
+
+	useEffect(() => {
+		fetchVendorProfile();
+	}, []);
+
+	useEffect(() => {
+		updateFormData({
+			type: 'UPDATE_FORMDATA',
+			payload: {
+				name: vendor?.name,
+				state: vendor?.state,
+				city: vendor?.city,
+				address: vendor?.address,
+				email: vendor?.email,
+				phoneNumber: vendor?.phoneNumber,
+			},
+		});
+	}, [vendor]);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		updateFormData({
@@ -101,7 +140,7 @@ const UpdateVendorProfileModal = () => {
 			setLoading(false);
 
 			updateUser(cookieUpdate.data);
-			
+
 			toast.success('Success');
 
 			// close modal
@@ -213,7 +252,11 @@ const UpdateVendorProfileModal = () => {
 								className='w-full border py-4 rounded px-3 text-sm scrollbar__1'
 								onChange={handleSelectChange}
 							>
-								<option value=''>Business State</option>
+								<option value=''>
+									{formData.state
+										? formData.state
+										: 'Business State'}
+								</option>
 								{NigeriaStates.map((option) => (
 									<option
 										key={option}
@@ -237,8 +280,14 @@ const UpdateVendorProfileModal = () => {
 								className='w-full border py-4 rounded px-3 text-sm scrollbar__1'
 								onChange={handleSelectChange}
 							>
-								<option value=''>Business City</option>
-								{NigeriaCities[formData.state].map((option) => (
+								<option value=''>
+									{formData.city
+										? formData.city
+										: 'Business City'}
+								</option>
+								{NigeriaCities[
+									formData.state ? formData.state : 'Abia'
+								].map((option) => (
 									<option
 										key={option}
 										value={option}

@@ -197,7 +197,7 @@ const UpdateProductModal = () => {
 
 			setMediaBlobs(createBlobImageUrls(media));
 
-			console.log(formData.media);
+			// console.log(formData.media);
 		}
 	};
 
@@ -222,7 +222,7 @@ const UpdateProductModal = () => {
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		console.log(formData);
+		// console.log(formData);
 
 		// return;
 
@@ -247,7 +247,7 @@ const UpdateProductModal = () => {
 				}
 			);
 
-			console.log('[DATA] :: ', data);
+			// console.log('[DATA] :: ', data);
 
 			setLoading(false);
 
@@ -262,7 +262,7 @@ const UpdateProductModal = () => {
 
 			const _error = error as AxiosError;
 
-			console.log('[UPDATE-PRODUCT-ERROR]', _error);
+			// console.log('[UPDATE-PRODUCT-ERROR]', _error);
 
 			toast.error('Error');
 		}

@@ -69,7 +69,7 @@ const DeleteProductModal = () => {
 				}
 			);
 
-			console.log('[DATA] :: ', data);
+			// console.log('[DATA] :: ', data);
 
 			setLoading(false);
 
@@ -86,7 +86,7 @@ const DeleteProductModal = () => {
 
 			const _error = error as AxiosError;
 
-			console.log('[DELETE-PRODUCT-ERROR]', _error);
+			// console.log('[DELETE-PRODUCT-ERROR]', _error);
 
 			toast.error('Error');
 		}
@@ -99,7 +99,9 @@ const DeleteProductModal = () => {
 				className='flex flex-col w-[90%] md:w-[40%] bg-white py-2 px-4  overflow-y-auto scrollbar__1'
 			>
 				<div className='flex items-center justify-between px4'>
-					<h1 className='text-red-500 font-mediumage'>Delete Product</h1>
+					<h1 className='text-red-500 font-mediumage'>
+						Delete Product
+					</h1>
 
 					<Button
 						type='button'

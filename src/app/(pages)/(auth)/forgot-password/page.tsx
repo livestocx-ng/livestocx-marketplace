@@ -48,7 +48,7 @@ const SignInPage = () => {
 
 		try {
 			setLoading(true);
-			console.log('[SIGNIN-PAYLOAD] :: ', formData);
+			// console.log('[SIGNIN-PAYLOAD] :: ', formData);
 
 			await axios.post('/api/auth/forgot-password', formData);
 
@@ -64,7 +64,7 @@ const SignInPage = () => {
 
 			const _error = error as AxiosError;
 
-			console.log('[FORGOT-PASSWORD-ERROR] :: ', _error);
+			// console.log('[FORGOT-PASSWORD-ERROR] :: ', _error);
 
 			toast.error('An error occured');
 		}
@@ -77,7 +77,6 @@ const SignInPage = () => {
 					Forgot Password
 				</h1>
 			</section>
-			
 
 			<div className='flex flex-col justify-center items-center  py-20'>
 				<form

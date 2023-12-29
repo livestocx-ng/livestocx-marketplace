@@ -25,7 +25,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 		try {
 			setLoading(true);
 
-			console.log('[LIKE-UNLIKE-PRODUCT-PAYLOAD] :: ', formData);
+			// console.log('[LIKE-UNLIKE-PRODUCT-PAYLOAD] :: ', formData);
 
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/like-unlike-product?productId=${product?.productId}`,
@@ -37,7 +37,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 				}
 			);
 
-			console.log('[LIKE-UNLIKE-PRODUCT-SUCCESS] :: ', data);
+			// console.log('[LIKE-UNLIKE-PRODUCT-SUCCESS] :: ', data);
 
 			setLoading(false);
 
@@ -46,7 +46,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 			setLoading(false);
 			const _error = error as AxiosError;
 
-			console.log('[ERROR] :: ', _error);
+			// console.log('[ERROR] :: ', _error);
 		}
 	};
 
@@ -56,7 +56,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 
 			if (!user) return router.push('/signin');
 
-			// console.log('[ADD-DESIRED-PRODUCT] :: ');
+			// // console.log('[ADD-DESIRED-PRODUCT] :: ');
 
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-desired-product?productId=${product?.productId}`,
@@ -68,7 +68,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 				}
 			);
 
-			// console.log('[ADD-DESIRED-PRODUCT-SUCCESS] :: ', data);
+			// // console.log('[ADD-DESIRED-PRODUCT-SUCCESS] :: ', data);
 
 			// setLoading(false);
 
@@ -81,7 +81,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 			// setLoading(false);
 			const _error = error as AxiosError;
 
-			console.log('[ERROR] :: ', _error);
+			// console.log('[ERROR] :: ', _error);
 		}
 	};
 
@@ -124,7 +124,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 						!pathName.includes('sellers')
 					) {
 						return router.push(
-							`/${product?.productId!.toLowerCase()}`
+							`/marketplace/products/${product?.productId!.toLowerCase()}`
 						);
 					}
 					if (pathName.includes('marketplace')) {
@@ -143,7 +143,14 @@ const ProductCard = ({product}: ProductCardProps) => {
 				<Image
 					fill
 					alt='product'
-					src={product?.media[0]?.mediaUrl!}
+					src={
+						product?.media?.find(
+							(media) =>
+								media.mediaUrl.includes('.jpeg') ||
+								media.mediaUrl.endsWith('.jpg') ||
+								media.mediaUrl.endsWith('.png')
+						)?.mediaUrl!
+					}
 					className='object-cover rounde-t'
 				/>
 

@@ -21,8 +21,8 @@ const handler = NextAuth({
 	callbacks: {
 		async signIn({account, profile}) {
 			if (account?.provider === 'google') {
-				console.log('[GOOGLE-SIGNIN-SUCCESS]');
-				console.log(`[USER] :: `, profile);
+				// console.log('[GOOGLE-SIGNIN-SUCCESS]');
+				// console.log(`[USER] :: `, profile);
 
 				try {
 					const {data} = await axios.post(
@@ -30,7 +30,7 @@ const handler = NextAuth({
 						{email: profile?.email}
 					);
 
-					// console.log('[DATA] :: ', data.data);
+					// // console.log('[DATA] :: ', data.data);
 
 					cookies().set({
 						name: COOKIE_NAME,
@@ -48,7 +48,7 @@ const handler = NextAuth({
 
 					return Promise.resolve('/');
 				} catch (error) {
-					console.error('[GOOGLE-SIGIN-API-ERROR]', error);
+					// console.error('[GOOGLE-SIGIN-API-ERROR]', error);
 				}
 			}
 

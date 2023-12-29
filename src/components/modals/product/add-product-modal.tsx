@@ -172,7 +172,7 @@ const AddProductModal = () => {
 
 			setMediaBlobs(createBlobImageUrls(media));
 
-			console.log(formData.media);
+			// console.log(formData.media);
 		}
 	};
 
@@ -207,7 +207,7 @@ const AddProductModal = () => {
 				return toast.error(validationError);
 			}
 
-			console.log('[CREATE-PRODUCT-PAYLOAD] :: ', FormData);
+			// console.log('[CREATE-PRODUCT-PAYLOAD] :: ', FormData);
 
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/products/create`,
@@ -233,7 +233,7 @@ const AddProductModal = () => {
 
 			const _error = error as AxiosError;
 
-			console.log('[CREATE-PRODUCT-ERROR]', _error);
+			// console.log('[CREATE-PRODUCT-ERROR]', _error);
 
 			toast.error('Error');
 		}

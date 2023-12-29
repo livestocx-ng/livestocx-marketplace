@@ -13,13 +13,13 @@ export async function PATCH(req: NextRequest) {
 			payload
 		);
 
-		console.log('[DATA] :: ', data);
+		// console.log('[DATA] :: ', data);
 
 		return NextResponse.json(data, {status: 200});
 	} catch (e) {
 		const error = e as AxiosError;
 
-		console.log('[ERROR] :: ', error);
+		// console.log('[ERROR] :: ', error);
 
 		return NextResponse.json(
 			{message: 'An error occured', error: error},

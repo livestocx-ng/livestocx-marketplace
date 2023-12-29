@@ -75,7 +75,7 @@ const SignInPage = () => {
 
 			const error = _error as AxiosError;
 
-			console.log('[ERROR]', error);
+			// console.log('[ERROR]', error);
 
 			toast.error('Invalid OTP');
 		}
@@ -88,7 +88,6 @@ const SignInPage = () => {
 					Reset Password
 				</h1>
 			</section>
-			
 
 			<div className='flex flex-col justify-center items-center  py-20'>
 				<form

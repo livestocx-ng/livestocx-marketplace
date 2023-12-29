@@ -21,15 +21,14 @@ const MarketPlacePage = () => {
 	const fetchMarketPlaceProducts = async () => {
 		try {
 			setLoading(true);
-			
+
 			if (currentPage > 1) setLoading(false);
-			
 
 			const {data} = await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/marketplace/fetch-all?page=${currentPage}`
 			);
 
-			// console.log('[DATA] ::  ', data);
+			// // console.log('[DATA] ::  ', data);
 
 			updateProducts(data.data.products);
 			updatePagination(data.data.totalPages, data.data.hasNext);
@@ -38,7 +37,7 @@ const MarketPlacePage = () => {
 			setLoading(false);
 			const _error = error as AxiosError;
 
-			console.log('[FETCH-PRODUCTS-ERROR] :: ', _error);
+			// console.log('[FETCH-PRODUCTS-ERROR] :: ', _error);
 		}
 	};
 

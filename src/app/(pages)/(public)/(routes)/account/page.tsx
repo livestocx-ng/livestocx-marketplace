@@ -11,7 +11,7 @@ import SettingsContent from './components/dashboard/settings-content';
 import MessagesContent from './components/dashboard/messages-content';
 import MobileAccountSideBar from './components/mobile-account-sidebar';
 import DashboardContent from './components/dashboard/dashboard-content';
-import ProductMediaModal from '@/components/modals/product-media-modal';
+import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import DesiredItemContent from './components/dashboard/desired-item-content';
 import DesiredItemsContent from './components/dashboard/desired-items-content';
 import AdvertisementContent from './components/dashboard/advertisement-content';
@@ -38,7 +38,7 @@ const AccountPage = () => {
 				<div className='flex w-full'>
 					<MobileAccountSideBar />
 				</div>
-				
+
 				<div className='flex items-start justify-between w-full'>
 					<AccountSideBar />
 

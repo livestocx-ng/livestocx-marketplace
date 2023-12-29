@@ -21,12 +21,14 @@ const handler = NextAuth({
 	callbacks: {
 		async signIn({account, profile}) {
 			if (account?.provider === 'google') {
-				// console.log('[GOOGLE-SIGNIN-SUCCESS]');
-				// console.log(`[USER] :: `, profile);
+				// // console.log('[GOOGLE-SIGNIN-SUCCESS]');
+				// // console.log(`[USER] :: `, profile);
 
 				try {
-					const name = profile?.name ? profile?.name?.split(' ') : ['', ''];
-					
+					const name = profile?.name
+						? profile?.name?.split(' ')
+						: ['', ''];
+
 					const {data} = await axios.post(
 						`${process.env.NEXT_PUBLIC_API_URL}/auth/google-signin`,
 						{
@@ -52,7 +54,7 @@ const handler = NextAuth({
 
 					return Promise.resolve('/');
 				} catch (error) {
-					console.error('[GOOGLE-SIGIN-API-ERROR]', error);
+					// console.error('[GOOGLE-SIGIN-API-ERROR]', error);
 				}
 			}
 

@@ -19,7 +19,7 @@ const SellerInfoProducts = ({
 	const {sellerProducts, sellerTotalPages, sellerHasNextPage} =
 		useGlobalStore();
 
-	console.log(sellerHasNextPage);
+	// console.log(sellerHasNextPage);
 
 	return (
 		<div className='flex flex-col w-full bg-white '>

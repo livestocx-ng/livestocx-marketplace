@@ -38,7 +38,7 @@ const UpdateUserRoleModal = () => {
 			);
 			await updateUser(cookieUpdate.data);
 
-			console.log('[DATA] :: ', data);
+			// console.log('[DATA] :: ', data);
 
 			setLoading(false);
 
@@ -54,7 +54,7 @@ const UpdateUserRoleModal = () => {
 
 			const _error = error as AxiosError;
 
-			console.log('[DELETE-PRODUCT-ERROR]', _error);
+			// console.log('[DELETE-PRODUCT-ERROR]', _error);
 
 			toast.error('An error occured');
 		}

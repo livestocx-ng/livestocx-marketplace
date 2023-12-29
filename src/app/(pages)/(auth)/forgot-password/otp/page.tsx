@@ -42,7 +42,7 @@ const SignInPage = () => {
 		if (value && index < numberOfInputs - 1) {
 			inputRefs.current[index + 1]?.focus();
 
-			console.log('[FOCUS]');
+			// console.log('[FOCUS]');
 		}
 	};
 
@@ -67,9 +67,9 @@ const SignInPage = () => {
 
 		try {
 			setLoading(true);
-			console.log('[OTP-PAYLOAD] :: ', otp);
+			// console.log('[OTP-PAYLOAD] :: ', otp);
 			const token = String(otp).split(',').join('');
-			console.log('[TOKEN] :: ', token);
+			// console.log('[TOKEN] :: ', token);
 
 			await axios.get(`/api/auth/verify-otp?token=${token}`);
 
@@ -83,7 +83,7 @@ const SignInPage = () => {
 
 			const error = _error as AxiosError;
 
-			console.log('[ERROR]', error);
+			// console.log('[ERROR]', error);
 
 			toast.error('Invalid OTP');
 		}
@@ -96,7 +96,6 @@ const SignInPage = () => {
 					Verify OTP
 				</h1>
 			</section>
-			
 
 			<div className='flex flex-col justify-center items-center  py-20'>
 				<form

@@ -58,7 +58,7 @@ const ProductReviewTab = () => {
 				?.count || 0;
 		const percentage = (ratingCount / totalCount) * 100;
 
-		// console.log(`[PERCENTAGE] :: ${percentage + '%'}`);
+		// // console.log(`[PERCENTAGE] :: ${percentage + '%'}`);
 
 		return isNaN(percentage) ? 0 : Number(percentage.toFixed(2));
 		// return isNaN(percentage) ? '0%' : percentage.toFixed(2) + '%';
@@ -84,7 +84,7 @@ const ProductReviewTab = () => {
 				return toast.error(validationError);
 			}
 
-			console.log('[PRODUCT-REVIEW-PAYLOAD] :: ', FormData);
+			// console.log('[PRODUCT-REVIEW-PAYLOAD] :: ', FormData);
 
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-review/${product?.productId}`,
@@ -111,7 +111,7 @@ const ProductReviewTab = () => {
 
 			const _error = error as AxiosError;
 
-			console.log('[PRODUCT-REVIEW-ERROR]', _error);
+			// console.log('[PRODUCT-REVIEW-ERROR]', _error);
 
 			toast.error('Error');
 		}
@@ -129,7 +129,7 @@ const ProductReviewTab = () => {
 
 					<StarRating rating={productInfo?.avgRating!} />
 
-					{/* {console.log(productInfo?.avgRating)} */}
+					{/* {// console.log(productInfo?.avgRating)} */}
 
 					<p className='text-sm'>
 						{productInfo?.reviews.length} Reviews
@@ -181,7 +181,10 @@ const ProductReviewTab = () => {
 				</div>
 
 				{user && (
-					<form onSubmit={handleSubmit} className='space-y-5 w-full md:w-[45%] mt-20 md:mt-0'>
+					<form
+						onSubmit={handleSubmit}
+						className='space-y-5 w-full md:w-[45%] mt-20 md:mt-0'
+					>
 						<p className='text-sm font-semibold'>
 							Be the first to review this product
 						</p>

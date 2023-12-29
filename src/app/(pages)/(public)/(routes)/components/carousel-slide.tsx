@@ -68,7 +68,7 @@ const CarouselSlide = () => {
 								(slide) => slide.id === item
 							);
 
-							// console.log('[SLIDE]', index);
+							// // console.log('[SLIDE]', index);
 
 							setCurrentSlide(CarouselSlideItems[index]);
 						}}

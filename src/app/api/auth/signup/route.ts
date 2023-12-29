@@ -12,7 +12,7 @@ export async function POST(req: Request) {
 			payload
 		);
 
-		console.log('[SIGNUP-DATA] :: ', data);
+		// console.log('[SIGNUP-DATA] :: ', data);
 
 		const user = {
 			...data?.data?.user,
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
 	} catch (e) {
 		const error = e as AxiosError;
 
-		console.log('[ERROR] :: ', error);
+		// console.log('[ERROR] :: ', error);
 
 		return NextResponse.json(
 			{message: 'An error occured', error: error},

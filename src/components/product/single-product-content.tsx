@@ -1,4 +1,11 @@
 'use client';
+import {
+	Phone,
+	ThumbsUp,
+	ThumbsDown,
+	MessageCircle,
+	FlagTriangleRight,
+} from 'lucide-react';
 import Image from 'next/image';
 import {cn} from '@/lib/utils';
 import {
@@ -17,6 +24,14 @@ import {
 	AlertDialogTrigger,
 	AlertDialogDescription,
 } from '@/components/ui/alert-dialog';
+import {
+	WhatsappShareButton,
+	WhatsappIcon,
+	FacebookIcon,
+	TwitterIcon,
+	FacebookShareButton,
+	TwitterShareButton,
+} from 'react-share';
 import {usePathname} from 'next/navigation';
 import ProductCard from '../cards/product-card';
 import {Product, ProductInfo} from '@/types/types';
@@ -25,14 +40,6 @@ import {PriceFormatter} from '@/utils/price.formatter';
 import SellerInfoTab from '../product-info/seller-info-tab';
 import ProductReviewTab from '../product-info/product-review-tab';
 import MoreFromSellerTab from '../product-info/more-from-seller-tab';
-import {
-	FlagTriangleRight,
-	MessageCircle,
-	Phone,
-	ThumbsDown,
-	ThumbsUp,
-} from 'lucide-react';
-import Link from 'next/link';
 
 interface SingleProductContentProps {
 	currentTab: Tab;
@@ -81,7 +88,14 @@ const SingleProductContent = ({
 					<Image
 						fill
 						alt={'product'}
-						src={product?.media[0]?.mediaUrl!}
+						src={
+							product?.media?.find(
+								(media) =>
+									media.mediaUrl.includes('.jpeg') ||
+									media.mediaUrl.endsWith('.jpg') ||
+									media.mediaUrl.endsWith('.png')
+							)?.mediaUrl!
+						}
 						className='object-cover h-full w-full md:rounded-l-l border-0 md:border border-gray-600'
 					/>
 
@@ -234,7 +248,22 @@ const SingleProductContent = ({
 				</div>
 			</div>
 
-			<div className='mt-10 px-4 md:px-0'>
+			<div className='mt-10 px-4 md:px-0 w-full flex space-x-5 items-center justify-start'>
+				<h1 className='font- text-xl'>Share on:</h1>
+				<div className='flex space-x-2'>
+					<WhatsappShareButton url={window.location.toString()}>
+						<WhatsappIcon size={30} round />
+					</WhatsappShareButton>
+					<FacebookShareButton url={window.location.toString()}>
+						<FacebookIcon size={30} round />
+					</FacebookShareButton>
+					<TwitterShareButton url={window.location.toString()}>
+						<TwitterIcon size={30} round />
+					</TwitterShareButton>
+				</div>
+			</div>
+
+			<div className='mt-5 px-4 md:px-0'>
 				<h1 className='font-medium text-xl'>Description</h1>
 				<p>{product?.description}</p>
 			</div>
@@ -308,21 +337,6 @@ const SingleProductContent = ({
 				</div>
 			</div>
 
-			<div className='mt-5 px-4 md:px-0 w-full flex space-x-5 items-center justify-end'>
-				<h1 className='font-bold text-sm'>Share on:</h1>
-				<div className='flex space-x-2'>
-					<MessageCircle
-						onClick={() => {
-							const link = document.createElement('a');
-							link.href = `whatsapp://send?text=Check out this awesome product on Livestocx: ${window.location.toString()}`;
-							link.target = '_blank';
-
-							link.click();
-						}}
-						className='cursor-pointer text-green-500 h-6 w-6'
-					/>
-				</div>
-			</div>
 			<div className='flex items-center justify-between w-full mt-10 border-b border-b-orange-500 px-4 md:px-0'>
 				{CurrentTabs.map((item) => (
 					<div

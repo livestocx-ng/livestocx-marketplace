@@ -8,7 +8,7 @@ import MarketPlaceProductCard from '../cards/marketplace-product-card';
 const MoreFromSellerTab = () => {
 	const pathName = usePathname();
 
-	// console.log(pathName);
+	// // console.log(pathName);
 
 	const {productInfo} = useGlobalStore();
 

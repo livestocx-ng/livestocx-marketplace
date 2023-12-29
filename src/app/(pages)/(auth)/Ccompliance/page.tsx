@@ -6,7 +6,7 @@ import {toast} from 'react-hot-toast';
 import {FileImage} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
-import {NigeriaCities, NigeriaStates} from '@/data';
+import {NigerianCities, NigerianStates} from '@/data';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import ButtonLoader from '@/components/loader/button-loader';
 import {isFileSizeValid} from '@/utils/media/file.validation';
@@ -119,7 +119,7 @@ const CompliancePage = () => {
 				return toast.error(validationError, {duration: 10000});
 			}
 
-			console.log('[COMPLIANCE-PAYLOAD] :: ', formData);
+			// console.log('[COMPLIANCE-PAYLOAD] :: ', formData);
 
 			const {data} = await axios.patch(
 				`${process.env.NEXT_PUBLIC_API_URL}/vendor/update-compliance`,
@@ -132,7 +132,7 @@ const CompliancePage = () => {
 				}
 			);
 
-			console.log('[DATA] :: ', data.data);
+			// console.log('[DATA] :: ', data.data);
 
 			const cookieUpdate = await axios.patch('/api/auth/update-cookies', {
 				...user,
@@ -148,7 +148,7 @@ const CompliancePage = () => {
 		} catch (error) {
 			setLoading(false);
 
-			console.error('[COMPLIANCE-ERROR]', error);
+			// console.error('[COMPLIANCE-ERROR]', error);
 
 			toast.error('An error occured');
 		}
@@ -240,7 +240,7 @@ const CompliancePage = () => {
 								className='w-full border py-3 rounded px-3 text-sm scrollbar__1'
 								onChange={handleSelectChange}
 							>
-								{NigeriaStates.map((option) => (
+								{NigerianStates.map((option) => (
 									<option
 										key={option}
 										value={option}
@@ -264,15 +264,17 @@ const CompliancePage = () => {
 								onChange={handleSelectChange}
 							>
 								<option value=''>City</option>
-								{NigeriaCities[formData.state].map((option) => (
-									<option
-										key={option}
-										value={option}
-										className='cursor-pointer'
-									>
-										{option}
-									</option>
-								))}
+								{NigerianCities[formData.state].map(
+									(option) => (
+										<option
+											key={option}
+											value={option}
+											className='cursor-pointer'
+										>
+											{option}
+										</option>
+									)
+								)}
 							</select>
 						</div>
 

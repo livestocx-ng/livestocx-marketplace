@@ -66,11 +66,11 @@ const SignInPage = () => {
 
 		try {
 			setLoading(true);
-			// console.log('[SIGNIN-PAYLOAD] :: ', formData);
+			// // console.log('[SIGNIN-PAYLOAD] :: ', formData);
 
 			const {data} = await axios.post('/api/auth/signin', formData);
 
-			// console.log('[DATA] :: ', data);
+			// // console.log('[DATA] :: ', data);
 
 			if (data?.ok == false) {
 				setLoading(false);
@@ -91,7 +91,7 @@ const SignInPage = () => {
 		} catch (error) {
 			setLoading(false);
 
-			console.error('[SIGNIN-ERROR]', error);
+			// console.error('[SIGNIN-ERROR]', error);
 
 			toast.error('Invalid credentials');
 		}
@@ -104,7 +104,7 @@ const SignInPage = () => {
 					Sign In
 				</h1>
 			</section>
-			
+
 			<div className='flex flex-col justify-center items-center py-20'>
 				<form
 					autoComplete='off'

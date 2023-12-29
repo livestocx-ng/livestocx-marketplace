@@ -27,14 +27,14 @@ const MarketPlaceFilterPage = ({params}: MarketPlaceFilterPageProps) => {
 				}/user/products/marketplace/fetch-all?category=${params.category.toUpperCase()}&page=${currentPage}`
 			);
 
-			console.log('[DATA] ::  ', data);
+			// console.log('[DATA] ::  ', data);
 
 			updateProducts(data.data.products);
 			updatePagination(data.data.totalPages, data.data.hasNext);
 		} catch (error) {
 			const _error = error as AxiosError;
 
-			console.log('[FETCH-PRODUCTS-ERROR] :: ', _error);
+			// console.log('[FETCH-PRODUCTS-ERROR] :: ', _error);
 		}
 	};
 

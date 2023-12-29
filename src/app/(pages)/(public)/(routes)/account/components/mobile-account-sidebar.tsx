@@ -71,12 +71,12 @@ const MobileAccountSideBar = ({}: AccountSideBarProps) => {
 
 				// window.location.reload();
 			} catch (error) {
-				console.log('[LOGOUT-ERROR] :: ', error);
+				// console.log('[LOGOUT-ERROR] :: ', error);
 			}
 		}
 	};
 
-	// console.log(user?.role);
+	// // console.log(user?.role);
 
 	return (
 		<>

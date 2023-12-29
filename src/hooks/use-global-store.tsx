@@ -13,6 +13,8 @@ import {
 import {create} from 'zustand';
 
 interface GlobalStore {
+	searchLocationState: string;
+	searchLocation: string | 'Nigeria';
 	user: User | null;
 	vendor: Vendor | null;
 	vendors: Vendor[];
@@ -31,6 +33,7 @@ interface GlobalStore {
 	sellerTotalPages: number;
 	sellerHasNextPage: boolean;
 	currentAccountTab: Tab | 'Account' | null;
+	updateSearchLocation: (searchLocation: string, searchLocationState: string)=> void;
 	updateNotification: (notificationId: number, value: Notification) => void;
 	updateNotifications: (value: Notification[]) => void;
 	updateDesiredProductInfo: (value: DesiredItemInfo) => void;
@@ -66,6 +69,12 @@ interface ReadNotificationModal {
 }
 
 interface WelcomeFarmerModal {
+	isOpen: boolean;
+	onOpen: () => void;
+	onClose: () => void;
+}
+
+interface UpdateSearchLocationModal {
 	isOpen: boolean;
 	onOpen: () => void;
 	onClose: () => void;
@@ -132,6 +141,14 @@ export const useUpdateWelcomeFarmerModalStore = create<WelcomeFarmerModal>(
 	})
 );
 
+export const useUpdateSearchLocationModalStore = create<UpdateSearchLocationModal>(
+	(set) => ({
+		isOpen: false,
+		onOpen: () => set({isOpen: true}),
+		onClose: () => set({isOpen: false}),
+	})
+);
+
 export const useUpdateUserRoleModalStore = create<UpdateUserRoleModal>(
 	(set) => ({
 		isOpen: false,
@@ -191,6 +208,8 @@ export const useProductMediaModalStore = create<ProductModal>((set) => ({
 }));
 
 export const useGlobalStore = create<GlobalStore>((set) => ({
+	searchLocationState: '',
+	searchLocation: 'Nigeria',
 	user: null,
 	desiredProductInfo: null,
 	desiredProduct: null,
@@ -209,6 +228,8 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	hasNextPage: false,
 	productInfo: null,
 	currentAccountTab: 'Account',
+	updateSearchLocation: (searchLocation: string, searchLocationState: string) =>
+		set({searchLocation: searchLocation, searchLocationState: searchLocationState}),
 	updateNotifications: (value: Notification[]) => set({notifications: value}),
 	updateDesiredProductInfo: (value: DesiredItemInfo) =>
 		set({desiredProductInfo: value}),
@@ -254,7 +275,8 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	updateSellerPagination: (totalPages: number, hasNextPage: boolean) =>
 		set({sellerTotalPages: totalPages, sellerHasNextPage: hasNextPage}),
 	updateProducts: (products: Product[]) => set({products: products}),
-	updateSearchProducts: (products: Product[]) => set({searchProducts: products}),
+	updateSearchProducts: (products: Product[]) =>
+		set({searchProducts: products}),
 	updateSellerProducts: (products: Product[]) =>
 		set({sellerProducts: products}),
 }));

@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 			payload
 		);
 
-		console.log('[DATA] :: ', data);
+		// console.log('[DATA] :: ', data);
 
 		return NextResponse.json(data, {status: 200});
 	} catch (e) {

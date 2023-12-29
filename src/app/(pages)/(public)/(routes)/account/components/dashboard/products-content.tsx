@@ -18,7 +18,7 @@ const ProductsContent = () => {
 
 	const fetchProducts = async () => {
 		try {
-			console.log('[USER] ::  ', user);
+			// console.log('[USER] ::  ', user);
 
 			const {data} = await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/products/fetch-all`,
@@ -29,13 +29,13 @@ const ProductsContent = () => {
 				}
 			);
 
-			console.log('[DATA] ::  ', data);
+			// console.log('[DATA] ::  ', data);
 
 			updateProducts(data.data.products);
 		} catch (error) {
 			const _error = error as AxiosError;
 
-			console.log('[FETCH-PRODUCTS-ERROR] :: ', _error);
+			// console.log('[FETCH-PRODUCTS-ERROR] :: ', _error);
 		}
 	};
 

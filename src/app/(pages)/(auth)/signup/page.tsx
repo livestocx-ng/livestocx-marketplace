@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import {NigeriaCities, NigeriaStates} from '@/data';
+import {NigerianCities, NigerianStates} from '@/data';
 import {toast} from 'react-hot-toast';
 import {signIn} from 'next-auth/react';
 import axios, {AxiosError} from 'axios';
@@ -109,7 +109,7 @@ const SignUpPage = () => {
 				return toast.error(validationError, {duration: 10000});
 			}
 
-			console.log('[SIGNUP-PAYLOAD] :: ', formData);
+			// console.log('[SIGNUP-PAYLOAD] :: ', formData);
 
 			const emailAvailability = await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/auth/email-availability?email=${formData.email}`
@@ -122,7 +122,7 @@ const SignUpPage = () => {
 
 			const {data} = await axios.post('/api/auth/signup', formData);
 
-			// console.log('[DATA] :: ', data);
+			// // console.log('[DATA] :: ', data);
 
 			if (data?.ok == false) {
 				setLoading(false);
@@ -144,7 +144,7 @@ const SignUpPage = () => {
 		} catch (error) {
 			setLoading(false);
 
-			console.error('[SIGNUP-ERROR]', error);
+			// console.error('[SIGNUP-ERROR]', error);
 
 			toast.error('An error occured');
 		}
@@ -227,7 +227,7 @@ const SignUpPage = () => {
 										onChange={handleSelectChange}
 									>
 										<option value=''>Business State</option>
-										{NigeriaStates.map((option) => (
+										{NigerianStates.map((option) => (
 											<option
 												key={option}
 												value={option}
@@ -246,17 +246,17 @@ const SignUpPage = () => {
 										onChange={handleSelectChange}
 									>
 										<option value=''>Business City</option>
-										{NigeriaCities[formData.businessState].map(
-											(option) => (
-												<option
-													key={option}
-													value={option}
-													className='cursor-pointer'
-												>
-													{option}
-												</option>
-											)
-										)}
+										{NigerianCities[
+											formData.businessState
+										].map((option) => (
+											<option
+												key={option}
+												value={option}
+												className='cursor-pointer'
+											>
+												{option}
+											</option>
+										))}
 									</select>
 								</div>
 							</>
@@ -270,7 +270,7 @@ const SignUpPage = () => {
 									onChange={handleSelectChange}
 								>
 									<option value=''>Location</option>
-									{NigeriaStates.map((option) => (
+									{NigerianStates.map((option) => (
 										<option
 											key={option}
 											value={option}

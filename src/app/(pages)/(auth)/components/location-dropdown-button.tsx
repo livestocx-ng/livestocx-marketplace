@@ -12,7 +12,7 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {ChevronDown, Plus} from 'lucide-react';
-import {NigeriaStates} from '@/data';
+import {NigerianStates} from '@/data';
 
 type Checked = DropdownMenuCheckboxItemProps['checked'];
 
@@ -39,7 +39,7 @@ export function LocationDropDownButton({
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className='w-56'>
-				{NigeriaStates.map((country) => (
+				{NigerianStates.map((country) => (
 					<DropdownMenuCheckboxItem
 						key={country}
 						onCheckedChange={(checked: Checked) => {

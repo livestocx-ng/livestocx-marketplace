@@ -19,7 +19,7 @@ import {Badge} from '@/components/ui/badge';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {useEffect} from 'react';
 import {DesiredItemInfo} from '@/types/types';
-import { Button } from '@/components/ui/button';
+import {Button} from '@/components/ui/button';
 
 const DesiredItemContent = () => {
 	const {
@@ -47,13 +47,13 @@ const DesiredItemContent = () => {
 				}
 			);
 
-			console.log('[DATA] ::  ', data.data);
+			// console.log('[DATA] ::  ', data.data);
 
 			updateDesiredProductInfo(data.data);
 		} catch (error) {
 			const _error = error as AxiosError;
 
-			console.log('[FETCH-DESIRED-PRODUCT-INFO-ERROR] :: ', _error);
+			// console.log('[FETCH-DESIRED-PRODUCT-INFO-ERROR] :: ', _error);
 		}
 	};
 
@@ -127,7 +127,7 @@ const DesiredItemContent = () => {
 							type='button'
 							variant={'outline'}
 							onClick={() => {
-								console.log(desiredProductInfo)
+								// console.log(desiredProductInfo)
 								const chatLink = `https://wa.me/+234${desiredProductInfo?.phoneNumber}`;
 
 								window.open(chatLink, '_blank');

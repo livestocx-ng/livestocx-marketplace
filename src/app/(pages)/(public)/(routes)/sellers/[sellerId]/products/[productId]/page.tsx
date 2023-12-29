@@ -21,7 +21,7 @@ import AuthHeader from '@/components/header/auth-header';
 import {useProductMediaModalStore} from '@/hooks/use-global-store';
 import SingleProductContent from '@/components/product/single-product-content';
 import EmptyAnimation from '../../../../../../../../../public/animations/animation__2.json';
-import ProductMediaModal from '../../../../../../../../components/modals/product-media-modal';
+import ProductMediaModal from '../../../../../../../../components/modals/product/product-media-modal';
 import LoadingAnimation from '../../../../../../../../../public/animations/loading__animation__1.json';
 
 interface SellerProductPageParams {
@@ -51,7 +51,7 @@ const SellerProductPage = ({params: {productId}}: SellerProductPageParams) => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [currentTab, setCurrentTab] = useState<Tab>('Seller Info');
 
-	console.log('[PRODUCT-ID] :: ', productId);
+	// console.log('[PRODUCT-ID] :: ', productId);
 
 	const fetchProduct = async () => {
 		try {
@@ -64,15 +64,15 @@ const SellerProductPage = ({params: {productId}}: SellerProductPageParams) => {
 				),
 			]);
 
-			console.log('[DATA] ::  ', _product.data.data);
-			// console.log('[DATA] ::  ', data);
+			// console.log('[DATA] ::  ', _product.data.data);
+			// // console.log('[DATA] ::  ', data);
 
 			updatePayload(_product.data.data);
 			updateProductInfo(_productInfo.data.data);
 		} catch (error) {
 			const _error = error as AxiosError;
 
-			console.log('[FETCH-PRODUCT-ERROR] :: ', _error);
+			// console.log('[FETCH-PRODUCT-ERROR] :: ', _error);
 		}
 	};
 
@@ -84,7 +84,7 @@ const SellerProductPage = ({params: {productId}}: SellerProductPageParams) => {
 		try {
 			setLoading(true);
 
-			console.log('[LIKE-UNLIKE-PRODUCT-PAYLOAD] :: ', formData);
+			// console.log('[LIKE-UNLIKE-PRODUCT-PAYLOAD] :: ', formData);
 
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/like-unlike-product?productId=${product?.productId}`,
@@ -96,7 +96,7 @@ const SellerProductPage = ({params: {productId}}: SellerProductPageParams) => {
 				}
 			);
 
-			console.log('[LIKE-UNLIKE-PRODUCT-SUCCESS] :: ', data);
+			// console.log('[LIKE-UNLIKE-PRODUCT-SUCCESS] :: ', data);
 
 			setLoading(false);
 
@@ -105,7 +105,7 @@ const SellerProductPage = ({params: {productId}}: SellerProductPageParams) => {
 			setLoading(false);
 			const _error = error as AxiosError;
 
-			console.log('[ERROR] :: ', _error);
+			// console.log('[ERROR] :: ', _error);
 		}
 	};
 
@@ -117,7 +117,7 @@ const SellerProductPage = ({params: {productId}}: SellerProductPageParams) => {
 
 			setLoading(true);
 
-			console.log('[ADD-DESIRED-PRODUCT] :: ');
+			// console.log('[ADD-DESIRED-PRODUCT] :: ');
 
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-desired-product?productId=${product?.productId}`,
@@ -129,7 +129,7 @@ const SellerProductPage = ({params: {productId}}: SellerProductPageParams) => {
 				}
 			);
 
-			console.log('[ADD-DESIRED-PRODUCT-SUCCESS] :: ', data);
+			// console.log('[ADD-DESIRED-PRODUCT-SUCCESS] :: ', data);
 
 			setLoading(false);
 
@@ -142,7 +142,7 @@ const SellerProductPage = ({params: {productId}}: SellerProductPageParams) => {
 			setLoading(false);
 			const _error = error as AxiosError;
 
-			console.log('[ERROR] :: ', _error);
+			// console.log('[ERROR] :: ', _error);
 		}
 	};
 

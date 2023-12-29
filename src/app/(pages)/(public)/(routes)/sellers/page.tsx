@@ -13,7 +13,7 @@ const SellersPage = () => {
 	const userStore = useUserHook();
 
 	const {vendors, updateVendors, updatePagination} = useGlobalStore();
-	const [currentPage, setCurrentPage] = useState<number>(1)
+	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [loading, setLoading] = useState<boolean>(true);
 
 	const fetchSellers = async () => {
@@ -24,7 +24,7 @@ const SellersPage = () => {
 				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/fetch-all?page=${currentPage}`
 			);
 
-			// console.log('[DATA] ::  ', data);
+			// // console.log('[DATA] ::  ', data);
 
 			updateVendors(data.data.vendors);
 			updatePagination(data.data.totalPages, data.data.hasNext);
@@ -34,7 +34,7 @@ const SellersPage = () => {
 			setLoading(false);
 			const _error = error as AxiosError;
 
-			console.log('[FETCH-SELLERS-ERROR] :: ', _error);
+			// console.log('[FETCH-SELLERS-ERROR] :: ', _error);
 		}
 	};
 
@@ -78,7 +78,10 @@ const SellersPage = () => {
 
 			{!loading && vendors?.length > 0 && (
 				<div className='flex flex-col w-full bg-white px-4 md:px-8 py-10'>
-					<HomeSellers currentPage={currentPage} updateCurrentPage={setCurrentPage} />
+					<HomeSellers
+						currentPage={currentPage}
+						updateCurrentPage={setCurrentPage}
+					/>
 				</div>
 			)}
 		</main>

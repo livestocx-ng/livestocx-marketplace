@@ -67,8 +67,8 @@ const DashboardContent = ({}: DashboardContentProps) => {
 		try {
 			setLoading(true);
 
-			console.log('[UPDATE-USER-ROLE-PAYLOAD] :: ', user);
-			console.log('[UPDATE-USER-ROLE-PAYLOAD] :: ', role);
+			// console.log('[UPDATE-USER-ROLE-PAYLOAD] :: ', user);
+			// console.log('[UPDATE-USER-ROLE-PAYLOAD] :: ', role);
 
 			const {data} = await axios.patch(
 				`${process.env.NEXT_PUBLIC_API_URL}/auth/update-user-role`,
@@ -87,7 +87,7 @@ const DashboardContent = ({}: DashboardContentProps) => {
 
 			setLoading(false);
 
-			// console.log('[USER-ROLE] :: ', cookieUpdate.data);
+			// // console.log('[USER-ROLE] :: ', cookieUpdate.data);
 			await updateUser(cookieUpdate.data);
 
 			toast.success('User role updated!');
@@ -96,7 +96,7 @@ const DashboardContent = ({}: DashboardContentProps) => {
 
 			const _error = error as AxiosError;
 
-			console.log('[UPDATE-USER-ROLE-ERROR]', _error);
+			// console.log('[UPDATE-USER-ROLE-ERROR]', _error);
 
 			toast.error('Error');
 		}
@@ -178,7 +178,7 @@ const DashboardContent = ({}: DashboardContentProps) => {
 									return;
 									// return handleUpdateUserRole('CUSTOMER');
 								}
-								
+
 								if (user?.role === 'CUSTOMER') {
 									return handleUpdateUserRole('FARMER');
 								}

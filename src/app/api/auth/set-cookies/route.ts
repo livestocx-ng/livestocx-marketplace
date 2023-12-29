@@ -7,7 +7,7 @@ export async function POST(req: Request) {
 	try {
 		const {data} = await req.json();
 
-		// console.log('[CREDENTIALS-SIGNIN-DATA] :: ', data);
+		// // console.log('[CREDENTIALS-SIGNIN-DATA] :: ', data);
 
 		const user = {
 			...data?.data?.user,
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
 	} catch (e) {
 		const error = e as AxiosError;
 
-		console.log('[ERROR] :: ', error);
+		// console.log('[ERROR] :: ', error);
 
 		return NextResponse.json(
 			{message: 'An error occured', error: error},

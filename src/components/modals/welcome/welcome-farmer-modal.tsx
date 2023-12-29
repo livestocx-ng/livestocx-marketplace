@@ -1,9 +1,15 @@
 'use client';
-import {X} from 'lucide-react';
+import {
+	useGlobalStore,
+	useUpdateWelcomeFarmerModalStore,
+} from '@/hooks/use-global-store';
+import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
-import {useUpdateWelcomeFarmerModalStore} from '@/hooks/use-global-store';
 
 const WelcomeFarmerModal = () => {
+	const router = useRouter();
+
+	const {updateCurrentAccountTab} = useGlobalStore();
 	const {onClose} = useUpdateWelcomeFarmerModalStore();
 
 	return (
@@ -32,7 +38,13 @@ const WelcomeFarmerModal = () => {
 					<Button
 						type='button'
 						variant={'outline'}
-						onClick={() => onClose()}
+						onClick={() => {
+							onClose();
+
+							router.push('/account');
+
+							updateCurrentAccountTab('Products');
+						}}
 						className='w-fit bg-white hover:bg-white text-sm font-medium underline h-12 text-red-500 hover:text-red-500 rounded-none py-3 px-8 border-0'
 					>
 						Close

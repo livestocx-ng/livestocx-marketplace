@@ -22,9 +22,8 @@ const initialState: FormData = {
 	highestPrice: false,
 };
 
-
 const SellerInfoSearchForm = () => {
-	const {vendor, updateProducts, updatePagination} = useGlobalStore();
+	const {vendor, updateSellerProducts, updateSellerPagination} = useGlobalStore();
 
 	const [search, setSearch] = useState<string>('');
 	const [loading, setLoading] = useState<boolean>(false);
@@ -43,17 +42,17 @@ const SellerInfoSearchForm = () => {
 		try {
 			setLoading(true);
 
-			// console.log('[PAYLOAD] ::  ', search);
-			// console.log('[PAYLOAD] ::  ', formData);
+			// // console.log('[PAYLOAD] ::  ', search);
+			// // console.log('[PAYLOAD] ::  ', formData);
 
 			const {data} = await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/${vendor?.vendorId}/filter-products?search=${search}&recommended=${formData.recommended}&newest=${formData.newest}&oldest=${formData.oldest}&lowestPrice=${formData.lowestPrice}&highestPrice=${formData.highestPrice}`
 			);
 
-			// console.log('[DATA] ::  ', data.data);
+			// // console.log('[DATA] ::  ', data.data);
 
-			updateProducts(data.data.products);
-			updatePagination(data.data.totalPages, data.data.hasNext);
+			updateSellerProducts(data.data.products);
+			updateSellerPagination(data.data.totalPages, data.data.hasNext);
 
 			setSearch('');
 			setLoading(false);
@@ -68,7 +67,7 @@ const SellerInfoSearchForm = () => {
 			setLoading(false);
 			const _error = error as AxiosError;
 
-			// console.log('[FILTER-SELLER-PRODUCTS-ERROR] :: ', _error);
+			// // console.log('[FILTER-SELLER-PRODUCTS-ERROR] :: ', _error);
 		}
 	};
 

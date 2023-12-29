@@ -12,7 +12,7 @@ import {ValidateUpdateProfileFormData} from '@/utils/form-validations/settings.v
 import {useGlobalStore} from '@/hooks/use-global-store';
 import ButtonLoader from '@/components/loader/button-loader';
 import {ValidateUpdateVendorProfileFormData} from '@/utils/form-validations/vendor.profile.validation';
-import {NigeriaCities, NigeriaStates} from '@/data';
+import {NigerianCities, NigerianStates} from '@/data';
 
 interface AccountSettingsProps {
 	user: User | null;
@@ -77,13 +77,13 @@ const VendorSettings = () => {
 				}
 			);
 
-			console.log('[DATA] ::  ', data);
+			// console.log('[DATA] ::  ', data);
 
 			updateVendor(data.data);
 		} catch (error) {
 			const _error = error as AxiosError;
 
-			console.log('[FETCH-VENDOR-PROFILE-ERROR] :: ', _error);
+			// console.log('[FETCH-VENDOR-PROFILE-ERROR] :: ', _error);
 		}
 	};
 
@@ -106,13 +106,13 @@ const VendorSettings = () => {
 			},
 		});
 
-		setCities(NigeriaCities[vendor?.state!]);
+		setCities(NigerianCities[vendor?.state!]);
 	}, [vendor]);
 
-	console.log(vendor);
+	// console.log(vendor);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		console.log('[EVENT] :: ', event.target.name);
+		// console.log('[EVENT] :: ', event.target.name);
 
 		updateFormData({
 			type: 'UPDATE_FORMDATA',
@@ -153,7 +153,7 @@ const VendorSettings = () => {
 				return toast.error(validationError);
 			}
 
-			console.log('[UPDATE-VENDOR-PROFILE-PAYLOAD] :: ', formData);
+			// console.log('[UPDATE-VENDOR-PROFILE-PAYLOAD] :: ', formData);
 
 			const {data} = await axios.patch(
 				`${process.env.NEXT_PUBLIC_API_URL}/vendor/update-profile`,
@@ -168,7 +168,7 @@ const VendorSettings = () => {
 
 			setLoading(false);
 
-			console.log('[VENDOR-PROFILE] :: ', data);
+			// console.log('[VENDOR-PROFILE] :: ', data);
 			updateVendor(data.data);
 
 			toast.success('Vendor profile updated');
@@ -177,7 +177,7 @@ const VendorSettings = () => {
 
 			const _error = error as AxiosError;
 
-			console.log('[UPDATE-VENDOR-PROFILE-ERROR]', _error);
+			// console.log('[UPDATE-VENDOR-PROFILE-ERROR]', _error);
 
 			toast.error('Error');
 		}
@@ -214,7 +214,7 @@ const VendorSettings = () => {
 							<option value={formData.state}>
 								{formData.state}
 							</option>
-							{NigeriaStates.map((option) => (
+							{NigerianStates.map((option) => (
 								<option
 									key={option}
 									value={option}

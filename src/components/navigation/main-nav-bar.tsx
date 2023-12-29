@@ -57,10 +57,10 @@ const MainNavbar = () => {
 
 			if (scrollPosition > 50) {
 				setScrolling(true);
-				// console.log('[SCROLLING]');
+				// // console.log('[SCROLLING]');
 			} else {
 				setScrolling(false);
-				// console.log('[FALSE]');
+				// // console.log('[FALSE]');
 			}
 		});
 	}, []);
@@ -286,10 +286,10 @@ const MainNavbar = () => {
 
 											// window.location.reload();
 										} catch (error) {
-											console.log(
-												'[LOGOUT-ERROR] :: ',
-												error
-											);
+											//  console.log(
+											// 	'[LOGOUT-ERROR] :: ',
+											// 	error
+											// );
 
 											toast.error('Error!');
 										}
@@ -319,8 +319,8 @@ const MainNavbar = () => {
 							if (user && user?.role === 'CUSTOMER') {
 								updateUserRoleModal.onOpen();
 
-								// console.log('[UPDATE-USER-ROLE]');
-								// console.log(
+								// // console.log('[UPDATE-USER-ROLE]');
+								// // console.log(
 								// 	'[UPDATE-USER-ROLE] :: ',
 								// 	updateUserRoleModal
 								// );
@@ -546,10 +546,10 @@ const MainNavbar = () => {
 
 											// window.location.reload();
 										} catch (error) {
-											console.log(
-												'[LOGOUT-ERROR] :: ',
-												error
-											);
+											//  console.log(
+											// 	'[LOGOUT-ERROR] :: ',
+											// 	error
+											// );
 
 											toast.error('Error!');
 										}
@@ -579,11 +579,11 @@ const MainNavbar = () => {
 							if (user && user?.role === 'CUSTOMER') {
 								updateUserRoleModal.onOpen();
 
-								console.log('[UPDATE-USER-ROLE]');
-								console.log(
-									'[UPDATE-USER-ROLE] :: ',
-									updateUserRoleModal
-								);
+								// console.log('[UPDATE-USER-ROLE]');
+								//  console.log(
+								// 	'[UPDATE-USER-ROLE] :: ',
+								// 	updateUserRoleModal
+								// );
 							}
 
 							if (user && user?.role === 'FARMER') {

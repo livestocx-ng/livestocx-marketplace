@@ -17,7 +17,7 @@ const NotificationModal = () => {
 
 	const handleReadNotification = async () => {
 		if (payload?.isRead === true) return;
-        
+
 		try {
 			const {data} = await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/notifications/read?notificationId=${payload?.id}`,
@@ -28,12 +28,12 @@ const NotificationModal = () => {
 				}
 			);
 
-			console.log(data);
+			// console.log(data);
 			updateNotification(payload?.id!, data.data);
 		} catch (error) {
 			const _error = error as AxiosError;
 
-			console.log('[READ-NOTIFICATION-ERROR]', _error);
+			// console.log('[READ-NOTIFICATION-ERROR]', _error);
 
 			toast.error('Error');
 		}

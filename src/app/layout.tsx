@@ -4,11 +4,11 @@ import {Poppins} from 'next/font/google';
 import {Toaster} from '@/components/ui/toaster';
 
 import './globals.css';
+import Head from 'next/head';
 import {ToastProvider} from '@/providers';
 import AuthProvider from '@/providers/auth-provider';
-import Head from 'next/head';
-import GoogleAnalyticsProvider from '@/providers/google-analytics-provider';
 import CookieBannerProvider from '@/providers/cookie-banner-provider';
+import GoogleAnalyticsProvider from '@/providers/google-analytics-provider';
 
 const poppins = Poppins({
 	subsets: ['latin'],

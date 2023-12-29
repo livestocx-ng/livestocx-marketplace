@@ -28,43 +28,60 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [currentPage, setCurrentPage] = useState<number>(1);
 
-	// console.log('[PARAMS] :: ', params);
-	// console.log('[VENDOR] :: ', vendor);
+	// // console.log('[PARAMS] :: ', params);
+	// // console.log('[VENDOR] :: ', vendor);
 
 	const fetchSeller = async () => {
 		try {
 			setLoading(true);
 
-			const [profile, products] = await Promise.all([
-				axios.get(
-					`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/${params.sellerId}`
-				),
-				axios.get(
-					`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/${params.sellerId}/products?page=${currentPage}`
-				),
-			]);
-
-			// console.log('[DATA] ::  ', profile.data);
-			console.log('[DATA] ::  ', products.data);
-
-			updateVendor(profile.data.data);
-			updateSellerProducts(products.data.data.products);
-			updateSellerPagination(
-				products.data.data.totalPages,
-				products.data.data.hasNext
+			const {data} = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/${params.sellerId}`
 			);
+
+			// // console.log('[DATA] ::  ', profile.data);
+			// console.log('[DATA] ::  ', products.data);
+
+			updateVendor(data.data);
 
 			setLoading(false);
 		} catch (error) {
 			setLoading(false);
 			const _error = error as AxiosError;
 
-			console.log('[FETCH-SELLERS-ERROR] :: ', _error);
+			// console.log('[FETCH-SELLERS-ERROR] :: ', _error);
+		}
+	};
+
+	const fetchSellerProducts = async () => {
+		try {
+			setLoading(true);
+
+			const {data} = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/${params.sellerId}/products?page=${currentPage}`
+			);
+
+			// // console.log('[DATA] ::  ', profile.data);
+			// console.log('[DATA] ::  ', products.data);
+
+			updateSellerProducts(data.data.products);
+			updateSellerPagination(data.data.totalPages, data.data.hasNext);
+
+			setLoading(false);
+		} catch (error) {
+			setLoading(false);
+			const _error = error as AxiosError;
+
+			// console.log('[FETCH-SELLERS-ERROR] :: ', _error);
 		}
 	};
 
 	useEffect(() => {
 		fetchSeller();
+	}, []);
+
+	useEffect(() => {
+		fetchSellerProducts();
 	}, [currentPage]);
 
 	return (

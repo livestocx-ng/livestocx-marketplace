@@ -1,23 +1,23 @@
 'use client';
 import Lottie from 'lottie-react';
 import axios, {AxiosError} from 'axios';
-import {useRouter} from 'next/navigation';
 import {useEffect, useState} from 'react';
-import {useUserHook} from '@/hooks/use-user';
-import SearchForm from './components/search-form';
-import HomeProducts from './components/home-products';
+import SearchForm from '../components/search-form';
+import HomeProducts from '../components/home-products';
 import {useGlobalStore} from '@/hooks/use-global-store';
-import TestimonialSection from '@/components/common/testimonials';
-import EmptyAnimation from '../../../../../public/animations/animation__3.json';
-import LoadingAnimation from '../../../../../public/animations/loading__animation__1.json';
+import EmptyAnimation from '../../../../../../public/animations/animation__3.json';
 
-export default function HomePage() {
-	const router = useRouter();
-	const userStore = useUserHook();
+interface SearchLocationPageParams {
+	params: {
+		location: string;
+	};
+}
+
+const SearchLocationPage = ({params}: SearchLocationPageParams) => {
 	const {
-		user,
 		products,
 		updateSearchLocation,
+		searchLocation,
 		updateProducts,
 		updatePagination,
 	} = useGlobalStore();
@@ -29,11 +29,13 @@ export default function HomePage() {
 		try {
 			setLoading(false);
 
+			console.log(currentPage);
+
 			const {data} = await axios.get(
-				`${process.env.NEXT_PUBLIC_API_URL}/user/products/recommended/fetch-all?page=${currentPage}`
+				`${process.env.NEXT_PUBLIC_API_URL}/user/products/fetch-location-products?location=${params.location}&query=&page=${currentPage}`
 			);
 
-			// // console.log('[DATA] ::  ', data);
+			// console.log('[DATA] ::  ', data);
 
 			updateProducts([]);
 			updateProducts(data.data.products);
@@ -45,44 +47,32 @@ export default function HomePage() {
 
 			const _error = error as AxiosError;
 
-			// console.log('[FETCH-PRODUCTS-ERROR] :: ', _error);
+			// console.log('[FETCH-LOCATION-PRODUCTS-ERROR] :: ', _error);
 		}
 	};
-
-	useEffect(() => {
-		updateSearchLocation('Nigeria', 'Nigeria');
-	}, []);
 
 	useEffect(() => {
 		fetchProducts();
 	}, [currentPage]);
 
+	useEffect(() => {
+		if (params.location) {
+			fetchProducts();
+		}
+
+		updateSearchLocation(params.location, params.location);
+	}, [params.location]);
+
 	return (
 		<main className='bg-[#28312B]'>
-			<section className='h-[42vh] md:h-[50vh] w-full bg-home flex flex-col items-center justify-end gap-y-5 md:gap-y-10 py-5 md:py-10 md:pt-0'>
-				<h1 className='text-xl md:text-4xl font-medium text-white'>
+			<section className='h-[40vh] md:h-[40vh] w-full bg-home flex flex-col items-center justify-end gap-y-5 md:gap-y-10 py-5 md:py-10 md:pt-0'>
+				{/* <h1 className='text-xl md:text-4xl font-medium text-white'>
 					Best <span className='text-green-600'>deals.</span>{' '}
 					Everything <span className='text-green-600'>Livestocx</span>
-				</h1>
+				</h1> */}
 
 				<SearchForm />
-
-				{/* <div className='md:px-8 pb-10 w-full'>
-					<CarouselSlide />
-				</div> */}
 			</section>
-
-			{/* {loading && (
-				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
-					<div className='h-[200px] w-1/2 mx-auto bg-white'>
-						<Lottie
-							loop={true}
-							className='h-full'
-							animationData={LoadingAnimation}
-						/>
-					</div>
-				</div>
-			)} */}
 
 			{!loading && products?.length === 0 && (
 				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
@@ -104,8 +94,8 @@ export default function HomePage() {
 					/>
 				</div>
 			)}
-
-			<TestimonialSection />
 		</main>
 	);
-}
+};
+
+export default SearchLocationPage;

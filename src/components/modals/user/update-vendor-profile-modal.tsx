@@ -5,7 +5,7 @@ import {
 	useGlobalStore,
 	useUpdateVendorProfileModalStore,
 } from '@/hooks/use-global-store';
-import {NigeriaCities, NigeriaStates} from '@/data';
+import {NigerianCities, NigerianStates} from '@/data';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {Button} from '@/components/ui/button';
@@ -64,13 +64,13 @@ const UpdateVendorProfileModal = () => {
 				}
 			);
 
-			console.log('[DATA] ::  ', data);
+			// console.log('[DATA] ::  ', data);
 
 			updateVendor(data.data);
 		} catch (error) {
 			const _error = error as AxiosError;
 
-			console.log('[FETCH-VENDOR-PROFILE-ERROR] :: ', _error);
+			// console.log('[FETCH-VENDOR-PROFILE-ERROR] :: ', _error);
 		}
 	};
 
@@ -135,7 +135,7 @@ const UpdateVendorProfileModal = () => {
 
 			await updateUser(cookieUpdate.data);
 
-			console.log('[DATA] :: ', cookieUpdate);
+			// console.log('[DATA] :: ', cookieUpdate);
 
 			setLoading(false);
 
@@ -150,7 +150,7 @@ const UpdateVendorProfileModal = () => {
 
 			const _error = error as AxiosError;
 
-			console.log('[UPDATE-GOOGLE-PROFILE-ERROR]', _error);
+			// console.log('[UPDATE-GOOGLE-PROFILE-ERROR]', _error);
 
 			toast.error('Error');
 		}
@@ -257,7 +257,7 @@ const UpdateVendorProfileModal = () => {
 										? formData.state
 										: 'Business State'}
 								</option>
-								{NigeriaStates.map((option) => (
+								{NigerianStates.map((option) => (
 									<option
 										key={option}
 										value={option}
@@ -285,7 +285,7 @@ const UpdateVendorProfileModal = () => {
 										? formData.city
 										: 'Business City'}
 								</option>
-								{NigeriaCities[
+								{NigerianCities[
 									formData.state ? formData.state : 'Abia'
 								].map((option) => (
 									<option

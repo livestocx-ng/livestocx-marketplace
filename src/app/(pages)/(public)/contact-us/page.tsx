@@ -80,14 +80,14 @@ const ContactUsPage = () => {
 
 		try {
 			setLoading(true);
-			console.log('[CONTACT-US-PAYLOAD] :: ', formData);
+			// console.log('[CONTACT-US-PAYLOAD] :: ', formData);
 
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/notifications/contact-us`,
 				formData
 			);
 
-			console.log('[DATA] :: ', data);
+			// console.log('[DATA] :: ', data);
 
 			toast.success(
 				'Thank you for your message, we will reply you shortly.'
@@ -109,7 +109,7 @@ const ContactUsPage = () => {
 
 			const _error = error as AxiosError;
 
-			console.error('[SIGNIN-ERROR]', _error);
+			// console.error('[SIGNIN-ERROR]', _error);
 
 			toast.error('An error occured!');
 		}

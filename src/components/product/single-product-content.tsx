@@ -251,13 +251,22 @@ const SingleProductContent = ({
 			<div className='mt-10 px-4 md:px-0 w-full flex space-x-5 items-center justify-start'>
 				<h1 className='font- text-xl'>Share on:</h1>
 				<div className='flex space-x-2'>
-					<WhatsappShareButton url={window.location.toString()}>
+					<WhatsappShareButton
+						url={window.location.toString()}
+						title='Check out this awesome product on Livestocx: '
+					>
 						<WhatsappIcon size={30} round />
 					</WhatsappShareButton>
-					<FacebookShareButton url={window.location.toString()}>
+					<FacebookShareButton
+						url={window.location.toString()}
+						title='Check out this awesome product on Livestocx: '
+					>
 						<FacebookIcon size={30} round />
 					</FacebookShareButton>
-					<TwitterShareButton url={window.location.toString()}>
+					<TwitterShareButton
+						url={window.location.toString()}
+						title='Check out this awesome product on Livestocx: '
+					>
 						<TwitterIcon size={30} round />
 					</TwitterShareButton>
 				</div>

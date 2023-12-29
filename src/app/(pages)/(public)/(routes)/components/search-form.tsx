@@ -164,13 +164,13 @@ const SearchForm = () => {
 					<MapPin className='h-5 w-5' /> {searchLocation}
 				</p>
 			</div>
-			<div className='flex flex-col md:flex-row w-full justify-center items-center gap-x-5 relative'>
+			<div className='flex w-full justify-center items-center gap-x-5 relative'>
 				<FormTextInput
 					name='query'
 					value={formData.query}
 					handleChange={handleChange}
 					placeHolder='What are you looking for?'
-					classes='w-[85%] md:w-[60%] bg-[#00A65120] text-white text-sm placeholder:text-sm placeholder:italic border-2 border-green-600 focus:border-green-600 rounded-full'
+					classes='w-[70%] md:w-[60%] bg-[#00A65120] text-white text-sm placeholder:text-sm placeholder:italic border-2 border-green-600 focus:border-green-600 rounded-full'
 				/>
 
 				{/* <div className='w-[85%] mt-4 md:mt-0 md:w-fit'>

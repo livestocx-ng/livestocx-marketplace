@@ -84,7 +84,7 @@ const PaginationButton = ({
 					<button
 						onClick={handlePreviousClick}
 						disabled={currentPage === pages[0]}
-						className='text-slate-400 text-[12px] hover:text-slate-600 cursor-pointer hover:-translate-x-1 duration-[800ms] ease-in-out'
+						className='text-slate-400 text-[12px] hover:text-slate-600 cursor-pointer hover:-translate-x-1 duration-700 ease-in-out'
 					>
 						<ChevronLeft size={25} />
 					</button>
@@ -116,7 +116,7 @@ const PaginationButton = ({
 					<button
 						onClick={handleNextClick}
 						disabled={currentPage === pages[pages.length - 1]}
-						className=' text-slate-400 text-[12px] hover:text-slate-600 cursor-pointer hover:translate-x-1 duration-[800ms] ease-in-out'
+						className=' text-slate-400 text-[12px] hover:text-slate-600 cursor-pointer hover:translate-x-1 duration-700 ease-in-out'
 					>
 						<ChevronRight size={25} />
 					</button>

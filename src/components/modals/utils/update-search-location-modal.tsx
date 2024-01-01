@@ -5,13 +5,13 @@ import {
 } from '@/hooks/use-global-store';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
+import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {NigerianCities, NigerianStates} from '@/data';
 import {useEffect, useReducer, useState} from 'react';
 import {ChevronLeft, ChevronRight, X} from 'lucide-react';
 import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
-import {useRouter} from 'next/navigation';
 
 type FormData = {
 	search: string;
@@ -111,14 +111,15 @@ const UpdateSearchLocationModal = () => {
 						</div>
 					)}
 
-					<FormTextInput
+					{/* <FormTextInput
 						name='search'
 						padding='py-2 px-4'
 						value={formData.search}
 						handleChange={handleChange}
 						placeHolder='Find state, city or district'
 						classes='w-full lg:w-[30%] text-white text-sm placeholder:text-sm placeholder:italic border border-slate-600'
-					/>
+					/> */}
+					<div></div>
 				</div>
 
 				{!formData.showCities && (

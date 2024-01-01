@@ -30,15 +30,6 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
 	return (
 		<html lang='en'>
-			<Head>
-				{/* Facebook Domain Verification meta tag */}
-				<meta
-					name='facebook-domain-verification'
-					content='yy2fxudmyl6e8nxtl2zjx9lss8j8dl'
-				/>
-
-				{/* Add other meta tags as needed */}
-			</Head>
 			<GoogleAnalyticsProvider />
 			<body className={poppins.className}>
 				<AuthProvider>

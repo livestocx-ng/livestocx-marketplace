@@ -1,5 +1,13 @@
 'use client';
 import {
+	WhatsappShareButton,
+	WhatsappIcon,
+	FacebookIcon,
+	TwitterIcon,
+	FacebookShareButton,
+	TwitterShareButton,
+} from 'react-share';
+import {
 	Phone,
 	ThumbsUp,
 	ThumbsDown,
@@ -24,14 +32,6 @@ import {
 	AlertDialogTrigger,
 	AlertDialogDescription,
 } from '@/components/ui/alert-dialog';
-import {
-	WhatsappShareButton,
-	WhatsappIcon,
-	FacebookIcon,
-	TwitterIcon,
-	FacebookShareButton,
-	TwitterShareButton,
-} from 'react-share';
 import {usePathname} from 'next/navigation';
 import ProductCard from '../cards/product-card';
 import {Product, ProductInfo} from '@/types/types';

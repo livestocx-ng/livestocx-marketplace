@@ -61,6 +61,9 @@ export function ValidateCreateProductFormData(
 	if (formData.media.length == 0) {
 		return (message = 'Product image|video is required');
 	}
+	if (!formData.media.some(file => file.type.includes('image'))) {
+		return (message = 'Product image is required');
+	}
 
 	return message;
 }

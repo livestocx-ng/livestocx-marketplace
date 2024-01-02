@@ -217,8 +217,15 @@ const UpdateSearchLocationModal = () => {
 										},
 									});
 
-									updateSearchLocation(location, location);
+									updateSearchLocation('', location);
 
+									window.localStorage.setItem(
+										'livestocx_search_query',
+										JSON.stringify({
+											searchQueryState: location,
+											searchQueryCity: '',
+										})
+									);
 									router.push(`/${location}`);
 
 									onClose();
@@ -241,7 +248,7 @@ const UpdateSearchLocationModal = () => {
 												.join('')
 												.toLowerCase();
 
-											console.log(location);
+											// console.log(location);
 
 											updateFormData({
 												type: 'UPDATE_FORMDATA',
@@ -252,9 +259,17 @@ const UpdateSearchLocationModal = () => {
 
 											updateSearchLocation(
 												location,
-												location
+												formData.searchLocationState.toLowerCase()
 											);
 
+											window.localStorage.setItem(
+												'livestocx_search_query',
+												JSON.stringify({
+													searchQueryState:
+														formData.searchLocationState,
+													searchQueryCity: location,
+												})
+											);
 											router.push(`/${location}`);
 
 											onClose();
@@ -296,9 +311,17 @@ const UpdateSearchLocationModal = () => {
 
 											updateSearchLocation(
 												location,
-												location
+												formData.searchLocationState.toLowerCase()
 											);
 
+											window.localStorage.setItem(
+												'livestocx_search_query',
+												JSON.stringify({
+													searchQueryState:
+														formData.searchLocationState,
+													searchQueryCity: location,
+												})
+											);
 											router.push(`/${location}`);
 
 											onClose();
@@ -329,7 +352,7 @@ const UpdateSearchLocationModal = () => {
 												.join('')
 												.toLowerCase();
 
-											console.log(location);
+											// console.log(location);
 
 											updateFormData({
 												type: 'UPDATE_FORMDATA',
@@ -340,9 +363,17 @@ const UpdateSearchLocationModal = () => {
 
 											updateSearchLocation(
 												location,
-												location
+												formData.searchLocationState.toLowerCase()
 											);
 
+											window.localStorage.setItem(
+												'livestocx_search_query',
+												JSON.stringify({
+													searchQueryState:
+														formData.searchLocationState,
+													searchQueryCity: location,
+												})
+											);
 											router.push(`/${location}`);
 
 											onClose();

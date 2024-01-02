@@ -13,8 +13,9 @@ import {
 import {create} from 'zustand';
 
 interface GlobalStore {
-	searchLocationState: string;
-	searchLocation: string | 'Nigeria';
+	searchQuery: string;
+	searchQueryState: string;
+	searchQueryCity: string | 'Nigeria';
 	user: User | null;
 	vendor: Vendor | null;
 	vendors: Vendor[];
@@ -33,7 +34,8 @@ interface GlobalStore {
 	sellerTotalPages: number;
 	sellerHasNextPage: boolean;
 	currentAccountTab: Tab | 'Account' | null;
-	updateSearchLocation: (searchLocation: string, searchLocationState: string)=> void;
+	updateSearchQuery: (searchQuery: string)=> void;
+	updateSearchLocation: (searchQueryCity: string, searchQueryState: string)=> void;
 	updateNotification: (notificationId: number, value: Notification) => void;
 	updateNotifications: (value: Notification[]) => void;
 	updateDesiredProductInfo: (value: DesiredItemInfo) => void;
@@ -208,8 +210,10 @@ export const useProductMediaModalStore = create<ProductModal>((set) => ({
 }));
 
 export const useGlobalStore = create<GlobalStore>((set) => ({
+	searchQuery: '',
+	searchQueryState: '',
 	searchLocationState: '',
-	searchLocation: 'Nigeria',
+	searchQueryCity: 'Nigeria',
 	user: null,
 	desiredProductInfo: null,
 	desiredProduct: null,
@@ -228,8 +232,10 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	hasNextPage: false,
 	productInfo: null,
 	currentAccountTab: 'Account',
-	updateSearchLocation: (searchLocation: string, searchLocationState: string) =>
-		set({searchLocation: searchLocation, searchLocationState: searchLocationState}),
+	updateSearchQuery: (searchQuery: string) =>
+	set({searchQuery: searchQuery}),
+	updateSearchLocation: (searchQueryCity: string, searchQueryState: string) =>
+		set({searchQueryCity: searchQueryCity, searchQueryState: searchQueryState}),
 	updateNotifications: (value: Notification[]) => set({notifications: value}),
 	updateDesiredProductInfo: (value: DesiredItemInfo) =>
 		set({desiredProductInfo: value}),

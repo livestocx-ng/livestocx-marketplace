@@ -16,10 +16,12 @@ interface SearchLocationPageParams {
 const SearchLocationPage = ({params}: SearchLocationPageParams) => {
 	const {
 		products,
-		updateSearchLocation,
-		searchLocation,
 		updateProducts,
+		searchQuery,
+		searchQueryCity,
+		searchQueryState,
 		updatePagination,
+		updateSearchLocation,
 	} = useGlobalStore();
 
 	const [loading, setLoading] = useState(true);
@@ -29,13 +31,13 @@ const SearchLocationPage = ({params}: SearchLocationPageParams) => {
 		try {
 			setLoading(false);
 
-			console.log(currentPage);
+			// console.log(currentPage);
 
 			const {data} = await axios.get(
-				`${process.env.NEXT_PUBLIC_API_URL}/user/products/fetch-location-products?location=${params.location}&query=&page=${currentPage}`
+				`${process.env.NEXT_PUBLIC_API_URL}/user/products/fetch-location-products?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=${searchQuery}&page=${currentPage}`
 			);
 
-			// console.log('[DATA] ::  ', data);
+			console.log('[DATA] ::  ', data);
 
 			updateProducts([]);
 			updateProducts(data.data.products);
@@ -52,16 +54,24 @@ const SearchLocationPage = ({params}: SearchLocationPageParams) => {
 	};
 
 	useEffect(() => {
-		fetchProducts();
-	}, [currentPage]);
+		const lsQueryParams =
+			window.localStorage.getItem('livestocx_search_query') !== null
+				? window.localStorage.getItem('livestocx_search_query')
+				: '';
+
+		const queryParams: {
+			searchQueryState: string;
+			searchQueryCity: string;
+		} = JSON.parse(lsQueryParams ?? '');
+
+		// console.log(queryParams);
+
+		updateSearchLocation(queryParams?.searchQueryCity, queryParams?.searchQueryState);
+	}, []);
 
 	useEffect(() => {
-		if (params.location) {
-			fetchProducts();
-		}
-
-		updateSearchLocation(params.location, params.location);
-	}, [params.location]);
+		fetchProducts();
+	}, [searchQueryState, searchQueryCity, currentPage]);
 
 	return (
 		<main className='bg-[#28312B]'>

@@ -12,7 +12,7 @@ export default function CookieBannerProvider() {
 	useEffect(() => {
 		const storedCookieConsent = getLocalStorage('livestocx_cookie_consent');
 
-		console.log(storedCookieConsent);
+		// console.log(storedCookieConsent);
 
 		setCookieConsent(storedCookieConsent);
 		setLocalStorage('livestocx_cookie_consent', storedCookieConsent);

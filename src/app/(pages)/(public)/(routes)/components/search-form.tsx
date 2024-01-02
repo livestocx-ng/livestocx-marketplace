@@ -40,13 +40,55 @@ const formReducer = (state: FormData, action: FormAction) => {
 const SearchForm = () => {
 	const pathName = usePathname();
 
-	const {searchLocation, updateVendors, updateProducts, updatePagination} =
-		useGlobalStore();
+	const {
+		searchQuery,
+		searchQueryCity,
+		searchQueryState,
+		updateSearchQuery,
+		updateVendors,
+		updateProducts,
+		updatePagination,
+	} = useGlobalStore();
 
 	const updateSearchLocationModal = useUpdateSearchLocationModalStore();
 
 	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
+
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		updateFormData({
+			type: 'UPDATE_FORMDATA',
+			payload: {
+				query: event.target.value,
+			},
+		});
+
+		updateSearchQuery(event.target.value);
+	};
+
+	useEffect(() => {
+		if (searchQuery) {
+			updateFormData({
+				type: 'UPDATE_FORMDATA',
+				payload: {
+					query: searchQuery,
+				},
+			});
+		}
+	}, []);
+
+	useEffect(() => {
+		if (formData.query === '' && !pathName.includes('sellers')) {
+			fetchProducts();
+		}
+		if (formData.query === '' && pathName.includes('sellers')) {
+			fetchSellers();
+		}
+
+		if (formData.query.trim().length > 2 || formData.location) {
+			handleSearch();
+		}
+	}, [formData.query, formData.location]);
 
 	const fetchProducts = async () => {
 		try {
@@ -59,7 +101,9 @@ const SearchForm = () => {
 				updatePagination(data.data.totalPages, data.data.hasNext);
 			} else {
 				const {data} = await axios.get(
-					`${process.env.NEXT_PUBLIC_API_URL}/user/products/fetch-location-products?location=${searchLocation}&query=$page=1`
+					`${
+						process.env.NEXT_PUBLIC_API_URL
+					}/user/products/fetch-location-products?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=&page=1`
 				);
 
 				updateProducts(data.data.products);
@@ -94,14 +138,47 @@ const SearchForm = () => {
 		try {
 			setLoading(true);
 
-			if (!pathName.includes('sellers')) {
+			if (
+				pathName.split('/')[1] === '' &&
+				!pathName.includes('sellers')
+			) {
 				const {data} = await axios.get(
 					`${process.env.NEXT_PUBLIC_API_URL}/user/products/search?query=${formData.query}&location=${formData.location}`
 				);
 
 				// // console.log('[DATA] ::  ', data);
-				// updateSearchProducts(data.data.products);
 
+				updateProducts([]);
+				updateProducts(data.data.products);
+				updatePagination(data.data.totalPages, data.data.hasNext);
+
+				setLoading(false);
+			} else if (
+				pathName.split('/')[1] !== '' &&
+				!pathName.includes('sellers') &&
+				!pathName.includes('marketplace')
+			) {
+				const {data} = await axios.get(
+					`${
+						process.env.NEXT_PUBLIC_API_URL
+					}/user/products/fetch-location-products?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=${
+						formData.query
+					}&page=1`
+				);
+
+				updateProducts([]);
+				updateProducts(data.data.products);
+				updatePagination(data.data.totalPages, data.data.hasNext);
+
+				setLoading(false);
+			} else if (pathName.includes('marketplace')) {
+				const {data} = await axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/user/products/search?query=${formData.query}&location=${formData.location}`
+				);
+
+				// console.log('[DATA] ::  ', data);
+
+				updateProducts([]);
 				updateProducts(data.data.products);
 				updatePagination(data.data.totalPages, data.data.hasNext);
 
@@ -112,7 +189,6 @@ const SearchForm = () => {
 				);
 
 				// // console.log('[DATA] ::  ', data);
-				// updateSearchProducts(data.data.vendors);
 
 				updateVendors(data.data.vendors);
 				updatePagination(data.data.totalPages, data.data.hasNext);
@@ -128,30 +204,6 @@ const SearchForm = () => {
 		}
 	};
 
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		updateFormData({
-			type: 'UPDATE_FORMDATA',
-			payload: {
-				query: event.target.value,
-			},
-		});
-	};
-
-	useEffect(() => {
-		if (formData.query === '' && !pathName.includes('sellers')) {
-			fetchProducts();
-		}
-		if (formData.query === '' && pathName.includes('sellers')) {
-			fetchSellers();
-		}
-	}, [formData.query]);
-
-	useEffect(() => {
-		if (formData.query.trim().length > 2 || formData.location) {
-			handleSearch();
-		}
-	}, [formData.query, formData.location]);
-
 	return (
 		<div className='w-full flex flex-col justify-center items-center'>
 			<div className='text-white text-sm flex items-center space-x-2 py-2'>
@@ -161,7 +213,8 @@ const SearchForm = () => {
 					className='bg-slate-800 cursor-pointer text-white px-4 pl-2 py-2 flex items-center capitalize'
 				>
 					&nbsp;
-					<MapPin className='h-5 w-5' /> {searchLocation}
+					<MapPin className='h-5 w-5' />{' '}
+					{searchQueryCity ? searchQueryCity : searchQueryState}
 				</p>
 			</div>
 			<div className='flex w-full justify-center items-center gap-x-5 relative'>

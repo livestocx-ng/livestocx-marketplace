@@ -22,7 +22,7 @@ import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
 import {Checkbox} from '@/components/ui/checkbox';
 import {useReducer, useRef, useState} from 'react';
-import {FileImage, FileVideo, X} from 'lucide-react';
+import {FileImage, FileVideo, ImagePlus, X} from 'lucide-react';
 import {isFileSizeValid} from '@/utils/media/file.validation';
 import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
@@ -293,12 +293,12 @@ const AddProductModal = () => {
 							) => handleMediaUpload(event, 'VIDEO')}
 						/>
 
-						<div className='flex items-start space-x-5'>
+						<div className='flex flex-row-reverse md:flex-row items-center md:items-start space-x-5'>
 							<div
 								onClick={openImageFileInput}
 								className='p-3 border text-center cursor-pointer'
 							>
-								<FileImage className='text-black' />
+								<ImagePlus className='text-black' />
 							</div>
 							<p className='text-xs text-red-500'>
 								Add pictures of product (maximum of 3 images 3MB
@@ -316,7 +316,7 @@ const AddProductModal = () => {
 							</p>
 						</div>
 
-						<div className='flex items-start space-x-5'>
+						<div className='flex flex-row-reverse md:flex-row items-center md:items-start space-x-5'>
 							<div
 								onClick={openVideoFileInput}
 								className='p-3 border text-center cursor-pointer'

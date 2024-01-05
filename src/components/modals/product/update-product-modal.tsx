@@ -26,7 +26,14 @@ import ButtonLoader from '@/components/loader/button-loader';
 import {useEffect, useReducer, useRef, useState} from 'react';
 import {isFileSizeValid} from '@/utils/media/file.validation';
 import FormTextInput from '@/components/input/form-text-input';
-import {FileImage, FileVideo, Plus, UploadCloud, X} from 'lucide-react';
+import {
+	FileImage,
+	FileVideo,
+	ImagePlus,
+	Plus,
+	UploadCloud,
+	X,
+} from 'lucide-react';
 import FormTextAreaInput from '@/components/input/form-text-area-input';
 import {CategoryDropDownButton} from '../buttons/category-dropdown-button';
 import {DropdownMenuCheckboxItemProps} from '@radix-ui/react-dropdown-menu';
@@ -327,7 +334,7 @@ const UpdateProductModal = () => {
 								onClick={openImageFileInput}
 								className='p-3 border text-center cursor-pointer'
 							>
-								<FileImage className='text-black' />
+								<ImagePlus className='text-black' />
 							</div>
 							<p className='text-xs text-red-500'>
 								Add pictures of product (maximum of 3 images 3MB

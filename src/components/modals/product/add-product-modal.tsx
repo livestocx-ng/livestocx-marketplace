@@ -475,14 +475,14 @@ const AddProductModal = () => {
 						<div className='space-y- w-full'>
 							<p className='text-xs'>Description</p>
 							<FormTextAreaInput
-								rows={8}
+								rows={4}
 								name='description'
 								disabled={loading}
 								handleChange={handleTextAreaChange}
 								value={formData.description}
 								placeHolder='Description'
 								padding={'py-3 px-2'}
-								classes='w-full text-xs placeholder:text-xs border focus:border-slate-500  resize-none'
+								classes='w-full text-xs placeholder:text-xs border border-red-300 focus:border-red-300  resize-none'
 							/>
 						</div>
 

@@ -190,6 +190,31 @@ export const useUpdateProductModalStore = create<UpdateProductModal>((set) => ({
 	updatePayload: (value: Product) => set({payload: value}),
 }));
 
+export const useShareNewProductModalStore = create<UpdateProductModal>((set) => ({
+	isOpen: false,
+	payload: {
+		id: '',
+		productId: '',
+		name: '',
+		price: 0,
+		discountPrice: 0,
+		category: '',
+		description: '',
+		inStock: false,
+		isNegotiable: false,
+		totalReviews: 0,
+		viewCount: 0,
+		likeCount: 0,
+		purchaseCount: 0,
+		likedUsers: null,
+		media: [],
+		createdAt: '',
+	},
+	onOpen: () => set({isOpen: true}),
+	onClose: () => set({isOpen: false}),
+	updatePayload: (value: Product) => set({payload: value}),
+}));
+
 export const useDeleteProductModalStore = create<DeleteProductModal>((set) => ({
 	isOpen: false,
 	payload: {

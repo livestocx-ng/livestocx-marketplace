@@ -8,14 +8,16 @@ import {
 	WhatsappShareButton,
 } from 'react-share';
 import Image from 'next/image';
-import {Product} from '@/types/types';
 import {
 	useGlobalStore,
 	useUpdateProductModalStore,
-	useDeleteProductModalStore,
 } from '@/hooks/use-global-store';
+import {Copy} from 'lucide-react';
+import {toast} from 'react-hot-toast';
+import {Product} from '@/types/types';
 import {ColumnDef} from '@tanstack/react-table';
 import {PriceFormatter} from '@/utils/price.formatter';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 export interface ProductColumn extends Product {}
 
@@ -153,6 +155,17 @@ export const columns: ColumnDef<ProductColumn>[] = [
 				>
 					<TwitterIcon size={25} round />
 				</TwitterShareButton>
+
+				<CopyToClipboard
+					onCopy={(text: string, result: boolean) => {
+						toast.success('Copied to clipboard');
+					}}
+					text={`https://livestocx.com/marketplace/products/${row.original.productId.toLowerCase()}`}
+				>
+					<div className='rounded-full border border-slate-400 h-7 w-7 flex items-center justify-center cursor-pointer'>
+						<Copy className='h-4 w-4' />
+					</div>
+				</CopyToClipboard>
 			</div>
 		),
 	},

@@ -11,8 +11,8 @@ import {
 	Phone,
 	ThumbsUp,
 	ThumbsDown,
-	MessageCircle,
 	FlagTriangleRight,
+	Copy,
 } from 'lucide-react';
 import Image from 'next/image';
 import {cn} from '@/lib/utils';
@@ -32,11 +32,13 @@ import {
 	AlertDialogTrigger,
 	AlertDialogDescription,
 } from '@/components/ui/alert-dialog';
+import {toast} from 'react-hot-toast';
 import {usePathname} from 'next/navigation';
 import ProductCard from '../cards/product-card';
 import {Product, ProductInfo} from '@/types/types';
 import React, {Dispatch, SetStateAction} from 'react';
 import {PriceFormatter} from '@/utils/price.formatter';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 import SellerInfoTab from '../product-info/seller-info-tab';
 import ProductReviewTab from '../product-info/product-review-tab';
 import MoreFromSellerTab from '../product-info/more-from-seller-tab';
@@ -249,7 +251,7 @@ const SingleProductContent = ({
 			</div>
 
 			<div className='mt-10 px-4 md:px-0 w-full flex space-x-5 items-center justify-start'>
-				<h1 className='font- text-xl'>Share on:</h1>
+				<h1 className='font-medium text-xl'>Share on:</h1>
 				<div className='flex space-x-2'>
 					<WhatsappShareButton
 						url={window.location.toString()}
@@ -269,6 +271,17 @@ const SingleProductContent = ({
 					>
 						<TwitterIcon size={30} round />
 					</TwitterShareButton>
+
+					<CopyToClipboard
+						text={window.location.toString()}
+						onCopy={(text: string, result: boolean) => {
+							toast.success('Copied to clipboard');
+						}}
+					>
+						<div className='rounded-full border border-slate-400 h-8 w-8 flex items-center justify-center cursor-pointer'>
+							<Copy className='h-4 w-4'/>
+						</div>
+					</CopyToClipboard>
 				</div>
 			</div>
 

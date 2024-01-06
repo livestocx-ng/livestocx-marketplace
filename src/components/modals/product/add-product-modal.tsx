@@ -10,6 +10,7 @@ import {
 import {
 	useGlobalStore,
 	useCreateProductModalStore,
+	useShareNewProductModalStore,
 } from '@/hooks/use-global-store';
 import {
 	getFilesTypeCount,
@@ -73,14 +74,13 @@ const AddProductModal = () => {
 	const {products, updateProducts} = useGlobalStore();
 
 	const modal = useCreateProductModalStore();
+	const shareProductModal = useShareNewProductModalStore();
 
 	const mediaImageRef = useRef<HTMLInputElement>(null);
 	const mediaVideoRef = useRef<HTMLInputElement>(null);
 
 	const [loading, setLoading] = useState<boolean>(false);
 	const [mediaBlobs, setMediaBlobs] = useState<string[]>([]);
-	const [showStatusBar, setShowStatusBar] = useState<Checked>(false);
-	const [category, setProductCategory] = useState<string>('');
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -224,10 +224,13 @@ const AddProductModal = () => {
 
 			toast.success('New product created');
 
+			shareProductModal.onOpen();
+			shareProductModal.updatePayload(data.data);
+			
+			updateProducts([...products, data.data]);
+
 			// close modal
 			modal.onClose();
-
-			updateProducts([...products, data.data]);
 		} catch (error) {
 			setLoading(false);
 

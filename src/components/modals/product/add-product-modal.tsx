@@ -525,7 +525,7 @@ const AddProductModal = () => {
 									htmlFor='terms'
 									className='text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
 								>
-									In Stock
+									{formData.inStock == true ? 'Available' : 'Sold Out'}
 								</label>
 							</div>
 						</div>

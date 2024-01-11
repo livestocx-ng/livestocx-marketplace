@@ -141,63 +141,73 @@ export const TeamMembers: TeamMember[] = [
 export const FilterOptions: FilterOption[] = [
 	{
 		id: 1,
-		title: 'Cow',
-		value: 'COW',
-	},
-	{
-		id: 2,
-		title: 'Goat',
-		value: 'GOAT',
-	},
-	{
-		id: 3,
 		title: 'Chickens',
 		value: 'CHICKEN',
 	},
 	{
-		id: 4,
-		title: 'Pig',
-		value: 'PIG',
-	},
-	{
-		id: 5,
-		title: 'Sheep',
-		value: 'SHEEP',
-	},
-	{
-		id: 6,
+		id: 2,
 		title: 'Dog',
 		value: 'DOG',
 	},
 	{
-		id: 7,
-		title: 'Cat',
-		value: 'CAT',
-	},
-	{
-		id: 8,
-		title: 'Fish',
-		value: 'FISH',
-	},
-	{
-		id: 9,
+		id: 3,
 		title: 'Rabbit',
 		value: 'RABBIT',
 	},
 	{
-		id: 9,
+		id: 4,
 		title: 'Turkey',
 		value: 'TURKEY',
 	},
 	{
+		id: 5,
+		title: 'Cow',
+		value: 'COW',
+	},
+	{
+		id: 6,
+		title: 'Goat',
+		value: 'GOAT',
+	},
+	{
+		id: 7,
+		title: 'Pig',
+		value: 'PIG',
+	},
+	{
+		id: 8,
+		title: 'Guinea Pig',
+		value: 'GUINEAPIG',
+	},
+	{
 		id: 9,
+		title: 'Sheep',
+		value: 'SHEEP',
+	},
+	{
+		id: 10,
+		title: 'Fish',
+		value: 'FISH',
+	},
+	{
+		id: 11,
 		title: 'Grass Cutter',
 		value: 'GRASSCUTTER',
 	},
 	{
-		id: 9,
+		id: 12,
+		title: 'Snail',
+		value: 'SNAIL',
+	},
+	{
+		id: 13,
 		title: 'Bird',
 		value: 'BIRD',
+	},
+	{
+		id: 14,
+		title: 'Cat',
+		value: 'CAT',
 	},
 ];
 

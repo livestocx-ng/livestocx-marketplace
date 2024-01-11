@@ -44,7 +44,7 @@ const formReducer = (state: FormData, action: FormAction) => {
 const UpdateSearchLocationModal = () => {
 	const router = useRouter();
 
-	const {user, updateSearchLocation} = useGlobalStore();
+	const {user, updateSearchLocation, updateProducts} = useGlobalStore();
 
 	const {onClose} = useUpdateSearchLocationModalStore();
 
@@ -228,6 +228,8 @@ const UpdateSearchLocationModal = () => {
 									);
 									router.push(`/${location}`);
 
+									updateProducts([]);
+
 									onClose();
 								}}
 								className='border-b text-sm py-2 flex justify-between w-full cursor-pointer hover:translate-y-1 transition-all duration-700'
@@ -271,6 +273,8 @@ const UpdateSearchLocationModal = () => {
 												})
 											);
 											router.push(`/${location}`);
+
+											updateProducts([]);
 
 											onClose();
 										}}
@@ -324,6 +328,8 @@ const UpdateSearchLocationModal = () => {
 											);
 											router.push(`/${location}`);
 
+											updateProducts([]);
+
 											onClose();
 										}}
 										className='border-b text-sm py-2 flex flex-col w-full cursor-pointer hover:translate-y-1 transition-all duration-700'
@@ -375,6 +381,8 @@ const UpdateSearchLocationModal = () => {
 												})
 											);
 											router.push(`/${location}`);
+
+											updateProducts([]);
 
 											onClose();
 										}}

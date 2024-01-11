@@ -1,18 +1,18 @@
 'use client';
-import axios, {AxiosError} from 'axios';
 import Image from 'next/image';
 import {toast} from 'react-hot-toast';
+import axios, {AxiosError} from 'axios';
 import {useEffect, useReducer, useRef, useState} from 'react';
 
 import {User} from '@/types/types';
 import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
-import FormTextInput from '@/components/input/form-text-input';
-import {ValidateUpdateProfileFormData} from '@/utils/form-validations/settings.validation';
-import {useGlobalStore} from '@/hooks/use-global-store';
-import ButtonLoader from '@/components/loader/button-loader';
-import {ValidateUpdateVendorProfileFormData} from '@/utils/form-validations/vendor.profile.validation';
 import {NigerianCities, NigerianStates} from '@/data';
+import {useGlobalStore} from '@/hooks/use-global-store';
+import FormTextInput from '@/components/input/form-text-input';
+import ButtonLoader from '@/components/loader/button-loader';
+import {ValidateUpdateProfileFormData} from '@/utils/form-validations/settings.validation';
+import {ValidateUpdateVendorProfileFormData} from '@/utils/form-validations/vendor.profile.validation';
 
 interface AccountSettingsProps {
 	user: User | null;

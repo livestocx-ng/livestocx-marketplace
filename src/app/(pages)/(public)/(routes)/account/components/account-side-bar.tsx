@@ -65,6 +65,7 @@ const AccountSideBar = ({}: AccountSideBarProps) => {
 				// window.location.reload();
 			} catch (error) {
 				// console.log('[LOGOUT-ERROR] :: ', error);
+				toast.error('Error!');
 			}
 		}
 	};

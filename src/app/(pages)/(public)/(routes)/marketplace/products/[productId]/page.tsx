@@ -78,9 +78,34 @@ const MarketPlaceProductPage = ({params: {productId}}: ProductPageParams) => {
 		}
 	};
 
+	const viewProduct = async () => {
+		try {
+			const {data} = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/user/products/product/${productId}/view`,
+				{
+					headers: {
+						Authorization: user?.accessToken,
+					},
+				}
+			);
+
+			console.log('[VIEW-PRODUCT-DATA] ::  ', data);
+		} catch (error) {
+			const _error = error as AxiosError;
+
+			console.log('[VIEW-PRODUCT-ERROR] :: ', _error);
+		}
+	};
+
 	useEffect(() => {
 		fetchProduct();
 	}, []);
+
+	useEffect(() => {
+		if (user) {
+			viewProduct();
+		}
+	}, [user]);
 
 	const handleLikeUnlikeProduct = async (formData: {value?: boolean}) => {
 		try {

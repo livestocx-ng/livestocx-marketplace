@@ -185,7 +185,7 @@ const SingleProductContent = ({
 								Add to Desired Product
 							</Button>
 
-							{/* <Button
+							<Button
 								type='button'
 								variant={'outline'}
 								onClick={() => {
@@ -196,11 +196,11 @@ const SingleProductContent = ({
 								className='border-main text-main text-[10px] md:text-xs h-10 w-[45%] rounded-full py-2'
 							>
 								Chat with Seller
-							</Button> */}
+							</Button>
 
-							<ContactVendorAlertDialog
+							{/* <ContactVendorAlertDialog
 								productInfo={productInfo}
-							/>
+							/> */}
 							<ProductContactAlertDialog
 								productInfo={productInfo}
 							/>

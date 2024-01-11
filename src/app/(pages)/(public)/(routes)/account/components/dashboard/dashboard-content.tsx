@@ -1,10 +1,20 @@
-import {useState} from 'react';
+import {
+	TwitterIcon,
+	WhatsappIcon,
+	FacebookIcon,
+	TwitterShareButton,
+	FacebookShareButton,
+	WhatsappShareButton,
+} from 'react-share';
 import Image from 'next/image';
+import {Copy} from 'lucide-react';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
+import {useEffect, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {DataTable} from '@/components/ui/data-table';
 import {useGlobalStore} from '@/hooks/use-global-store';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 import ButtonLoader from '@/components/loader/button-loader';
 import {RecentOrderColumn, columns} from './tables/recent-orders-columns';
 
@@ -59,9 +69,35 @@ interface DashboardContentProps {
 }
 
 const DashboardContent = ({}: DashboardContentProps) => {
-	const {user, updateUser, updateCurrentAccountTab} = useGlobalStore();
+	const {user, vendor, updateUser, updateVendor, updateCurrentAccountTab} =
+		useGlobalStore();
 
 	const [loading, setLoading] = useState<boolean>(false);
+
+	const fetchVendorProfile = async () => {
+		try {
+			const {data} = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/vendor/profile`,
+				{
+					headers: {
+						Authorization: user?.accessToken,
+					},
+				}
+			);
+
+			// console.log('[DATA] ::  ', data);
+
+			updateVendor(data.data);
+		} catch (error) {
+			const _error = error as AxiosError;
+
+			// console.log('[FETCH-VENDOR-PROFILE-ERROR] :: ', _error);
+		}
+	};
+
+	useEffect(() => {
+		fetchVendorProfile();
+	}, []);
 
 	const handleUpdateUserRole = async (role: string) => {
 		try {
@@ -127,12 +163,48 @@ const DashboardContent = ({}: DashboardContentProps) => {
 						</p>
 					</div>
 
-					<p
-						onClick={() => updateCurrentAccountTab('Settings')}
-						className='text-main text-sm font-semibold cursor-pointer'
-					>
-						Edit Profile
-					</p>
+					{user?.role === 'FARMER' && (
+						<div className='flex items-center space-x-4'>
+							<p
+								// onClick={() => updateCurrentAccountTab('Settings')}
+								className='text-sm'
+							>
+								Share Profile:
+							</p>
+
+							<div className='flex space-x-2'>
+								<WhatsappShareButton
+									url={`https://livestocx.com/sellers/${vendor?.vendorId?.toLowerCase()}`}
+									title='Check out my seller profile on Livestocx: '
+								>
+									<WhatsappIcon size={25} round />
+								</WhatsappShareButton>
+								<FacebookShareButton
+									url={`https://livestocx.com/sellers/${vendor?.vendorId?.toLowerCase()}`}
+									title='Check out my seller profile on Livestocx: '
+								>
+									<FacebookIcon size={25} round />
+								</FacebookShareButton>
+								<TwitterShareButton
+									url={`https://livestocx.com/sellers/${vendor?.vendorId?.toLowerCase()}`}
+									title='Check out my seller profile on Livestocx: '
+								>
+									<TwitterIcon size={25} round />
+								</TwitterShareButton>
+
+								<CopyToClipboard
+									onCopy={(text: string, result: boolean) => {
+										toast.success('Copied to clipboard');
+									}}
+									text={`https://livestocx.com/sellers/${vendor?.vendorId?.toLowerCase()}`}
+								>
+									<div className='rounded-full border border-slate-400 h-7 w-7 flex items-center justify-center cursor-pointer'>
+										<Copy className='h-4 w-4' />
+									</div>
+								</CopyToClipboard>
+							</div>
+						</div>
+					)}
 				</div>
 				<div className='flex flex-col items-start justify-between h-[350px] w-full md:w-[45%]'>
 					<div className='p-5 flex flex-col items-start w-full h-[300px] justify-between border rounded-lg'>

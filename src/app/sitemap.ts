@@ -1,16 +1,16 @@
-import {fetchSiteProducts} from '@/lib/siteMapData';
+// import {fetchSiteProducts} from '@/lib/siteMapData';
 
 export default async function sitemap() {
 	const baseUrl = 'https://livestocx.com';
 
-	const products = await fetchSiteProducts();
+	// const products = await fetchSiteProducts();
 
-	const productUrls = products.map((product) => {
-		return {
-			url: `${baseUrl}/${product.productId.toLowerCase()}`,
-			lastModified: new Date(product.createdAt),
-		};
-	});
+	// const productUrls = products.map((product) => {
+	// 	return {
+	// 		url: `${baseUrl}/${product.productId.toLowerCase()}`,
+	// 		lastModified: new Date(product.createdAt),
+	// 	};
+	// });
 
 	return [
 		{

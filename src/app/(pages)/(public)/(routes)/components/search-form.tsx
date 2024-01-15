@@ -207,7 +207,7 @@ const SearchForm = () => {
 	return (
 		<div className='w-full flex flex-col justify-center items-center'>
 			<div className='text-white text-sm flex items-center space-x-2 py-2'>
-				Find anything Livestocx in{' '}
+				Find anything Livestock in{' '}
 				<p
 					onClick={() => updateSearchLocationModal.onOpen()}
 					className='bg-slate-800 cursor-pointer text-white px-4 pl-2 py-2 flex items-center capitalize'

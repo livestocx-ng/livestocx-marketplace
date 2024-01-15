@@ -97,14 +97,14 @@ export const Testimonials: Testimonial[] = [
 		author: 'Blessing Ugo',
 		avatar: '/testimonial_avatar_1.svg',
 		description:
-			'Livestocx has been the perfect marketplace for me. I had been searching for a platform to present my goat business, and this one has shown the most potential.',
+			'Livestock has been the perfect marketplace for me. I had been searching for a platform to present my goat business, and this one has shown the most potential.',
 	},
 	{
 		id: 2,
 		author: 'Samuel Oguaju',
 		avatar: '/testimonial_avatar_2.svg',
 		description:
-			'Due to the very fragmented dog market with a lot of middle men, Livestocx has helped me find more customers directly. And it is free. Amazing.',
+			'Due to the very fragmented dog market with a lot of middle men, Livestock has helped me find more customers directly. And it is free. Amazing.',
 	},
 	{
 		id: 3,
@@ -120,7 +120,7 @@ export const TeamMembers: TeamMember[] = [
 		id: 1,
 		image: '/about__1.png',
 		name: 'Oghenekevwe Emadago',
-		intro: 'Founder of Livestocx is a skilled innovator and experienced entrepreneur who has achieved great success in his career. His previous business venture, Girlified, was able to secure a substantial amount of funding, which is a testament to his outstanding business acumen and strategic skills.',
+		intro: 'Founder of Livestock is a skilled innovator and experienced entrepreneur who has achieved great success in his career. His previous business venture, Girlified, was able to secure a substantial amount of funding, which is a testament to his outstanding business acumen and strategic skills.',
 		facebook:
 			'https://www.facebook.com/oghenekevwe.emadago?mibextid=kFxxJD',
 		linkedin:
@@ -131,7 +131,7 @@ export const TeamMembers: TeamMember[] = [
 		id: 2,
 		image: '/about__2.png',
 		name: 'Idokoh Divine',
-		intro: 'Founder of Livestocx is a skilled innovator and experienced entrepreneur who has achieved great success in his career. His previous business venture, Girlified, was able to secure a substantial amount of funding, which is a testament to his outstanding business acumen and strategic skills.',
+		intro: 'Founder of Livestock is a skilled innovator and experienced entrepreneur who has achieved great success in his career. His previous business venture, Girlified, was able to secure a substantial amount of funding, which is a testament to his outstanding business acumen and strategic skills.',
 		facebook: 'https://www.facebook.com/chide2001?mibextid=ZbWKwL',
 		linkedin: 'https://ng.linkedin.com/in/divine-idokoh',
 		twitter: 'https://x.com/ojo__chide?s=09',
@@ -257,7 +257,7 @@ export const Features: Feature[] = [
 		icon: '/icon__feature__1.svg',
 		title: 'Co-ordination and Logistics',
 		description:
-			'Livestocx integrates a logistics module, streamlining the coordination of transportation for livestock. Farmers can easily schedule transportation services directly through our platform, optimizing routes to minimize environmental impact and reduce the huge carbon footprint of the transportation process',
+			'Livestock integrates a logistics module, streamlining the coordination of transportation for livestock. Farmers can easily schedule transportation services directly through our platform, optimizing routes to minimize environmental impact and reduce the huge carbon footprint of the transportation process',
 	},
 	{
 		icon: '/icon__feature__2.svg',
@@ -282,15 +282,15 @@ export const Features: Feature[] = [
 export const FaqItems: FaqOption[] = [
 	{
 		id: 1,
-		title: 'What can Livestocx do for me as a farmer?',
+		title: 'What can Livestock do for me as a farmer?',
 		description:
-			'Livestocx will help you get more customers easily and faster by giving you and your business increased visibility all over Nigeria and beyond. This is through our unique features to promote small-holder livestock farmers all over Africa.',
+			'Livestock will help you get more customers easily and faster by giving you and your business increased visibility all over Nigeria and beyond. This is through our unique features to promote small-holder livestock farmers all over Africa.',
 	},
 	{
 		id: 2,
-		title: 'Do I need to pay to post my product on Livestocx?',
+		title: 'Do I need to pay to post my product on Livestock?',
 		description:
-			'Posting on Livestocx, like posting on Facebook, is totally free of charge. But for farmers who want to stand out among others in search, we charge a small premium fee of 500 Naira for advertisement.',
+			'Posting on Livestock, like posting on Facebook, is totally free of charge. But for farmers who want to stand out among others in search, we charge a small premium fee of 500 Naira for advertisement.',
 	},
 	{
 		id: 3,

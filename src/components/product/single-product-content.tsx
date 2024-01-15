@@ -101,8 +101,23 @@ const SingleProductContent = ({
 						className='object-cover h-full w-full md:rounded-l-l border-0 md:border border-gray-600'
 					/>
 
-					{user && (
-						<div className='absolute bottom-0 right-0'>
+					<div className='absolute flex items-center bottom-0 left-0'>
+						<p className='bg-slate-800 border-0 text-white hover:bg-slate-800 hover:text-white text-xs h-10 py-4 px-2 flex items-center'>
+							Posted on: {product?.createdAt?.slice(0, 10)}
+						</p>
+					</div>
+
+					<div className='absolute flex items-center bottom-0 right-0'>
+						{product?.likedUsers?.length! > 0 && (
+							<Button
+								type='button'
+								variant={'outline'}
+								className='bg-slate-800 border-0 text-white hover:bg-slate-800 hover:text-white text-xs h-10 py-4 flex items-center space-x-3 rounded-none'
+							>
+								{product?.likedUsers?.length!} Likes
+							</Button>
+						)}
+						{user && (
 							<Button
 								type='button'
 								onClick={() => {
@@ -135,8 +150,8 @@ const SingleProductContent = ({
 									</>
 								)}
 							</Button>
-						</div>
-					)}
+						)}
+					</div>
 				</div>
 				<div className='w-full md:w-[40%] flex flex-col justify-between md:h-full px-4 md:px-0'>
 					<div className='flex flex-col justify-between border border-slate-500 md:rounded-tr-lg p-4'>
@@ -279,7 +294,7 @@ const SingleProductContent = ({
 						}}
 					>
 						<div className='rounded-full border border-slate-400 h-8 w-8 flex items-center justify-center cursor-pointer'>
-							<Copy className='h-4 w-4'/>
+							<Copy className='h-4 w-4' />
 						</div>
 					</CopyToClipboard>
 				</div>

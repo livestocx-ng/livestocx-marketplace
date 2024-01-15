@@ -1,13 +1,16 @@
 'use client';
 import Image from 'next/image';
 import {useState} from 'react';
+import {
+	useGlobalStore,
+	useShareProductModalStore,
+} from '@/hooks/use-global-store';
 import {toast} from 'react-hot-toast';
 import {Product} from '@/types/types';
 import axios, {AxiosError} from 'axios';
 import {usePathname, useRouter} from 'next/navigation';
 import {PriceFormatter} from '@/utils/price.formatter';
-import {useGlobalStore} from '@/hooks/use-global-store';
-import {ShoppingCartIcon, ThumbsDown, ThumbsUp} from 'lucide-react';
+import {Forward, ShoppingCartIcon, ThumbsDown, ThumbsUp} from 'lucide-react';
 
 interface ProductCardProps {
 	product: Product | null;
@@ -17,9 +20,16 @@ const ProductCard = ({product}: ProductCardProps) => {
 	const router = useRouter();
 	const pathName = usePathname();
 
+	const shareProductModal = useShareProductModalStore();
 	const {user, vendor, updateProduct} = useGlobalStore();
 
 	const [loading, setLoading] = useState<boolean>(false);
+
+	const handleShareProductModal = () => {
+		shareProductModal.updatePayload(product!);
+
+		shareProductModal.onOpen();
+	};
 
 	const handleLikeUnlikeProduct = async (formData: {value?: boolean}) => {
 		try {
@@ -89,36 +99,6 @@ const ProductCard = ({product}: ProductCardProps) => {
 		<div className='w-[48%] sm:w-[150px] flex flex-col justify-between shadow__1 rounde relative'>
 			<div
 				onClick={() => {
-					if (loading) return;
-
-					if (!user) return router.push('/signin');
-
-					const formData: {value?: boolean} = {};
-					if (product?.likedUsers?.includes(user?.id!)) {
-						formData.value = false;
-					} else {
-						formData.value = true;
-					}
-
-					handleLikeUnlikeProduct(formData);
-				}}
-				className='absolute right-14 bottom-[85px] z-[3] flex items-center justify-center h-8 sm:h-8 w-8 sm:w-8 bg-main rounded-full cursor-pointer'
-			>
-				{product?.likedUsers?.includes(user?.id!) ? (
-					<ThumbsDown className='h-4 sm:h-4 w-4 sm:w-4 text-white' />
-				) : (
-					<ThumbsUp className='h-4 sm:h-4 w-4 sm:w-4 text-white' />
-				)}
-			</div>
-
-			<div
-				onClick={handleAddToDesiredProducts}
-				className='absolute right-4 bottom-[85px] z-[3] flex items-center justify-center h-8 sm:h-8 w-8 sm:w-8 bg-main rounded-full'
-			>
-				<ShoppingCartIcon className='h-4 sm:h-4 w-4 sm:w-4 text-white' />
-			</div>
-			<div
-				onClick={() => {
 					if (
 						!pathName.includes('marketplace') &&
 						!pathName.includes('sellers')
@@ -138,7 +118,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 						);
 					}
 				}}
-				className='h-[160px] relative rounde-t cursor-pointer rela'
+				className='h-[180px] relative rounde-t cursor-pointer rela'
 			>
 				<Image
 					fill
@@ -161,29 +141,70 @@ const ProductCard = ({product}: ProductCardProps) => {
 				)}
 			</div>
 
-			<div className='flex flex-col justify-end bg-orange-100 border border-t-0 border-slate-400 px-1 sm:px-2 py-6 rounde-b relative h-[100px]'>
-				{/* <div className='text-xs text-right sm:text-xs font-medium border-b border-t-black'>
-					{product?.vendor?.name}
-				</div> */}
-				<div className='text-xs sm:text-sm font-semibold'>
-					{product?.name.length! > 15
-						? `${product?.name.slice(0, 15)}...`
-						: product?.name}
-				</div>
-				{product?.isNegotiable && (
-					<div className='text-xs sm:text-sm text-main font-medium'>
-						{PriceFormatter(product?.discountPrice!)}
+			<div className='flex flex-col justify-between bg-orange-100 border border-t-0 border-slate-400 py-2 relative h-[160px]'>
+				<div className='space-y-1'>
+					<div className='flex justify-between items-center sm:px-2'>
+						<div
+							onClick={() => {
+								if (loading) return;
+
+								if (!user) return router.push('/signin');
+
+								const formData: {value?: boolean} = {};
+								if (product?.likedUsers?.includes(user?.id!)) {
+									formData.value = false;
+								} else {
+									formData.value = true;
+								}
+
+								handleLikeUnlikeProduct(formData);
+							}}
+							className=' flex items-center justify-center h-8 sm:h-8 w-8 sm:w-8 bg-main rounded-full cursor-pointer'
+						>
+							{product?.likedUsers?.includes(user?.id!) ? (
+								<ThumbsDown className='h-4 sm:h-4 w-4 sm:w-4 text-white' />
+							) : (
+								<ThumbsUp className='h-4 sm:h-4 w-4 sm:w-4 text-white' />
+							)}
+						</div>
+
+						<div
+							onClick={handleAddToDesiredProducts}
+							className=' flex items-center justify-center h-8 sm:h-8 w-8 sm:w-8 bg-main rounded-full cursor-pointer'
+						>
+							<ShoppingCartIcon className='h-4 sm:h-4 w-4 sm:w-4 text-white' />
+						</div>
+
+						<div
+							onClick={handleShareProductModal}
+							className=' flex items-center justify-center h-8 sm:h-8 w-8 sm:w-8 bg-main rounded-full cursor-pointer'
+						>
+							<Forward className='h-4 sm:h-4 w-4 sm:w-4 text-white' />
+						</div>
 					</div>
-				)}
-				<div
-					className={`text-xs sm:text-sm font-medium ${
-						product?.isNegotiable
-							? 'line-through text-slate-500'
-							: 'text-main'
-					}`}
-				>
-					{PriceFormatter(product?.price!)}
+
+					<div className='text-xs sm:text-sm font-semibold sm:px-2'>
+						{product?.name.length! > 15
+							? `${product?.name.slice(0, 15)}...`
+							: product?.name}
+					</div>
+					{product?.isNegotiable && (
+						<div className='text-xs sm:text-sm text-main font-medium sm:px-2'>
+							{PriceFormatter(product?.discountPrice!)}
+						</div>
+					)}
+					<div
+						className={`text-xs sm:text-sm font-medium sm:px-2 ${
+							product?.isNegotiable
+								? 'line-through text-slate-500'
+								: 'text-main'
+						}`}
+					>
+						{PriceFormatter(product?.price!)}
+					</div>
 				</div>
+
+				<div className='border-t border-slate-400 text-xs font-medium px-2'>{product?.vendor?.state}</div>
 			</div>
 		</div>
 	);

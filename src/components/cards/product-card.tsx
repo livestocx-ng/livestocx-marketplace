@@ -141,7 +141,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 				)}
 			</div>
 
-			<div className='flex flex-col justify-between bg-orange-100 border border-t-0 border-slate-400 py-2 relative h-[160px]'>
+			<div className='flex flex-col justify-between bg-orange-100 border border-t-0 border-slate-400 py-2 relative h-[150px]'>
 				<div className='space-y-1'>
 					<div className='flex justify-between items-center sm:px-2'>
 						<div
@@ -204,7 +204,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 					</div>
 				</div>
 
-				<div className='border-t border-slate-400 text-xs font-medium px-2'>{product?.vendor?.state}</div>
+				{/* <div className='border-t border-slate-400 text-xs font-medium px-2'>{product?.vendor?.state}</div> */}
 			</div>
 		</div>
 	);

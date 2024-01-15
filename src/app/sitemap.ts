@@ -1,4 +1,4 @@
-// import {fetchSiteProducts} from '@/lib/siteMapData';
+import {fetchSiteProducts} from '@/lib/siteMapData';
 
 export default async function sitemap() {
 	const baseUrl = 'https://livestocx.com';

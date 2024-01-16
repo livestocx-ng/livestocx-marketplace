@@ -40,6 +40,9 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
 	return (
 		<html lang='en'>
+			<Head>
+				<meta property="og:image" content={"https://livestocx-media.s3.amazonaws.com/public/livestocx-sitemap.png"} />
+			</Head>
 			<GoogleAnalyticsProvider />
 			<body className={poppins.className}>
 				<AuthProvider>

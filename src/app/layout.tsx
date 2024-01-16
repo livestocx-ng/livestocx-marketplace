@@ -24,6 +24,16 @@ export const metadata: Metadata = {
 	keywords: ['livestocx', 'Livestock', 'Nigeria', 'Animals', 'Meat'],
 	other: {
 		"facebook-domain-verification": "yy2fxudmyl6e8nxtl2zjx9lss8j8dl",
+	},
+	openGraph: {
+		images: [
+			{
+				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-sitemap.png',
+				secureUrl: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-sitemap.png',
+				width: 300,
+				height: 300
+			}
+		]
 	}
 };
 

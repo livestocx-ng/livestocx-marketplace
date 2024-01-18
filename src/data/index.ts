@@ -141,7 +141,7 @@ export const TeamMembers: TeamMember[] = [
 export const FilterOptions: FilterOption[] = [
 	{
 		id: 1,
-		title: 'Chickens',
+		title: 'Chicken',
 		value: 'CHICKEN',
 	},
 	{

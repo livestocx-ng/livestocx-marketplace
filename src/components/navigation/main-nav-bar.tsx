@@ -318,12 +318,6 @@ const MainNavbar = () => {
 
 							if (user && user?.role === 'CUSTOMER') {
 								updateUserRoleModal.onOpen();
-
-								// // console.log('[UPDATE-USER-ROLE]');
-								// // console.log(
-								// 	'[UPDATE-USER-ROLE] :: ',
-								// 	updateUserRoleModal
-								// );
 							}
 
 							if (user && user?.role === 'FARMER') {

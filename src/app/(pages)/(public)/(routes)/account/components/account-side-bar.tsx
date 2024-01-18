@@ -52,7 +52,7 @@ const AccountSideBar = ({}: AccountSideBarProps) => {
 			updateCurrentAccountTab(tab);
 		} else {
 			try {
-				await signOut();
+				// await signOut();
 
 				await axios.get('/api/auth/signout');
 

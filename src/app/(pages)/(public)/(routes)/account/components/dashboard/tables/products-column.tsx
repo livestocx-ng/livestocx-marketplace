@@ -48,7 +48,25 @@ export const columns: ColumnDef<ProductColumn>[] = [
 							// height={40}
 							className='w-full h-full object-fill'
 							alt={row.original.name}
-							src={row.original.media[0].mediaUrl}
+							src={
+								row.original.media?.find(
+									(media) =>
+										media.mediaUrl.includes('.jpeg') ||
+										media.mediaUrl.endsWith('.jpg') ||
+										media.mediaUrl.endsWith('.png')
+								)?.mediaUrl!
+									? row.original.media?.find(
+											(media) =>
+												media.mediaUrl.includes(
+													'.jpeg'
+												) ||
+												media.mediaUrl.endsWith(
+													'.jpg'
+												) ||
+												media.mediaUrl.endsWith('.png')
+									  )?.mediaUrl!
+									: '/product__4.jpg'
+							}
 						/>
 					</div>
 					<p className='text-sm'>{row.original.name}</p>

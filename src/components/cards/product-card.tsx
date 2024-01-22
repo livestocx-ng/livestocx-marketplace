@@ -204,7 +204,11 @@ const ProductCard = ({product}: ProductCardProps) => {
 					</div>
 				</div>
 
-				{/* <div className='border-t border-slate-400 text-xs font-medium px-2'>{product?.vendor?.state}</div> */}
+				{product?.vendor?.state && (
+					<div className='border-t border-slate-400 text-xs font-medium px-2'>
+						{product?.vendor?.state}
+					</div>
+				)}
 			</div>
 		</div>
 	);

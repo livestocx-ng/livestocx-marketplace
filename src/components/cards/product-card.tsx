@@ -213,7 +213,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 				{product?.vendor?.state && (
 					<div className='border-t border-slate-400 text-xs font-medium px-2 pt-1 flex items-center space-x-2'>
 						<MapPin className='h-3 w-3 text-black' />
-						<p className='text-xs'>{product?.vendor?.state === 'Federal Capital Territory' ? `${product?.vendor?.city}, Abuja` : `${product?.vendor?.city}, ${product?.vendor?.state}`}</p>
+						<p className='text-[10px]'>{product?.vendor?.state === 'Federal Capital Territory' ? `${product?.vendor?.city}, Abuja` : `${product?.vendor?.city}, ${product?.vendor?.state}`}</p>
 					</div>
 				)}
 			</div>

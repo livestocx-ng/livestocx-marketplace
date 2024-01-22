@@ -12,7 +12,7 @@ import {usePathname, useRouter} from 'next/navigation';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {
 	Forward,
-	MapPin,
+	Navigation,
 	ShoppingCartIcon,
 	ThumbsDown,
 	ThumbsUp,
@@ -212,8 +212,8 @@ const ProductCard = ({product}: ProductCardProps) => {
 
 				{product?.vendor?.state && (
 					<div className='border-t border-slate-400 text-xs font-medium px-2 pt-1 flex items-center space-x-2'>
-						<MapPin className='h-4 w-4 text-black' />
-						<p className='text-xs'>{product?.vendor?.state}</p>
+						<Navigation className='h-4 w-4 text-black' />
+						<p className='text-xs'>{product?.vendor?.state === 'Federal Capital Territory' ? 'Abuja' : product?.vendor?.state}</p>
 					</div>
 				)}
 			</div>

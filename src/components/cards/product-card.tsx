@@ -10,7 +10,13 @@ import {Product} from '@/types/types';
 import axios, {AxiosError} from 'axios';
 import {usePathname, useRouter} from 'next/navigation';
 import {PriceFormatter} from '@/utils/price.formatter';
-import {Forward, ShoppingCartIcon, ThumbsDown, ThumbsUp} from 'lucide-react';
+import {
+	Forward,
+	MapPin,
+	ShoppingCartIcon,
+	ThumbsDown,
+	ThumbsUp,
+} from 'lucide-react';
 
 interface ProductCardProps {
 	product: Product | null;
@@ -141,7 +147,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 				)}
 			</div>
 
-			<div className='flex flex-col justify-between bg-orange-100 border border-t-0 border-slate-400 py-2 relative h-[150px]'>
+			<div className='flex flex-col justify-between bg-orange-100 border border-t-0 border-slate-400 py-2 relative h-[160px]'>
 				<div className='space-y-1'>
 					<div className='flex justify-between items-center sm:px-2'>
 						<div
@@ -205,8 +211,9 @@ const ProductCard = ({product}: ProductCardProps) => {
 				</div>
 
 				{product?.vendor?.state && (
-					<div className='border-t border-slate-400 text-xs font-medium px-2'>
-						{product?.vendor?.state}
+					<div className='border-t border-slate-400 text-xs font-medium px-2 pt-1 flex items-center space-x-2'>
+						<MapPin className='h-4 w-4 text-black' />
+						<p className='text-xs'>{product?.vendor?.state}</p>
 					</div>
 				)}
 			</div>

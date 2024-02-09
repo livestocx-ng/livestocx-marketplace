@@ -143,7 +143,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 
 			<div className='flex flex-col justify-between bg-orange-100 border border-t-0 border-slate-400 py-2 relative h-[160px] rounded-b-md'>
 				<div className='space-y-1'>
-					<div className='flex justify-between items-center sm:px-2'>
+					<div className='flex justify-between items-center px-2'>
 						<div
 							onClick={() => {
 								if (loading) return;
@@ -183,18 +183,18 @@ const ProductCard = ({product}: ProductCardProps) => {
 						</div>
 					</div>
 
-					<div className='text-xs sm:text-sm font-semibold sm:px-2'>
+					<div className='text-xs sm:text-sm font-semibold px-2'>
 						{product?.name.length! > 15
 							? `${product?.name.slice(0, 15)}...`
 							: product?.name}
 					</div>
 					{product?.isNegotiable && (
-						<div className='text-xs sm:text-sm text-main font-medium sm:px-2'>
+						<div className='text-xs sm:text-sm text-main font-medium px-2'>
 							{PriceFormatter(product?.discountPrice!)}
 						</div>
 					)}
 					<div
-						className={`text-xs sm:text-sm font-medium sm:px-2 ${
+						className={`text-xs sm:text-sm font-medium px-2 ${
 							product?.isNegotiable
 								? 'line-through text-slate-500'
 								: 'text-main'

@@ -17,6 +17,7 @@ import {
 	ThumbsDown,
 	ThumbsUp,
 } from 'lucide-react';
+import {getMediaImageUrl} from '@/utils/media/media.url';
 
 interface ProductCardProps {
 	product: Product | null;
@@ -124,30 +125,23 @@ const ProductCard = ({product}: ProductCardProps) => {
 						);
 					}
 				}}
-				className='h-[180px] relative rounde-t cursor-pointer rela'
+				className='h-[180px] relative cursor-pointer rela'
 			>
 				<Image
 					fill
 					alt='product'
-					src={
-						product?.media?.find(
-							(media) =>
-								media.mediaUrl.includes('.jpeg') ||
-								media.mediaUrl.endsWith('.jpg') ||
-								media.mediaUrl.endsWith('.png')
-						)?.mediaUrl!
-					}
-					className='object-cover rounde-t'
+					src={getMediaImageUrl(product!)}
+					className='object-cover rounded-t-md'
 				/>
 
 				{product?.isNegotiable === true && (
-					<div className='absolute top-0 left-0 bg-[#11111180] px-4 rounde-tl'>
+					<div className='absolute top-0 left-0 bg-[#11111180] px-4 rounded-tl-md'>
 						<p className='text-[10px] text-white'>Negotiable</p>
 					</div>
 				)}
 			</div>
 
-			<div className='flex flex-col justify-between bg-orange-100 border border-t-0 border-slate-400 py-2 relative h-[160px]'>
+			<div className='flex flex-col justify-between bg-orange-100 border border-t-0 border-slate-400 py-2 relative h-[160px] rounded-b-md'>
 				<div className='space-y-1'>
 					<div className='flex justify-between items-center sm:px-2'>
 						<div
@@ -213,7 +207,12 @@ const ProductCard = ({product}: ProductCardProps) => {
 				{product?.vendor?.state && (
 					<div className='border-t border-slate-400 text-xs font-medium px-2 pt-1 flex items-center space-x-2'>
 						<MapPin className='h-3 w-3 text-black' />
-						<p className='text-[10px]'>{product?.vendor?.state === 'Federal Capital Territory' ? `${product?.vendor?.city}, Abuja` : `${product?.vendor?.city}, ${product?.vendor?.state}`}</p>
+						<p className='text-[10px]'>
+							{product?.vendor?.state ===
+							'Federal Capital Territory'
+								? `${product?.vendor?.city}, Abuja`
+								: `${product?.vendor?.city}, ${product?.vendor?.state}`}
+						</p>
 					</div>
 				)}
 			</div>

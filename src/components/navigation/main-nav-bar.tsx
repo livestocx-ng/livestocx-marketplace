@@ -326,7 +326,7 @@ const MainNavbar = () => {
 								router.push('/account');
 							}
 						}}
-						className={`h-10 bg-orange-400 w-[80px] text-white text-sm flex flex-col items-center justify-center cursor-pointer`}
+						className={`h-10 bg-orange-400 rounded-sm w-[80px] text-white text-sm flex flex-col items-center justify-center cursor-pointer`}
 					>
 						Sell
 					</div>
@@ -563,7 +563,7 @@ const MainNavbar = () => {
 							</div>
 						)}
 					</div>
-					
+
 					<div
 						onClick={() => {
 							if (!user) {

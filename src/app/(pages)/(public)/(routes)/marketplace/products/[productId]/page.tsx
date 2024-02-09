@@ -109,7 +109,7 @@ const MarketPlaceProductPage = ({params: {productId}}: ProductPageParams) => {
 
 	const handleLikeUnlikeProduct = async (formData: {value?: boolean}) => {
 		try {
-			setLoading(true);
+			// setLoading(true);
 
 			// console.log('[LIKE-UNLIKE-PRODUCT-PAYLOAD] :: ', formData);
 
@@ -125,14 +125,14 @@ const MarketPlaceProductPage = ({params: {productId}}: ProductPageParams) => {
 
 			// // console.log('[LIKE-UNLIKE-PRODUCT-SUCCESS] :: ', data);
 
-			setLoading(false);
+			// setLoading(false);
 
 			updatePayload(data.data);
 		} catch (error) {
-			setLoading(false);
+			// setLoading(false);
 			const _error = error as AxiosError;
 
-			// console.log('[ERROR] :: ', _error);
+			console.log('[ERROR] :: ', _error);
 		}
 	};
 

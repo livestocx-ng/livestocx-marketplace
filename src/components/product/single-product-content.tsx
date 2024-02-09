@@ -42,6 +42,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import SellerInfoTab from '../product-info/seller-info-tab';
 import ProductReviewTab from '../product-info/product-review-tab';
 import MoreFromSellerTab from '../product-info/more-from-seller-tab';
+import {getMediaImageUrl} from '@/utils/media/media.url';
 
 interface SingleProductContentProps {
 	currentTab: Tab;
@@ -90,14 +91,7 @@ const SingleProductContent = ({
 					<Image
 						fill
 						alt={'product'}
-						src={
-							product?.media?.find(
-								(media) =>
-									media.mediaUrl.includes('.jpeg') ||
-									media.mediaUrl.endsWith('.jpg') ||
-									media.mediaUrl.endsWith('.png')
-							)?.mediaUrl!
-						}
+						src={getMediaImageUrl(product)}
 						className='object-cover h-full w-full md:rounded-l-l border-0 md:border border-gray-600'
 					/>
 
@@ -239,10 +233,10 @@ const SingleProductContent = ({
 						</div>
 					</div>
 
-					<div className='flex flex-col space-y-3 h-ful md:h-fi border border-slate-500 p-4 mt-5 md:mt-0 rounded-br-lg'>
-						<h1 className='text-sm font-medium'>Safety Tips</h1>
+					<div className='flex flex-col space-y-3 h-ful md:h-fi border border-red-500 text-red-600 p-4 mt-5 md:mt-0 rounded-br-lg'>
+						<h1 className='text-sm font-semibold'>Safety Tips</h1>
 
-						<ul className='text-xs list-disc pl-3 space-y-5'>
+						<ul className='text-xs  list-disc pl-3 space-y-5'>
 							<li>
 								If you wish to meet a seller, meet in a place
 								where there are other people around and where
@@ -305,36 +299,24 @@ const SingleProductContent = ({
 				<p>{product?.description}</p>
 			</div>
 
-			<div className='mt-5 w-full px-4 md:px-0'>
-				<h1 className='font-medium text-xl'>Images</h1>
+			{product?.media?.filter((media) => media.mediaType === 'IMAGE')
+				.length > 0 && (
+				<div className='mt-5 w-full px-4 md:px-0'>
+					<h1 className='font-medium text-xl'>Images</h1>
 
-				<div className='grid grid-cols-2 gap-5 md:gap-5 md:flex items-center justify-start w-full rounded-lg'>
-					{product?.media
-						?.filter((media) => media.mediaType === 'IMAGE')
-						?.slice(0, 6)
-						?.map((media, index) => (
-							<div
-								key={media.id}
-								className='h-[150px] md:h-[150px] w-full md:w-[150px] relative border border-slate-400'
-							>
-								<Image
-									fill
-									alt={'product'}
-									src={media.mediaUrl}
-									onClick={() => {
-										if (!isProductMediaModalOpen) {
-											onProductMediaModalOpen();
-
-											updateProductModalPayload(
-												product.media
-											);
-										}
-									}}
-									className='object-cover rounded-g h-full w-full cursor-pointer'
-								/>
-
-								{index === 5 && (
-									<div
+					<div className='grid grid-cols-2 gap-5 md:gap-5 md:flex items-center justify-start w-full rounded-lg'>
+						{product?.media
+							?.filter((media) => media.mediaType === 'IMAGE')
+							?.slice(0, 6)
+							?.map((media, index) => (
+								<div
+									key={media.id}
+									className='h-[150px] md:h-[150px] w-full md:w-[150px] relative border border-slate-400'
+								>
+									<Image
+										fill
+										alt={'product'}
+										src={media.mediaUrl}
 										onClick={() => {
 											if (!isProductMediaModalOpen) {
 												onProductMediaModalOpen();
@@ -344,35 +326,53 @@ const SingleProductContent = ({
 												);
 											}
 										}}
-										className='absolute top-0 h-full w-full bg-[#11111190] flex items-center justify-center rounded-lg cursor-pointer'
-									>
-										<p className='text-xs text-center text-white'>
-											See more images
-										</p>
-									</div>
-								)}
-							</div>
-						))}
-				</div>
-			</div>
+										className='object-cover rounded-g h-full w-full cursor-pointer'
+									/>
 
-			<div className='mt-5 px-4 md:px-0 w-full'>
-				<h1 className='font-medium text-xl'>Videos</h1>
+									{index === 5 && (
+										<div
+											onClick={() => {
+												if (!isProductMediaModalOpen) {
+													onProductMediaModalOpen();
 
-				<div className='grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-5 md:flex items-center justify-start w-full rounded-lg'>
-					{product?.media
-						?.filter((media) => media.mediaType === 'VIDEO')
-						?.map((media, index) => (
-							<div className='h-[250px] w-full md:w-[25%] relative border border-slate-400'>
-								<video
-									controls
-									src={media.mediaUrl}
-									className='object-cover h-full w-full'
-								/>
-							</div>
-						))}
+													updateProductModalPayload(
+														product.media
+													);
+												}
+											}}
+											className='absolute top-0 h-full w-full bg-[#11111190] flex items-center justify-center rounded-lg cursor-pointer'
+										>
+											<p className='text-xs text-center text-white'>
+												See more images
+											</p>
+										</div>
+									)}
+								</div>
+							))}
+					</div>
 				</div>
-			</div>
+			)}
+
+			{product?.media?.filter((media) => media.mediaType === 'VIDEO')
+				.length > 0 && (
+				<div className='mt-5 px-4 md:px-0 w-full'>
+					<h1 className='font-medium text-xl'>Videos</h1>
+
+					<div className='grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-5 md:flex items-center justify-start w-full rounded-lg'>
+						{product?.media
+							?.filter((media) => media.mediaType === 'VIDEO')
+							?.map((media, index) => (
+								<div className='h-[250px] w-full md:w-[25%] relative border border-slate-400'>
+									<video
+										controls
+										src={media.mediaUrl}
+										className='object-cover h-full w-full'
+									/>
+								</div>
+							))}
+					</div>
+				</div>
+			)}
 
 			<div className='flex items-center justify-between w-full mt-10 border-b border-b-orange-500 px-4 md:px-0'>
 				{CurrentTabs.map((item) => (

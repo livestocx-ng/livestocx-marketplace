@@ -118,9 +118,9 @@ export const Testimonials: Testimonial[] = [
 export const TeamMembers: TeamMember[] = [
 	{
 		id: 1,
-		image: '/about__1.png',
+		image: '/team/about__1.png',
 		name: 'Oghenekevwe Emadago',
-		intro: 'Founder of Livestock is a skilled innovator and experienced entrepreneur who has achieved great success in his career. His previous business venture, Girlified, was able to secure a substantial amount of funding, which is a testament to his outstanding business acumen and strategic skills.',
+		intro: 'Founder and CEO of Livestock is a skilled innovator and experienced entrepreneur who has achieved great success in his career. His previous business venture, Girlified, was able to secure a substantial amount of funding, which is a testament to his outstanding business acumen and strategic skills.',
 		facebook:
 			'https://www.facebook.com/oghenekevwe.emadago?mibextid=kFxxJD',
 		linkedin:
@@ -129,11 +129,38 @@ export const TeamMembers: TeamMember[] = [
 	},
 	{
 		id: 2,
-		image: '/about__2.png',
+		image: '/team/about__2.png',
 		name: 'Idokoh Divine',
-		intro: 'Founder of Livestock is a skilled innovator and experienced entrepreneur who has achieved great success in his career. His previous business venture, Girlified, was able to secure a substantial amount of funding, which is a testament to his outstanding business acumen and strategic skills.',
+		intro: 'Founder and COO of Livestock is a skilled innovator and experienced entrepreneur who has achieved great success in his career. His previous business venture, Girlified, was able to secure a substantial amount of funding, which is a testament to his outstanding business acumen and strategic skills.',
 		facebook: 'https://www.facebook.com/chide2001?mibextid=ZbWKwL',
-		linkedin: 'https://ng.linkedin.com/in/divine-idokoh',
+		linkedin: 'https://www.linkedin.com/in/divine-idokoh',
+		twitter: 'https://x.com/ojo__chide?s=09',
+	},
+	{
+		id: 3,
+		image: '/team/about__3.jpg',
+		name: 'Yada Martins',
+		intro: "As a seasoned software engineer, Yada Martins, the CTO of Livestocx, brings an array of knowledge to the table. Martins is a leader with a track record of creating creative solutions and a strong technical and strategic background. His direction creates an environment that is conducive to greatness, propelling Livestocx's technical innovations and guaranteeing its leadership in the sector.",
+		facebook: 'https://www.facebook.com/chide2001?mibextid=ZbWKwL',
+		linkedin: 'https://www.linkedin.com/in/yada-martins',
+		twitter: 'https://x.com/ojo__chide?s=09',
+	},
+	{
+		id: 4,
+		image: '/team/about__4.jpeg',
+		name: 'Steve Odinkaru',
+		intro: "Steve Odinkaru, the frontend developer at Livestocx, is a talented inventor and seasoned businessman who contributes insightful knowledge from his prior position at Medexer, a well-known health tech firm. His ability to successfully navigate the industry's intricacies highlights his remarkable commercial acumen and strategic talents, which have contributed to Livestocx's continuous success.",
+		facebook: 'https://www.facebook.com/chide2001?mibextid=ZbWKwL',
+		linkedin: 'https://www.linkedin.com/in/steve-odinkaru/',
+		twitter: 'https://x.com/ojo__chide?s=09',
+	},
+	{
+		id: 5,
+		image: '/team/about__5.jpeg',
+		name: 'Asalu Peter',
+		intro: 'Passionate in extracting meaning from large, complicated datasets, Asalu is an excellent data analyst. Using accurate and insightful data, he facilitates well-informed decision-making at Livestocx. He possesses expertise in statistical analysis and visualisation in healthcare',
+		facebook: 'https://www.facebook.com/chide2001?mibextid=ZbWKwL',
+		linkedin: 'https://www.linkedin.com/in/asalu-peter-41300a188/',
 		twitter: 'https://x.com/ojo__chide?s=09',
 	},
 ];

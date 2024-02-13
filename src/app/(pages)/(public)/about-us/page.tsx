@@ -166,7 +166,7 @@ const AboutUsPage = () => {
 				</h1>
 			</div>
 
-			<div className='space-y-20 md:space-y-0 px-8 py-10 pb-20 w-full flex flex-col md:flex-row justify-between items-start'>
+			<div className='space-y-20 md:space-y-0 px-8 py-10 pb-20 w-full flex flex-col md:flex-row md:flex-wrap md:gap-y-10 justify-between items-start'>
 				{TeamMembers.map((member) => (
 					<div
 						key={member.id}
@@ -191,48 +191,42 @@ const AboutUsPage = () => {
 							</p>
 
 							<div className='flex items-center space-x-5 mt-5 sm:mt-0'>
-								<Link
+								{/* <Link
 									target='_blank'
 									href={member.facebook}
 									className='bg-main h-[30px] w-[30px] relative rounded p-3'
 								>
 									<Image
-										// width={30}
-										// height={30}
 										fill
 										className='object-fill'
 										alt={member.facebook}
 										src={'/icon__facebook__2.svg'}
 									/>
-								</Link>
+								</Link> */}
 								<Link
 									target='_blank'
 									href={member.linkedin}
 									className='bg-main h-[30px] w-[30px] relative rounded p-3'
 								>
 									<Image
-										// width={30}
-										// height={30}
 										fill
 										className='object-fill'
 										alt={member.linkedin}
 										src={'/icon__linkedin__2.svg'}
 									/>
 								</Link>
-								<Link
+								{/* <Link
 									target='_blank'
 									href={member.twitter}
 									className='bg-main h-[30px] w-[30px] relative rounded p-3'
 								>
 									<Image
-										// width={30}
-										// height={30}
 										fill
 										className='object-fill'
 										alt={member.twitter}
 										src={'/icon__twitter.svg'}
 									/>
-								</Link>
+								</Link> */}
 							</div>
 						</div>
 					</div>

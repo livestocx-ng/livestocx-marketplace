@@ -139,19 +139,25 @@ const Footer = () => {
 						<Link href={'#'} className=''>
 							<Image
 								alt={''}
-								width={100}
-								height={50}
+								width={120}
+								height={60}
 								className='object-cover'
-								src={'/icon__appstore.svg'}
+								src={'/icon__appstore__2.svg'}
 							/>
 						</Link>
-						<Link href={'#'} className=''>
+						<Link
+							className=''
+							target='_blank'
+							href={
+								'https://play.google.com/store/apps/details?id=com.livestocx.livestocx_mobile&pcampaignid=web_share'
+							}
+						>
 							<Image
 								alt={''}
-								width={100}
-								height={50}
+								width={120}
+								height={60}
 								className='object-cover'
-								src={'/icon__playstore.svg'}
+								src={'/icon__playstore__2.svg'}
 							/>
 						</Link>
 					</div>

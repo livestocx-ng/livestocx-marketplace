@@ -1,4 +1,6 @@
 'use client';
+import Link from 'next/link';
+import Image from 'next/image';
 import Lottie from 'lottie-react';
 import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
@@ -9,7 +11,6 @@ import HomeProducts from './components/home-products';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import TestimonialSection from '@/components/common/testimonials';
 import EmptyAnimation from '../../../../../public/animations/animation__3.json';
-import LoadingAnimation from '../../../../../public/animations/loading__animation__1.json';
 
 export default function HomePage() {
 	const router = useRouter();
@@ -67,9 +68,7 @@ export default function HomePage() {
 
 				<SearchForm />
 
-				{/* <div className='md:px-8 pb-10 w-full'>
-					<CarouselSlide />
-				</div> */}
+				
 			</section>
 
 			{/* {loading && (

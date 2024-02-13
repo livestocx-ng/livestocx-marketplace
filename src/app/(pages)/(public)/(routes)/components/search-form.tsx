@@ -1,6 +1,8 @@
 'use client';
-import {MapPin, Search} from 'lucide-react';
+import Link from 'next/link';
+import Image from 'next/image';
 import axios, {AxiosError} from 'axios';
+import {MapPin, Search} from 'lucide-react';
 import {Button} from '@/components/ui/button';
 import React, {useEffect, useReducer, useState} from 'react';
 import {
@@ -206,8 +208,23 @@ const SearchForm = () => {
 
 	return (
 		<div className='w-full flex flex-col justify-center items-center'>
+			<Link
+				className=''
+				target='_blank'
+				href={
+					'https://play.google.com/store/apps/details?id=com.livestocx.livestocx_mobile&pcampaignid=web_share'
+				}
+			>
+				<Image
+					alt={''}
+					width={130}
+					height={60}
+					className='object-cover'
+					src={'/icon__playstore__2.svg'}
+				/>
+			</Link>
 			<div className='text-white text-sm flex items-center space-x-2 py-2'>
-				Find anything Livestock in{' '}
+				<p> Find anything Livestock in </p>
 				<p
 					onClick={() => updateSearchLocationModal.onOpen()}
 					className='bg-slate-800 cursor-pointer text-white px-4 pl-2 py-2 flex items-center capitalize'

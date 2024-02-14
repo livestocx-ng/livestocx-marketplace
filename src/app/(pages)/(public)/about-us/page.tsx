@@ -172,17 +172,31 @@ const AboutUsPage = () => {
 						key={member.id}
 						className='flex flex-col md:flex-row md:space-x-5 items-start w-full md:w-[45%]'
 					>
-						<div className='w-full sm:w-[30%] h-[280px] md:h-[200px] relative mb-10 sm:mb-0'>
-							<Image
-								fill
-								alt={member.name}
-								src={member.image}
-								className='object-cover h-full w-full absolute z-[5]'
-							/>
-							<div className='absolute top-5 -left-3 sm:w-[100%] h-[190px] bg-green-600' />
+						<div className='flex flex-col justify-between w-full sm:w-[30%] h-[300px] md:h-[280px]'>
+							<div className='relative w-full h-[280px] md:h-[200px] mb-10 sm:mb-0'>
+								<Image
+									fill
+									alt={member.name}
+									src={member.image}
+									className='object-cover h-full w-full absolute z-[5]'
+								/>
+								<div className='absolute top-5 -left-3 sm:w-[100%] h-[190px] bg-green-600' />
+							</div>
+							<Link
+								target='_blank'
+								href={member.linkedin}
+								className='bg-main h-[30px] w-[30px] relative rounded p-3'
+							>
+								<Image
+									fill
+									className='object-fill'
+									alt={member.linkedin}
+									src={'/icon__linkedin__2.svg'}
+								/>
+							</Link>
 						</div>
 
-						<div className='lspace-y-5 w-full md:w-[70%] t-10 sm:mt-0'>
+						<div className='lspace-y-5 w-full md:w-[70%] t-10 mt-5 md:mt-0'>
 							<h1 className='text-main font-bold text-xl'>
 								{member.name}
 							</h1>
@@ -203,7 +217,7 @@ const AboutUsPage = () => {
 										src={'/icon__facebook__2.svg'}
 									/>
 								</Link> */}
-								<Link
+								{/* <Link
 									target='_blank'
 									href={member.linkedin}
 									className='bg-main h-[30px] w-[30px] relative rounded p-3'
@@ -214,7 +228,7 @@ const AboutUsPage = () => {
 										alt={member.linkedin}
 										src={'/icon__linkedin__2.svg'}
 									/>
-								</Link>
+								</Link> */}
 								{/* <Link
 									target='_blank'
 									href={member.twitter}

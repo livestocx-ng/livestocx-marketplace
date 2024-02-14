@@ -162,7 +162,7 @@ const AboutUsPage = () => {
 
 			<div className='w-full py-5 text-center'>
 				<h1 className='text-2xl font-semibold text-mai'>
-					MEET OUR FOUNDERS
+					MEET OUR TEAM
 				</h1>
 			</div>
 

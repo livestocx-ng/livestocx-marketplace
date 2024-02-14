@@ -140,7 +140,7 @@ export const TeamMembers: TeamMember[] = [
 		id: 3,
 		image: '/team/about__3.jpg',
 		name: 'Yada Martins',
-		intro: 'Co-founder/CTO: Martins is a full stack developer with 6 years+ experience with JavaScript and Python. Most experirncted in  NestJS, NextJS, and Flutter. He is the technical backbone of Livestocx, leading the development and implementation of our technology stack with his expertise in software development and emerging technologies.',
+		intro: 'Co-founder/CTO: Martins is a full stack developer with 6 years+ experience with JavaScript and Python. Most experienced in  NestJS, NextJS, and Flutter. He is the technical backbone of Livestocx, leading the development and implementation of our technology stack with his expertise in software development and emerging technologies.',
 		facebook: 'https://www.facebook.com/chide2001?mibextid=ZbWKwL',
 		linkedin: 'https://www.linkedin.com/in/yada-martins',
 		twitter: 'https://x.com/ojo__chide?s=09',

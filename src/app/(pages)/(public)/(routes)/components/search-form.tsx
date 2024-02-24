@@ -208,22 +208,25 @@ const SearchForm = () => {
 
 	return (
 		<div className='w-full flex flex-col justify-center items-center'>
-			<Link
-				className=''
-				target='_blank'
-				href={
-					'https://play.google.com/store/apps/details?id=com.livestocx.livestocx_mobile&pcampaignid=web_share'
-				}
-			>
-				<Image
-					alt={''}
-					width={130}
-					height={60}
-					unoptimized={true}
-					className='object-cover'
-					src={'/icon__playstore__2.svg'}
-				/>
-			</Link>
+			{!pathName.includes('sellers') &&
+				!pathName.includes('marketplace') && (
+					<Link
+						className=''
+						target='_blank'
+						href={
+							'https://play.google.com/store/apps/details?id=com.livestocx.livestocx_mobile&pcampaignid=web_share'
+						}
+					>
+						<Image
+							alt={''}
+							width={130}
+							height={60}
+							unoptimized={true}
+							className='object-cover'
+							src={'/icon__playstore__2.svg'}
+						/>
+					</Link>
+				)}
 			<div className='text-white text-sm flex items-center space-x-2 py-2'>
 				<p> Find anything Livestock in </p>
 				<p

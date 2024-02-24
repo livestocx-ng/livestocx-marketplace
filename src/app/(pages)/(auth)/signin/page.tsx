@@ -179,6 +179,7 @@ const SignInPage = () => {
 							className='flex items-center gap-x-4 h-12 justify-center w-full rounded-full py-4'
 						>
 							<Image
+								unoptimized={true}
 								alt='google icon'
 								src={'/icon_google.svg'}
 								width={30}

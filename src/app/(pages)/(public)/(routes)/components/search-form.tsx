@@ -219,6 +219,7 @@ const SearchForm = () => {
 					alt={''}
 					width={130}
 					height={60}
+					unoptimized={true}
 					className='object-cover'
 					src={'/icon__playstore__2.svg'}
 				/>

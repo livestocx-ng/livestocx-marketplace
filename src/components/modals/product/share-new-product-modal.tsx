@@ -38,6 +38,7 @@ const ShareNewProductModal = () => {
 					<div className='h-[200px] w-full relative'>
 						<Image
 							fill
+							unoptimized={true}
 							alt='product'
 							src={
 								payload?.media?.find(

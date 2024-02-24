@@ -55,6 +55,7 @@ const ProductMediaModal = () => {
 						fill
 						alt={'product'}
 						src={mediaUrl}
+						unoptimized={true}
 						className='object-cover h-full w-full'
 					/>
 

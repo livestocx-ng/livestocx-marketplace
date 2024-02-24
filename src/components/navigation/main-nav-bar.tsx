@@ -78,6 +78,7 @@ const MainNavbar = () => {
 						width={40}
 						height={40}
 						className=''
+						unoptimized={true}
 						src={'/logo.svg'}
 					/>
 				</Link>
@@ -349,6 +350,7 @@ const MainNavbar = () => {
 						alt='menu_icon'
 						width={30}
 						height={30}
+						unoptimized={true}
 						src={`${
 							!scrolling
 								? '/icon_menu.svg'
@@ -609,6 +611,7 @@ const MainNavbar = () => {
 							width={50}
 							height={50}
 							className=''
+							unoptimized={true}
 							src={'/logo.svg'}
 						/>
 					</Link>

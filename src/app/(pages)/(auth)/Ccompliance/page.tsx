@@ -376,6 +376,7 @@ const CompliancePage = () => {
 										<Image
 											alt=''
 											fill
+											unoptimized={true}
 											src={formData.avatarUrl}
 											className='object-fill h-full w-full absolute'
 										/>
@@ -448,6 +449,7 @@ const CompliancePage = () => {
 										<Image
 											alt=''
 											fill
+											unoptimized={true}
 											src={
 												formData.identificationDocumentUrl
 											}
@@ -549,6 +551,7 @@ const CompliancePage = () => {
 										<Image
 											alt=''
 											fill
+											unoptimized={true}
 											src={
 												formData.registrationDocumentUrl
 											}

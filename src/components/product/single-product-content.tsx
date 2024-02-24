@@ -90,6 +90,7 @@ const SingleProductContent = ({
 				<div className='w-full md:w-[55%] h-[350px] md:h-full relative mb-5 md:mb-0 rounded-none md:rounded-l-l'>
 					<Image
 						fill
+						unoptimized={true}
 						alt={'product'}
 						src={getMediaImageUrl(product)}
 						className='object-cover h-full w-full md:rounded-l-l border-0 md:border border-gray-600'
@@ -168,6 +169,7 @@ const SingleProductContent = ({
 							<Image
 								width={40}
 								height={40}
+								unoptimized={true}
 								alt={productInfo?.name!}
 								src={productInfo?.avatar ?? '/icon__user.svg'}
 								// src={'/icon__user.svg'}
@@ -316,6 +318,7 @@ const SingleProductContent = ({
 									<Image
 										fill
 										alt={'product'}
+										unoptimized={true}
 										src={media.mediaUrl}
 										onClick={() => {
 											if (!isProductMediaModalOpen) {
@@ -458,6 +461,7 @@ const ProductContactAlertDialog = ({
 							<Image
 								fill
 								alt=''
+								unoptimized={true}
 								src={productInfo?.avatar!}
 								className='object-cover w-full h-full'
 							/>

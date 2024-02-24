@@ -276,6 +276,7 @@ const ReviewCard = ({review}: {review: ProductInfoReview}) => {
 						// width={60}
 						// height={60}
 						fill
+						unoptimized={true}
 						src={review.user.avatar}
 						alt={review.user.firstName}
 						className='border rounded-full object-fill h-full w-full'

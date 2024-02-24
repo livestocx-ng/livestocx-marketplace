@@ -130,6 +130,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 				<Image
 					fill
 					alt='product'
+					unoptimized={true}
 					src={getMediaImageUrl(product!)}
 					className='object-cover rounded-t-md'
 				/>

@@ -54,6 +54,7 @@ export default function CookieBannerProvider() {
 								alt='cookie-logo'
 								width={50}
 								height={50}
+								unoptimized={true}
 								src={'/icon__cookies.svg'}
 								className='object-fill'
 							/>

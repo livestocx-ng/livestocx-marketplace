@@ -580,6 +580,7 @@ const ImageToolTip = ({imageUrl}: {imageUrl: string}) => {
 					<div className='h-[80px] w-[80px] relative'>
 						<Image
 							fill
+							unoptimized={true}
 							src={imageUrl}
 							// width={40}
 							// height={40}
@@ -592,6 +593,7 @@ const ImageToolTip = ({imageUrl}: {imageUrl: string}) => {
 					<div className='h-[200px] w-[200px] relative'>
 						<Image
 							fill
+							unoptimized={true}
 							src={imageUrl}
 							// width={40}
 							// height={40}

@@ -17,6 +17,7 @@ const SellerBanner = () => {
 					// height={160}
 					// src={'/vendor.jpg'}
 					src={vendor?.avatar!}
+					unoptimized={true}
 					className='h-full w-full object-cover'
 				/>
 			</div>

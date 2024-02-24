@@ -9,6 +9,7 @@ const MessagesContent = () => {
 					alt='logo'
 					width={150}
 					height={150}
+					unoptimized={true}
 					src={'/logo.svg'}
 					className='opacity-50'
 				/>

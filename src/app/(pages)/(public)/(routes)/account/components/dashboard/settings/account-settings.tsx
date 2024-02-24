@@ -224,6 +224,7 @@ const AccountSettings = () => {
 							// width={150}
 							// height={150}
 							fill
+							unoptimized={true}
 							// src={'/user__1.svg'}
 							className='object-cover rounded-full h-full w-full'
 							src={

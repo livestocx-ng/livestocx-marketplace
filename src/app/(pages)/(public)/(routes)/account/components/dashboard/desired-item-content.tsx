@@ -81,6 +81,7 @@ const DesiredItemContent = () => {
 						<Image
 							alt='product image'
 							fill
+							unoptimized={true}
 							src={product?.media[0]?.mediaUrl!}
 							className='object-fill h-full w-full'
 						/>
@@ -160,6 +161,7 @@ const DesiredItemContent = () => {
 									<Image
 										fill
 										alt={'product'}
+										unoptimized={true}
 										src={media.mediaUrl}
 										onClick={() => {
 											onModalOpen();
@@ -262,6 +264,7 @@ const ProductContactAlertDialog = ({
 							<Image
 								fill
 								alt=''
+								unoptimized={true}
 								src={productInfo?.avatar!}
 								className='object-fill w-full h-full'
 							/>

@@ -18,6 +18,7 @@ const SellerInfoCard = ({vendor}: {vendor: Vendor}) => {
 						width={40}
 						height={40}
 						className=''
+						unoptimized={true}
 						// src={vendor?.avatar}
 						src={'/logo.svg'}
 					/>
@@ -35,6 +36,7 @@ const SellerInfoCard = ({vendor}: {vendor: Vendor}) => {
 						fill
 						alt='image'
 						src={vendor?.avatar}
+						unoptimized={true}
 						// src={'/user__1.svg'}
 						className='object-fill h-full w-full absolute rounded-full'
 					/>

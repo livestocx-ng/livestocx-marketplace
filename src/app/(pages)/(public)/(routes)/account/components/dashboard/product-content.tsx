@@ -48,6 +48,7 @@ const ProductContent = ({}: ProductContentProps) => {
 						<Image
 							alt='product image'
 							fill
+							unoptimized={true}
 							src={product?.media[0]?.mediaUrl!}
 							className='object-fill h-full w-full'
 						/>
@@ -135,6 +136,7 @@ const ProductContent = ({}: ProductContentProps) => {
 									<Image
 										fill
 										alt={'product'}
+										unoptimized={true}
 										src={media.mediaUrl}
 										onClick={() => {
 											onModalOpen();

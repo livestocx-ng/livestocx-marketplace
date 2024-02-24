@@ -25,6 +25,7 @@ const AboutUsPage = () => {
 					<Image
 						alt=''
 						fill
+						unoptimized={true}
 						src={'/about__art__1.svg'}
 						className='object-fill h-full w-full absolute'
 					/>
@@ -44,6 +45,7 @@ const AboutUsPage = () => {
 						alt=''
 						width={40}
 						height={40}
+						unoptimized={true}
 						src={'/icon__wallet__1.svg'}
 					/>
 
@@ -59,6 +61,7 @@ const AboutUsPage = () => {
 					<Image
 						fill
 						alt=''
+						unoptimized={true}
 						src={'/about__art__2.svg'}
 						className='object-fill w-full h-full'
 					/>
@@ -88,6 +91,7 @@ const AboutUsPage = () => {
 									width={40}
 									height={40}
 									src={feature.icon}
+									unoptimized={true}
 									className='object-fill w-full h-full'
 								/>
 							</div>
@@ -112,6 +116,7 @@ const AboutUsPage = () => {
 					<Image
 						fill
 						alt=''
+						unoptimized={true}
 						src={'/about__art__3.svg'}
 						className='object-fill w-full h-full'
 					/>
@@ -178,6 +183,7 @@ const AboutUsPage = () => {
 									fill
 									alt={member.name}
 									src={member.image}
+									unoptimized={true}
 									className='object-cover h-full w-full absolute z-[5]'
 								/>
 								<div className='absolute top-5 -left-3 sm:w-[100%] h-[190px] bg-green-600' />
@@ -191,6 +197,7 @@ const AboutUsPage = () => {
 									fill
 									className='object-fill'
 									alt={member.linkedin}
+									unoptimized={true}
 									src={'/icon__linkedin__2.svg'}
 								/>
 							</Link>

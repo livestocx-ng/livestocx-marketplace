@@ -21,6 +21,7 @@ const IconLink = ({href, icon, width, height}: IconLinkProps) => {
 				src={icon}
 				width={width}
 				height={height}
+				unoptimized={true}
 				className='object-cover'
 			/>
 		</Link>
@@ -41,6 +42,7 @@ const Footer = () => {
 						width={60}
 						height={60}
 						className=''
+						unoptimized={true}
 						src={'/logo.svg'}
 					/>
 
@@ -113,6 +115,7 @@ const Footer = () => {
 								width={30}
 								height={30}
 								className='object-cover'
+								unoptimized={true}
 								src={'/icon__facebook.svg'}
 							/>
 						</Link>
@@ -121,6 +124,7 @@ const Footer = () => {
 								alt={''}
 								width={30}
 								height={30}
+								unoptimized={true}
 								className='object-cover'
 								src={'/icon__linkedin.svg'}
 							/>
@@ -130,6 +134,7 @@ const Footer = () => {
 								alt={''}
 								width={30}
 								height={30}
+								unoptimized={true}
 								className='object-cover'
 								src={'/icon__instagram.svg'}
 							/>
@@ -141,6 +146,7 @@ const Footer = () => {
 								alt={''}
 								width={120}
 								height={60}
+								unoptimized={true}
 								className='object-cover'
 								src={'/icon__appstore__2.svg'}
 							/>
@@ -156,6 +162,7 @@ const Footer = () => {
 								alt={''}
 								width={120}
 								height={60}
+								unoptimized={true}
 								className='object-cover'
 								src={'/icon__playstore__2.svg'}
 							/>

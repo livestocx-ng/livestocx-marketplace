@@ -27,6 +27,7 @@ export const columns: ColumnDef<WishListColumn>[] = [
 				<Image
 					width={80}
 					height={80}
+					unoptimized={true}
 					className='rounded-lg'
 					alt={row.original.product.name}
 					src={row.original.product.image}

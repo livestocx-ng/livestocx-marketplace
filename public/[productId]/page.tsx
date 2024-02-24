@@ -229,6 +229,7 @@ const ProductContactAlertDialog = ({
 							<Image
 								fill
 								alt=''
+								unoptimized={true}
 								src={productInfo?.avatar!}
 								className='object-fill w-full h-full'
 							/>

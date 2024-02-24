@@ -672,6 +672,7 @@ const CurrentImageToolTip = ({
 					<div className='h-[80px] w-[80px] relative'>
 						<Image
 							fill
+							unoptimized={true}
 							src={media.mediaUrl}
 							// width={40}
 							// height={40}
@@ -691,6 +692,7 @@ const CurrentImageToolTip = ({
 					<div className='h-[200px] w-[200px] relative'>
 						<Image
 							fill
+							unoptimized={true}
 							src={media.mediaUrl}
 							// width={40}
 							// height={40}
@@ -711,6 +713,7 @@ const ImageToolTip = ({image}: {image: string}) => {
 					<div className='h-[80px] w-[80px] relative'>
 						<Image
 							fill
+							unoptimized={true}
 							src={image}
 							// width={40}
 							// height={40}
@@ -724,6 +727,7 @@ const ImageToolTip = ({image}: {image: string}) => {
 						<Image
 							fill
 							src={image}
+							unoptimized={true}
 							// width={40}
 							// height={40}
 							alt={'Blob'}

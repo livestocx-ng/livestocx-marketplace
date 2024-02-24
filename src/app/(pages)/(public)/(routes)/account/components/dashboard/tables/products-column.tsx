@@ -46,6 +46,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
 							fill
 							// width={40}
 							// height={40}
+							unoptimized={true}
 							className='w-full h-full object-fill'
 							alt={row.original.name}
 							src={

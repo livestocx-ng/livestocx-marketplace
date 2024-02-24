@@ -109,7 +109,12 @@ const Footer = () => {
 
 				<div className='flex flex-col items-center justify-center space-y-5 mt-10'>
 					<div className='flex items-center space-x-10 sm:space-x-3'>
-						<Link href={'#'} className=''>
+						<Link
+							target='_blank'
+							href={
+								'https://www.facebook.com/profile.php?id=61550763699954'
+							}
+						>
 							<Image
 								alt={''}
 								width={30}
@@ -119,7 +124,13 @@ const Footer = () => {
 								src={'/icon__facebook.svg'}
 							/>
 						</Link>
-						<Link href={'#'} className=''>
+						<Link
+							className=''
+							target='_blank'
+							href={
+								'https://www.linkedin.com/company/livestocxltd/'
+							}
+						>
 							<Image
 								alt={''}
 								width={30}
@@ -129,7 +140,12 @@ const Footer = () => {
 								src={'/icon__linkedin.svg'}
 							/>
 						</Link>
-						<Link href={'#'} className=''>
+						<Link
+							target='_blank'
+							href={
+								'https://instagram.com/livestocx?igshid=MzNlNGNkZWQ4Mg=='
+							}
+						>
 							<Image
 								alt={''}
 								width={30}

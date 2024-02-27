@@ -8,7 +8,7 @@ const SellerBanner = () => {
 	const {vendor} = useGlobalStore();
 
 	return (
-		<div className='w-[100%] h-[220px] flex flex-col sm:flex-row items-start justify-between border border-gray-400'>
+		<div className='w-[100%] md:h-[220px] flex flex-col sm:flex-row items-start justify-between border border-gray-400'>
 			<div className='w-full h-full sm:w-[20%] relative flex flex-col items-center justify-center'>
 				<Image
 					alt='logo'
@@ -17,11 +17,12 @@ const SellerBanner = () => {
 					// height={160}
 					// src={'/vendor.jpg'}
 					src={vendor?.avatar!}
+					unoptimized={true}
 					className='h-full w-full object-cover'
 				/>
 			</div>
 
-			<div className='flex flex-col h-full space-y-5 w-[80%] px-10 border-t sm:border-l border-l-gray-400 py-6'>
+			<div className='flex flex-col h-full space-y-5 md:w-[80%] px-4 md:px-10 border-t sm:border-l border-l-gray-400 py-6'>
 				<h1 className='text-center text-xl font-semibold uppercase'>
 					{vendor?.name}
 				</h1>

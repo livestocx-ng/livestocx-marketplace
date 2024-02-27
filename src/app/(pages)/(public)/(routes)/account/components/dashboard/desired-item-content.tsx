@@ -19,7 +19,7 @@ import {Badge} from '@/components/ui/badge';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {useEffect} from 'react';
 import {DesiredItemInfo} from '@/types/types';
-import { Button } from '@/components/ui/button';
+import {Button} from '@/components/ui/button';
 
 const DesiredItemContent = () => {
 	const {
@@ -47,13 +47,13 @@ const DesiredItemContent = () => {
 				}
 			);
 
-			console.log('[DATA] ::  ', data.data);
+			// console.log('[DATA] ::  ', data.data);
 
 			updateDesiredProductInfo(data.data);
 		} catch (error) {
 			const _error = error as AxiosError;
 
-			console.log('[FETCH-DESIRED-PRODUCT-INFO-ERROR] :: ', _error);
+			// console.log('[FETCH-DESIRED-PRODUCT-INFO-ERROR] :: ', _error);
 		}
 	};
 
@@ -81,6 +81,7 @@ const DesiredItemContent = () => {
 						<Image
 							alt='product image'
 							fill
+							unoptimized={true}
 							src={product?.media[0]?.mediaUrl!}
 							className='object-fill h-full w-full'
 						/>
@@ -127,7 +128,7 @@ const DesiredItemContent = () => {
 							type='button'
 							variant={'outline'}
 							onClick={() => {
-								console.log(desiredProductInfo)
+								// console.log(desiredProductInfo)
 								const chatLink = `https://wa.me/+234${desiredProductInfo?.phoneNumber}`;
 
 								window.open(chatLink, '_blank');
@@ -160,6 +161,7 @@ const DesiredItemContent = () => {
 									<Image
 										fill
 										alt={'product'}
+										unoptimized={true}
 										src={media.mediaUrl}
 										onClick={() => {
 											onModalOpen();
@@ -262,6 +264,7 @@ const ProductContactAlertDialog = ({
 							<Image
 								fill
 								alt=''
+								unoptimized={true}
 								src={productInfo?.avatar!}
 								className='object-fill w-full h-full'
 							/>

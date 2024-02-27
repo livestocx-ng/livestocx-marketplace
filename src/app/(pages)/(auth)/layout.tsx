@@ -25,9 +25,9 @@ const PagesLayout = ({children}: AuthPagesLayoutProps) => {
 		if (user && user?.isProfileUpdated && user?.isVendorProfileUpdated) {
 			router.push('/');
 		}
-		if (user && user?.isProfileUpdated && !user?.isVendorProfileUpdated) {
-			router.push('/compliance');
-		}
+		// if (user && user?.isProfileUpdated && !user?.isVendorProfileUpdated) {
+		// 	router.push('/compliance');
+		// }
 	}, [user]);
 
 	return (

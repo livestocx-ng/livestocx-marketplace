@@ -25,6 +25,7 @@ const AboutUsPage = () => {
 					<Image
 						alt=''
 						fill
+						unoptimized={true}
 						src={'/about__art__1.svg'}
 						className='object-fill h-full w-full absolute'
 					/>
@@ -44,6 +45,7 @@ const AboutUsPage = () => {
 						alt=''
 						width={40}
 						height={40}
+						unoptimized={true}
 						src={'/icon__wallet__1.svg'}
 					/>
 
@@ -59,6 +61,7 @@ const AboutUsPage = () => {
 					<Image
 						fill
 						alt=''
+						unoptimized={true}
 						src={'/about__art__2.svg'}
 						className='object-fill w-full h-full'
 					/>
@@ -88,6 +91,7 @@ const AboutUsPage = () => {
 									width={40}
 									height={40}
 									src={feature.icon}
+									unoptimized={true}
 									className='object-fill w-full h-full'
 								/>
 							</div>
@@ -112,6 +116,7 @@ const AboutUsPage = () => {
 					<Image
 						fill
 						alt=''
+						unoptimized={true}
 						src={'/about__art__3.svg'}
 						className='object-fill w-full h-full'
 					/>
@@ -162,27 +167,43 @@ const AboutUsPage = () => {
 
 			<div className='w-full py-5 text-center'>
 				<h1 className='text-2xl font-semibold text-mai'>
-					MEET OUR FOUNDERS
+					MEET OUR TEAM
 				</h1>
 			</div>
 
-			<div className='space-y-20 md:space-y-0 px-8 py-10 pb-20 w-full flex flex-col md:flex-row justify-between items-start'>
+			<div className='space-y-20 md:space-y-0 px-8 py-10 pb-20 w-full flex flex-col md:flex-row md:flex-wrap md:gap-y-10 justify-between items-start'>
 				{TeamMembers.map((member) => (
 					<div
 						key={member.id}
 						className='flex flex-col md:flex-row md:space-x-5 items-start w-full md:w-[45%]'
 					>
-						<div className='w-full sm:w-[30%] h-[280px] md:h-[200px] relative mb-10 sm:mb-0'>
-							<Image
-								fill
-								alt={member.name}
-								src={member.image}
-								className='object-cover h-full w-full absolute z-[5]'
-							/>
-							<div className='absolute top-5 -left-3 sm:w-[100%] h-[190px] bg-green-600' />
+						<div className='flex flex-col justify-between w-full sm:w-[30%] h-[300px] md:h-[280px]'>
+							<div className='relative w-full h-[280px] md:h-[200px] mb-10 sm:mb-0'>
+								<Image
+									fill
+									alt={member.name}
+									src={member.image}
+									unoptimized={true}
+									className='object-cover h-full w-full absolute z-[5]'
+								/>
+								<div className='absolute top-5 -left-3 sm:w-[100%] h-[190px] bg-green-600' />
+							</div>
+							<Link
+								target='_blank'
+								href={member.linkedin}
+								className='bg-main h-[30px] w-[30px] relative rounded p-3'
+							>
+								<Image
+									fill
+									className='object-fill'
+									alt={member.linkedin}
+									unoptimized={true}
+									src={'/icon__linkedin__2.svg'}
+								/>
+							</Link>
 						</div>
 
-						<div className='lspace-y-5 w-full md:w-[70%] t-10 sm:mt-0'>
+						<div className='lspace-y-5 w-full md:w-[70%] t-10 mt-5 md:mt-0'>
 							<h1 className='text-main font-bold text-xl'>
 								{member.name}
 							</h1>
@@ -191,48 +212,42 @@ const AboutUsPage = () => {
 							</p>
 
 							<div className='flex items-center space-x-5 mt-5 sm:mt-0'>
-								<Link
+								{/* <Link
 									target='_blank'
 									href={member.facebook}
 									className='bg-main h-[30px] w-[30px] relative rounded p-3'
 								>
 									<Image
-										// width={30}
-										// height={30}
 										fill
 										className='object-fill'
 										alt={member.facebook}
 										src={'/icon__facebook__2.svg'}
 									/>
-								</Link>
-								<Link
+								</Link> */}
+								{/* <Link
 									target='_blank'
 									href={member.linkedin}
 									className='bg-main h-[30px] w-[30px] relative rounded p-3'
 								>
 									<Image
-										// width={30}
-										// height={30}
 										fill
 										className='object-fill'
 										alt={member.linkedin}
 										src={'/icon__linkedin__2.svg'}
 									/>
-								</Link>
-								<Link
+								</Link> */}
+								{/* <Link
 									target='_blank'
 									href={member.twitter}
 									className='bg-main h-[30px] w-[30px] relative rounded p-3'
 								>
 									<Image
-										// width={30}
-										// height={30}
 										fill
 										className='object-fill'
 										alt={member.twitter}
 										src={'/icon__twitter.svg'}
 									/>
-								</Link>
+								</Link> */}
 							</div>
 						</div>
 					</div>

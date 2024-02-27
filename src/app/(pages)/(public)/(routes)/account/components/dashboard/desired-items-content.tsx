@@ -20,15 +20,15 @@ const DesiredItemsContent = () => {
 				}
 			);
 
-			console.log('[DATA] ::  ', data.data);
-			// console.log('[DATA] ::  ', data);
+			// console.log('[DATA] ::  ', data.data);
+			// // console.log('[DATA] ::  ', data);
 
 			updateDesiredProducts(data.data.products);
 			updatePagination(data.data.totalPages, data.data.hasNext);
 		} catch (error) {
 			const _error = error as AxiosError;
 
-			console.log('[FETCH-PRODUCT-ERROR] :: ', _error);
+			// console.log('[FETCH-PRODUCT-ERROR] :: ', _error);
 		}
 	};
 
@@ -44,6 +44,7 @@ const DesiredItemsContent = () => {
 						alt='logo'
 						width={150}
 						height={150}
+						unoptimized={true}
 						src={'/logo.svg'}
 						className='opacity-50'
 					/>

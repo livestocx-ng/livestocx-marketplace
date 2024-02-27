@@ -61,6 +61,7 @@ export interface Product {
 	discountPrice: number;
 	category: string;
 	description: string;
+	inStock: boolean;
 	isNegotiable: boolean;
 	totalReviews: number;
 	viewCount: number;

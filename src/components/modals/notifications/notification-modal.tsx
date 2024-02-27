@@ -17,7 +17,7 @@ const NotificationModal = () => {
 
 	const handleReadNotification = async () => {
 		if (payload?.isRead === true) return;
-        
+
 		try {
 			const {data} = await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/notifications/read?notificationId=${payload?.id}`,
@@ -28,12 +28,12 @@ const NotificationModal = () => {
 				}
 			);
 
-			console.log(data);
+			// console.log(data);
 			updateNotification(payload?.id!, data.data);
 		} catch (error) {
 			const _error = error as AxiosError;
 
-			console.log('[READ-NOTIFICATION-ERROR]', _error);
+			// console.log('[READ-NOTIFICATION-ERROR]', _error);
 
 			toast.error('Error');
 		}
@@ -45,7 +45,7 @@ const NotificationModal = () => {
 
 	return (
 		<div className='fixed h-screen flex flex-col items-center justify-center w-full bg-[#11111190] backdrop-blur-sm z-[15]'>
-			<div className='flex flex-col w-[40%] bg-white py-2 px-4 rounded overflow-y-auto scrollbar__1'>
+			<div className='flex flex-col w-[90%] md:w-[40%] bg-white py-2 px-4 rounded overflow-y-auto scrollbar__1'>
 				<div className='flex items-center justify-between px4'>
 					<h1 className='font-semibold'>{payload?.title}</h1>
 

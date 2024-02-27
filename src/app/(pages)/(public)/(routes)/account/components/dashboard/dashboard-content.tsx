@@ -1,10 +1,20 @@
-import {useState} from 'react';
+import {
+	TwitterIcon,
+	WhatsappIcon,
+	FacebookIcon,
+	TwitterShareButton,
+	FacebookShareButton,
+	WhatsappShareButton,
+} from 'react-share';
 import Image from 'next/image';
+import {Copy} from 'lucide-react';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
+import {useEffect, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {DataTable} from '@/components/ui/data-table';
 import {useGlobalStore} from '@/hooks/use-global-store';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 import ButtonLoader from '@/components/loader/button-loader';
 import {RecentOrderColumn, columns} from './tables/recent-orders-columns';
 
@@ -59,16 +69,42 @@ interface DashboardContentProps {
 }
 
 const DashboardContent = ({}: DashboardContentProps) => {
-	const {user, updateUser, updateCurrentAccountTab} = useGlobalStore();
+	const {user, vendor, updateUser, updateVendor, updateCurrentAccountTab} =
+		useGlobalStore();
 
 	const [loading, setLoading] = useState<boolean>(false);
+
+	const fetchVendorProfile = async () => {
+		try {
+			const {data} = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/vendor/profile`,
+				{
+					headers: {
+						Authorization: user?.accessToken,
+					},
+				}
+			);
+
+			// console.log('[DATA] ::  ', data);
+
+			updateVendor(data.data);
+		} catch (error) {
+			const _error = error as AxiosError;
+
+			// console.log('[FETCH-VENDOR-PROFILE-ERROR] :: ', _error);
+		}
+	};
+
+	useEffect(() => {
+		fetchVendorProfile();
+	}, []);
 
 	const handleUpdateUserRole = async (role: string) => {
 		try {
 			setLoading(true);
 
-			console.log('[UPDATE-USER-ROLE-PAYLOAD] :: ', user);
-			console.log('[UPDATE-USER-ROLE-PAYLOAD] :: ', role);
+			// console.log('[UPDATE-USER-ROLE-PAYLOAD] :: ', user);
+			// console.log('[UPDATE-USER-ROLE-PAYLOAD] :: ', role);
 
 			const {data} = await axios.patch(
 				`${process.env.NEXT_PUBLIC_API_URL}/auth/update-user-role`,
@@ -87,7 +123,7 @@ const DashboardContent = ({}: DashboardContentProps) => {
 
 			setLoading(false);
 
-			// console.log('[USER-ROLE] :: ', cookieUpdate.data);
+			// // console.log('[USER-ROLE] :: ', cookieUpdate.data);
 			await updateUser(cookieUpdate.data);
 
 			toast.success('User role updated!');
@@ -96,7 +132,7 @@ const DashboardContent = ({}: DashboardContentProps) => {
 
 			const _error = error as AxiosError;
 
-			console.log('[UPDATE-USER-ROLE-ERROR]', _error);
+			// console.log('[UPDATE-USER-ROLE-ERROR]', _error);
 
 			toast.error('Error');
 		}
@@ -113,6 +149,7 @@ const DashboardContent = ({}: DashboardContentProps) => {
 								// width={150}
 								// height={150}
 								fill
+								unoptimized={true}
 								// src={'/user__1.svg'}
 								className='object-cover rounded-full h-full w-full'
 								src={user?.avatar ?? '/user__1.svg'}
@@ -123,16 +160,52 @@ const DashboardContent = ({}: DashboardContentProps) => {
 							{user?.lastName} {user?.firstName}
 						</h1>
 						<p className='text-sm capitalize text-red-600 underline'>
-							{user?.role}
+							{user?.role === 'CUSTOMER' ? 'CUSTOMER' : 'SELLER'}
 						</p>
 					</div>
 
-					<p
-						onClick={() => updateCurrentAccountTab('Settings')}
-						className='text-main text-sm font-semibold cursor-pointer'
-					>
-						Edit Profile
-					</p>
+					{user?.role === 'FARMER' && (
+						<div className='flex items-center space-x-4'>
+							<p
+								// onClick={() => updateCurrentAccountTab('Settings')}
+								className='text-sm'
+							>
+								Share Profile:
+							</p>
+
+							<div className='flex space-x-2'>
+								<WhatsappShareButton
+									url={`https://livestocx.com/sellers/${vendor?.vendorId?.toLowerCase()}`}
+									title='Check out my seller profile on Livestocx: '
+								>
+									<WhatsappIcon size={25} round />
+								</WhatsappShareButton>
+								<FacebookShareButton
+									url={`https://livestocx.com/sellers/${vendor?.vendorId?.toLowerCase()}`}
+									title='Check out my seller profile on Livestocx: '
+								>
+									<FacebookIcon size={25} round />
+								</FacebookShareButton>
+								<TwitterShareButton
+									url={`https://livestocx.com/sellers/${vendor?.vendorId?.toLowerCase()}`}
+									title='Check out my seller profile on Livestocx: '
+								>
+									<TwitterIcon size={25} round />
+								</TwitterShareButton>
+
+								<CopyToClipboard
+									onCopy={(text: string, result: boolean) => {
+										toast.success('Copied to clipboard');
+									}}
+									text={`https://livestocx.com/sellers/${vendor?.vendorId?.toLowerCase()}`}
+								>
+									<div className='rounded-full border border-slate-400 h-7 w-7 flex items-center justify-center cursor-pointer'>
+										<Copy className='h-4 w-4' />
+									</div>
+								</CopyToClipboard>
+							</div>
+						</div>
+					)}
 				</div>
 				<div className='flex flex-col items-start justify-between h-[350px] w-full md:w-[45%]'>
 					<div className='p-5 flex flex-col items-start w-full h-[300px] justify-between border rounded-lg'>
@@ -149,7 +222,10 @@ const DashboardContent = ({}: DashboardContentProps) => {
 									<span className='font-medium'>Email: </span>
 									{user?.email}
 								</h1>
-								<h1 className='text-sm'><span className="font-medium">Phone: </span>{user?.phoneNumber}</h1>
+								<h1 className='text-sm'>
+									<span className='font-medium'>Phone: </span>
+									{user?.phoneNumber}
+								</h1>
 							</div>
 						</div>
 						<p
@@ -172,17 +248,19 @@ const DashboardContent = ({}: DashboardContentProps) => {
 							type='button'
 							onClick={() => {
 								if (user?.role === 'FARMER') {
-									return handleUpdateUserRole('CUSTOMER');
+									return;
+									// return handleUpdateUserRole('CUSTOMER');
 								}
+
 								if (user?.role === 'CUSTOMER') {
 									return handleUpdateUserRole('FARMER');
 								}
 							}}
 							className='bg-main text-white text-xs hover:bg-main hover:text-white w-full px-3 rounded-lg'
 						>
-							{user?.role === 'FARMER'
-								? 'Become a Customer'
-								: 'Become a Seller'}
+							{user?.role === 'CUSTOMER'
+								? 'Become a Seller'
+								: 'Seller'}
 						</Button>
 					)}
 				</div>

@@ -17,7 +17,7 @@ import {cn} from '@/lib/utils';
 import Image from 'next/image';
 import {Tab} from '@/types/types';
 import {toast} from 'react-hot-toast';
-import { signOut } from 'next-auth/react';
+import {signOut} from 'next-auth/react';
 import {redirect, useRouter} from 'next/navigation';
 import {useGlobalStore} from '@/hooks/use-global-store';
 
@@ -52,7 +52,7 @@ const AccountSideBar = ({}: AccountSideBarProps) => {
 			updateCurrentAccountTab(tab);
 		} else {
 			try {
-				await signOut();
+				// await signOut();
 
 				await axios.get('/api/auth/signout');
 
@@ -64,12 +64,13 @@ const AccountSideBar = ({}: AccountSideBarProps) => {
 
 				// window.location.reload();
 			} catch (error) {
-				console.log('[LOGOUT-ERROR] :: ', error);
+				// console.log('[LOGOUT-ERROR] :: ', error);
+				toast.error('Error!');
 			}
 		}
 	};
 
-	console.log(user?.role);
+	// console.log(user?.role);
 
 	return (
 		<div className='hidden w-[20%] md:flex flex-col pt-3 border rounded'>

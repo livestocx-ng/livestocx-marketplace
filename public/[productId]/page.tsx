@@ -23,13 +23,13 @@ import {useGlobalStore} from '@/hooks/use-global-store';
 import AuthHeader from '@/components/header/auth-header';
 import {useProductMediaModalStore} from '@/hooks/use-global-store';
 import {FlagTriangleRight, ThumbsDown, ThumbsUp} from 'lucide-react';
-import ProductCard from '../../../../../components/cards/product-card';
-import SellerInfoTab from '../../../../../components/product-info/seller-info-tab';
-import EmptyAnimation from '../../../../../../public/animations/animation__2.json';
-import ProductMediaModal from '../../../../../components/modals/product-media-modal';
-import ProductReviewTab from '../../../../../components/product-info/product-review-tab';
-import MoreFromSellerTab from '../../../../../components/product-info/more-from-seller-tab';
-import LoadingAnimation from '../../../../../../public/animations/loading__animation__1.json';
+import ProductCard from '../../src/components/cards/product-card';
+import SellerInfoTab from '../../src/components/product-info/seller-info-tab';
+import EmptyAnimation from '../animations/animation__2.json';
+import ProductMediaModal from '../../src/components/modals/product/product-media-modal';
+import ProductReviewTab from '../../src/components/product-info/product-review-tab';
+import MoreFromSellerTab from '../../src/components/product-info/more-from-seller-tab';
+import LoadingAnimation from '../animations/loading__animation__1.json';
 import SingleProductContent from '@/components/product/single-product-content';
 
 interface ProductPageParams {
@@ -76,15 +76,15 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 				),
 			]);
 
-			// console.log('[DATA] ::  ', _product.data.data);
-			// console.log('[DATA] ::  ', _productInfo.data.data);
+			// // console.log('[DATA] ::  ', _product.data.data);
+			// // console.log('[DATA] ::  ', _productInfo.data.data);
 
 			updatePayload(_product.data.data);
 			updateProductInfo(_productInfo.data.data);
 		} catch (error) {
 			const _error = error as AxiosError;
 
-			console.log('[FETCH-PRODUCT-ERROR] :: ', _error);
+			// console.log('[FETCH-PRODUCT-ERROR] :: ', _error);
 		}
 	};
 
@@ -96,7 +96,7 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 		try {
 			setLoading(true);
 
-			console.log('[LIKE-UNLIKE-PRODUCT-PAYLOAD] :: ', formData);
+			// // console.log('[LIKE-UNLIKE-PRODUCT-PAYLOAD] :: ', formData);
 
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/like-unlike-product?productId=${product?.productId}`,
@@ -108,7 +108,7 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 				}
 			);
 
-			console.log('[LIKE-UNLIKE-PRODUCT-SUCCESS] :: ', data);
+			// // console.log('[LIKE-UNLIKE-PRODUCT-SUCCESS] :: ', data);
 
 			setLoading(false);
 
@@ -117,7 +117,7 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 			setLoading(false);
 			const _error = error as AxiosError;
 
-			console.log('[ERROR] :: ', _error);
+			// console.log('[ERROR] :: ', _error);
 		}
 	};
 
@@ -129,7 +129,7 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 
 			// setLoading(true);
 
-			console.log('[ADD-DESIRED-PRODUCT] :: ');
+			// // console.log('[ADD-DESIRED-PRODUCT] :: ');
 
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-desired-product?productId=${product?.productId}`,
@@ -141,7 +141,7 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 				}
 			);
 
-			console.log('[ADD-DESIRED-PRODUCT-SUCCESS] :: ', data);
+			// // console.log('[ADD-DESIRED-PRODUCT-SUCCESS] :: ', data);
 
 			// setLoading(false);
 
@@ -154,7 +154,7 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 			// setLoading(false);
 			const _error = error as AxiosError;
 
-			console.log('[ERROR] :: ', _error);
+			// console.log('[ERROR] :: ', _error);
 		}
 	};
 
@@ -162,7 +162,13 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 		<main className='w-full relative'>
 			{isProductMediaModalOpen && <ProductMediaModal />}
 
-			<AuthHeader classes='md:h-[35vh]' />
+			<section className='sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 pb-20 sm:pb-0 md:pt-0'>
+				<h1 className='text-xl md:text-5xl font-medium text-white'>
+					{product?.name}
+				</h1>
+
+				{/* <SearchForm /> */}
+			</section>
 
 			{loading && (
 				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
@@ -223,6 +229,7 @@ const ProductContactAlertDialog = ({
 							<Image
 								fill
 								alt=''
+								unoptimized={true}
 								src={productInfo?.avatar!}
 								className='object-fill w-full h-full'
 							/>

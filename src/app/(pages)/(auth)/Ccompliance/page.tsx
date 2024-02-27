@@ -1,18 +1,19 @@
 'use client';
 import axios from 'axios';
+import Link from 'next/link';
 import Image from 'next/image';
-import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {toast} from 'react-hot-toast';
 import {FileImage} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
-import {NigeriaCities, NigeriaStates} from '@/data';
+import {NigerianCities, NigerianStates} from '@/data';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import ButtonLoader from '@/components/loader/button-loader';
+import {isFileSizeValid} from '@/utils/media/file.validation';
 import FormTextInput from '@/components/input/form-text-input';
 import React, {useEffect, useReducer, useRef, useState} from 'react';
+import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {ValidateComplianceFormData} from '@/utils/form-validations/compliance.validation';
-import Link from 'next/link';
 
 type FormData = {
 	name: string;
@@ -28,6 +29,10 @@ type FormData = {
 	email: string;
 	phoneNumber: string;
 	socials?: string;
+	facebookUrl?: string;
+	instagramUrl?: string;
+	twitterUrl?: string;
+	websiteUrl?: string;
 	media: [] | null;
 	isUpdated: boolean;
 };
@@ -50,6 +55,10 @@ const initialState: FormData = {
 	registrationDocumentUrl: '',
 	email: '',
 	socials: '',
+	facebookUrl: '',
+	instagramUrl: '',
+	twitterUrl: '',
+	websiteUrl: '',
 	media: null,
 	phoneNumber: '',
 	isUpdated: false,
@@ -110,7 +119,7 @@ const CompliancePage = () => {
 				return toast.error(validationError, {duration: 10000});
 			}
 
-			console.log('[COMPLIANCE-PAYLOAD] :: ', formData);
+			// console.log('[COMPLIANCE-PAYLOAD] :: ', formData);
 
 			const {data} = await axios.patch(
 				`${process.env.NEXT_PUBLIC_API_URL}/vendor/update-compliance`,
@@ -123,7 +132,7 @@ const CompliancePage = () => {
 				}
 			);
 
-			console.log('[DATA] :: ', data.data);
+			// console.log('[DATA] :: ', data.data);
 
 			const cookieUpdate = await axios.patch('/api/auth/update-cookies', {
 				...user,
@@ -139,7 +148,7 @@ const CompliancePage = () => {
 		} catch (error) {
 			setLoading(false);
 
-			console.error('[COMPLIANCE-ERROR]', error);
+			// console.error('[COMPLIANCE-ERROR]', error);
 
 			toast.error('An error occured');
 		}
@@ -147,18 +156,18 @@ const CompliancePage = () => {
 
 	return (
 		<div className='w-full'>
-			<section className='h-[50vh] md:h-[50vh] w-full bg-home flex flex-col items-center justify-center pt-28 md:pt-0'>
+			<section className='h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
 				<h1 className='text-xl md:text-5xl font-medium text-white'>
-					Compliance
+					KYC Verification
 				</h1>
 			</section>
 
 			<div className='space-y-3 mx-auto text-center py-10 px-4 md:px-8'>
-				<h1 className='text-sm md:text-xl font-medium'>
+				<h1 className='text-sm font-medium'>
 					In order to prevent fraud on our platform, we try to
 					identify the identity of our users.
 				</h1>
-				<h1 className='text-sm md:text-xl font-medium'>
+				<h1 className='text-sm font-medium'>
 					Please fill out the form to complete your registration.
 				</h1>
 			</div>
@@ -173,10 +182,10 @@ const CompliancePage = () => {
 						KYC Verification
 					</h1>
 
-					<div className='w-full flex justify-between items-center flex-wrap'>
+					<div className='w-full flex justify-between items-center flex-wrap space-y-5 sm:space-y-0'>
 						<div className='w-full md:w-[48%]'>
 							<p className='text-sm font-medium'>
-								Brand Name{' '}
+								Business Name{' '}
 								<span className='text-red-500'>*</span>
 							</p>
 							<FormTextInput
@@ -185,13 +194,14 @@ const CompliancePage = () => {
 								disabled={loading}
 								value={formData.name}
 								handleChange={handleChange}
-								placeHolder='Name'
+								placeHolder='Business Name'
 								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 							/>
 						</div>
 						<div className='w-full md:w-[48%]'>
 							<p className='text-sm font-medium'>
-								Email <span className='text-red-500'>*</span>
+								Business Email{' '}
+								<span className='text-red-500'>*</span>
 							</p>
 							<FormTextInput
 								name='email'
@@ -199,13 +209,28 @@ const CompliancePage = () => {
 								disabled={loading}
 								value={formData.email}
 								handleChange={handleChange}
-								placeHolder='Email'
+								placeHolder='Business Email'
 								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 							/>
 						</div>
 					</div>
 
-					<div className='w-full flex justify-between items-center flex-wrap'>
+					<div className='w-full flex justify-between items-center flex-wrap space-y-5 sm:space-y-0'>
+						<div className='w-full md:w-[48%]'>
+							<p className='text-sm font-medium'>
+								Business Address{' '}
+								<span className='text-red-500'>*</span>
+							</p>
+							<FormTextInput
+								name='address'
+								padding='py-3 px-4'
+								disabled={loading}
+								placeHolder='Business Address'
+								value={formData.address}
+								handleChange={handleChange}
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
+						</div>
 						<div className='w-full md:w-[48%]'>
 							<p className='text-sm font-medium'>
 								State <span className='text-red-500'>*</span>
@@ -215,8 +240,7 @@ const CompliancePage = () => {
 								className='w-full border py-3 rounded px-3 text-sm scrollbar__1'
 								onChange={handleSelectChange}
 							>
-								{/* <option value=''>{NigeriaStates[0]}</option> */}
-								{NigeriaStates.map((option) => (
+								{NigerianStates.map((option) => (
 									<option
 										key={option}
 										value={option}
@@ -227,6 +251,9 @@ const CompliancePage = () => {
 								))}
 							</select>
 						</div>
+					</div>
+
+					<div className='w-full flex justify-between items-center flex-wrap space-y-5 sm:space-y-0'>
 						<div className='w-full md:w-[48%]'>
 							<p className='text-sm font-medium'>
 								City <span className='text-red-500'>*</span>
@@ -236,67 +263,99 @@ const CompliancePage = () => {
 								className='w-full border py-3 rounded px-3 text-sm scrollbar__1'
 								onChange={handleSelectChange}
 							>
-								{/* <option value=''>
-									{NigeriaCities[formData.state ?? 'Abia'][0]}
-								</option> */}
-								{NigeriaCities[formData.state].map((option) => (
-									<option
-										key={option}
-										value={option}
-										className='cursor-pointer'
-									>
-										{option}
-									</option>
-								))}
+								<option value=''>City</option>
+								{NigerianCities[formData.state].map(
+									(option) => (
+										<option
+											key={option}
+											value={option}
+											className='cursor-pointer'
+										>
+											{option}
+										</option>
+									)
+								)}
 							</select>
+						</div>
+
+						<div className='w-full md:w-[48%]'>
+							<p className='text-sm font-medium'>
+								Business Phone Number{' '}
+								<span className='text-red-500'>*</span>
+							</p>
+							<FormTextInput
+								type='text'
+								name='phoneNumber'
+								padding='py-3 px-4'
+								disabled={loading}
+								placeHolder='Business Phone Number'
+								value={formData.phoneNumber}
+								handleChange={handleChange}
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
 						</div>
 					</div>
 
-					<div className='w-full'>
-						<p className='text-sm font-medium'>
-							Phone Contact{' '}
-							<span className='text-red-500'>*</span>
-						</p>
-						<FormTextInput
-							type='text'
-							name='phoneNumber'
-							padding='py-3 px-4'
-							disabled={loading}
-							placeHolder='Phone Number'
-							value={formData.phoneNumber}
-							handleChange={handleChange}
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-						/>
+					<div className='w-full flex justify-between items-center flex-wrap space-y-5 sm:space-y-0'>
+						<div className='w-full md:w-[48%]'>
+							<p className='text-sm font-medium'>
+								Business Facebook Handle
+							</p>
+							<FormTextInput
+								name='facebookUrl'
+								padding='py-3 px-4'
+								disabled={loading}
+								placeHolder='https://web.facebook.com/wazofarm'
+								value={formData?.facebookUrl!}
+								handleChange={handleChange}
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
+						</div>
+						<div className='w-full md:w-[48%]'>
+							<p className='text-sm font-medium'>
+								Business Instagram Handle
+							</p>
+							<FormTextInput
+								name='instagramUrl'
+								padding='py-3 px-4'
+								disabled={loading}
+								placeHolder='https://instagram/wazofarm'
+								value={formData?.instagramUrl!}
+								handleChange={handleChange}
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
+						</div>
 					</div>
 
-					<div className='w-full'>
-						<p className='text-sm font-medium'>
-							Address <span className='text-red-500'>*</span>
-						</p>
-						<FormTextInput
-							name='address'
-							padding='py-3 px-4'
-							disabled={loading}
-							placeHolder='Address'
-							value={formData.address}
-							handleChange={handleChange}
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-						/>
-					</div>
-
-					<div className='w-full'>
-						<p className='text-sm font-medium'>
-							Website / Social Media Links
-						</p>
-						<FormTextInput
-							name='socials'
-							padding='py-3 px-4'
-							disabled={loading}
-							value={formData?.socials!}
-							handleChange={handleChange}
-							placeHolder='website, facebook, instagram'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-						/>
+					<div className='w-full flex justify-between items-center flex-wrap space-y-5 sm:space-y-0'>
+						<div className='w-full md:w-[48%]'>
+							<p className='text-sm font-medium'>
+								Business Twitter Handle
+							</p>
+							<FormTextInput
+								name='twitterUrl'
+								padding='py-3 px-4'
+								disabled={loading}
+								placeHolder='https://twitter.com/wazofarm'
+								value={formData?.twitterUrl!}
+								handleChange={handleChange}
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
+						</div>
+						<div className='w-full md:w-[48%]'>
+							<p className='text-sm font-medium'>
+								Business Website Url
+							</p>
+							<FormTextInput
+								name='websiteUrl'
+								padding='py-3 px-4'
+								disabled={loading}
+								placeHolder='www.wazofarm.com'
+								value={formData?.websiteUrl!}
+								handleChange={handleChange}
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
+						</div>
 					</div>
 
 					<div className='w-full flex items-center md:space-x-5'>
@@ -304,8 +363,8 @@ const CompliancePage = () => {
 							<div className='flex items-start justify-between lg:justify-start lg:space-x-5 w-full lg:w-fit'>
 								<div className='flex flex-col w-[180px]'>
 									<h1 className='text-sm font-medium'>
-										Brand Logo{' '}
-										<span className='text-red-500'>*</span>
+										Business Logo{' '}
+										{/* <span className='text-red-500'>*</span> */}
 									</h1>
 									<p className='text-xs text-slate-400'>
 										Image.
@@ -317,6 +376,7 @@ const CompliancePage = () => {
 										<Image
 											alt=''
 											fill
+											unoptimized={true}
 											src={formData.avatarUrl}
 											className='object-fill h-full w-full absolute'
 										/>
@@ -337,6 +397,15 @@ const CompliancePage = () => {
 									onChange={(
 										event: React.ChangeEvent<HTMLInputElement>
 									) => {
+										if (
+											!isFileSizeValid(
+												event.target.files![0]
+											)
+										)
+											return toast.error(
+												'File size must be below 500kb'
+											);
+
 										updateFormData({
 											type: 'UPDATE_FORMDATA',
 											payload: {
@@ -380,6 +449,7 @@ const CompliancePage = () => {
 										<Image
 											alt=''
 											fill
+											unoptimized={true}
 											src={
 												formData.identificationDocumentUrl
 											}
@@ -407,6 +477,15 @@ const CompliancePage = () => {
 									onChange={(
 										event: React.ChangeEvent<HTMLInputElement>
 									) => {
+										if (
+											!isFileSizeValid(
+												event.target.files![0]
+											)
+										)
+											return toast.error(
+												'File size must be below 500kb'
+											);
+
 										updateFormData({
 											type: 'UPDATE_FORMDATA',
 											payload: {
@@ -472,6 +551,7 @@ const CompliancePage = () => {
 										<Image
 											alt=''
 											fill
+											unoptimized={true}
 											src={
 												formData.registrationDocumentUrl
 											}
@@ -499,6 +579,15 @@ const CompliancePage = () => {
 									onChange={(
 										event: React.ChangeEvent<HTMLInputElement>
 									) => {
+										if (
+											!isFileSizeValid(
+												event.target.files![0]
+											)
+										)
+											return toast.error(
+												'File size must be below 500kb'
+											);
+
 										updateFormData({
 											type: 'UPDATE_FORMDATA',
 											payload: {

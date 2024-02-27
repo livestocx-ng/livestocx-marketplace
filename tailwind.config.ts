@@ -71,9 +71,6 @@ module.exports = {
 					to: {height: 0},
 				},
 			},
-			transitionDuration: {
-				'3000': '3000ms',
-			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',

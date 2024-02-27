@@ -31,7 +31,7 @@ const PaginationButton = ({
 	// }, [data, indexOfFirstItem, indexOfLastItem])
 
 	const handleClick = (e: MouseEvent<HTMLLIElement>) => {
-		// console.log('::current page ', Number(e.target.id))
+		// // console.log('::current page ', Number(e.target.id))
 		setCurrentPage(Number(e.currentTarget.id));
 		// setCurrentPageFetch(Number(e.currentTarget.id) - 1);
 		setCurrentPageFetch(Number(e.currentTarget.id));
@@ -39,7 +39,7 @@ const PaginationButton = ({
 
 	const handlePreviousClick = () => {
 		setCurrentPage(currentPage - 1);
-		console.log(currentPage - 2, ':: current page');
+		// console.log(currentPage - 2, ':: current page');
 		setCurrentPageFetch(currentPage - 2);
 
 		if ((currentPage - 1) % pageNumberLimit === 0) {
@@ -50,7 +50,7 @@ const PaginationButton = ({
 
 	const handleNextClick = () => {
 		setCurrentPage(currentPage + 1);
-		console.log(currentPage, ':: current page');
+		// console.log(currentPage, ':: current page');
 		setCurrentPageFetch(currentPage);
 
 		if (currentPage + 1 > maxPageNumberLimit) {
@@ -84,7 +84,7 @@ const PaginationButton = ({
 					<button
 						onClick={handlePreviousClick}
 						disabled={currentPage === pages[0]}
-						className='text-slate-400 text-[12px] hover:text-slate-600 cursor-pointer hover:-translate-x-1 duration-[800ms] ease-in-out'
+						className='text-slate-400 text-[12px] hover:text-slate-600 cursor-pointer hover:-translate-x-1 duration-700 ease-in-out'
 					>
 						<ChevronLeft size={25} />
 					</button>
@@ -116,7 +116,7 @@ const PaginationButton = ({
 					<button
 						onClick={handleNextClick}
 						disabled={currentPage === pages[pages.length - 1]}
-						className=' text-slate-400 text-[12px] hover:text-slate-600 cursor-pointer hover:translate-x-1 duration-[800ms] ease-in-out'
+						className=' text-slate-400 text-[12px] hover:text-slate-600 cursor-pointer hover:translate-x-1 duration-700 ease-in-out'
 					>
 						<ChevronRight size={25} />
 					</button>

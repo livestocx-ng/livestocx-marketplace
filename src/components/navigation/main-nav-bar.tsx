@@ -57,10 +57,10 @@ const MainNavbar = () => {
 
 			if (scrollPosition > 50) {
 				setScrolling(true);
-				// console.log('[SCROLLING]');
+				// // console.log('[SCROLLING]');
 			} else {
 				setScrolling(false);
-				// console.log('[FALSE]');
+				// // console.log('[FALSE]');
 			}
 		});
 	}, []);
@@ -68,7 +68,7 @@ const MainNavbar = () => {
 	return (
 		<div className='relative'>
 			<nav
-				className={`w-full py-2 px-8 hidden fixed z-10 sm:flex items-center justify-between ${
+				className={`w-full py-2 px-8 hidden fixed z-10 lg:flex items-center justify-between ${
 					scrolling && 'bg-main backdrop-blur-sm'
 				}`}
 			>
@@ -78,6 +78,7 @@ const MainNavbar = () => {
 						width={40}
 						height={40}
 						className=''
+						unoptimized={true}
 						src={'/logo.svg'}
 					/>
 				</Link>
@@ -286,10 +287,10 @@ const MainNavbar = () => {
 
 											// window.location.reload();
 										} catch (error) {
-											console.log(
-												'[LOGOUT-ERROR] :: ',
-												error
-											);
+											//  console.log(
+											// 	'[LOGOUT-ERROR] :: ',
+											// 	error
+											// );
 
 											toast.error('Error!');
 										}
@@ -318,12 +319,6 @@ const MainNavbar = () => {
 
 							if (user && user?.role === 'CUSTOMER') {
 								updateUserRoleModal.onOpen();
-
-								console.log('[UPDATE-USER-ROLE]');
-								console.log(
-									'[UPDATE-USER-ROLE] :: ',
-									updateUserRoleModal
-								);
 							}
 
 							if (user && user?.role === 'FARMER') {
@@ -332,7 +327,7 @@ const MainNavbar = () => {
 								router.push('/account');
 							}
 						}}
-						className={`h-10 bg-orange-400 w-[80px] text-white text-sm flex flex-col items-center justify-center cursor-pointer`}
+						className={`h-10 bg-orange-400 rounded-sm w-[80px] text-white text-sm flex flex-col items-center justify-center cursor-pointer`}
 					>
 						Sell
 					</div>
@@ -341,7 +336,7 @@ const MainNavbar = () => {
 
 			{/* MOBILE TOGGLEBAR */}
 			<div
-				className={`w-full py-4 px-4 pl-1 sm:pl-8 sm:px-8 sm:hidden fixed z-10 flex items-center justify-between ${
+				className={`w-full py-4 px-4 pl-1 lg:pl-8 lg:px-8 lg:hidden fixed z-10 flex items-center justify-between ${
 					scrolling && 'bg-main backdrop-blur-sm'
 				}`}
 			>
@@ -355,6 +350,7 @@ const MainNavbar = () => {
 						alt='menu_icon'
 						width={30}
 						height={30}
+						unoptimized={true}
 						src={`${
 							!scrolling
 								? '/icon_menu.svg'
@@ -546,10 +542,10 @@ const MainNavbar = () => {
 
 											// window.location.reload();
 										} catch (error) {
-											console.log(
-												'[LOGOUT-ERROR] :: ',
-												error
-											);
+											//  console.log(
+											// 	'[LOGOUT-ERROR] :: ',
+											// 	error
+											// );
 
 											toast.error('Error!');
 										}
@@ -569,7 +565,7 @@ const MainNavbar = () => {
 							</div>
 						)}
 					</div>
-					
+
 					<div
 						onClick={() => {
 							if (!user) {
@@ -579,11 +575,11 @@ const MainNavbar = () => {
 							if (user && user?.role === 'CUSTOMER') {
 								updateUserRoleModal.onOpen();
 
-								console.log('[UPDATE-USER-ROLE]');
-								console.log(
-									'[UPDATE-USER-ROLE] :: ',
-									updateUserRoleModal
-								);
+								// console.log('[UPDATE-USER-ROLE]');
+								//  console.log(
+								// 	'[UPDATE-USER-ROLE] :: ',
+								// 	updateUserRoleModal
+								// );
 							}
 
 							if (user && user?.role === 'FARMER') {
@@ -592,7 +588,7 @@ const MainNavbar = () => {
 								router.push('/account');
 							}
 						}}
-						className={`h-10 bg-orange-400 w-[80px] text-white text-sm flex flex-col items-center justify-center cursor-pointer`}
+						className={`h-10 bg-orange-400 rounded-sm w-[80px] text-white text-sm flex flex-col items-center justify-center cursor-pointer`}
 					>
 						Sell
 					</div>
@@ -615,6 +611,7 @@ const MainNavbar = () => {
 							width={50}
 							height={50}
 							className=''
+							unoptimized={true}
 							src={'/logo.svg'}
 						/>
 					</Link>

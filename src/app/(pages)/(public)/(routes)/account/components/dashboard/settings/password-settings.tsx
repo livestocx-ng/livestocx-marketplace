@@ -65,7 +65,7 @@ const PasswordSettings = () => {
 				return toast.error(validationError);
 			}
 
-			console.log('[UPDATE-PASSWORD-PAYLOAD] :: ', formData);
+			// console.log('[UPDATE-PASSWORD-PAYLOAD] :: ', formData);
 
 			const {data} = await axios.patch(
 				`${process.env.NEXT_PUBLIC_API_URL}/auth/update-password`,
@@ -79,7 +79,7 @@ const PasswordSettings = () => {
 
 			setLoading(false);
 
-			console.log('[PASSWORD] :: ', data);
+			// console.log('[PASSWORD] :: ', data);
 
 			updateFormData({
 				type: 'UPDATE_FORMDATA',
@@ -96,7 +96,7 @@ const PasswordSettings = () => {
 
 			const _error = error as AxiosError;
 
-			console.log('[UPDATE-PASSWORD-ERROR]', _error);
+			// console.log('[UPDATE-PASSWORD-ERROR]', _error);
 
 			toast.error('Error');
 		}

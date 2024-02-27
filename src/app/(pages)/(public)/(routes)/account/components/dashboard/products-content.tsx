@@ -1,22 +1,24 @@
 'use client';
+import {
+	useGlobalStore,
+	useCreateProductModalStore,
+} from '@/hooks/use-global-store';
+import {useEffect} from 'react';
 import {Plus} from 'lucide-react';
 import axios, {AxiosError} from 'axios';
-import {useEffect, useState} from 'react';
-import {useModal} from '@/hooks/use-modal';
 import {Button} from '@/components/ui/button';
+import {columns} from './tables/products-column';
 import {DataTable} from '@/components/ui/data-table';
-import {useGlobalStore} from '@/hooks/use-global-store';
-import {ProductColumn, columns} from './tables/products-column';
 
 const ProductsContent = () => {
-	const isModalOpen = useModal((state) => state.isOpen);
-	const onModalOpen = useModal((state) => state.onOpen);
+	const isModalOpen = useCreateProductModalStore((state) => state.isOpen);
+	const onModalOpen = useCreateProductModalStore((state) => state.onOpen);
 
 	const {user, products, updateProducts} = useGlobalStore();
 
 	const fetchProducts = async () => {
 		try {
-			console.log('[USER] ::  ', user);
+			// console.log('[USER] ::  ', user);
 
 			const {data} = await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/products/fetch-all`,
@@ -27,13 +29,13 @@ const ProductsContent = () => {
 				}
 			);
 
-			console.log('[DATA] ::  ', data);
+			// console.log('[DATA] ::  ', data);
 
 			updateProducts(data.data.products);
 		} catch (error) {
 			const _error = error as AxiosError;
 
-			console.log('[FETCH-PRODUCTS-ERROR] :: ', _error);
+			// console.log('[FETCH-PRODUCTS-ERROR] :: ', _error);
 		}
 	};
 

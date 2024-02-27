@@ -5,6 +5,7 @@ import {
 	useGlobalStore,
 	useProductMediaModalStore,
 } from '@/hooks/use-global-store';
+import Lottie from 'lottie-react';
 import {
 	AlertDialog,
 	AlertDialogCancel,
@@ -15,25 +16,15 @@ import {
 	AlertDialogTrigger,
 	AlertDialogDescription,
 } from '@/components/ui/alert-dialog';
-import Lottie from 'lottie-react';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useEffect, useState} from 'react';
 import {ProductInfo} from '@/types/types';
-import {Badge} from '@/components/ui/badge';
-import {Button} from '@/components/ui/button';
-import {PriceFormatter} from '@/utils/price.formatter';
 import AuthHeader from '@/components/header/auth-header';
-import ProductCard from '@/components/cards/product-card';
-import SellerInfoTab from '@/components/product-info/seller-info-tab';
-import {FlagTriangleRight, ThumbsDown, ThumbsUp} from 'lucide-react';
-import ProductMediaModal from '@/components/modals/product-media-modal';
-import ProductReviewTab from '@/components/product-info/product-review-tab';
-import MoreFromSellerTab from '@/components/product-info/more-from-seller-tab';
-import MarketPlaceProductCard from '@/components/cards/marketplace-product-card';
+import ProductMediaModal from '@/components/modals/product/product-media-modal';
+import SingleProductContent from '@/components/product/single-product-content';
 import EmptyAnimation from '../../../../../../../../public/animations/animation__2.json';
 import LoadingAnimation from '../../../../../../../../public/animations/loading__animation__1.json';
-import SingleProductContent from '@/components/product/single-product-content';
 
 interface ProductPageParams {
 	params: {
@@ -49,12 +40,6 @@ const MarketPlaceProductPage = ({params: {productId}}: ProductPageParams) => {
 	const isProductMediaModalOpen = useProductMediaModalStore(
 		(state) => state.isOpen
 	);
-	const onProductMediaModalOpen = useProductMediaModalStore(
-		(state) => state.onOpen
-	);
-	const updateProductModalPayload = useProductMediaModalStore(
-		(state) => state.updatePayload
-	);
 
 	const {
 		user,
@@ -68,7 +53,7 @@ const MarketPlaceProductPage = ({params: {productId}}: ProductPageParams) => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [currentTab, setCurrentTab] = useState<Tab>('Seller Info');
 
-	console.log('[PRODUCT-ID] :: ', productId);
+	// console.log('[PRODUCT-ID] :: ', productId);
 
 	const fetchProduct = async () => {
 		try {
@@ -81,15 +66,34 @@ const MarketPlaceProductPage = ({params: {productId}}: ProductPageParams) => {
 				),
 			]);
 
-			// console.log('[DATA] ::  ', _product.data.data);
-			// console.log('[DATA] ::  ', data);
+			// // console.log('[DATA] ::  ', _product.data.data);
+			// // console.log('[DATA] ::  ', data);
 
 			updatePayload(_product.data.data);
 			updateProductInfo(_productInfo.data.data);
 		} catch (error) {
 			const _error = error as AxiosError;
 
-			console.log('[FETCH-PRODUCT-ERROR] :: ', _error);
+			// console.log('[FETCH-PRODUCT-ERROR] :: ', _error);
+		}
+	};
+
+	const viewProduct = async () => {
+		try {
+			const {data} = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/user/products/product/${productId}/view`,
+				{
+					headers: {
+						Authorization: user?.accessToken,
+					},
+				}
+			);
+
+			console.log('[VIEW-PRODUCT-DATA] ::  ', data);
+		} catch (error) {
+			const _error = error as AxiosError;
+
+			console.log('[VIEW-PRODUCT-ERROR] :: ', _error);
 		}
 	};
 
@@ -97,11 +101,17 @@ const MarketPlaceProductPage = ({params: {productId}}: ProductPageParams) => {
 		fetchProduct();
 	}, []);
 
+	useEffect(() => {
+		if (user) {
+			viewProduct();
+		}
+	}, [user]);
+
 	const handleLikeUnlikeProduct = async (formData: {value?: boolean}) => {
 		try {
-			setLoading(true);
+			// setLoading(true);
 
-			console.log('[LIKE-UNLIKE-PRODUCT-PAYLOAD] :: ', formData);
+			// console.log('[LIKE-UNLIKE-PRODUCT-PAYLOAD] :: ', formData);
 
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/like-unlike-product?productId=${product?.productId}`,
@@ -113,13 +123,13 @@ const MarketPlaceProductPage = ({params: {productId}}: ProductPageParams) => {
 				}
 			);
 
-			// console.log('[LIKE-UNLIKE-PRODUCT-SUCCESS] :: ', data);
+			// // console.log('[LIKE-UNLIKE-PRODUCT-SUCCESS] :: ', data);
 
-			setLoading(false);
+			// setLoading(false);
 
 			updatePayload(data.data);
 		} catch (error) {
-			setLoading(false);
+			// setLoading(false);
 			const _error = error as AxiosError;
 
 			console.log('[ERROR] :: ', _error);
@@ -134,7 +144,7 @@ const MarketPlaceProductPage = ({params: {productId}}: ProductPageParams) => {
 
 			setLoading(true);
 
-			console.log('[ADD-DESIRED-PRODUCT] :: ');
+			// console.log('[ADD-DESIRED-PRODUCT] :: ');
 
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-desired-product?productId=${product?.productId}`,
@@ -146,7 +156,7 @@ const MarketPlaceProductPage = ({params: {productId}}: ProductPageParams) => {
 				}
 			);
 
-			console.log('[ADD-DESIRED-PRODUCT-SUCCESS] :: ', data);
+			// console.log('[ADD-DESIRED-PRODUCT-SUCCESS] :: ', data);
 
 			setLoading(false);
 
@@ -159,7 +169,7 @@ const MarketPlaceProductPage = ({params: {productId}}: ProductPageParams) => {
 			setLoading(false);
 			const _error = error as AxiosError;
 
-			console.log('[ERROR] :: ', _error);
+			// console.log('[ERROR] :: ', _error);
 		}
 	};
 
@@ -167,7 +177,13 @@ const MarketPlaceProductPage = ({params: {productId}}: ProductPageParams) => {
 		<main className='w-full relative'>
 			{isProductMediaModalOpen && <ProductMediaModal />}
 
-			<AuthHeader classes='md:h-[35vh]' />
+			<section className='sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 pb-20 sm:pb-0 md:pt-0'>
+				<h1 className='text-xl md:text-5xl font-medium text-white capitalize'>
+					{product?.name}
+				</h1>
+
+				{/* <SearchForm /> */}
+			</section>
 
 			{loading && (
 				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
@@ -228,6 +244,7 @@ const ProductContactAlertDialog = ({
 							<Image
 								fill
 								alt=''
+								unoptimized={true}
 								src={productInfo?.avatar!}
 								className='object-fill w-full h-full'
 							/>

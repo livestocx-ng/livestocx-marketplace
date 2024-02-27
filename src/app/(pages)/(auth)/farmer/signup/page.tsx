@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import {NigeriaStates} from '@/data';
+import {NigerianStates} from '@/data';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
@@ -100,11 +100,11 @@ const SignUpPage = () => {
 
 		try {
 			setLoading(true);
-			console.log('[SIGNUP-PAYLOAD] :: ', formData);
+			// console.log('[SIGNUP-PAYLOAD] :: ', formData);
 
 			const {data} = await axios.post('/api/auth/signup', formData);
 
-			console.log('[DATA] :: ', data);
+			// console.log('[DATA] :: ', data);
 
 			if (data?.ok == false) {
 				setLoading(false);
@@ -119,7 +119,7 @@ const SignUpPage = () => {
 			}
 		} catch (error) {
 			setLoading(false);
-			console.error('[SIGNUP-ERROR]', error);
+			// console.error('[SIGNUP-ERROR]', error);
 			toast.error('An error occured');
 		}
 	};
@@ -194,7 +194,7 @@ const SignUpPage = () => {
 								className='w-full border py-3 rounded px-3 text-xs scrollbar__1'
 								onChange={handleSelectChange}
 							>
-								{NigeriaStates.map((option) => (
+								{NigerianStates.map((option) => (
 									<option
 										key={option}
 										value={option}
@@ -251,6 +251,7 @@ const SignUpPage = () => {
 							className='flex items-center gap-x-4 h-12 justify-center w-full rounded-full py-3'
 						>
 							<Image
+								unoptimized={true}
 								alt='google icon'
 								src={'/icon_google.svg'}
 								width={30}

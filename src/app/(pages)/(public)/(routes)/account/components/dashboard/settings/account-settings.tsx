@@ -71,7 +71,7 @@ const AccountSettings = () => {
 	}, [user]);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		console.log('[EVENT] :: ', event.target.name);
+		// console.log('[EVENT] :: ', event.target.name);
 
 		updateFormData({
 			type: 'UPDATE_FORMDATA',
@@ -102,7 +102,7 @@ const AccountSettings = () => {
 				return toast.error(validationError);
 			}
 
-			console.log('[UPDATE-PROFILE-PAYLOAD] :: ', formData);
+			// console.log('[UPDATE-PROFILE-PAYLOAD] :: ', formData);
 
 			const {data} = await axios.patch(
 				`${process.env.NEXT_PUBLIC_API_URL}/auth/update-profile`,
@@ -115,13 +115,16 @@ const AccountSettings = () => {
 				}
 			);
 
-			const cookieUpdate = await axios.patch('/api/auth/update-cookies', data.data);
+			const cookieUpdate = await axios.patch(
+				'/api/auth/update-cookies',
+				data.data
+			);
 
 			await updateUser(cookieUpdate.data);
-			
+
 			setLoading(false);
 
-			// console.log('[PROFILE] :: ', cookieUpdate.data);
+			// // console.log('[PROFILE] :: ', cookieUpdate.data);
 
 			toast.success('Profile updated');
 		} catch (error) {
@@ -129,7 +132,7 @@ const AccountSettings = () => {
 
 			const _error = error as AxiosError;
 
-			console.log('[UPDATE-PROFILE-ERROR]', _error);
+			// console.log('[UPDATE-PROFILE-ERROR]', _error);
 
 			toast.error('Error');
 		}
@@ -221,6 +224,7 @@ const AccountSettings = () => {
 							// width={150}
 							// height={150}
 							fill
+							unoptimized={true}
 							// src={'/user__1.svg'}
 							className='object-cover rounded-full h-full w-full'
 							src={

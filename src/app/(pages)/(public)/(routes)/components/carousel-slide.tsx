@@ -68,7 +68,7 @@ const CarouselSlide = () => {
 								(slide) => slide.id === item
 							);
 
-							// console.log('[SLIDE]', index);
+							// // console.log('[SLIDE]', index);
 
 							setCurrentSlide(CarouselSlideItems[index]);
 						}}
@@ -80,6 +80,7 @@ const CarouselSlide = () => {
 				<Image
 					fill
 					src={currentSlide.image}
+					unoptimized={true}
 					alt={`Livestocx - ${currentSlide.description}`}
 					className='rounded-tr-lg object-cover h-full w-full'
 				/>

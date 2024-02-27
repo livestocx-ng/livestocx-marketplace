@@ -1,4 +1,19 @@
 'use client';
+import {
+	WhatsappShareButton,
+	WhatsappIcon,
+	FacebookIcon,
+	TwitterIcon,
+	FacebookShareButton,
+	TwitterShareButton,
+} from 'react-share';
+import {
+	Phone,
+	ThumbsUp,
+	ThumbsDown,
+	FlagTriangleRight,
+	Copy,
+} from 'lucide-react';
 import Image from 'next/image';
 import {cn} from '@/lib/utils';
 import {
@@ -17,17 +32,17 @@ import {
 	AlertDialogTrigger,
 	AlertDialogDescription,
 } from '@/components/ui/alert-dialog';
+import {toast} from 'react-hot-toast';
 import {usePathname} from 'next/navigation';
 import ProductCard from '../cards/product-card';
 import {Product, ProductInfo} from '@/types/types';
 import React, {Dispatch, SetStateAction} from 'react';
 import {PriceFormatter} from '@/utils/price.formatter';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 import SellerInfoTab from '../product-info/seller-info-tab';
-import SellerProductCard from '../cards/seller-product-card';
 import ProductReviewTab from '../product-info/product-review-tab';
 import MoreFromSellerTab from '../product-info/more-from-seller-tab';
-import {FlagTriangleRight, ThumbsDown, ThumbsUp} from 'lucide-react';
-import MarketPlaceProductCard from '../cards/marketplace-product-card';
+import {getMediaImageUrl} from '@/utils/media/media.url';
 
 interface SingleProductContentProps {
 	currentTab: Tab;
@@ -67,21 +82,37 @@ const SingleProductContent = ({
 
 	return (
 		<div className='flex flex-col justify-start items-start py-10 md:px-8'>
-			<h1 className='text-orange-500 text-3xl font-medium mb-4'>
+			<h1 className='text-orange-500 text-3xl font-medium mb-4 px-4 md:px-0'>
 				{product?.name}
 			</h1>
 
 			<div className='flex flex-wrap justify-between items-start md:h-[500px] w-full'>
-				<div className='w-full md:w-[55%] h-[350px] md:h-full relative mb-5 md:mb-0 md:rounded-l-l'>
+				<div className='w-full md:w-[55%] h-[350px] md:h-full relative mb-5 md:mb-0 rounded-none md:rounded-l-l'>
 					<Image
 						fill
+						unoptimized={true}
 						alt={'product'}
-						src={product?.media[0]?.mediaUrl!}
-						className='object-fill h-full w-full md:rounded-l-l border border-gray-600'
+						src={getMediaImageUrl(product)}
+						className='object-cover h-full w-full md:rounded-l-l border-0 md:border border-gray-600'
 					/>
 
-					{user && (
-						<div className='absolute bottom-0 right-0'>
+					<div className='absolute flex items-center bottom-0 left-0'>
+						<p className='bg-slate-800 border-0 text-white hover:bg-slate-800 hover:text-white text-xs h-10 py-4 px-2 flex items-center'>
+							Posted on: {product?.createdAt?.slice(0, 10)}
+						</p>
+					</div>
+
+					<div className='absolute flex items-center bottom-0 right-0'>
+						{product?.likedUsers?.length! > 0 && (
+							<Button
+								type='button'
+								variant={'outline'}
+								className='bg-slate-800 border-0 text-white hover:bg-slate-800 hover:text-white text-xs h-10 py-4 flex items-center space-x-3 rounded-none'
+							>
+								{product?.likedUsers?.length!} Likes
+							</Button>
+						)}
+						{user && (
 							<Button
 								type='button'
 								onClick={() => {
@@ -114,8 +145,8 @@ const SingleProductContent = ({
 									</>
 								)}
 							</Button>
-						</div>
-					)}
+						)}
+					</div>
 				</div>
 				<div className='w-full md:w-[40%] flex flex-col justify-between md:h-full px-4 md:px-0'>
 					<div className='flex flex-col justify-between border border-slate-500 md:rounded-tr-lg p-4'>
@@ -136,8 +167,9 @@ const SingleProductContent = ({
 
 						<div className='flex items-center space-x-3 py-3'>
 							<Image
-								width={60}
-								height={60}
+								width={40}
+								height={40}
+								unoptimized={true}
 								alt={productInfo?.name!}
 								src={productInfo?.avatar ?? '/icon__user.svg'}
 								// src={'/icon__user.svg'}
@@ -145,12 +177,12 @@ const SingleProductContent = ({
 							/>
 
 							<div className='flex flex-col space-y-3'>
-								<p className='text-sm font-medium'>
+								<p className='text-xs font-medium'>
 									{productInfo?.name! ?? ''}
 								</p>
-								<p className='text-[10px] px-2 py-1 text-center bg-gray-200 rounded-md'>
+								{/* <p className='text-[10px] px-2 py-1 text-center bg-gray-200 rounded-md'>
 									{productInfo?.name && 'Replies in 2 days'}
-								</p>
+								</p> */}
 							</div>
 						</div>
 
@@ -177,6 +209,9 @@ const SingleProductContent = ({
 								Chat with Seller
 							</Button>
 
+							{/* <ContactVendorAlertDialog
+								productInfo={productInfo}
+							/> */}
 							<ProductContactAlertDialog
 								productInfo={productInfo}
 							/>
@@ -200,10 +235,10 @@ const SingleProductContent = ({
 						</div>
 					</div>
 
-					<div className='flex flex-col space-y-3 h-ful md:h-fi border border-slate-500 p-4 mt-5 md:mt-0 rounded-br-lg'>
-						<h1 className='text-sm font-medium'>Safety Tips</h1>
+					<div className='flex flex-col space-y-3 h-ful md:h-fi border border-red-500 text-red-600 p-4 mt-5 md:mt-0 rounded-br-lg'>
+						<h1 className='text-sm font-semibold'>Safety Tips</h1>
 
-						<ul className='text-xs list-disc pl-3 space-y-5'>
+						<ul className='text-xs  list-disc pl-3 space-y-5'>
 							<li>
 								If you wish to meet a seller, meet in a place
 								where there are other people around and where
@@ -226,41 +261,65 @@ const SingleProductContent = ({
 				</div>
 			</div>
 
-			<div className='mt-10 px-4 md:px-0'>
+			<div className='mt-10 px-4 md:px-0 w-full flex space-x-5 items-center justify-start'>
+				<h1 className='font-medium text-xl'>Share on:</h1>
+				<div className='flex space-x-2'>
+					<WhatsappShareButton
+						url={window.location.toString()}
+						title='Check out this awesome product on Livestocx: '
+					>
+						<WhatsappIcon size={30} round />
+					</WhatsappShareButton>
+					<FacebookShareButton
+						url={window.location.toString()}
+						title='Check out this awesome product on Livestocx: '
+					>
+						<FacebookIcon size={30} round />
+					</FacebookShareButton>
+					<TwitterShareButton
+						url={window.location.toString()}
+						title='Check out this awesome product on Livestocx: '
+					>
+						<TwitterIcon size={30} round />
+					</TwitterShareButton>
+
+					<CopyToClipboard
+						text={window.location.toString()}
+						onCopy={(text: string, result: boolean) => {
+							toast.success('Copied to clipboard');
+						}}
+					>
+						<div className='rounded-full border border-slate-400 h-8 w-8 flex items-center justify-center cursor-pointer'>
+							<Copy className='h-4 w-4' />
+						</div>
+					</CopyToClipboard>
+				</div>
+			</div>
+
+			<div className='mt-5 px-4 md:px-0'>
 				<h1 className='font-medium text-xl'>Description</h1>
 				<p>{product?.description}</p>
 			</div>
 
-			<div className='mt-5 w-full px-4 md:px-0'>
-				<h1 className='font-medium text-xl'>Images</h1>
+			{product?.media?.filter((media) => media.mediaType === 'IMAGE')
+				.length > 0 && (
+				<div className='mt-5 w-full px-4 md:px-0'>
+					<h1 className='font-medium text-xl'>Images</h1>
 
-				<div className='grid grid-cols-2 gap-5 md:gap-5 md:flex items-center justify-start w-full rounded-lg'>
-					{product?.media
-						?.filter((media) => media.mediaType === 'IMAGE')
-						?.slice(0, 6)
-						?.map((media, index) => (
-							<div
-								key={media.id}
-								className='h-[150px] md:h-[150px] w-full md:w-[150px] relative'
-							>
-								<Image
-									fill
-									alt={'product'}
-									src={media.mediaUrl}
-									onClick={() => {
-										if (!isProductMediaModalOpen) {
-											onProductMediaModalOpen();
-
-											updateProductModalPayload(
-												product.media
-											);
-										}
-									}}
-									className='rounded-g h-full w-full cursor-pointer'
-								/>
-
-								{index === 5 && (
-									<div
+					<div className='grid grid-cols-2 gap-5 md:gap-5 md:flex items-center justify-start w-full rounded-lg'>
+						{product?.media
+							?.filter((media) => media.mediaType === 'IMAGE')
+							?.slice(0, 6)
+							?.map((media, index) => (
+								<div
+									key={media.id}
+									className='h-[150px] md:h-[150px] w-full md:w-[150px] relative border border-slate-400'
+								>
+									<Image
+										fill
+										alt={'product'}
+										unoptimized={true}
+										src={media.mediaUrl}
 										onClick={() => {
 											if (!isProductMediaModalOpen) {
 												onProductMediaModalOpen();
@@ -270,35 +329,53 @@ const SingleProductContent = ({
 												);
 											}
 										}}
-										className='absolute top-0 h-full w-full bg-[#11111190] flex items-center justify-center rounded-lg cursor-pointer'
-									>
-										<p className='text-xs text-center text-white'>
-											See more images
-										</p>
-									</div>
-								)}
-							</div>
-						))}
-				</div>
-			</div>
+										className='object-cover rounded-g h-full w-full cursor-pointer'
+									/>
 
-			<div className='mt-5 px-4 md:px-0'>
-				<h1 className='font-medium text-xl'>Videos</h1>
+									{index === 5 && (
+										<div
+											onClick={() => {
+												if (!isProductMediaModalOpen) {
+													onProductMediaModalOpen();
 
-				<div className='grid grid-cols-2 gap-5 md:gap-5 md:flex items-center justify-start w-full rounded-lg px-4 md:px-0'>
-					{product?.media
-						?.filter((media) => media.mediaType === 'VIDEO')
-						?.map((media, index) => (
-							<div className='h-[250px] w-[45%] relative'>
-								<video
-									controls
-									src={media.mediaUrl}
-									className='object-cover h-full w-full'
-								/>
-							</div>
-						))}
+													updateProductModalPayload(
+														product.media
+													);
+												}
+											}}
+											className='absolute top-0 h-full w-full bg-[#11111190] flex items-center justify-center rounded-lg cursor-pointer'
+										>
+											<p className='text-xs text-center text-white'>
+												See more images
+											</p>
+										</div>
+									)}
+								</div>
+							))}
+					</div>
 				</div>
-			</div>
+			)}
+
+			{product?.media?.filter((media) => media.mediaType === 'VIDEO')
+				.length > 0 && (
+				<div className='mt-5 px-4 md:px-0 w-full'>
+					<h1 className='font-medium text-xl'>Videos</h1>
+
+					<div className='grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-5 md:flex items-center justify-start w-full rounded-lg'>
+						{product?.media
+							?.filter((media) => media.mediaType === 'VIDEO')
+							?.map((media, index) => (
+								<div className='h-[250px] w-full md:w-[25%] relative border border-slate-400'>
+									<video
+										controls
+										src={media.mediaUrl}
+										className='object-cover h-full w-full'
+									/>
+								</div>
+							))}
+					</div>
+				</div>
+			)}
 
 			<div className='flex items-center justify-between w-full mt-10 border-b border-b-orange-500 px-4 md:px-0'>
 				{CurrentTabs.map((item) => (
@@ -335,32 +412,29 @@ const SingleProductContent = ({
 					{products
 						?.filter((prd) => prd.id !== product?.id)
 						?.slice(0, 10)
-						.map((product) => {
-							if (!pathName.includes('marketplace')) {
-								return (
-									<ProductCard
-										key={product.id}
-										product={product}
-									/>
-								);
-							}
-							if (pathName.includes('marketplace')) {
-								return (
-									<MarketPlaceProductCard
-										key={product.id}
-										product={product}
-									/>
-								);
-							}
-							if (pathName.includes('sellers')) {
-								return (
-									<SellerProductCard
-										key={product.id}
-										product={product}
-									/>
-								);
-							}
-						})}
+						.map((product) => (
+							<ProductCard key={product.id} product={product} />
+							// if (!pathName.includes('marketplace')) {
+							// 	return (
+							// 	);
+							// }
+							// if (pathName.includes('marketplace')) {
+							// 	return (
+							// 		<MarketPlaceProductCard
+							// 			key={product.id}
+							// 			product={product}
+							// 		/>
+							// 	);
+							// }
+							// if (pathName.includes('sellers')) {
+							// 	return (
+							// 		<SellerProductCard
+							// 			key={product.id}
+							// 			product={product}
+							// 		/>
+							// 	);
+							// }
+						))}
 				</div>
 			</div>
 		</div>
@@ -387,8 +461,9 @@ const ProductContactAlertDialog = ({
 							<Image
 								fill
 								alt=''
+								unoptimized={true}
 								src={productInfo?.avatar!}
-								className='object-fill w-full h-full'
+								className='object-cover w-full h-full'
 							/>
 						</div>
 						<div className='grid grid-cols-2 gap-y-5 pt-2'>
@@ -399,6 +474,44 @@ const ProductContactAlertDialog = ({
 							</p>
 							<p>{productInfo?.phoneNumber}</p>
 						</div>
+					</AlertDialogDescription>
+				</AlertDialogHeader>
+				<AlertDialogFooter>
+					<AlertDialogCancel>Close</AlertDialogCancel>
+				</AlertDialogFooter>
+			</AlertDialogContent>
+		</AlertDialog>
+	);
+};
+
+const ContactVendorAlertDialog = ({
+	productInfo,
+}: {
+	productInfo: ProductInfo | null;
+}) => {
+	return (
+		<AlertDialog>
+			<AlertDialogTrigger className='border border-main text-main text-xs h-10 w-[45%] rounded-full py-2'>
+				Chat With Seller
+			</AlertDialogTrigger>
+			<AlertDialogContent>
+				<AlertDialogHeader>
+					<AlertDialogTitle>Vendor Contact</AlertDialogTitle>
+					<AlertDialogDescription className='flex flex-col items-center justify-center py-5 text-black'>
+						<Button
+							variant={'outline'}
+							onClick={() => {
+								const chatLink = `https://wa.me/+234${productInfo?.phoneNumber}`;
+
+								window.open(chatLink, '_blank');
+							}}
+							className='bg-main border-0 text-white hover:bg-main hover:text-white text-xs h-10 py-4 flex items-center space-x-3 rounded-full'
+						>
+							<Phone className='h-6 w-6' />{' '}
+							<p className='text-sm'>
+								{productInfo?.phoneNumber}
+							</p>
+						</Button>
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>

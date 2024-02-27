@@ -7,6 +7,7 @@ import {Button} from '@/components/ui/button';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import ProductCard from '../../../../../components/cards/product-card';
 import PaginationButton from '@/components/utils/pagination-button';
+import {usePathname} from 'next/navigation';
 
 interface Tab {
 	id: number;
@@ -33,6 +34,7 @@ const TabItems: Tab[] = [
 ];
 
 const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
+	const pathName = usePathname();
 	const {products, totalPages, hasNextPage} = useGlobalStore();
 
 	const [currentTab, setCurrentTab] = useState<Tab>(TabItems[0]);
@@ -40,30 +42,33 @@ const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 	return (
 		<Fragment>
 			<div className='flex item-center space-x-4'>
-				{TabItems.map((tab) => (
-					<Button
-						key={tab.id}
-						type='button'
-						className={`border  bg-white hover:bg-white ${
-							currentTab.id === tab.id
-								? 'border-main text-main'
-								: 'border-black text-black'
-						}`}
-						onClick={() => {
-							const index = TabItems.findIndex(
-								(item) => item.id === tab.id
-							);
+				{pathName.length <= 1 && (
+					<>
+						{TabItems.map((tab) => (
+							<Button
+								key={tab.id}
+								type='button'
+								className={`border bg-white hover:bg-white rounded-none ${
+									currentTab.id === tab.id
+										? 'border-main text-main'
+										: 'border-black text-black'
+								}`}
+								onClick={() => {
+									const index = TabItems.findIndex(
+										(item) => item.id === tab.id
+									);
 
-							setCurrentTab(TabItems[index]);
-						}}
-					>
-						{tab.title}
-					</Button>
-				))}
+									setCurrentTab(TabItems[index]);
+								}}
+							>
+								{tab.title}
+							</Button>
+						))}
+					</>
+				)}
 			</div>
 
-			{/* <div className='flex justify-between items-center flex-wrap gap-6 mt-10'> */}
-			<div className='flex flex-wrap items-center w-full justify-around gap-y-10 gap-x-2 sm:gap-x-5 md:gap-x-10 mt-10'>
+			<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2 mt-5'>
 				{products?.map((product) => (
 					<ProductCard key={product.id} product={product} />
 				))}
@@ -76,6 +81,10 @@ const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 						variant={'outline'}
 						onClick={() => {
 							updateCurrentPage(1);
+							window.scrollTo({
+								top: 50,
+								behavior: 'smooth',
+							});
 						}}
 						className='flex items-center space-x-1 bg-white border hover:bg:white focus:bg-white'
 					>
@@ -91,6 +100,10 @@ const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 						variant={'outline'}
 						onClick={() => {
 							updateCurrentPage(currentPage + 1);
+							window.scrollTo({
+								top: 50,
+								behavior: 'smooth',
+							});
 						}}
 						className='flex items-center space-x-1 bg-white border hover:bg:white focus:bg-white'
 					>

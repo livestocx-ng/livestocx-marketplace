@@ -1,14 +1,20 @@
 'use client';
-import {X} from 'lucide-react';
+import {
+	useGlobalStore,
+	useUpdateWelcomeFarmerModalStore,
+} from '@/hooks/use-global-store';
+import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
-import {useUpdateWelcomeFarmerModalStore} from '@/hooks/use-global-store';
 
 const WelcomeFarmerModal = () => {
+	const router = useRouter();
+
+	const {updateCurrentAccountTab} = useGlobalStore();
 	const {onClose} = useUpdateWelcomeFarmerModalStore();
 
 	return (
 		<div className='fixed h-screen flex flex-col items-center justify-center w-full bg-[#11111190] backdrop-blur-sm z-20'>
-			<div className='bg-white py-6  px-5 w-[50%] transition-all duration-700 ease-in-out translate-x-3'>
+			<div className='bg-white py-6 px-5 w-[90%] md:w-[50%] transition-all duration-700 ease-in-out md:translate-x-3'>
 				<div className='flex items-center justify-between'>
 					<h1 className='text-xl font-medium'>
 						Welcome to Livestocx!
@@ -32,7 +38,13 @@ const WelcomeFarmerModal = () => {
 					<Button
 						type='button'
 						variant={'outline'}
-						onClick={() => onClose()}
+						onClick={() => {
+							onClose();
+
+							router.push('/account');
+
+							updateCurrentAccountTab('Products');
+						}}
 						className='w-fit bg-white hover:bg-white text-sm font-medium underline h-12 text-red-500 hover:text-red-500 rounded-none py-3 px-8 border-0'
 					>
 						Close

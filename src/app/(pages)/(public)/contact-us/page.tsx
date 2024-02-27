@@ -80,14 +80,14 @@ const ContactUsPage = () => {
 
 		try {
 			setLoading(true);
-			console.log('[CONTACT-US-PAYLOAD] :: ', formData);
+			// console.log('[CONTACT-US-PAYLOAD] :: ', formData);
 
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/notifications/contact-us`,
 				formData
 			);
 
-			console.log('[DATA] :: ', data);
+			// console.log('[DATA] :: ', data);
 
 			toast.success(
 				'Thank you for your message, we will reply you shortly.'
@@ -109,7 +109,7 @@ const ContactUsPage = () => {
 
 			const _error = error as AxiosError;
 
-			console.error('[SIGNIN-ERROR]', _error);
+			// console.error('[SIGNIN-ERROR]', _error);
 
 			toast.error('An error occured!');
 		}
@@ -206,6 +206,7 @@ const ContactUsPage = () => {
 					<Image
 						fill
 						alt=''
+						unoptimized={true}
 						src={'/about__art__4.svg'}
 						className='object-fill w-full h-full'
 					/>
@@ -219,6 +220,7 @@ const ContactUsPage = () => {
 							alt=''
 							width={40}
 							height={40}
+							unoptimized={true}
 							src={'/icon__phone.svg'}
 						/>
 						<h1 className='font-semibold text-main'>
@@ -233,6 +235,7 @@ const ContactUsPage = () => {
 							alt=''
 							width={40}
 							height={40}
+							unoptimized={true}
 							src={'/icon__messages.svg'}
 						/>
 						<h1 className='font-semibold text-main'>
@@ -249,6 +252,7 @@ const ContactUsPage = () => {
 							>
 								<Image
 									fill
+									unoptimized={true}
 									className='object-fill'
 									alt={'livestocx-facebook'}
 									src={'/icon__facebook__2.svg'}
@@ -264,6 +268,7 @@ const ContactUsPage = () => {
 								<Image
 									fill
 									className='object-fill'
+									unoptimized={true}
 									alt={'livestocx-facebook'}
 									src={'/icon__linkedin__2.svg'}
 								/>
@@ -277,6 +282,7 @@ const ContactUsPage = () => {
 							>
 								<Image
 									fill
+									unoptimized={true}
 									className='object-fill'
 									alt={'livestocx-facebook'}
 									src={'/icon__instagram__2.svg'}
@@ -290,6 +296,7 @@ const ContactUsPage = () => {
 							alt=''
 							width={40}
 							height={40}
+							unoptimized={true}
 							src={'/icon__sms.svg'}
 						/>
 						<h1 className='font-semibold text-main'>

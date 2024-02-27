@@ -7,7 +7,7 @@ import {User} from '@/types/types';
 import {Button} from '@/components/ui/button';
 import FormTextInput from '@/components/input/form-text-input';
 import SelectDropdown from '@/components/ui/select-dropdown';
-import {NigeriaCities, NigeriaStates} from '@/data';
+import {NigerianCities, NigerianStates} from '@/data';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import ButtonLoader from '@/components/loader/button-loader';
 import {ValidateUpdateBillingFormData} from '@/utils/form-validations/billing.validation';
@@ -69,13 +69,13 @@ const BillingSettings = () => {
 				}
 			);
 
-			console.log('[DATA] ::  ', data);
+			// console.log('[DATA] ::  ', data);
 
 			updateBilling(data.data);
 		} catch (error) {
 			const _error = error as AxiosError;
 
-			console.log('[FETCH-BILLING-ERROR] :: ', _error);
+			// console.log('[FETCH-BILLING-ERROR] :: ', _error);
 		}
 	};
 
@@ -119,7 +119,7 @@ const BillingSettings = () => {
 				return toast.error(validationError);
 			}
 
-			console.log('[UPDATE-BILLING-PAYLOAD] :: ', formData);
+			// console.log('[UPDATE-BILLING-PAYLOAD] :: ', formData);
 
 			const {data} = await axios.patch(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/update-billing`,
@@ -133,7 +133,7 @@ const BillingSettings = () => {
 
 			setLoading(false);
 
-			console.log('[BILLING] :: ', data);
+			// console.log('[BILLING] :: ', data);
 
 			await updateBilling(data.data);
 
@@ -143,7 +143,7 @@ const BillingSettings = () => {
 
 			const _error = error as AxiosError;
 
-			console.log('[UPDATE-BILLING-ERROR]', _error);
+			// console.log('[UPDATE-BILLING-ERROR]', _error);
 
 			toast.error('Error');
 		}
@@ -222,7 +222,7 @@ const BillingSettings = () => {
 										});
 									}}
 								>
-									{NigeriaStates.map((option) => (
+									{NigerianStates.map((option) => (
 										<option
 											key={option}
 											value={option}
@@ -247,7 +247,7 @@ const BillingSettings = () => {
 										});
 									}}
 								>
-									{NigeriaCities[formData.state]?.map(
+									{NigerianCities[formData.state]?.map(
 										(option) => (
 											<option
 												key={option}

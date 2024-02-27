@@ -1,14 +1,16 @@
 'use client';
 import {
+	useCreateProductModalStore,
 	useDeleteProductModalStore,
+	useShareNewProductModalStore,
 	useUpdateProductModalStore,
 } from '@/hooks/use-global-store';
 import {redirect} from 'next/navigation';
-import {useModal} from '@/hooks/use-modal';
 import {useUserHook} from '@/hooks/use-user';
 import AddProductModal from '@/components/modals/product/add-product-modal';
 import UpdateProductModal from '@/components/modals/product/update-product-modal';
 import DeleteProductModal from '@/components/modals/product/delete-product-modal';
+import ShareNewProductModal from '@/components/modals/product/share-new-product-modal';
 
 interface AccountLayoutProps {
 	children: React.ReactNode;
@@ -17,7 +19,12 @@ interface AccountLayoutProps {
 export default function AccountLayout({children}: AccountLayoutProps) {
 	const {user, error, isUserSuccess} = useUserHook();
 
-	const isModalOpen = useModal((state) => state.isOpen);
+	const isCreateProductModalOpen = useCreateProductModalStore(
+		(state) => state.isOpen
+	);
+	const isShareNewProductModalOpen = useShareNewProductModalStore(
+		(state) => state.isOpen
+	);
 	const isUpdateProductModalOpen = useUpdateProductModalStore(
 		(state) => state.isOpen
 	);
@@ -48,7 +55,8 @@ export default function AccountLayout({children}: AccountLayoutProps) {
 		return (
 			<div className='relative'>
 				{' '}
-				{isModalOpen && <AddProductModal />}
+				{isCreateProductModalOpen && <AddProductModal />}
+				{isShareNewProductModalOpen && <ShareNewProductModal />}
 				{isUpdateProductModalOpen && <UpdateProductModal />}
 				{isDeleteProductModalOpen && <DeleteProductModal />}
 				{children}

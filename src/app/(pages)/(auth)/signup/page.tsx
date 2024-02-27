@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import {NigeriaStates} from '@/data';
+import {NigerianCities, NigerianStates} from '@/data';
 import {toast} from 'react-hot-toast';
 import {signIn} from 'next-auth/react';
 import axios, {AxiosError} from 'axios';
@@ -23,6 +23,10 @@ type FormData = {
 	email: string;
 	password: string;
 	role: 'FARMER' | 'CUSTOMER';
+	businessName: string;
+	businessAddress: string;
+	businessState: string;
+	businessCity: string;
 	location: string;
 	acceptedTerms: boolean;
 	confirmPassword: string;
@@ -39,6 +43,10 @@ const initialState: FormData = {
 	phoneNumber: '',
 	email: '',
 	password: '',
+	businessName: '',
+	businessAddress: '',
+	businessState: 'Abia',
+	businessCity: '',
 	location: '',
 	role: 'CUSTOMER',
 	acceptedTerms: false,
@@ -101,7 +109,7 @@ const SignUpPage = () => {
 				return toast.error(validationError, {duration: 10000});
 			}
 
-			console.log('[SIGNUP-PAYLOAD] :: ', formData);
+			// console.log('[SIGNUP-PAYLOAD] :: ', formData);
 
 			const emailAvailability = await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/auth/email-availability?email=${formData.email}`
@@ -114,7 +122,7 @@ const SignUpPage = () => {
 
 			const {data} = await axios.post('/api/auth/signup', formData);
 
-			// console.log('[DATA] :: ', data);
+			// // console.log('[DATA] :: ', data);
 
 			if (data?.ok == false) {
 				setLoading(false);
@@ -136,7 +144,7 @@ const SignUpPage = () => {
 		} catch (error) {
 			setLoading(false);
 
-			console.error('[SIGNUP-ERROR]', error);
+			// console.error('[SIGNUP-ERROR]', error);
 
 			toast.error('An error occured');
 		}
@@ -144,7 +152,11 @@ const SignUpPage = () => {
 
 	return (
 		<div className='w-full'>
-			<AuthHeader />
+			<section className='h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
+				<h1 className='text-xl md:text-5xl font-medium text-white'>
+					Sign Up
+				</h1>
+			</section>
 
 			<div className='flex flex-col justify-center items-center  py-20'>
 				<form
@@ -173,6 +185,14 @@ const SignUpPage = () => {
 							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 						/>
 						<FormTextInput
+							name='email'
+							padding='py-4 px-4'
+							value={formData.email}
+							handleChange={handleChange}
+							placeHolder='Email'
+							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+						/>
+						<FormTextInput
 							name='phoneNumber'
 							type='number'
 							padding='py-4 px-4'
@@ -181,33 +201,87 @@ const SignUpPage = () => {
 							placeHolder='Phone Number'
 							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 						/>
-						<FormTextInput
-							name='email'
-							padding='py-4 px-4'
-							value={formData.email}
-							handleChange={handleChange}
-							placeHolder='Email'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-						/>
+						{formData.role === 'FARMER' && (
+							<>
+								<FormTextInput
+									name='businessName'
+									padding='py-4 px-4'
+									value={formData.businessName}
+									handleChange={handleChange}
+									placeHolder='Business Name'
+									classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+								/>
+								<FormTextInput
+									name='businessAddress'
+									padding='py-4 px-4'
+									value={formData.businessAddress}
+									handleChange={handleChange}
+									placeHolder='Business Address'
+									classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+								/>
 
-						<div>
-							<select
-								name='location'
-								className='w-full border py-4 rounded px-3 text-sm scrollbar__1'
-								onChange={handleSelectChange}
-							>
-								<option value=''>Location</option>
-								{NigeriaStates.map((option) => (
-									<option
-										key={option}
-										value={option}
-										className='cursor-pointer'
+								<div className='w-full'>
+									<select
+										name='businessState'
+										className='w-full border py-4 rounded px-3 text-sm scrollbar__1'
+										onChange={handleSelectChange}
 									>
-										{option}
-									</option>
-								))}
-							</select>
-						</div>
+										<option value=''>Business State</option>
+										{NigerianStates.map((option) => (
+											<option
+												key={option}
+												value={option}
+												className='cursor-pointer'
+											>
+												{option}
+											</option>
+										))}
+									</select>
+								</div>
+
+								<div className='w-full'>
+									<select
+										name='businessCity'
+										className='w-full border py-3 rounded px-3 text-sm scrollbar__1'
+										onChange={handleSelectChange}
+									>
+										<option value=''>Business City</option>
+										{NigerianCities[
+											formData.businessState
+										].map((option) => (
+											<option
+												key={option}
+												value={option}
+												className='cursor-pointer'
+											>
+												{option}
+											</option>
+										))}
+									</select>
+								</div>
+							</>
+						)}
+
+						{formData.role === 'CUSTOMER' && (
+							<div>
+								<select
+									name='location'
+									className='w-full border py-4 rounded px-3 text-sm scrollbar__1'
+									onChange={handleSelectChange}
+								>
+									<option value=''>Location</option>
+									{NigerianStates.map((option) => (
+										<option
+											key={option}
+											value={option}
+											className='cursor-pointer'
+										>
+											{option}
+										</option>
+									))}
+								</select>
+							</div>
+						)}
 
 						<FormPasswordInput
 							name='password'
@@ -339,6 +413,7 @@ const SignUpPage = () => {
 							className='flex items-center gap-x-4 h-12 justify-center w-full rounded-full py-3'
 						>
 							<Image
+								unoptimized={true}
 								alt='google icon'
 								src={'/icon_google.svg'}
 								width={30}

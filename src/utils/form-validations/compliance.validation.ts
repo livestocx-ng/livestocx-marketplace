@@ -7,6 +7,10 @@ interface ComplianceDto {
 	identificationDocument: File | null;
 	registrationDocument: File | null;
 	email: string;
+	facebookUrl?: string;
+	instagramUrl?: string;
+	twitterUrl?: string;
+	websiteUrl?: string;
 	phoneNumber: string;
 	isUpdated: boolean;
 }
@@ -18,16 +22,16 @@ export function ValidateComplianceFormData(formData: ComplianceDto): string {
 	let message = '';
 
 	if (!formData.name) {
-		return (message = 'Brand name is required.');
+		return (message = 'Business name is required.');
 	}
-	
-		if (!formData.email) {
-			return (message = 'Email is required.');
-		}
-	
-		if (!emailRegEX.test(formData.email)) {
-			return (message = 'Invalid email address.');
-		}
+
+	if (!formData.email) {
+		return (message = 'Business email is required.');
+	}
+
+	if (!emailRegEX.test(formData.email)) {
+		return (message = 'Invalid email address.');
+	}
 
 	if (!formData.state) {
 		return (message = 'State is required.');
@@ -38,11 +42,11 @@ export function ValidateComplianceFormData(formData: ComplianceDto): string {
 	}
 
 	if (!formData.address) {
-		return (message = 'Address is required.');
+		return (message = 'Business address is required.');
 	}
 
 	if (!formData.phoneNumber) {
-		return (message = 'Phone number is required.');
+		return (message = 'Business Phone number is required.');
 	}
 	if (!isNumberRegEX.test(formData.phoneNumber)) {
 		return (message = 'Invalid phone number.');
@@ -54,11 +58,24 @@ export function ValidateComplianceFormData(formData: ComplianceDto): string {
 		return (message = 'Phone number must be at least 11 characters.');
 	}
 
-	if (!formData.avatar) {
-		return (message = 'Brand logo is required.');
+	if (formData.facebookUrl && !formData.facebookUrl.includes('.com')) {
+		return (message = 'Invalid facebook url.');
 	}
+
+	if (formData.instagramUrl && !formData.instagramUrl.includes('.com')) {
+		return (message = 'Invalid instagram url.');
+	}
+
+	if (formData.twitterUrl && !formData.twitterUrl.includes('.com')) {
+		return (message = 'Invalid twitter url.');
+	}
+
+	if (formData.websiteUrl && !formData.websiteUrl.includes('.com')) {
+		return (message = 'Invalid website url.');
+	}
+
 	if (formData.avatar && typeof formData.avatar !== 'object') {
-		return (message = 'Uploaded brand logo type is not a valid image.');
+		return (message = 'Uploaded business logo type is not a valid image.');
 	}
 
 	if (!formData.identificationDocument) {

@@ -21,6 +21,7 @@ const IconLink = ({href, icon, width, height}: IconLinkProps) => {
 				src={icon}
 				width={width}
 				height={height}
+				unoptimized={true}
 				className='object-cover'
 			/>
 		</Link>
@@ -41,6 +42,7 @@ const Footer = () => {
 						width={60}
 						height={60}
 						className=''
+						unoptimized={true}
 						src={'/logo.svg'}
 					/>
 
@@ -107,29 +109,48 @@ const Footer = () => {
 
 				<div className='flex flex-col items-center justify-center space-y-5 mt-10'>
 					<div className='flex items-center space-x-10 sm:space-x-3'>
-						<Link href={'#'} className=''>
+						<Link
+							target='_blank'
+							href={
+								'https://www.facebook.com/profile.php?id=61550763699954'
+							}
+						>
 							<Image
 								alt={''}
 								width={30}
 								height={30}
 								className='object-cover'
+								unoptimized={true}
 								src={'/icon__facebook.svg'}
 							/>
 						</Link>
-						<Link href={'#'} className=''>
+						<Link
+							className=''
+							target='_blank'
+							href={
+								'https://www.linkedin.com/company/livestocxltd/'
+							}
+						>
 							<Image
 								alt={''}
 								width={30}
 								height={30}
+								unoptimized={true}
 								className='object-cover'
 								src={'/icon__linkedin.svg'}
 							/>
 						</Link>
-						<Link href={'#'} className=''>
+						<Link
+							target='_blank'
+							href={
+								'https://instagram.com/livestocx?igshid=MzNlNGNkZWQ4Mg=='
+							}
+						>
 							<Image
 								alt={''}
 								width={30}
 								height={30}
+								unoptimized={true}
 								className='object-cover'
 								src={'/icon__instagram.svg'}
 							/>
@@ -139,19 +160,27 @@ const Footer = () => {
 						<Link href={'#'} className=''>
 							<Image
 								alt={''}
-								width={100}
-								height={50}
+								width={120}
+								height={60}
+								unoptimized={true}
 								className='object-cover'
-								src={'/icon__appstore.svg'}
+								src={'/icon__appstore__2.svg'}
 							/>
 						</Link>
-						<Link href={'#'} className=''>
+						<Link
+							className=''
+							target='_blank'
+							href={
+								'https://play.google.com/store/apps/details?id=com.livestocx.livestocx_mobile&pcampaignid=web_share'
+							}
+						>
 							<Image
 								alt={''}
-								width={100}
-								height={50}
+								width={120}
+								height={60}
+								unoptimized={true}
 								className='object-cover'
-								src={'/icon__playstore.svg'}
+								src={'/icon__playstore__2.svg'}
 							/>
 						</Link>
 					</div>

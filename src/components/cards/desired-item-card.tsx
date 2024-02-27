@@ -14,6 +14,7 @@ const DesiredItemCard = ({item}: {item: DesiredItem}) => {
 				<Image
 					alt=''
 					fill
+					unoptimized={true}
 					className='object-full rounded-l'
 					src={item.product.media[0].mediaUrl}
 				/>

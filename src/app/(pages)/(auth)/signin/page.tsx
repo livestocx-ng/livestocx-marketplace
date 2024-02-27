@@ -11,7 +11,6 @@ import {useGlobalStore} from '@/hooks/use-global-store';
 import {useRouter, useSearchParams} from 'next/navigation';
 import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
-import AuthHeader from '../../../../components/header/auth-header';
 import FormPasswordInput from '@/components/input/form-password-input';
 import {ValidateSigninFormData} from '@/utils/form-validations/auth.validation';
 
@@ -67,11 +66,11 @@ const SignInPage = () => {
 
 		try {
 			setLoading(true);
-			// console.log('[SIGNIN-PAYLOAD] :: ', formData);
+			// // console.log('[SIGNIN-PAYLOAD] :: ', formData);
 
 			const {data} = await axios.post('/api/auth/signin', formData);
 
-			// console.log('[DATA] :: ', data);
+			// // console.log('[DATA] :: ', data);
 
 			if (data?.ok == false) {
 				setLoading(false);
@@ -92,7 +91,7 @@ const SignInPage = () => {
 		} catch (error) {
 			setLoading(false);
 
-			console.error('[SIGNIN-ERROR]', error);
+			// console.error('[SIGNIN-ERROR]', error);
 
 			toast.error('Invalid credentials');
 		}
@@ -100,7 +99,11 @@ const SignInPage = () => {
 
 	return (
 		<div className='w-full'>
-			<AuthHeader />
+			<section className='h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
+				<h1 className='text-xl md:text-5xl font-medium text-white'>
+					Sign In
+				</h1>
+			</section>
 
 			<div className='flex flex-col justify-center items-center py-20'>
 				<form
@@ -172,10 +175,11 @@ const SignInPage = () => {
 						<Button
 							type='button'
 							variant={'outline'}
-							onClick={()=> signIn('google')}
+							onClick={() => signIn('google')}
 							className='flex items-center gap-x-4 h-12 justify-center w-full rounded-full py-4'
 						>
 							<Image
+								unoptimized={true}
 								alt='google icon'
 								src={'/icon_google.svg'}
 								width={30}

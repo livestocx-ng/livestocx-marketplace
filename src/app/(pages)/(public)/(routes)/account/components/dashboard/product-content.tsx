@@ -1,4 +1,12 @@
 'use client';
+import {
+	TwitterIcon,
+	WhatsappIcon,
+	FacebookIcon,
+	TwitterShareButton,
+	FacebookShareButton,
+	WhatsappShareButton,
+} from 'react-share';
 import Image from 'next/image';
 import {
 	useGlobalStore,
@@ -40,6 +48,7 @@ const ProductContent = ({}: ProductContentProps) => {
 						<Image
 							alt='product image'
 							fill
+							unoptimized={true}
 							src={product?.media[0]?.mediaUrl!}
 							className='object-fill h-full w-full'
 						/>
@@ -80,6 +89,29 @@ const ProductContent = ({}: ProductContentProps) => {
 							title='Date uploaded:'
 							value={product?.createdAt.slice(0, 10)!}
 						/>
+						<div className='w-full flex space-x-5 items-center justify-start'>
+							<h1 className='font-medium text-sm'>Share on:</h1>
+							<div className='flex space-x-2'>
+								<WhatsappShareButton
+									url={`https://livestocx.com/marketplace/products/${product?.productId.toLowerCase()}`}
+									title='Check out this awesome product on Livestocx: '
+								>
+									<WhatsappIcon size={30} round />
+								</WhatsappShareButton>
+								<FacebookShareButton
+									url={`https://livestocx.com/marketplace/products/${product?.productId.toLowerCase()}`}
+									title='Check out this awesome product on Livestocx: '
+								>
+									<FacebookIcon size={30} round />
+								</FacebookShareButton>
+								<TwitterShareButton
+									url={`https://livestocx.com/marketplace/products/${product?.productId.toLowerCase()}`}
+									title='Check out this awesome product on Livestocx: '
+								>
+									<TwitterIcon size={30} round />
+								</TwitterShareButton>
+							</div>
+						</div>
 					</div>
 				</div>
 
@@ -104,6 +136,7 @@ const ProductContent = ({}: ProductContentProps) => {
 									<Image
 										fill
 										alt={'product'}
+										unoptimized={true}
 										src={media.mediaUrl}
 										onClick={() => {
 											onModalOpen();

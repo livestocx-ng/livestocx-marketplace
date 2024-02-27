@@ -19,7 +19,7 @@ const YoutubeVideoPlayer = ({videoId}: {videoId: string}) => {
 	};
 
 	const onError = (error: any) => {
-		console.error('YouTube Player Error:', error);
+		// console.error('YouTube Player Error:', error);
 	};
 
 	return (

@@ -69,7 +69,7 @@ const DeleteProductModal = () => {
 				}
 			);
 
-			console.log('[DATA] :: ', data);
+			// console.log('[DATA] :: ', data);
 
 			setLoading(false);
 
@@ -86,7 +86,7 @@ const DeleteProductModal = () => {
 
 			const _error = error as AxiosError;
 
-			console.log('[DELETE-PRODUCT-ERROR]', _error);
+			// console.log('[DELETE-PRODUCT-ERROR]', _error);
 
 			toast.error('Error');
 		}
@@ -96,10 +96,12 @@ const DeleteProductModal = () => {
 		<div className='fixed h-screen flex flex-col items-center justify-center w-full bg-[#11111190] backdrop-blur-sm z-10'>
 			<form
 				onSubmit={handleSubmit}
-				className='flex flex-col w-[40%] bg-white py-2 px-4  overflow-y-auto scrollbar__1'
+				className='flex flex-col w-[90%] md:w-[40%] bg-white py-2 px-4  overflow-y-auto scrollbar__1'
 			>
 				<div className='flex items-center justify-between px4'>
-					<h1 className='text-red-500'>Delete Product</h1>
+					<h1 className='text-red-500 font-mediumage'>
+						Delete Product
+					</h1>
 
 					<Button
 						type='button'
@@ -123,7 +125,7 @@ const DeleteProductModal = () => {
 							// disabled
 							type='button'
 							variant={'outline'}
-							className='w-[200px] bg-red-500 hover:bg-red-500 text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
+							className='w-full md:w-[200px] bg-red-500 hover:bg-red-500 text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
 						>
 							<ButtonLoader />
 						</Button>
@@ -131,7 +133,7 @@ const DeleteProductModal = () => {
 						<Button
 							type='submit'
 							variant={'outline'}
-							className='w-[200px] bg-red-500 hover:bg-red-600 text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
+							className='w-full md:w-[200px] bg-red-500 hover:bg-red-600 text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
 						>
 							Delete
 						</Button>

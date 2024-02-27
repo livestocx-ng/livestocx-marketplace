@@ -19,6 +19,7 @@ const TestimonialCard = ({data}: {data: Testimonial}) => {
 					height={50}
 					alt='testimonial'
 					src={data.avatar}
+					unoptimized={true}
 				/>
 
 				<p className='text-sm'>{data.author}</p>

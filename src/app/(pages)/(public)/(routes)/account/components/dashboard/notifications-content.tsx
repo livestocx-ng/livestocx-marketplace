@@ -24,14 +24,14 @@ const NotificationsContent = () => {
 				}
 			);
 
-			console.log('[DATA] ::  ', data);
+			// console.log('[DATA] ::  ', data);
 
 			updateNotifications(data.data.notifications);
 			updatePagination(data.data.totalPages, data.data.hasNext);
 		} catch (error) {
 			const _error = error as AxiosError;
 
-			console.log('[FETCH-NOTIFICATIONS-ERROR] :: ', _error);
+			// console.log('[FETCH-NOTIFICATIONS-ERROR] :: ', _error);
 		}
 	};
 
@@ -39,7 +39,7 @@ const NotificationsContent = () => {
 		fetchNotifications();
 	}, []);
 
-	console.log(notifications);
+	// console.log(notifications);
 
 	return (
 		<div className='w-full md:w-[78%] flex flex-col gap-5'>
@@ -49,6 +49,7 @@ const NotificationsContent = () => {
 						alt='logo'
 						width={150}
 						height={150}
+						unoptimized={true}
 						src={'/logo.svg'}
 						className='opacity-50'
 					/>

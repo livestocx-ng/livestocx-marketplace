@@ -13,7 +13,7 @@ const SellersPage = () => {
 	const userStore = useUserHook();
 
 	const {vendors, updateVendors, updatePagination} = useGlobalStore();
-	const [currentPage, setCurrentPage] = useState<number>(1)
+	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [loading, setLoading] = useState<boolean>(true);
 
 	const fetchSellers = async () => {
@@ -24,7 +24,7 @@ const SellersPage = () => {
 				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/fetch-all?page=${currentPage}`
 			);
 
-			console.log('[DATA] ::  ', data);
+			// // console.log('[DATA] ::  ', data);
 
 			updateVendors(data.data.vendors);
 			updatePagination(data.data.totalPages, data.data.hasNext);
@@ -34,7 +34,7 @@ const SellersPage = () => {
 			setLoading(false);
 			const _error = error as AxiosError;
 
-			console.log('[FETCH-SELLERS-ERROR] :: ', _error);
+			// console.log('[FETCH-SELLERS-ERROR] :: ', _error);
 		}
 	};
 
@@ -44,10 +44,9 @@ const SellersPage = () => {
 
 	return (
 		<main className='bg-[#28312B]'>
-			<section className='md:h-[60vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 md:pt-0 pb-20 mb:pb-0'>
+			<section className='h-[40vh] md:h-[50vh] w-full bg-home flex flex-col items-center justify-end gap-y-5 md:gap-y-16 py-5 md:py-10 md:pt-0'>
 				<h1 className='text-xl md:text-5xl font-medium text-white'>
-					Best <span className='text-green-600'>deals.</span>{' '}
-					Everything <span className='text-green-600'>Livestocx</span>
+					Sellers
 				</h1>
 
 				<SearchForm />
@@ -79,7 +78,10 @@ const SellersPage = () => {
 
 			{!loading && vendors?.length > 0 && (
 				<div className='flex flex-col w-full bg-white px-4 md:px-8 py-10'>
-					<HomeSellers currentPage={currentPage} updateCurrentPage={setCurrentPage} />
+					<HomeSellers
+						currentPage={currentPage}
+						updateCurrentPage={setCurrentPage}
+					/>
 				</div>
 			)}
 		</main>

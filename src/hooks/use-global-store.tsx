@@ -1,4 +1,3 @@
-import {create} from 'zustand';
 import {
 	Tab,
 	User,
@@ -11,8 +10,12 @@ import {
 	Notification,
 	DesiredItemInfo,
 } from '@/types/types';
+import {create} from 'zustand';
 
 interface GlobalStore {
+	searchQuery: string;
+	searchQueryState: string;
+	searchQueryCity: string | 'Nigeria';
 	user: User | null;
 	vendor: Vendor | null;
 	vendors: Vendor[];
@@ -24,9 +27,15 @@ interface GlobalStore {
 	desiredProducts: DesiredItem[];
 	productInfo: ProductInfo | null;
 	products: Product[];
+	searchProducts: Product[];
+	sellerProducts: Product[];
 	totalPages: number;
 	hasNextPage: boolean;
+	sellerTotalPages: number;
+	sellerHasNextPage: boolean;
 	currentAccountTab: Tab | 'Account' | null;
+	updateSearchQuery: (searchQuery: string)=> void;
+	updateSearchLocation: (searchQueryCity: string, searchQueryState: string)=> void;
 	updateNotification: (notificationId: number, value: Notification) => void;
 	updateNotifications: (value: Notification[]) => void;
 	updateDesiredProductInfo: (value: DesiredItemInfo) => void;
@@ -39,12 +48,15 @@ interface GlobalStore {
 	updateBilling: (value: Billing | null) => void;
 	updateUser: (value: User | null) => void;
 	updateProducts: (products: Product[]) => void;
+	updateSearchProducts: (products: Product[]) => void;
+	updateSellerProducts: (products: Product[]) => void;
 	updateProductInfo: (value: ProductInfo) => void;
 	updateProduct: (productId: string, product: Product) => void;
 	updatePagination: (totalPages: number, hasNextPage: boolean) => void;
+	updateSellerPagination: (totalPages: number, hasNextPage: boolean) => void;
 }
 
-interface UpdateGoogleProfileModal {
+interface UpdateVendorProfileModal {
 	isOpen: boolean;
 	onOpen: () => void;
 	onClose: () => void;
@@ -64,6 +76,12 @@ interface WelcomeFarmerModal {
 	onClose: () => void;
 }
 
+interface UpdateSearchLocationModal {
+	isOpen: boolean;
+	onOpen: () => void;
+	onClose: () => void;
+}
+
 interface ProductModal {
 	isOpen: boolean;
 	payload: Media[];
@@ -73,6 +91,12 @@ interface ProductModal {
 }
 
 interface UpdateUserRoleModal {
+	isOpen: boolean;
+	onOpen: () => void;
+	onClose: () => void;
+}
+
+interface CreateProductModal {
 	isOpen: boolean;
 	onOpen: () => void;
 	onClose: () => void;
@@ -94,8 +118,8 @@ interface DeleteProductModal {
 	updatePayload: (value: Product) => void;
 }
 
-export const useUpdateGoogleProfileModalStore =
-	create<UpdateGoogleProfileModal>((set) => ({
+export const useUpdateVendorProfileModalStore =
+	create<UpdateVendorProfileModal>((set) => ({
 		isOpen: false,
 		onOpen: () => set({isOpen: true}),
 		onClose: () => set({isOpen: false}),
@@ -119,6 +143,14 @@ export const useUpdateWelcomeFarmerModalStore = create<WelcomeFarmerModal>(
 	})
 );
 
+export const useUpdateSearchLocationModalStore = create<UpdateSearchLocationModal>(
+	(set) => ({
+		isOpen: false,
+		onOpen: () => set({isOpen: true}),
+		onClose: () => set({isOpen: false}),
+	})
+);
+
 export const useUpdateUserRoleModalStore = create<UpdateUserRoleModal>(
 	(set) => ({
 		isOpen: false,
@@ -126,6 +158,12 @@ export const useUpdateUserRoleModalStore = create<UpdateUserRoleModal>(
 		onClose: () => set({isOpen: false}),
 	})
 );
+
+export const useCreateProductModalStore = create<CreateProductModal>((set) => ({
+	isOpen: false,
+	onOpen: () => set({isOpen: true}),
+	onClose: () => set({isOpen: false}),
+}));
 
 export const useUpdateProductModalStore = create<UpdateProductModal>((set) => ({
 	isOpen: false,
@@ -137,6 +175,57 @@ export const useUpdateProductModalStore = create<UpdateProductModal>((set) => ({
 		discountPrice: 0,
 		category: '',
 		description: '',
+		inStock: false,
+		isNegotiable: false,
+		totalReviews: 0,
+		viewCount: 0,
+		likeCount: 0,
+		purchaseCount: 0,
+		likedUsers: null,
+		media: [],
+		createdAt: '',
+	},
+	onOpen: () => set({isOpen: true}),
+	onClose: () => set({isOpen: false}),
+	updatePayload: (value: Product) => set({payload: value}),
+}));
+
+export const useShareProductModalStore = create<UpdateProductModal>((set) => ({
+	isOpen: false,
+	payload: {
+		id: '',
+		productId: '',
+		name: '',
+		price: 0,
+		discountPrice: 0,
+		category: '',
+		description: '',
+		inStock: false,
+		isNegotiable: false,
+		totalReviews: 0,
+		viewCount: 0,
+		likeCount: 0,
+		purchaseCount: 0,
+		likedUsers: null,
+		media: [],
+		createdAt: '',
+	},
+	onOpen: () => set({isOpen: true}),
+	onClose: () => set({isOpen: false}),
+	updatePayload: (value: Product) => set({payload: value}),
+}));
+
+export const useShareNewProductModalStore = create<UpdateProductModal>((set) => ({
+	isOpen: false,
+	payload: {
+		id: '',
+		productId: '',
+		name: '',
+		price: 0,
+		discountPrice: 0,
+		category: '',
+		description: '',
+		inStock: false,
 		isNegotiable: false,
 		totalReviews: 0,
 		viewCount: 0,
@@ -171,6 +260,10 @@ export const useProductMediaModalStore = create<ProductModal>((set) => ({
 }));
 
 export const useGlobalStore = create<GlobalStore>((set) => ({
+	searchQuery: '',
+	searchQueryState: '',
+	searchLocationState: '',
+	searchQueryCity: 'Nigeria',
 	user: null,
 	desiredProductInfo: null,
 	desiredProduct: null,
@@ -179,12 +272,20 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	vendors: [],
 	billing: null,
 	vendor: null,
+	searchProducts: [],
 	products: [],
-	totalPages: 1,
+	sellerProducts: [],
+	totalPages: 0,
+	sellerTotalPages: 0,
+	sellerHasNextPage: false,
 	product: null,
 	hasNextPage: false,
 	productInfo: null,
 	currentAccountTab: 'Account',
+	updateSearchQuery: (searchQuery: string) =>
+	set({searchQuery: searchQuery}),
+	updateSearchLocation: (searchQueryCity: string, searchQueryState: string) =>
+		set({searchQueryCity: searchQueryCity, searchQueryState: searchQueryState}),
 	updateNotifications: (value: Notification[]) => set({notifications: value}),
 	updateDesiredProductInfo: (value: DesiredItemInfo) =>
 		set({desiredProductInfo: value}),
@@ -227,5 +328,11 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	},
 	updatePagination: (totalPages: number, hasNextPage: boolean) =>
 		set({totalPages: totalPages, hasNextPage: hasNextPage}),
+	updateSellerPagination: (totalPages: number, hasNextPage: boolean) =>
+		set({sellerTotalPages: totalPages, sellerHasNextPage: hasNextPage}),
 	updateProducts: (products: Product[]) => set({products: products}),
+	updateSearchProducts: (products: Product[]) =>
+		set({searchProducts: products}),
+	updateSellerProducts: (products: Product[]) =>
+		set({sellerProducts: products}),
 }));

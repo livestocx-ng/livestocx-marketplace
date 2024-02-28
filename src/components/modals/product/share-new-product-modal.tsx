@@ -56,19 +56,19 @@ const ShareNewProductModal = () => {
 						<h1 className='text-sm font-medium'>Share On: &nbsp;</h1>
 						<div className='flex space-x-2'>
 							<WhatsappShareButton
-								title='Check out this awesome product on Livestocx: '
+								title={`Check out my ${payload.name} on livestocx: `}
 								url={`https://livestocx.com/marketplace/products/${payload.productId.toLowerCase()}`}
 							>
 								<WhatsappIcon size={30} round />
 							</WhatsappShareButton>
 							<FacebookShareButton
-								title='Check out this awesome product on Livestocx: '
+								title={`Check out my ${payload.name} on livestocx: `}
 								url={`https://livestocx.com/marketplace/products/${payload.productId.toLowerCase()}`}
 							>
 								<FacebookIcon size={30} round />
 							</FacebookShareButton>
 							<TwitterShareButton
-								title='Check out this awesome product on Livestocx: '
+								title={`Check out my ${payload.name} on livestocx: `}
 								url={`https://livestocx.com/marketplace/products/${payload.productId.toLowerCase()}`}
 							>
 								<TwitterIcon size={30} round />

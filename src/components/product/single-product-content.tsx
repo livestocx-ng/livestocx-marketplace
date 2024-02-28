@@ -266,19 +266,19 @@ const SingleProductContent = ({
 				<div className='flex space-x-2'>
 					<WhatsappShareButton
 						url={window.location.toString()}
-						title='Check out this awesome product on Livestocx: '
+						title={`Check out my ${product?.name} on livestocx: `}
 					>
 						<WhatsappIcon size={30} round />
 					</WhatsappShareButton>
 					<FacebookShareButton
 						url={window.location.toString()}
-						title='Check out this awesome product on Livestocx: '
+						title={`Check out my ${product?.name} on livestocx: `}
 					>
 						<FacebookIcon size={30} round />
 					</FacebookShareButton>
 					<TwitterShareButton
 						url={window.location.toString()}
-						title='Check out this awesome product on Livestocx: '
+						title={`Check out my ${product?.name} on livestocx: `}
 					>
 						<TwitterIcon size={30} round />
 					</TwitterShareButton>

@@ -149,7 +149,7 @@ export const TeamMembers: TeamMember[] = [
 		id: 4,
 		image: '/team/about__4.jpeg',
 		name: 'Steve Odinkaru',
-		intro: 'Co-founder UI/UX designer and Frontend Engineer: Steve is an expert in Figma design with 5 years experience Python and C++. He is charge of our front end designs and implementation. He also manages our social media handles.',
+		intro: 'Co-founder/Product Architect & Lead Designer: Steve is an expert in Figma design and product management with 5 years of experience. He is also a developer of Python and C++. He is in charge of our front-end designs and user experience. He also manages our social media handles.',
 		facebook: 'https://www.facebook.com/chide2001?mibextid=ZbWKwL',
 		linkedin: 'https://www.linkedin.com/in/steve-odinkaru/',
 		twitter: 'https://x.com/ojo__chide?s=09',

@@ -158,19 +158,19 @@ export const columns: ColumnDef<ProductColumn>[] = [
 			<div className='flex space-x-2'>
 				<WhatsappShareButton
 					url={`https://livestocx.com/marketplace/products/${row.original.productId.toLowerCase()}`}
-					title={`Check out my ${row.original.name} on livestocx: `}
+					title='Check out this awesome product on Livestocx: '
 				>
 					<WhatsappIcon size={25} round />
 				</WhatsappShareButton>
 				<FacebookShareButton
 					url={`https://livestocx.com/marketplace/products/${row.original.productId.toLowerCase()}`}
-					title={`Check out my ${row.original.name} on livestocx: `}
+					title='Check out this awesome product on Livestocx: '
 				>
 					<FacebookIcon size={25} round />
 				</FacebookShareButton>
 				<TwitterShareButton
 					url={`https://livestocx.com/marketplace/products/${row.original.productId.toLowerCase()}`}
-					title={`Check out my ${row.original.name} on livestocx: `}
+					title='Check out this awesome product on Livestocx: '
 				>
 					<TwitterIcon size={25} round />
 				</TwitterShareButton>

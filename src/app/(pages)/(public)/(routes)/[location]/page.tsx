@@ -34,7 +34,8 @@ const SearchLocationPage = ({params}: SearchLocationPageParams) => {
 			// console.log(currentPage);
 
 			const {data} = await axios.get(
-				`${process.env.NEXT_PUBLIC_API_URL}/user/products/fetch-location-products?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=${searchQuery}&page=${currentPage}`
+				// `${process.env.NEXT_PUBLIC_API_URL}/user/products/fetch-location-products?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=${searchQuery}&page=${currentPage}`
+				`${process.env.NEXT_PUBLIC_API_URL}/user/products/search?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=${searchQuery}&category=&page=${currentPage}`
 			);
 
 			// console.log('[DATA] ::  ', data);

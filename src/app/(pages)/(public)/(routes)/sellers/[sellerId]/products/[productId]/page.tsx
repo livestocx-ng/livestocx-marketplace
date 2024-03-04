@@ -20,9 +20,9 @@ import {useGlobalStore} from '@/hooks/use-global-store';
 import AuthHeader from '@/components/header/auth-header';
 import {useProductMediaModalStore} from '@/hooks/use-global-store';
 import SingleProductContent from '@/components/product/single-product-content';
-import EmptyAnimation from '../../../../../../../../../public/animations/animation__2.json';
+import EmptyAnimation from '../../../../../../../../../public/animations/animation__3.json';
+import LoadingAnimation from '../../../../../../../../../public/animations/animation__3.json';
 import ProductMediaModal from '../../../../../../../../components/modals/product/product-media-modal';
-import LoadingAnimation from '../../../../../../../../../public/animations/loading__animation__1.json';
 
 interface SellerProductPageParams {
 	params: {

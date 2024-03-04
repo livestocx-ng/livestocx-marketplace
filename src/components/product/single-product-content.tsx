@@ -81,10 +81,10 @@ const SingleProductContent = ({
 	);
 
 	return (
-		<div className='flex flex-col justify-start items-start py-10 md:px-8'>
-			<h1 className='text-orange-500 text-3xl font-medium mb-4 px-4 md:px-0'>
+		<div className='flex flex-col justify-start items-start pt-3 pb-10 md:px-8'>
+			{/* <h1 className='text-orange-500 text-3xl font-medium mb-4 px-4 md:px-0'>
 				{product?.name}
-			</h1>
+			</h1> */}
 
 			<div className='flex flex-wrap justify-between items-start md:h-[500px] w-full'>
 				<div className='w-full md:w-[55%] h-[350px] md:h-full relative mb-5 md:mb-0 rounded-none md:rounded-l-l'>

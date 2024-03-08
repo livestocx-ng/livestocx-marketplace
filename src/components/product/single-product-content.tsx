@@ -43,6 +43,7 @@ import SellerInfoTab from '../product-info/seller-info-tab';
 import ProductReviewTab from '../product-info/product-review-tab';
 import MoreFromSellerTab from '../product-info/more-from-seller-tab';
 import {getMediaImageUrl} from '@/utils/media/media.url';
+import axios from 'axios';
 
 interface SingleProductContentProps {
 	currentTab: Tab;
@@ -81,7 +82,7 @@ const SingleProductContent = ({
 	);
 
 	return (
-		<div className='flex flex-col justify-start items-start pt-3 pb-10 md:px-8'>
+		<div className='flex flex-col justify-start items-start pt-0 md:pt-3 pb-10 md:px-8'>
 			{/* <h1 className='text-orange-500 text-3xl font-medium mb-4 px-4 md:px-0'>
 				{product?.name}
 			</h1> */}
@@ -96,8 +97,21 @@ const SingleProductContent = ({
 						className='object-cover h-full w-full md:rounded-l-l border-0 md:border border-gray-600'
 					/>
 
+					{product?.isNegotiable === true && (
+						<div className='absolute top-0 left-0 bg-slate-800 px-4 py-2'>
+							<p className='text-[10px] text-white'>Negotiable</p>
+						</div>
+					)}
+					{product?.inStock === false && (
+						<div className='absolute top-0 right-0 bg-[#b21e1ec6] px-4 py-2'>
+							<p className='text-[10px] text-white'>
+								Out Of Stock
+							</p>
+						</div>
+					)}
+
 					<div className='absolute flex items-center bottom-0 left-0'>
-						<p className='bg-slate-800 border-0 text-white hover:bg-slate-800 hover:text-white text-xs h-10 py-4 px-2 flex items-center'>
+						<p className='bg-slate-800 border-0 text-white hover:bg-slate-800 hover:text-white text-[10px] py-2 px-2 flex items-center'>
 							Posted on: {product?.createdAt?.slice(0, 10)}
 						</p>
 					</div>
@@ -107,9 +121,12 @@ const SingleProductContent = ({
 							<Button
 								type='button'
 								variant={'outline'}
-								className='bg-slate-800 border-0 text-white hover:bg-slate-800 hover:text-white text-xs h-10 py-4 flex items-center space-x-3 rounded-none'
+								className='bg-slate-800 border-0 text-white hover:bg-slate-800 hover:text-white text-xs py-2 flex items-center space-x-3 rounded-none'
 							>
-								{product?.likedUsers?.length!} Likes
+								{product?.likedUsers?.length!}{' '}
+								{product?.likedUsers?.length == 1
+									? 'Like'
+									: 'Likes'}
 							</Button>
 						)}
 						{user && (
@@ -199,7 +216,21 @@ const SingleProductContent = ({
 							<Button
 								type='button'
 								variant={'outline'}
-								onClick={() => {
+								onClick={async () => {
+									if (user?.accessToken) {
+										await axios.get(
+											`${
+												process.env.NEXT_PUBLIC_API_URL
+											}/user/products/add-user-to-contact-seller?product=${product?.id}`,
+											{
+												headers: {
+													Authorization:
+														user?.accessToken,
+												},
+											}
+										);
+									}
+
 									const chatLink = `https://wa.me/+234${productInfo?.phoneNumber}`;
 
 									window.open(chatLink, '_blank');

@@ -34,8 +34,6 @@ export default function HomePage() {
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/recommended/fetch-all?page=${currentPage}`
 			);
 
-			// // console.log('[DATA] ::  ', data);
-
 			updateProducts([]);
 			updateProducts(data.data.products);
 			updatePagination(data.data.totalPages, data.data.hasNext);
@@ -67,8 +65,6 @@ export default function HomePage() {
 				</h1>
 
 				<SearchForm />
-
-				
 			</section>
 
 			{/* {loading && (

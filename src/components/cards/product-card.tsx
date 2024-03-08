@@ -73,7 +73,16 @@ const ProductCard = ({product}: ProductCardProps) => {
 
 			if (!user) return router.push('/signin');
 
-			// // console.log('[ADD-DESIRED-PRODUCT] :: ');
+			await axios.get(
+				`${
+					process.env.NEXT_PUBLIC_API_URL
+				}/user/products/add-user-to-contact-seller?product=${product?.id}`,
+				{
+					headers: {
+						Authorization: user?.accessToken,
+					},
+				}
+			);
 
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-desired-product?productId=${product?.productId}`,
@@ -84,10 +93,6 @@ const ProductCard = ({product}: ProductCardProps) => {
 					},
 				}
 			);
-
-			// // console.log('[ADD-DESIRED-PRODUCT-SUCCESS] :: ', data);
-
-			// setLoading(false);
 
 			if (data.data === false) {
 				return toast.success('Product already added to desired items');
@@ -135,9 +140,22 @@ const ProductCard = ({product}: ProductCardProps) => {
 					className='object-cover rounded-t-md'
 				/>
 
+				{product?.likeCount !== 0 && (
+					<div className='absolute bottom-0 left-0 bg-[#11111180] px-4 rounded-tl-md'>
+						<p className='text-[10px] text-white'>
+							{product?.likeCount}{' '}
+							{product?.likeCount == 1 ? 'Like' : 'Likes'}
+						</p>
+					</div>
+				)}
 				{product?.isNegotiable === true && (
-					<div className='absolute top-0 left-0 bg-[#11111180] px-4 rounded-tl-md'>
+					<div className='absolute top-0 left-0 bg-[#11111180] px-1 rounded-tl-md'>
 						<p className='text-[10px] text-white'>Negotiable</p>
+					</div>
+				)}
+				{product?.inStock === false && (
+					<div className='absolute bottom-0 right-0 bg-[#b21e1ec6] px-1'>
+						<p className='text-[10px] text-white'>Out Of Stock</p>
 					</div>
 				)}
 			</div>

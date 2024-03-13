@@ -10,6 +10,7 @@ import MarketplaceProducts from './components/marketplace-products';
 import MarketplaceFilterForm from './components/marketplace-filterform';
 import EmptyAnimation from '../../../../../../public/animations/animation__3.json';
 import LoadingAnimation from '../../../../../../public/animations/loading__animation__1.json';
+import AnimationLoad from '../../../../../../public/animations/animationLoading.json';
 
 const MarketPlacePage = () => {
 	const userStore = useUserHook();
@@ -64,7 +65,7 @@ const MarketPlacePage = () => {
 							<Lottie
 								loop={true}
 								className='h-full'
-								animationData={LoadingAnimation}
+								animationData={AnimationLoad}
 							/>
 						</div>
 					</div>
@@ -76,7 +77,7 @@ const MarketPlacePage = () => {
 							<Lottie
 								loop={false}
 								className='h-full'
-								animationData={EmptyAnimation}
+								animationData={AnimationLoad}
 							/>
 						</div>
 					</div>

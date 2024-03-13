@@ -59,9 +59,6 @@ type Tab = 'Seller Info' | 'Review' | 'More From Seller';
 const CurrentTabs: Tab[] = ['Seller Info', 'Review', 'More From Seller'];
 
 
-if ('Notification' in window && Notification.permission !== 'granted') {
-	Notification.requestPermission();
-  }
 const SingleProductContent = ({
 	loading,
 	product,
@@ -71,16 +68,6 @@ const SingleProductContent = ({
 	handleLikeUnlikeProduct,
 	handleAddToDesiredProducts,
 }: SingleProductContentProps) => {
-
-	const [notificationEnabled, setNotificationEnabled] = useState(false);
-
-	useEffect(() => {
-	  if ('Notification' in window && Notification.permission === 'granted') {
-		setNotificationEnabled(true);
-	  }
-	}, []);
-  
-
 	const pathName = usePathname();
 
 	const {user, products} = useGlobalStore();
@@ -143,17 +130,6 @@ const SingleProductContent = ({
 									}
 
 									handleLikeUnlikeProduct(formData);
-
-									if (notificationEnabled) {
-										const notificationMessage = formData.value
-										  ? 'Product Liked!'
-										  : 'Product Unliked!';
-								  
-										new Notification(notificationMessage, {
-										  icon: '/home/asalu/Desktop/livestox/livestocx-marketplace/public/logo.svg',
-
-										});
-									  }
 								}}
 								variant={'outline'}
 								className='bg-main border-0 text-white hover:bg-main hover:text-white text-xs h-10 py-4 flex items-center space-x-3 rounded-none'

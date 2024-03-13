@@ -11,6 +11,7 @@ import HomeProducts from './components/home-products';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import TestimonialSection from '@/components/common/testimonials';
 import EmptyAnimation from '../../../../../public/animations/animation__3.json';
+import AnimationLoad from '../../../../../public/animations/animationLoading.json';
 
 export default function HomePage() {
 	const router = useRouter();
@@ -89,7 +90,7 @@ export default function HomePage() {
 						<Lottie
 							loop={false}
 							className='h-full'
-							animationData={EmptyAnimation}
+							animationData={AnimationLoad}
 						/>
 					</div>
 				</div>

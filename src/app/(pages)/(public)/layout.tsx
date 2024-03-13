@@ -16,6 +16,7 @@ import UpdateUserRoleModal from '@/components/modals/user/update-user-role-modal
 import NotificationModal from '@/components/modals/notifications/notification-modal';
 import UpdateVendorProfileModal from '@/components/modals/user/update-vendor-profile-modal';
 import UpdateSearchLocationModal from '@/components/modals/utils/update-search-location-modal';
+import ContactUsModal from '@/components/modals/contact-us/contact-us-modal';
 
 interface PagesLayoutProps {
 	children: React.ReactNode;
@@ -52,6 +53,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 
 			<Navbar />
 			{children}
+			<ContactUsModal />
 			<Footer />
 		</div>
 	);

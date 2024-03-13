@@ -105,7 +105,7 @@ const SearchForm = () => {
 				const {data} = await axios.get(
 					`${
 						process.env.NEXT_PUBLIC_API_URL
-					}/user/products/fetch-location-products?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=&page=1`
+					}/user/products/search?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=${searchQuery}&category=&page=1`
 				);
 
 				updateProducts(data.data.products);
@@ -145,10 +145,9 @@ const SearchForm = () => {
 				!pathName.includes('sellers')
 			) {
 				const {data} = await axios.get(
-					`${process.env.NEXT_PUBLIC_API_URL}/user/products/search?query=${formData.query}&location=${formData.location}`
+					// `${process.env.NEXT_PUBLIC_API_URL}/user/products/search?query=${formData.query}&location=${formData.location}`
+					`${process.env.NEXT_PUBLIC_API_URL}/user/products/search?state=${formData.location}&city=${formData.location}&query=${formData.query}&category=&page=1`
 				);
-
-				// // console.log('[DATA] ::  ', data);
 
 				updateProducts([]);
 				updateProducts(data.data.products);
@@ -163,9 +162,10 @@ const SearchForm = () => {
 				const {data} = await axios.get(
 					`${
 						process.env.NEXT_PUBLIC_API_URL
-					}/user/products/fetch-location-products?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=${
-						formData.query
-					}&page=1`
+					// }/user/products/fetch-location-products?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=${
+					// 	formData.query
+					// }&page=1`
+					}/user/products/search?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=${searchQuery}&category=&page=1`
 				);
 
 				updateProducts([]);
@@ -175,7 +175,8 @@ const SearchForm = () => {
 				setLoading(false);
 			} else if (pathName.includes('marketplace')) {
 				const {data} = await axios.get(
-					`${process.env.NEXT_PUBLIC_API_URL}/user/products/search?query=${formData.query}&location=${formData.location}`
+					// `${process.env.NEXT_PUBLIC_API_URL}/user/products/search?query=${formData.query}&location=${formData.location}`
+					`${process.env.NEXT_PUBLIC_API_URL}/user/products/search?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=${searchQuery}&category=&page=1`
 				);
 
 				// console.log('[DATA] ::  ', data);

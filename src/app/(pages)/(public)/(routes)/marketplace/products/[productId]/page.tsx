@@ -1,5 +1,4 @@
 'use client';
-import {cn} from '@/lib/utils';
 import Image from 'next/image';
 import {
 	useGlobalStore,
@@ -20,11 +19,10 @@ import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useEffect, useState} from 'react';
 import {ProductInfo} from '@/types/types';
-import AuthHeader from '@/components/header/auth-header';
 import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import SingleProductContent from '@/components/product/single-product-content';
-import EmptyAnimation from '../../../../../../../../public/animations/animation__2.json';
-import LoadingAnimation from '../../../../../../../../public/animations/loading__animation__1.json';
+import EmptyAnimation from '../../../../../../../../public/animations/animation__3.json';
+import LoadingAnimation from '../../../../../../../../public/animations/animation__3.json';
 
 interface ProductPageParams {
 	params: {
@@ -109,10 +107,6 @@ const MarketPlaceProductPage = ({params: {productId}}: ProductPageParams) => {
 
 	const handleLikeUnlikeProduct = async (formData: {value?: boolean}) => {
 		try {
-			// setLoading(true);
-
-			// console.log('[LIKE-UNLIKE-PRODUCT-PAYLOAD] :: ', formData);
-
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/like-unlike-product?productId=${product?.productId}`,
 				formData,
@@ -122,10 +116,6 @@ const MarketPlaceProductPage = ({params: {productId}}: ProductPageParams) => {
 					},
 				}
 			);
-
-			// // console.log('[LIKE-UNLIKE-PRODUCT-SUCCESS] :: ', data);
-
-			// setLoading(false);
 
 			updatePayload(data.data);
 		} catch (error) {
@@ -143,8 +133,6 @@ const MarketPlaceProductPage = ({params: {productId}}: ProductPageParams) => {
 			if (loading) return;
 
 			setLoading(true);
-
-			// console.log('[ADD-DESIRED-PRODUCT] :: ');
 
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-desired-product?productId=${product?.productId}`,

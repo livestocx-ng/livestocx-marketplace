@@ -127,8 +127,18 @@ const DesiredItemContent = () => {
 						<Button
 							type='button'
 							variant={'outline'}
-							onClick={() => {
-								// console.log(desiredProductInfo)
+							onClick={async () => {
+								await axios.get(
+									`${
+										process.env.NEXT_PUBLIC_API_URL
+									}/user/products/add-user-to-contact-seller?product=${product?.id}`,
+									{
+										headers: {
+											Authorization: user?.accessToken,
+										},
+									}
+								);
+
 								const chatLink = `https://wa.me/+234${desiredProductInfo?.phoneNumber}`;
 
 								window.open(chatLink, '_blank');

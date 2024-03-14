@@ -5,7 +5,7 @@ const ContactUsModal = () => {
 	return (
 		<div
 			className='
-				flex space-x-5 items-center
+				flex space-x-2 md:space-x-5 items-center
                 fixed z-10 mb-10 bottom-20 left- right-5 
             '
 		>
@@ -33,7 +33,7 @@ const ContactUsModal = () => {
 				/>
 			</div>
 
-			<div className='p-2 border border-slate-400 text-sm text-black w-[200px] rounded-md bg-white shadow-[#ffffff80] shadow-lg'>
+			<div className='p-2 border border-slate-400 text-[10px] md:text-sm text-black w-[200px] rounded-md bg-white shadow-[#ffffff80] shadow-lg'>
 				Give us your special request lets get you the product seller
 				within an hour🕰️.
 			</div>

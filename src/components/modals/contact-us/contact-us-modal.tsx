@@ -18,14 +18,14 @@ const ContactUsModal = () => {
 				}}
 				className='
 					border border-[#ffffff80]
-					bg-main h-12 w-12 rounded-full 
+					bg-main h-10 w-10 md:h-12 md:w-12 rounded-full 
 					flex flex-col items-center justify-center shadow-[#ffffff80] shadow-lg 
 					cursor-pointer hover:-translate-y-1 transition-all ease-in-out duration-700
 				'
 			>
 				<Image
-					width={40}
-					height={40}
+					width={10}
+					height={10}
 					unoptimized={true}
 					className='w-8 h-8'
 					alt='Livestocx-contact-us'

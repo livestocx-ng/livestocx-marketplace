@@ -1,6 +1,7 @@
 export type Tab =
 	| 'Account'
 	| 'Product'
+	| 'Messages'
 	| 'Desired Item'
 	| 'Desired Items'
 	| 'Products'
@@ -157,4 +158,34 @@ export interface Notification {
 	isRead: boolean;
 	notificationType: string;
 	product: Product | null;
+}
+
+export interface ChatConversationVendor {
+	id: number;
+	name: string;
+	email: string;
+	avatar: string;
+	phoneNumber: string;
+	city: string;
+	state: string;
+	address: string;
+}
+
+export interface ChatConversationUser {
+	id: number;
+	name: string;
+	role: string;
+	email: string;
+	avatar: string;
+	phoneNumber: string;
+}
+
+export interface ChatConversation {
+	id: number;
+	unreadMessages: number;
+	lastConversationMessage: string;
+	lastConversationTimestamp: Date;
+	vendor: ChatConversationVendor;
+	user1: ChatConversationUser;
+	user2: ChatConversationUser;
 }

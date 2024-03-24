@@ -8,6 +8,7 @@ import {
 	Megaphone,
 	LogOutIcon,
 	ShoppingCart,
+	MessagesSquare,
 } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link';
@@ -159,6 +160,23 @@ const MainNavbar = () => {
 									<User2 className={`h-5 w-5 text-main`} />
 
 									<p className='text-xs'>Account</p>
+								</Link>
+								<Link
+									href={'/account'}
+									onClick={() => {
+										setSetShowAccountMenu(false);
+
+										updateCurrentAccountTab('Messages');
+									}}
+									className={` ${
+										scrolling ? 'bg-white' : 'bg-mai'
+									} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
+								>
+									<MessagesSquare
+										className={`h-5 w-5 text-main`}
+									/>
+
+									<p className='text-xs'>Messages</p>
 								</Link>
 								{user?.role === 'CUSTOMER' && (
 									<Link

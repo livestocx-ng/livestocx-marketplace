@@ -9,10 +9,15 @@ import {
 	DesiredItem,
 	Notification,
 	DesiredItemInfo,
+	ChatConversation,
 } from '@/types/types';
+import { Socket } from 'socket.io-client';
 import {create} from 'zustand';
 
 interface GlobalStore {
+	socket: Socket | null;
+	chatConversations: ChatConversation[];
+	showChatConversation: boolean;
 	searchQuery: string;
 	searchQueryState: string;
 	searchQueryCity: string | 'Nigeria';
@@ -34,6 +39,9 @@ interface GlobalStore {
 	sellerTotalPages: number;
 	sellerHasNextPage: boolean;
 	currentAccountTab: Tab | 'Account' | null;
+	updateChatConversations: (value: ChatConversation[])=> void;
+	updateSocketInstance: (value: Socket)=> void;
+	updateShowChatConversation: (value: boolean)=> void;
 	updateSearchQuery: (searchQuery: string)=> void;
 	updateSearchLocation: (searchQueryCity: string, searchQueryState: string)=> void;
 	updateNotification: (notificationId: number, value: Notification) => void;
@@ -260,6 +268,9 @@ export const useProductMediaModalStore = create<ProductModal>((set) => ({
 }));
 
 export const useGlobalStore = create<GlobalStore>((set) => ({
+	socket: null,
+	chatConversations: [],
+	showChatConversation: false,
 	searchQuery: '',
 	searchQueryState: '',
 	searchLocationState: '',
@@ -282,6 +293,10 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	hasNextPage: false,
 	productInfo: null,
 	currentAccountTab: 'Account',
+	updateChatConversations: (value: ChatConversation[]) => set({chatConversations: value}),
+	updateSocketInstance: (value: Socket) => set({socket: value}),
+	updateShowChatConversation: (value: boolean) =>
+	set({showChatConversation: value}),
 	updateSearchQuery: (searchQuery: string) =>
 	set({searchQuery: searchQuery}),
 	updateSearchLocation: (searchQueryCity: string, searchQueryState: string) =>

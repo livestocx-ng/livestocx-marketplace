@@ -9,14 +9,16 @@ import {
 } from '@/hooks/use-global-store';
 import {useRouter} from 'next/navigation';
 import {useUserHook} from '@/hooks/use-user';
+import {io} from 'socket.io-client';
+// import Socket from '@/providers/socket-provider';
 import Footer from '@/components/navigation/footer';
 import Navbar from '@/components/navigation/main-nav-bar';
+import ContactUsModal from '@/components/modals/contact-us/contact-us-modal';
 import ShareProductModal from '@/components/modals/product/share-product-modal';
 import UpdateUserRoleModal from '@/components/modals/user/update-user-role-modal';
 import NotificationModal from '@/components/modals/notifications/notification-modal';
 import UpdateVendorProfileModal from '@/components/modals/user/update-vendor-profile-modal';
 import UpdateSearchLocationModal from '@/components/modals/utils/update-search-location-modal';
-import ContactUsModal from '@/components/modals/contact-us/contact-us-modal';
 
 interface PagesLayoutProps {
 	children: React.ReactNode;

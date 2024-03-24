@@ -9,6 +9,7 @@ import {ToastProvider} from '@/providers';
 import AuthProvider from '@/providers/auth-provider';
 import CookieBannerProvider from '@/providers/cookie-banner-provider';
 import GoogleAnalyticsProvider from '@/providers/google-analytics-provider';
+import SocketProvider from '@/providers/socket-provider';
 
 const poppins = Poppins({
 	subsets: ['latin'],
@@ -23,32 +24,40 @@ export const metadata: Metadata = {
 	description: 'Best deals, Everything Livestock',
 	keywords: ['livestocx', 'Livestock', 'Nigeria', 'Animals', 'Meat'],
 	other: {
-		"facebook-domain-verification": "yy2fxudmyl6e8nxtl2zjx9lss8j8dl",
+		'facebook-domain-verification': 'yy2fxudmyl6e8nxtl2zjx9lss8j8dl',
 	},
 	openGraph: {
 		images: [
 			{
 				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-sitemap.png',
-				secureUrl: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-sitemap.png',
+				secureUrl:
+					'https://livestocx-media.s3.amazonaws.com/public/livestocx-sitemap.png',
 				width: 300,
-				height: 300
-			}
-		]
-	}
+				height: 300,
+			},
+		],
+	},
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
 	return (
 		<html lang='en'>
 			<Head>
-				<meta property="og:image" content={"https://livestocx-media.s3.amazonaws.com/public/livestocx-sitemap.png"} />
+				<meta
+					property='og:image'
+					content={
+						'https://livestocx-media.s3.amazonaws.com/public/livestocx-sitemap.png'
+					}
+				/>
 			</Head>
 			<GoogleAnalyticsProvider />
 			<body className={poppins.className}>
 				<AuthProvider>
-					<ToastProvider />
-					<Toaster />
-					{children}
+					<SocketProvider>
+						<ToastProvider />
+						<Toaster />
+						{children}
+					</SocketProvider>
 				</AuthProvider>
 
 				<CookieBannerProvider />

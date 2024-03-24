@@ -34,7 +34,7 @@ const AccountPage = () => {
 				</h1>
 			</section>
 
-			<div className='w-full flex flex-col justify-center items-center py-10 md:py-20 px-4 sm:px-10'>
+			<div className='w-full flex flex-col justify-center items-center py-10 md:py-10 px-4 sm:px-10'>
 				<div className='flex w-full'>
 					<MobileAccountSideBar />
 				</div>

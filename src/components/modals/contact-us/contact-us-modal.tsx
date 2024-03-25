@@ -1,13 +1,26 @@
 import {useGlobalStore} from '@/hooks/use-global-store';
+import { getLocalStorage } from '@/lib/localstorageHelper';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const ContactUsModal = () => {
 	const {currentAccountTab} = useGlobalStore();
+	const [cookieConsentStatus, setCookieConsentStatus] = useState<boolean| null>(false);
+
+	const initializeState = ()=>{
+		const storedCookieConsent = getLocalStorage('livestocx_cookie_consent');
+
+		console.log('[STORED COOKIE] :: ',storedCookieConsent);
+		setCookieConsentStatus(storedCookieConsent);
+	}
+
+	useEffect(()=>{
+		initializeState();
+	},[])
 
 	return (
 		<>
-			{currentAccountTab !== null && currentAccountTab !== 'Messages' ? (
+			{(cookieConsentStatus !== null && cookieConsentStatus !== false) && currentAccountTab !== null && currentAccountTab !== 'Messages' ? (
 				<div
 					className='
 				flex space-x-2 md:space-x-5 items-center

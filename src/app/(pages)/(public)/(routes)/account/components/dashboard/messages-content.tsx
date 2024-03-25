@@ -43,8 +43,8 @@ const MessagesContent = () => {
 	}, []);
 
 	return (
-		<div className='w-full md:w-[78%] flex items-start justify-between h-[70vh]'>
-			{!showChatConversation && (
+		<div className='w-full md:w-[78%] flex items-center items-star justify-between h-[70vh]'>
+			{/* {!showChatConversation && (
 				<div className='w-[25%] border-r hidde flex lg:flex flex-col space-y-4 h-full overflow-y-auto scrollbar__2'>
 					{chatConversations?.map((conversation) => (
 						<ChatConversationCard
@@ -102,9 +102,9 @@ const MessagesContent = () => {
 						</div>
 					</div>
 				</div>
-			)}
+			)} */}
 
-			{/* <div className='flex flex-col items-center justify-center py-20'>
+			<div className='flex flex-col items-center justify-center py-20 w-full'>
 				<Image
 					alt='logo'
 					width={150}
@@ -113,7 +113,7 @@ const MessagesContent = () => {
 					src={'/logo.svg'}
 					className='opacity-50'
 				/>
-			</div> */}
+			</div>
 		</div>
 	);
 };

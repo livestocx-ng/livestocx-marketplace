@@ -8,14 +8,16 @@ interface ChatConversationCardProps {
 }
 
 const ChatConversationCard = ({conversation}: ChatConversationCardProps) => {
-	const {user, updateShowChatConversation} = useGlobalStore();
+	const {user, updateShowChatConversation, updateChatConversation} =
+		useGlobalStore();
 
 	return (
 		<div
 			onClick={() => {
 				updateShowChatConversation(true);
+				updateChatConversation(conversation);
 			}}
-			className='flex items-center space-x-2 w-full cursor-pointer transition-all ease-in-out duration-700 hover:translate-y-1'
+			className='flex items-center space-x-2 w-full cursor-pointer transition-all ease-in-out duration-700 hover:translate-y-1 border-b pb-3'
 		>
 			<div className='h-[50px] w-[50px] rounded-full border relative'>
 				<Image

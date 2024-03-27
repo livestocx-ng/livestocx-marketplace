@@ -1,12 +1,11 @@
 'use client';
-import Image from 'next/image';
 import {useEffect} from 'react';
+import Lottie from 'lottie-react';
 import axios, {AxiosError} from 'axios';
-import {SendHorizonal, X} from 'lucide-react';
 import {useGlobalStore} from '@/hooks/use-global-store';
-import ChatBubble from '@/components/bubbles/chat-bubble';
-import FormTextInput from '@/components/input/form-text-input';
-import ChatConversationCard from '@/components/cards/chat-conversation-card';
+import ChatConversationCard from '@/components/chat/chat-conversation-card';
+import ChatConversationContent from '@/components/chat/chat-conversation-content';
+import EmptyMessagesAnimation from '../../../../../../../../public/animations/animation__chat__1.json';
 
 const MessagesContent = () => {
 	const {
@@ -44,8 +43,18 @@ const MessagesContent = () => {
 
 	return (
 		<div className='w-full md:w-[78%] flex items-center items-star justify-between h-[70vh]'>
-			{/* {!showChatConversation && (
-				<div className='w-[25%] border-r hidde flex lg:flex flex-col space-y-4 h-full overflow-y-auto scrollbar__2'>
+			{!showChatConversation && chatConversations?.length === 0 && (
+				<div className='w-full h-full flex flex-col items-center justify-center'>
+					<Lottie
+						loop={true}
+						className='h-1/2'
+						animationData={EmptyMessagesAnimation}
+					/>
+				</div>
+			)}
+
+			{!showChatConversation && chatConversations?.length > 0 && (
+				<div className='w-full md:w-[30%] md:border-r hidde flex lg:flex flex-col space-y-4 h-full overflow-y-auto scrollbar__2'>
 					{chatConversations?.map((conversation) => (
 						<ChatConversationCard
 							key={conversation?.id}
@@ -55,56 +64,9 @@ const MessagesContent = () => {
 				</div>
 			)}
 
-			{showChatConversation && (
-				<div className='w-full lg:w-full border rounded-t-md flex flex-col space-y-4 h-full overflow-y-auto scrollbar__2 relative'>
-					<div className='sticky z-[5] top-0 w-full bg-white py-2 px-5 shadow-sm border-b flex justify-between items-center'>
-						<div className='flex items-center space-x-2'>
-							<div className='h-[50px] w-[50px] rounded-full border relative shadow-lg'>
-								<Image
-									alt='image'
-									fill
-									unoptimized={true}
-									className='object-cover rounded-full h-full w-full'
-									src={'/user__1.svg'}
-								/>
-							</div>
+			{showChatConversation && <ChatConversationContent />}
 
-							<p className='font-semibold text-sm'>
-								Jerry Abiodun
-							</p>
-						</div>
-
-						<X
-							size={15}
-							className='text-red-500 cursor-pointer'
-							onClick={() => {
-								updateShowChatConversation(false);
-							}}
-						/>
-					</div>
-
-					{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
-						<ChatBubble key={item} />
-					))}
-
-					<div className='sticky z-[5] bottom-0 w-full py-2 px-5 shadow-sm flex items-center space-x-2'>
-						<FormTextInput
-							name='email'
-							padding='py-3 px-4'
-							value={''}
-							handleChange={() => {}}
-							placeHolder='Message'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-						/>
-
-						<div className='w-10 h-10 bg-main flex items-center justify-center rounded-full'>
-							<SendHorizonal className='text-white' size={15} />
-						</div>
-					</div>
-				</div>
-			)} */}
-
-			<div className='flex flex-col items-center justify-center py-20 w-full'>
+			{/* <div className='flex flex-col items-center justify-center py-20 w-full'>
 				<Image
 					alt='logo'
 					width={150}
@@ -113,7 +75,7 @@ const MessagesContent = () => {
 					src={'/logo.svg'}
 					className='opacity-50'
 				/>
-			</div>
+			</div> */}
 		</div>
 	);
 };

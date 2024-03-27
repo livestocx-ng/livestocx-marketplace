@@ -17,6 +17,7 @@ const SocketProvider = ({children}: {children: React.ReactNode}) => {
 			// forceNew: true,
 			// host: SOCKET_URL,
 			upgrade: true,
+			secure: true,
 			transports: ['websocket'],
 		});
 	}, []);
@@ -55,5 +56,9 @@ const SocketProvider = ({children}: {children: React.ReactNode}) => {
 
 	return <Fragment>{children}</Fragment>;
 };
+
+export function getSocketInstance() {
+	return SocketInstance;
+}
 
 export default SocketProvider;

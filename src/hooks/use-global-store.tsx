@@ -10,13 +10,16 @@ import {
 	Notification,
 	DesiredItemInfo,
 	ChatConversation,
+	ChatMessage,
 } from '@/types/types';
 import { Socket } from 'socket.io-client';
 import {create} from 'zustand';
 
 interface GlobalStore {
 	socket: Socket | null;
+	chatConversation: ChatConversation | null;
 	chatConversations: ChatConversation[];
+	chatConversationMessages: ChatMessage[];
 	showChatConversation: boolean;
 	searchQuery: string;
 	searchQueryState: string;
@@ -39,7 +42,10 @@ interface GlobalStore {
 	sellerTotalPages: number;
 	sellerHasNextPage: boolean;
 	currentAccountTab: Tab | 'Account' | null;
+	updateChatConversation: (value: ChatConversation | null)=> void;
 	updateChatConversations: (value: ChatConversation[])=> void;
+	addChatConversationMessage: (value: ChatMessage)=> void;
+	updateChatConversationMessages: (value: ChatMessage[])=> void;
 	updateSocketInstance: (value: Socket)=> void;
 	updateShowChatConversation: (value: boolean)=> void;
 	updateSearchQuery: (searchQuery: string)=> void;
@@ -192,6 +198,7 @@ export const useUpdateProductModalStore = create<UpdateProductModal>((set) => ({
 		likedUsers: null,
 		media: [],
 		createdAt: '',
+		user: 0,
 	},
 	onOpen: () => set({isOpen: true}),
 	onClose: () => set({isOpen: false}),
@@ -217,6 +224,7 @@ export const useShareProductModalStore = create<UpdateProductModal>((set) => ({
 		likedUsers: null,
 		media: [],
 		createdAt: '',
+		user: 0,
 	},
 	onOpen: () => set({isOpen: true}),
 	onClose: () => set({isOpen: false}),
@@ -242,6 +250,7 @@ export const useShareNewProductModalStore = create<UpdateProductModal>((set) => 
 		likedUsers: null,
 		media: [],
 		createdAt: '',
+		user: 0,
 	},
 	onOpen: () => set({isOpen: true}),
 	onClose: () => set({isOpen: false}),
@@ -269,7 +278,9 @@ export const useProductMediaModalStore = create<ProductModal>((set) => ({
 
 export const useGlobalStore = create<GlobalStore>((set) => ({
 	socket: null,
+	chatConversation: null,
 	chatConversations: [],
+	chatConversationMessages: [],
 	showChatConversation: false,
 	searchQuery: '',
 	searchQueryState: '',
@@ -293,7 +304,16 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	hasNextPage: false,
 	productInfo: null,
 	currentAccountTab: 'Account',
+	updateChatConversation: (value: ChatConversation| null) => set({chatConversation: value}),
 	updateChatConversations: (value: ChatConversation[]) => set({chatConversations: value}),
+	addChatConversationMessage: (newMessage: ChatMessage) => {
+		set((state)=>{
+			const messages = [...state.chatConversationMessages, newMessage];
+
+			return {chatConversationMessages: messages};
+		});
+	},
+	updateChatConversationMessages: (value: ChatMessage[]) => set({chatConversationMessages: value}),
 	updateSocketInstance: (value: Socket) => set({socket: value}),
 	updateShowChatConversation: (value: boolean) =>
 	set({showChatConversation: value}),

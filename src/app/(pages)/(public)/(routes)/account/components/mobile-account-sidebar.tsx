@@ -27,7 +27,7 @@ interface AccountSideBarProps {}
 
 const CustomerTabs: Tab[] = [
 	'Account',
-	'Desired Items',
+	// 'Desired Items',
 	'Messages',
 	'Notifications',
 	'Settings',
@@ -134,21 +134,14 @@ const MobileAccountSideBar = ({}: AccountSideBarProps) => {
 												}`}
 											/>
 										)}
-										{tab === 'Desired Items' && (
-											// <Image
-											// 	width={20}
-											// 	height={20}
-											// 	alt='Livestocx Carrier'
-											// 	src='/shopping__icon.png'
-											// 	className='text-white'
-											// />
+										{/* {tab === 'Desired Items' && (
 											<ShoppingCart
 												className={`h-6 w-6 ${
 													currentAccountTab == tab &&
 													'text-green-600'
 												}`}
 											/>
-										)}
+										)} */}
 										{tab === 'Messages' && (
 											<Mails
 												className={`h-6 w-6 ${

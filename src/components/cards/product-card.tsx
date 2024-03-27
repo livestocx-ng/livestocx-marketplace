@@ -13,6 +13,7 @@ import {PriceFormatter} from '@/utils/price.formatter';
 import {
 	Forward,
 	MapPin,
+	MessageCircle,
 	ShoppingCartIcon,
 	ThumbsDown,
 	ThumbsUp,
@@ -28,7 +29,14 @@ const ProductCard = ({product}: ProductCardProps) => {
 	const pathName = usePathname();
 
 	const shareProductModal = useShareProductModalStore();
-	const {user, vendor, updateProduct} = useGlobalStore();
+	const {
+		user,
+		vendor,
+		updateProduct,
+		updateChatConversation,
+		updateCurrentAccountTab,
+		updateShowChatConversation,
+	} = useGlobalStore();
 
 	const [loading, setLoading] = useState<boolean>(false);
 
@@ -73,10 +81,10 @@ const ProductCard = ({product}: ProductCardProps) => {
 
 			if (!user) return router.push('/signin');
 
+			if (user?.id === product?.user.toString()) return;
+
 			await axios.get(
-				`${
-					process.env.NEXT_PUBLIC_API_URL
-				}/user/products/add-user-to-contact-seller?product=${product?.id}`,
+				`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-user-to-contact-seller?product=${product?.id}`,
 				{
 					headers: {
 						Authorization: user?.accessToken,
@@ -84,9 +92,8 @@ const ProductCard = ({product}: ProductCardProps) => {
 				}
 			);
 
-			const {data} = await axios.post(
-				`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-desired-product?productId=${product?.productId}`,
-				{},
+			const {data} = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/chat/conversation?receiver=${product?.user}`,
 				{
 					headers: {
 						Authorization: user?.accessToken,
@@ -94,16 +101,34 @@ const ProductCard = ({product}: ProductCardProps) => {
 				}
 			);
 
-			if (data.data === false) {
-				return toast.success('Product already added to desired items');
-			} else {
-				return toast.success('Product added to desired items');
-			}
+			updateChatConversation(data.data);
+
+			router.push('/account');
+
+			updateCurrentAccountTab('Messages');
+
+			updateShowChatConversation(true);
+
+			// const {data} = await axios.post(
+			// 	`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-desired-product?productId=${product?.productId}`,
+			// 	{},
+			// 	{
+			// 		headers: {
+			// 			Authorization: user?.accessToken,
+			// 		},
+			// 	}
+			// );
+
+			// if (data.data === false) {
+			// 	return toast.success('Product already added to desired items');
+			// } else {
+			// 	return toast.success('Product added to desired items');
+			// }
 		} catch (error) {
 			// setLoading(false);
 			const _error = error as AxiosError;
 
-			// console.log('[ERROR] :: ', _error);
+			console.log('[ERROR] :: ', _error);
 		}
 	};
 
@@ -191,7 +216,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 							onClick={handleAddToDesiredProducts}
 							className=' flex items-center justify-center h-8 sm:h-8 w-8 sm:w-8 bg-main rounded-full cursor-pointer'
 						>
-							<ShoppingCartIcon className='h-4 sm:h-4 w-4 sm:w-4 text-white' />
+							<MessageCircle className='h-4 sm:h-4 w-4 sm:w-4 text-white' />
 						</div>
 
 						<div

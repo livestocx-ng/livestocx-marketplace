@@ -210,10 +210,10 @@ const SingleProductContent = ({
 								onClick={handleAddToDesiredProducts}
 								className='bg-main text-white hover:bg-main hover:text-white text-[10px] md:text-xs h-10 w-[45%] rounded-full py-2'
 							>
-								Add to Desired Product
+								Chat with Seller
 							</Button>
 
-							<Button
+							{/* <Button
 								type='button'
 								variant={'outline'}
 								onClick={async () => {
@@ -238,7 +238,7 @@ const SingleProductContent = ({
 								className='border-main text-main text-[10px] md:text-xs h-10 w-[45%] rounded-full py-2'
 							>
 								Chat with Seller
-							</Button>
+							</Button> */}
 
 							{/* <ContactVendorAlertDialog
 								productInfo={productInfo}

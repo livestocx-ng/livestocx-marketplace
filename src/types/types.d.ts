@@ -72,6 +72,7 @@ export interface Product {
 	media: Media[];
 	createdAt: string;
 	vendor?: Vendor;
+	user: number;
 }
 
 export interface DesiredItem {
@@ -188,4 +189,14 @@ export interface ChatConversation {
 	vendor: ChatConversationVendor;
 	user1: ChatConversationUser;
 	user2: ChatConversationUser;
+}
+
+export interface ChatMessage {
+	id: number;
+	content: string;
+	isRead: number[];
+	timestamp: Date;
+	sender: number;
+	recipient: number;
+	conversation: number;
 }

@@ -53,11 +53,11 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 			<GoogleAnalyticsProvider />
 			<body className={poppins.className}>
 				<AuthProvider>
-					{/* <SocketProvider> */}
+					<SocketProvider>
 						<ToastProvider />
 						<Toaster />
 						{children}
-					{/* </SocketProvider> */}
+					</SocketProvider>
 				</AuthProvider>
 
 				<CookieBannerProvider />

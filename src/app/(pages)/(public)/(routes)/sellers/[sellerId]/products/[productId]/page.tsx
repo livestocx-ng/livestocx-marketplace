@@ -23,6 +23,7 @@ import SingleProductContent from '@/components/product/single-product-content';
 import EmptyAnimation from '../../../../../../../../../public/animations/animation__3.json';
 import LoadingAnimation from '../../../../../../../../../public/animations/animation__3.json';
 import ProductMediaModal from '../../../../../../../../components/modals/product/product-media-modal';
+import {useRouter} from 'next/navigation';
 
 interface SellerProductPageParams {
 	params: {
@@ -35,6 +36,8 @@ type Tab = 'Seller Info' | 'Review' | 'More From Seller';
 const CurrentTabs: Tab[] = ['Seller Info', 'Review', 'More From Seller'];
 
 const SellerProductPage = ({params: {productId}}: SellerProductPageParams) => {
+	const router = useRouter();
+
 	const isProductMediaModalOpen = useProductMediaModalStore(
 		(state) => state.isOpen
 	);
@@ -46,6 +49,9 @@ const SellerProductPage = ({params: {productId}}: SellerProductPageParams) => {
 		productInfo,
 		updatePayload,
 		updateProductInfo,
+		updateChatConversation,
+		updateCurrentAccountTab,
+		updateShowChatConversation,
 	} = useGlobalStore();
 
 	const [loading, setLoading] = useState<boolean>(false);
@@ -140,13 +146,12 @@ const SellerProductPage = ({params: {productId}}: SellerProductPageParams) => {
 
 			if (loading) return;
 
-			setLoading(true);
+			console.log('[PRODUCT-USER] :: ', product?.user);
 
-			// console.log('[ADD-DESIRED-PRODUCT] :: ');
+			if (user?.id === product?.user.toString()) return;
 
-			const {data} = await axios.post(
-				`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-desired-product?productId=${product?.productId}`,
-				{},
+			await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-user-to-contact-seller?product=${product?.id}`,
 				{
 					headers: {
 						Authorization: user?.accessToken,
@@ -154,17 +159,40 @@ const SellerProductPage = ({params: {productId}}: SellerProductPageParams) => {
 				}
 			);
 
-			// console.log('[ADD-DESIRED-PRODUCT-SUCCESS] :: ', data);
+			const {data} = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/chat/conversation?receiver=${product?.user}`,
+				{
+					headers: {
+						Authorization: user?.accessToken,
+					},
+				}
+			);
 
-			setLoading(false);
+			updateChatConversation(data.data);
 
-			if (data.data === false) {
-				return toast.success('Product already added to desired items');
-			} else {
-				return toast.success('Product added to desired items');
-			}
+			router.push('/account');
+
+			updateCurrentAccountTab('Messages');
+
+			updateShowChatConversation(true);
+
+			// const {data} = await axios.post(
+			// 	`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-desired-product?productId=${product?.productId}`,
+			// 	{},
+			// 	{
+			// 		headers: {
+			// 			Authorization: user?.accessToken,
+			// 		},
+			// 	}
+			// );
+
+			// if (data.data === false) {
+			// 	return toast.success('Product already added to desired items');
+			// } else {
+			// 	return toast.success('Product added to desired items');
+			// }
 		} catch (error) {
-			setLoading(false);
+			// setLoading(false);
 			const _error = error as AxiosError;
 
 			// console.log('[ERROR] :: ', _error);

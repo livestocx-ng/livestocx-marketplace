@@ -1,31 +1,37 @@
 import {useGlobalStore} from '@/hooks/use-global-store';
-import { getLocalStorage } from '@/lib/localstorageHelper';
+import {getLocalStorage} from '@/lib/localstorageHelper';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
-const ContactUsModal = () => {
-	const {currentAccountTab} = useGlobalStore();
-	const [cookieConsentStatus, setCookieConsentStatus] = useState<boolean| null>(false);
+const ContactUsBanner = () => {
+	const {currentAccountTab, cookieConsentStatus, showChatConversation} = useGlobalStore();
+	const [lsCookieConsentStatus, setLsCookieConsentStatus] = useState<boolean | null>(false);
 
-	const initializeState = ()=>{
+	const initializeState = () => {
 		const storedCookieConsent = getLocalStorage('livestocx_cookie_consent');
 
-		console.log('[STORED COOKIE] :: ',storedCookieConsent);
-		setCookieConsentStatus(storedCookieConsent);
-	}
+		console.log('[STORED COOKIE] :: ', storedCookieConsent);
+		setLsCookieConsentStatus(storedCookieConsent);
+	};
 
-	useEffect(()=>{
+	useEffect(() => {
 		initializeState();
-	},[])
+	}, []);
+
+	useEffect(() => {
+		if(cookieConsentStatus){
+			setLsCookieConsentStatus(true);
+		}
+	}, [cookieConsentStatus]);
 
 	return (
 		<>
-			{(cookieConsentStatus !== null && cookieConsentStatus !== false) && currentAccountTab !== null && currentAccountTab !== 'Messages' ? (
+			{(lsCookieConsentStatus !== null && lsCookieConsentStatus !== false) && !showChatConversation && (
 				<div
 					className='
-				flex space-x-2 md:space-x-5 items-center
-                fixed z-10 mb-10 bottom-20 left- right-5 
-            '
+						flex space-x-2 md:space-x-5 items-center
+						fixed z-10 mb-10 bottom-20 left- right-5
+					'
 				>
 					<div
 						onClick={() => {
@@ -56,11 +62,9 @@ const ContactUsModal = () => {
 						seller within an hour🕰️.
 					</div>
 				</div>
-			) : (
-				<></>
 			)}
 		</>
 	);
 };
 
-export default ContactUsModal;
+export default ContactUsBanner;

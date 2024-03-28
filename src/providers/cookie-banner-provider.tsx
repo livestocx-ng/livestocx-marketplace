@@ -2,9 +2,12 @@
 import Image from 'next/image';
 import {Cookie} from 'lucide-react';
 import {useEffect, useState} from 'react';
+import {useGlobalStore} from '@/hooks/use-global-store';
 import {getLocalStorage, setLocalStorage} from '@/lib/localstorageHelper';
 
 export default function CookieBannerProvider() {
+	const {updateCookieConsentStatus} = useGlobalStore();
+
 	const [cookieConsent, setCookieConsent] = useState<
 		true | false | null | undefined
 	>(undefined);
@@ -77,14 +80,20 @@ export default function CookieBannerProvider() {
 
 						<div className='flex flex-col md:flex-row gap-2 w-full md:w-fit px-4 md:px-0'>
 							<button
-								onClick={() => setCookieConsent(true)}
+								onClick={() => {
+									setCookieConsent(true);
+									updateCookieConsentStatus(true);
+								}}
 								className='w-full md:w-fit bg-main px-5 py-3 md:py-2 text-white rounded-full text-sm flex justify-center items-center space-x-2'
 							>
 								<Cookie className='h-5 w-5' />{' '}
 								<p className='text-sm'>Allow</p>
 							</button>
 							<button
-								onClick={() => setCookieConsent(false)}
+								onClick={() => {
+									setCookieConsent(true);
+									updateCookieConsentStatus(true);
+								}}
 								className='w-full md:w-fit bg-white border px-5 py-3 md:py-2 text-black rounded-full border-gray-900 text-sm'
 							>
 								Decline

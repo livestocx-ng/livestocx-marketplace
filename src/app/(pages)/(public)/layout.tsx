@@ -13,7 +13,7 @@ import {io} from 'socket.io-client';
 // import Socket from '@/providers/socket-provider';
 import Footer from '@/components/navigation/footer';
 import Navbar from '@/components/navigation/main-nav-bar';
-import ContactUsModal from '@/components/modals/contact-us/contact-us-modal';
+import ContactUsBanner from '@/components/modals/contact-us/contact-us-banner';
 import ShareProductModal from '@/components/modals/product/share-product-modal';
 import UpdateUserRoleModal from '@/components/modals/user/update-user-role-modal';
 import NotificationModal from '@/components/modals/notifications/notification-modal';
@@ -55,7 +55,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 
 			<Navbar />
 			{children}
-			<ContactUsModal />
+			<ContactUsBanner />
 			<Footer />
 		</div>
 	);

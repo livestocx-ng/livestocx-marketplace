@@ -17,6 +17,7 @@ import {create} from 'zustand';
 
 interface GlobalStore {
 	socket: Socket | null;
+	cookieConsentStatus: boolean,
 	chatConversation: ChatConversation | null;
 	chatConversations: ChatConversation[];
 	chatConversationMessages: ChatMessage[];
@@ -42,6 +43,7 @@ interface GlobalStore {
 	sellerTotalPages: number;
 	sellerHasNextPage: boolean;
 	currentAccountTab: Tab | 'Account' | null;
+	updateCookieConsentStatus: (value: boolean)=> void;
 	updateChatConversation: (value: ChatConversation | null)=> void;
 	updateChatConversations: (value: ChatConversation[])=> void;
 	addChatConversationMessage: (value: ChatMessage)=> void;
@@ -278,6 +280,7 @@ export const useProductMediaModalStore = create<ProductModal>((set) => ({
 
 export const useGlobalStore = create<GlobalStore>((set) => ({
 	socket: null,
+	cookieConsentStatus: false,
 	chatConversation: null,
 	chatConversations: [],
 	chatConversationMessages: [],
@@ -304,6 +307,7 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	hasNextPage: false,
 	productInfo: null,
 	currentAccountTab: 'Account',
+	updateCookieConsentStatus: (value: boolean) => set({cookieConsentStatus: value}),
 	updateChatConversation: (value: ChatConversation| null) => set({chatConversation: value}),
 	updateChatConversations: (value: ChatConversation[]) => set({chatConversations: value}),
 	addChatConversationMessage: (newMessage: ChatMessage) => {

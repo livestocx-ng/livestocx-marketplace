@@ -27,6 +27,7 @@
     "@types/cookie": "^0.5.3",
     "@types/jsonwebtoken": "^9.0.4",
     "@types/react-copy-to-clipboard": "^5.0.7",
+    "@vercel/og": "^0.6.2",
     "axios": "^1.5.1",
     "bufferutil": "^4.0.8",
     "class-variance-authority": "^0.7.0",

@@ -20,7 +20,7 @@ const poppins = Poppins({
 // ReactGA.initialize(process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID ?? '');
 
 export const metadata: Metadata = {
-	title: 'Livestocx - Best deals, Everything Livestock',
+	title: 'Livestocx - Best deals, Everything Animals',
 	description: 'Best deals, Everything Animals',
 	keywords: ['livestocx', 'Livestock', 'Nigeria', 'Animals', 'Meat'],
 	other: {

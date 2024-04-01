@@ -227,7 +227,7 @@ const ContactUsPage = () => {
 							Give us a call today!
 						</h1>
 
-						<p>+234 (0) 813 254 9273</p>
+						<p>+234 (0) 806 289 9590</p>
 					</div>
 
 					<div className='flex flex-col items-center w-full md:w-[300px] space-y-5 bg-white shadow-lg rounde py-10'>

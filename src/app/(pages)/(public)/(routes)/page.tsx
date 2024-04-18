@@ -11,6 +11,7 @@ import HomeProducts from './components/home-products';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import TestimonialSection from '@/components/common/testimonials';
 import EmptyAnimation from '../../../../../public/animations/animation__3.json';
+import AdvertisementBanner from '@/components/banner/advertisement-banner';
 
 export default function HomePage() {
 	const router = useRouter();
@@ -92,7 +93,9 @@ export default function HomePage() {
 			)}
 
 			{!loading && products?.length > 0 && (
-				<div className='flex flex-col w-full bg-white px-4 md:px-8 pt-5 pb-10'>
+				<div className='flex flex-col w-full bg-white px-4 md:px-8 pt-10 pb-10 relative'>
+					<AdvertisementBanner />
+
 					<HomeProducts
 						currentPage={currentPage}
 						updateCurrentPage={setCurrentPage}

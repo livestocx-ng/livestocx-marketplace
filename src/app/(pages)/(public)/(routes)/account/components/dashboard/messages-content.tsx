@@ -27,7 +27,7 @@ const MessagesContent = () => {
 				}
 			);
 
-			console.log('[CONVERSATIONS-RESPONSE] :: ', data);
+			// console.log('[CONVERSATIONS-RESPONSE] :: ', data);
 
 			updateChatConversations(data.data.conversations);
 		} catch (error) {

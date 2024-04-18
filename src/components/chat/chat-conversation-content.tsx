@@ -178,15 +178,35 @@ const ChatConversationContent = () => {
 						/>
 					</div>
 
-					<p className='font-semibold text-sm'>
-						{chatConversation?.user1.id.toString() === user?.id
-							? chatConversation?.user2.role === 'FARMER'
-								? chatConversation?.vendor.name
-								: chatConversation?.user2.name
-							: chatConversation?.user1.role === 'FARMER'
-							? chatConversation?.vendor.name
-							: chatConversation?.user1.name}
-					</p>
+					<div className='flex items-center space-x-4'>
+						<p className='font-semibold text-sm'>
+							{chatConversation?.user1.id.toString() === user?.id
+								? chatConversation?.user2.name
+								: chatConversation?.user1.name}
+						</p>
+
+						{chatConversation?.user1?.role === 'ADMIN' ? (
+							<Image
+								alt='image'
+								width={40}
+								height={40}
+								src={'/icon__verified__1.svg'}
+								unoptimized={true}
+								className='object-cover h-full w-full'
+							/>
+						) : chatConversation?.user2?.role === 'ADMIN' ? (
+							<Image
+								alt='image'
+								width={40}
+								height={40}
+								src={'/icon__verified__1.svg'}
+								unoptimized={true}
+								className='object-cover h-full w-full'
+							/>
+						) : (
+							<div></div>
+						)}
+					</div>
 				</div>
 
 				<X

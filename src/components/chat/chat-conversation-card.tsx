@@ -38,15 +38,36 @@ const ChatConversationCard = ({conversation}: ChatConversationCardProps) => {
 				/>
 			</div>
 			<div className='flex flex-col'>
-				<p className='text-[12px] font-medium'>
-					{conversation.user1.id.toString() === user?.id
-						? conversation.user2.role === 'FARMER'
-							? conversation.vendor.name
-							: conversation.user2.name
-						: conversation.user1.role === 'FARMER'
-						? conversation.vendor.name
-						: conversation.user1.name}
-				</p>
+				<div className='flex items-center space-x-4'>
+					<p className='font-semibold text-sm'>
+						{conversation?.user1.id.toString() === user?.id
+							? conversation?.user2.name
+							: conversation?.user1.name}
+					</p>
+
+					{conversation?.user1?.role === 'ADMIN' ? (
+						<Image
+							alt='image'
+							width={40}
+							height={40}
+							src={'/icon__verified__1.svg'}
+							unoptimized={true}
+							className='object-cover h-full w-full'
+						/>
+					) : conversation?.user2?.role === 'ADMIN' ? (
+						<Image
+							alt='image'
+							width={40}
+							height={40}
+							src={'/icon__verified__1.svg'}
+							unoptimized={true}
+							className='object-cover h-full w-full'
+						/>
+					) : (
+						<div></div>
+					)}
+				</div>
+
 				{conversation.lastConversationMessage.length > 0 && (
 					<p className='text-[12px]'>
 						{conversation.lastConversationMessage.length > 10

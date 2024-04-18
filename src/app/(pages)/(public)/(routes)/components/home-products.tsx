@@ -8,6 +8,7 @@ import {useGlobalStore} from '@/hooks/use-global-store';
 import ProductCard from '../../../../../components/cards/product-card';
 import PaginationButton from '@/components/utils/pagination-button';
 import {usePathname} from 'next/navigation';
+import AdvertisementBanner from '@/components/banner/advertisement-banner';
 
 interface Tab {
 	id: number;
@@ -42,6 +43,7 @@ const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 	return (
 		<Fragment>
 			<div className='flex item-center space-x-4'>
+
 				{pathName.length <= 1 && (
 					<>
 						{TabItems.map((tab) => (

@@ -49,13 +49,13 @@ const AdvertisementBanner = () => {
 					// console.log(_error);
 				}
 			}}
-			className='absolute top-0 left-0 w-full py-2 bg-gradient-to-tr from-green-200 to-green-500 text-sm px-4 flex items-center justify-center space-x-5 cursor-pointer'
+			className='absolute top-0 left-0 w-full py-2 bg-gradient-to-tr from-green-200 to-green-500 text-sm px-4 flex items-center justify-center space-x-3 cursor-pointer'
 		>
-			<p className='text-sm font-semibold'>
+			<p className='text-sm font-medium'>
 				Want to promote your product? Click here!
 			</p>
 
-			<LineChart size={12} />
+			<LineChart size={18} />
 		</div>
 	);
 };

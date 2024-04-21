@@ -31,11 +31,6 @@ const AdvertisementBanner = () => {
 						}
 					);
 
-					// console.log(
-					//     '[CONVERSATION-RESPONSE] :: ',
-					//     data
-					// );
-
 					router.push('/account');
 
 					updateCurrentAccountTab('Messages');
@@ -49,10 +44,11 @@ const AdvertisementBanner = () => {
 					// console.log(_error);
 				}
 			}}
-			className='absolute top-0 left-0 w-full py-2 bg-gradient-to-tr from-green-200 to-green-500 text-sm px-4 flex items-center justify-center space-x-3 cursor-pointer'
+			className='absolute top-0 left-0 w-full py-2 bg-gradient-to-tr from-indigo-200 to-indigo-500 text-sm px-4 flex items-center justify-center space-x-3 cursor-pointer'
 		>
 			<p className='text-sm font-medium'>
-				Want to promote your product? Click here!
+				Want to sell very fast? Boost your product with just &#8358;810
+				per week
 			</p>
 
 			<LineChart size={18} />

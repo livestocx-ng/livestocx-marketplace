@@ -6,11 +6,11 @@ import {
 	useReadNotificationModalStore,
 	useUpdateVendorProfileModalStore,
 	useUpdateSearchLocationModalStore,
+	useGlobalStore,
 } from '@/hooks/use-global-store';
+import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
 import {useUserHook} from '@/hooks/use-user';
-import {io} from 'socket.io-client';
-// import Socket from '@/providers/socket-provider';
 import Footer from '@/components/navigation/footer';
 import Navbar from '@/components/navigation/main-nav-bar';
 import ContactUsBanner from '@/components/modals/contact-us/contact-us-banner';
@@ -28,11 +28,38 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const router = useRouter();
 	const {user} = useUserHook();
 
+	const {updateChatConversations} = useGlobalStore();
+
 	const shareProductModal = useShareProductModalStore();
 	const updateUserRoleModal = useUpdateUserRoleModalStore();
 	const readNotificationModal = useReadNotificationModalStore();
 	const updateVendorProfileModal = useUpdateVendorProfileModalStore();
 	const updateSearchLocationModal = useUpdateSearchLocationModalStore();
+
+	const fetchChatConversations = async () => {
+		try {
+			if (!user) {
+				return;
+			}
+
+			const {data} = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/chat/conversations?page=1`,
+				{
+					headers: {
+						Authorization: user?.accessToken,
+					},
+				}
+			);
+
+			// console.log('[CONVERSATIONS-RESPONSE] :: ', data);
+
+			updateChatConversations(data.data.conversations);
+		} catch (error) {
+			const _error = error as AxiosError;
+
+			// console.log('[FETCH-PRODUCTS-ERROR] :: ', _error);
+		}
+	};
 
 	useEffect(() => {
 		if (
@@ -43,6 +70,8 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 			// router.push('/compliance');
 			updateVendorProfileModal.onOpen();
 		}
+
+		fetchChatConversations();
 	}, [user]);
 
 	return (

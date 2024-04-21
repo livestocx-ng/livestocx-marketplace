@@ -2,10 +2,13 @@
 import {
 	useCreateProductModalStore,
 	useDeleteProductModalStore,
+	useGlobalStore,
 	useShareNewProductModalStore,
 	useUpdateProductModalStore,
 } from '@/hooks/use-global-store';
+import {useEffect} from 'react';
 import {redirect} from 'next/navigation';
+import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';
 import AddProductModal from '@/components/modals/product/add-product-modal';
 import UpdateProductModal from '@/components/modals/product/update-product-modal';
@@ -17,7 +20,8 @@ interface AccountLayoutProps {
 }
 
 export default function AccountLayout({children}: AccountLayoutProps) {
-	const {user, error, isUserSuccess} = useUserHook();
+	const {user, error} = useUserHook();
+	const {updateChatConversations} = useGlobalStore();
 
 	const isCreateProductModalOpen = useCreateProductModalStore(
 		(state) => state.isOpen
@@ -36,20 +40,34 @@ export default function AccountLayout({children}: AccountLayoutProps) {
 		redirect('/');
 	}
 
-	// if (!isUserSuccess) {
-	// 	return (
-	// 		<div className='h-screen w-full bg-main'>
-	// 			<div className='h-screen grid place-content-center bg-[#ffffff] z-10 fixed w-full'>
-	// 				<Lottie
-	// 					loop={true}
-	// 					className='h-full'
-	// 					animationData={LoadingAnimation}
-	// 					// animationData={'/animations/loading__animation.json'}
-	// 				/>
-	// 			</div>
-	// 		</div>
-	// 	);
-	// }
+	const fetchChatConversations = async () => {
+		try {
+			if (!user) {
+				return;
+			}
+
+			const {data} = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/chat/conversations?page=1`,
+				{
+					headers: {
+						Authorization: user?.accessToken,
+					},
+				}
+			);
+
+			// console.log('[CONVERSATIONS-RESPONSE] :: ', data);
+
+			updateChatConversations(data.data.conversations);
+		} catch (error) {
+			const _error = error as AxiosError;
+
+			// console.log('[FETCH-PRODUCTS-ERROR] :: ', _error);
+		}
+	};
+
+	useEffect(() => {
+		fetchChatConversations();
+	}, [user]);
 
 	if (user) {
 		return (

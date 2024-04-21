@@ -50,7 +50,7 @@ const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 							<Button
 								key={tab.id}
 								type='button'
-								className={`border bg-white hover:bg-white rounded-none ${
+								className={`border bg-white hover:bg-white h-4 py-3 text-xs rounded-md ${
 									currentTab.id === tab.id
 										? 'border-main text-main'
 										: 'border-black text-black'
@@ -58,7 +58,7 @@ const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 								onClick={() => {
 									const index = TabItems.findIndex(
 										(item) => item.id === tab.id
-									);
+									);	
 
 									setCurrentTab(TabItems[index]);
 								}}
@@ -70,7 +70,7 @@ const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 				)}
 			</div>
 
-			<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2 mt-5'>
+			<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2 mt-2'>
 				{products?.map((product) => (
 					<ProductCard key={product.id} product={product} />
 				))}

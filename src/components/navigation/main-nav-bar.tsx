@@ -9,6 +9,7 @@ import {
 	LogOutIcon,
 	ShoppingCart,
 	MessagesSquare,
+	MessageCircle,
 } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link';
@@ -28,16 +29,17 @@ const MainNavbar = () => {
 	const router = useRouter();
 	const session = useSession();
 
-	const {user, updateUser, updateCurrentAccountTab} = useGlobalStore();
+	const {user, updateUser, chatConversations, updateCurrentAccountTab} =
+		useGlobalStore();
 
 	const updateUserRoleModal = useUpdateUserRoleModalStore();
 
 	const [scrolling, setScrolling] = useState<boolean>(false);
-	const [showMenu, setSetshowMenu] = useState<boolean>(false);
+	const [showMenu, setSetShowMenu] = useState<boolean>(false);
 	const [showAccountMenu, setSetShowAccountMenu] = useState<boolean>(false);
 
 	const toggleMenu = () => {
-		setSetshowMenu(!showMenu);
+		setSetShowMenu(!showMenu);
 	};
 
 	const handleScrollHeight = () => {
@@ -99,25 +101,44 @@ const MainNavbar = () => {
 				</div>
 
 				<div className='flex items-center space-x-5'>
-					<Link
-						href={'#'}
-						className={`h-10 w-10 ${
-							scrolling ? 'bg-white' : 'bg-main'
-						} rounded-full flex flex-col items-center justify-center`}
-					>
-						{/* <Image
-							width={20}
-							height={20}
-							alt='Livestocx Carrier'
-							src='/shopping__icon.png'
-							className='text-white'
-						/> */}
-						<ShoppingCart
-							className={`h-5 w-5 ${
-								scrolling ? 'text-main' : 'text-white'
-							}`}
-						/>
-					</Link>
+					{chatConversations?.filter(
+						(conversation) => conversation.unreadMessages !== 0
+					).length !== 0 && (
+						<div
+							onClick={() => {
+								if (!user) {
+									router.push(`${!user && '/signin'}`);
+								} else {
+									router.push('/account');
+
+									setSetShowAccountMenu(false);
+
+									updateCurrentAccountTab('Messages');
+								}
+							}}
+							className={`h-10 w-10 ${
+								scrolling ? 'bg-white' : 'bg-main'
+							} rounded-full flex flex-col items-center justify-center cursor-pointer relative`}
+						>
+							<MessageCircle
+								className={`h-5 w-5 ${
+									scrolling ? 'text-main' : 'text-white'
+								}`}
+							/>
+
+							<div
+								className={`absolute -bottom-3 right-0 bg-red-500 rounded-full h-5 w-5 text-white font-bold text-[8px] flex items-center justify-center animate-bounce duration-1000`}
+							>
+								{
+									chatConversations?.filter(
+										(conversation) =>
+											conversation.unreadMessages !== 0
+									).length
+								}
+							</div>
+						</div>
+					)}
+
 					<div
 						// href={user ? '/account' : '/signin'}
 						onClick={() => {
@@ -378,18 +399,44 @@ const MainNavbar = () => {
 				</Button>
 
 				<div className='flex items-center space-x-5'>
-					<Link
-						href={'#'}
-						className={`h-10 w-10 ${
-							scrolling ? 'bg-white' : 'bg-main'
-						} rounded-full flex flex-col items-center justify-center`}
-					>
-						<ShoppingCart
-							className={`h-5 w-5 ${
-								scrolling ? 'text-main' : 'text-white'
-							}`}
-						/>
-					</Link>
+					{chatConversations?.filter(
+						(conversation) => conversation.unreadMessages !== 0
+					).length !== 0 && (
+						<div
+							onClick={() => {
+								if (!user) {
+									router.push(`${!user && '/signin'}`);
+								} else {
+									router.push('/account');
+
+									setSetShowAccountMenu(false);
+
+									updateCurrentAccountTab('Messages');
+								}
+							}}
+							className={`h-10 w-10 ${
+								scrolling ? 'bg-white' : 'bg-main'
+							} rounded-full flex flex-col items-center justify-center cursor-pointer relative`}
+						>
+							<MessageCircle
+								className={`h-5 w-5 ${
+									scrolling ? 'text-main' : 'text-white'
+								}`}
+							/>
+
+							<div
+								className={`absolute -bottom-3 right-0 bg-red-500 rounded-full h-5 w-5 text-white font-bold text-[8px] flex items-center justify-center animate-bounce duration-1000`}
+							>
+								{
+									chatConversations?.filter(
+										(conversation) =>
+											conversation.unreadMessages !== 0
+									).length
+								}
+							</div>
+						</div>
+					)}
+
 					<div
 						// href={user ? '/account' : '/signin'}
 						onClick={() => {

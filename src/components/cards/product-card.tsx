@@ -11,6 +11,7 @@ import axios, {AxiosError} from 'axios';
 import {usePathname, useRouter} from 'next/navigation';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {
+	Award,
 	Forward,
 	MapPin,
 	MessageCircle,
@@ -173,11 +174,19 @@ const ProductCard = ({product}: ProductCardProps) => {
 						</p>
 					</div>
 				)}
+
+				{product?.isPromotion && (
+					<div className='absolute top-0 -right-3 bg-green-500 px-2 py-1 rounded-md shadow-lg shadow-slate-500'>
+						<Award className='text-white' />
+					</div>
+				)}
+
 				{product?.isNegotiable === true && (
 					<div className='absolute top-0 left-0 bg-[#11111180] px-1 rounded-tl-md'>
 						<p className='text-[10px] text-white'>Negotiable</p>
 					</div>
 				)}
+
 				{product?.inStock === false && (
 					<div className='absolute bottom-0 right-0 bg-[#b21e1ec6] px-1'>
 						<p className='text-[10px] text-white'>Out Of Stock</p>

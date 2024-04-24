@@ -50,7 +50,7 @@ const Footer = () => {
 
 					<div className='flex flex-wrap items-center'>
 						<p className='bg-black text-white text-xs'>
-							+234 (0) 813 254 9273
+							+234 806 289 9590
 						</p>
 						&nbsp;
 						<p className='bg-black text-white text-xs'>

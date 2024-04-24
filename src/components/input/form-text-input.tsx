@@ -7,6 +7,7 @@ interface FormTextInputProps {
 	classes?: string;
 	name: string;
 	value: string;
+	autoComplete?: string;
 	// minLength?: number;
 	// maxLength?: number;
 	padding?: string;
@@ -20,6 +21,7 @@ const FormTextInput = ({
 	classes,
 	name,
 	value,
+	autoComplete,
 	// minLength,
 	// maxLength,
 	handleChange,
@@ -30,6 +32,7 @@ const FormTextInput = ({
 	return (
 		<input
 			name={name}
+			autoComplete={autoComplete ? autoComplete : 'off'}
 			value={value}
 			placeholder={placeHolder}
 			type={type ? type : 'text'}
@@ -41,7 +44,6 @@ const FormTextInput = ({
 				padding ? padding : 'px-5 py-4'
 			)}
 		/>
-		
 	);
 };
 

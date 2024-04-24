@@ -140,8 +140,8 @@ const UpdateSearchLocationModal = () => {
 									className='border-b text-sm py-2 flex justify-between cursor-pointer hover:translate-y-1 transition-all duration-700'
 								>
 									<p>
-										{state.includes('Federal')
-											? 'Abuja (FCT)'
+										{state === 'Abuja'
+											? 'FCT Abuja'
 											: `${state} State`}
 									</p>{' '}
 									<ChevronRight className='text-slate-400' />
@@ -234,7 +234,7 @@ const UpdateSearchLocationModal = () => {
 								}}
 								className='border-b text-sm py-2 flex justify-between w-full cursor-pointer hover:translate-y-1 transition-all duration-700'
 							>
-								<p>All {formData.searchLocationState} State</p>{' '}
+								<p>All {formData.searchLocationState} {formData.searchLocationState === 'Abuja'? '' : `${formData.searchLocationState} State`}</p>{' '}
 								<ChevronRight className='text-slate-400' />
 							</div>
 							{NigerianCities[formData.searchLocationState]

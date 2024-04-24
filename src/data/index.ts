@@ -344,7 +344,7 @@ export const FaqItems: FaqOption[] = [
 ];
 
 export const NigerianStates: string[] = [
-	'Federal Capital Territory',
+	'Abuja',
 	'Abia',
 	'Adamawa',
 	'Akwa Ibom',
@@ -669,7 +669,7 @@ export const NigerianCities: {[key: string]: string[]} = {
 		'Udenu',
 		'Uzo-Uwani',
 	],
-	'Federal Capital Territory': [
+	'Abuja': [
 		'Central Business District',
 		'Gwarinpa',
 		'Kubwa',

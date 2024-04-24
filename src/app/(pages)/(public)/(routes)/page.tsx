@@ -11,7 +11,7 @@ import HomeProducts from './components/home-products';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import TestimonialSection from '@/components/common/testimonials';
 import EmptyAnimation from '../../../../../public/animations/animation__3.json';
-import AnimationLoad from '../../../../../public/animations/animationLoading.json';
+import AdvertisementBanner from '@/components/banner/advertisement-banner';
 
 export default function HomePage() {
 	const router = useRouter();
@@ -59,10 +59,10 @@ export default function HomePage() {
 
 	return (
 		<main className='bg-[#28312B]'>
-			<section className='h-[40vh] md:h-[50vh] w-full bg-home flex flex-col items-center justify-end gap-y-8 md:gap-y-10 py-5 md:py-10 md:pt-0'>
+			<section className='h-[40vh] md:h-[50vh md:h-[380px] w-full bg-home flex flex-col items-center justify-end gap-y-8 md:gap-y-10 py-5 md:py-10 md:pt-0'>
 				<h1 className='text-xl md:text-4xl font-medium text-white'>
 					Best <span className='text-green-600'>deals.</span>{' '}
-					Everything <span className='text-green-600'>Livestock</span>
+					Everything <span className='text-green-600'>Animals</span>
 				</h1>
 
 				<SearchForm />
@@ -93,7 +93,9 @@ export default function HomePage() {
 			)}
 
 			{!loading && products?.length > 0 && (
-				<div className='flex flex-col w-full bg-white px-4 md:px-8 pt-5 pb-10'>
+				<div className='flex flex-col w-full bg-white px-4 md:px-8 pt-16 sm:pt-[44px] pb-10 relative'>
+					<AdvertisementBanner />
+
 					<HomeProducts
 						currentPage={currentPage}
 						updateCurrentPage={setCurrentPage}

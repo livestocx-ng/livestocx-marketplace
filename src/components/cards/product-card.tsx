@@ -176,8 +176,8 @@ const ProductCard = ({product}: ProductCardProps) => {
 				)}
 
 				{product?.isPromotion && (
-					<div className='absolute top-0 -right-3 bg-green-500 px-2 py-1 rounded-md shadow-lg shadow-slate-500'>
-						<Award className='text-white' />
+					<div className='absolute top-0 right-0 bg-green-500 px-1 py-1 rounded-md shadow-lg shadow-slate-500'>
+						<Award className='text-white' size={16}/>
 					</div>
 				)}
 

@@ -13,10 +13,10 @@ export const NavLinks: NavLink[] = [
 		title: 'Home',
 		url: '/',
 	},
-	{
-		title: 'Marketplace',
-		url: '/marketplace',
-	},
+	// {
+	// 	title: 'Marketplace',
+	// 	url: '/marketplace',
+	// },
 	{
 		title: 'Sellers',
 		url: '/sellers',

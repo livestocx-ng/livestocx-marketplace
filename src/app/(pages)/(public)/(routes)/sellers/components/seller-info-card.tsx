@@ -1,13 +1,23 @@
+'use-client';
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {Vendor} from '@/types/types';
+import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {useGlobalStore} from '@/hooks/use-global-store';
 
 const SellerInfoCard = ({vendor}: {vendor: Vendor}) => {
-	const {updateVendor} = useGlobalStore();
+	const router = useRouter();
+
+	const {
+		user,
+		updateVendor,
+		updateChatConversation,
+		updateCurrentAccountTab,
+		updateShowChatConversation,
+	} = useGlobalStore();
 
 	return (
 		<div className='w-full sm:w-[280px] bg-green-100 flex flex-col justify-between relative cursor-pointe shadow__1 hover:shadow__2 rounded-lg px-4 py-5'>
@@ -60,10 +70,34 @@ const SellerInfoCard = ({vendor}: {vendor: Vendor}) => {
 						<Button
 							type='button'
 							variant={'outline'}
-							onClick={() => {
-								const chatLink = `https://wa.me/+234${vendor?.phoneNumber}`;
+							onClick={async () => {
+								try {
+									if (!user) return router.push('/signin');
 
-								window.open(chatLink, '_blank');
+									if (user?.id == vendor?.user) {
+										return;
+									}
+
+									const {data} = await axios.get(
+										`${process.env.NEXT_PUBLIC_API_URL}/chat/conversation?receiver=${vendor?.user}`,
+										{
+											headers: {
+												Authorization:
+													user?.accessToken,
+											},
+										}
+									);
+
+									updateChatConversation(data.data);
+
+									router.push('/account');
+
+									updateCurrentAccountTab('Messages');
+
+									updateShowChatConversation(true);
+								} catch (_error) {
+									const error = _error as AxiosError;
+								}
 							}}
 							className='bg-orange-500 text-white text-xs h-10 rounded-none py-3 w-full'
 						>

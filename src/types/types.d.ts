@@ -50,6 +50,7 @@ export interface Vendor {
 	avatar: string;
 	avatarKey: string;
 	email: string;
+	user: string;
 	phoneNumber: string;
 	isUpdated: boolean;
 }

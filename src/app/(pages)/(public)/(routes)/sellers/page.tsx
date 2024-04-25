@@ -44,7 +44,7 @@ const SellersPage = () => {
 
 	return (
 		<main className='bg-[#28312B]'>
-			<section className='h-[40vh] md:h-[50vh] w-full bg-home flex flex-col items-center justify-end gap-y-5 md:gap-y-16 py-5 md:py-10 md:pt-0'>
+			<section className='h-[25vh] md:h-[380px] w-full bg-home flex flex-col items-center justify-end gap-y-3 md:gap-y-10 py-2 pt20 md:py-10 md:pt-0'>
 				<h1 className='text-xl md:text-5xl font-medium text-white'>
 					Sellers
 				</h1>

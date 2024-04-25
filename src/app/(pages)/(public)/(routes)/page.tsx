@@ -86,7 +86,7 @@ export default function HomePage() {
 						<Lottie
 							loop={false}
 							className='h-full'
-							animationData={AnimationLoad}
+							animationData={Animation}
 						/>
 					</div>
 				</div>

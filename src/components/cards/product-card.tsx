@@ -257,6 +257,12 @@ const ProductCard = ({product}: ProductCardProps) => {
 					</div>
 				</div>
 
+				{
+					product?.isPromotion && (
+						<p className="xs flex justify-end">Promoted</p>
+					)
+				}
+
 				{product?.vendor?.state && (
 					<div className='border-t border-slate-400 text-xs font-medium px-2 pt-1 flex items-center space-x-2'>
 						<MapPin className='h-3 w-3 text-black' />

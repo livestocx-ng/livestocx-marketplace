@@ -243,9 +243,9 @@ const SingleProductContent = ({
 							{/* <ContactVendorAlertDialog
 								productInfo={productInfo}
 							/> */}
-							<ProductContactAlertDialog
+							{/* <ProductContactAlertDialog
 								productInfo={productInfo}
-							/>
+							/> */}
 							{/* 
 								<Button
 									type='button'
@@ -266,7 +266,7 @@ const SingleProductContent = ({
 						</div>
 					</div>
 
-					<div className='flex flex-col space-y-3 h-ful md:h-fi border border-red-500 text-red-600 p-4 mt-5 md:mt-0 rounded-br-lg'>
+					<div className='flex flex-col space-y-3 h-fl md:h-[60%] border border-red-500 text-red-600 p-4 mt-5 md:mt-0 rounded-br-lg'>
 						<h1 className='text-sm font-semibold'>Safety Tips</h1>
 
 						<ul className='text-xs  list-disc pl-3 space-y-5'>

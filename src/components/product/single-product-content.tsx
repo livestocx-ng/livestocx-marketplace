@@ -212,6 +212,22 @@ const SingleProductContent = ({
 							>
 								Chat with Seller
 							</Button>
+							<Button
+								type='button'
+								variant={'outline'}
+								onClick={()=>{
+									const telLink = document.createElement('a')
+
+									telLink.href = `tel:${productInfo?.phoneNumber}`
+
+									telLink.target = "_blank";
+
+									telLink.click();
+								}}
+								className='bg-white text-main hover:bg-white hover:text-main border border-main text-[10px] md:text-xs h-10 w-[45%] rounded-full py-2'
+							>
+								Call Seller
+							</Button>
 
 							{/* <Button
 								type='button'

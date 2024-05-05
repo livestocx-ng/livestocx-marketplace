@@ -29,8 +29,13 @@ const MainNavbar = () => {
 	const router = useRouter();
 	const session = useSession();
 
-	const {user, updateUser, chatConversations, updateCurrentAccountTab} =
-		useGlobalStore();
+	const {
+		user,
+		updateUser,
+		chatConversations,
+		updateCurrentAccountTab,
+		updateChatConversations,
+	} = useGlobalStore();
 
 	const updateUserRoleModal = useUpdateUserRoleModalStore();
 
@@ -320,6 +325,7 @@ const MainNavbar = () => {
 											toast.success('Logged out!');
 
 											updateUser(null);
+											updateChatConversations([]);
 											setSetShowAccountMenu(false);
 
 											router.push('/');

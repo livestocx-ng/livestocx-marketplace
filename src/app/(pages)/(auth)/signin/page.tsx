@@ -42,7 +42,7 @@ const SignInPage = () => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
-	const {user, updateUser} = useGlobalStore();
+	const {user, updateUser, updateChatConversations} = useGlobalStore();
 
 	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
@@ -85,7 +85,18 @@ const SignInPage = () => {
 				if (searchParams.get('redirect_to')) {
 					return router.push(`/${searchParams.get('redirect_to')}`);
 				} else {
-					return router.push('/');
+					router.push('/');
+
+					const response = await axios.get(
+						`${process.env.NEXT_PUBLIC_API_URL}/chat/conversations?page=1`,
+						{
+							headers: {
+								Authorization: data?.accessToken,
+							},
+						}
+					);
+
+					updateChatConversations(response.data.data.conversations);
 				}
 			}
 		} catch (error) {

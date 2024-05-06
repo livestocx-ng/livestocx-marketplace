@@ -1,21 +1,26 @@
 import {Product, Vendor} from '@/types/types';
 
 export function formatProductSlug(product: Product): string {
-	const formattedProductName = product.name
+	// Remove commas from the product name
+	const formattedProductName = product.name.replace(/,/g, '');
+
+	// Replace spaces with dashes and convert to lowercase
+	const formattedProductNameWithoutCommas = formattedProductName
 		.replace(/\s+/g, '-')
 		.toLowerCase();
 
-	const slug = `${formattedProductName}_${product.productId.toLowerCase()}`;
+	// Concatenate product name and product ID with an underscore
+	const slug = `${formattedProductNameWithoutCommas}_${product.productId}`;
 
 	return slug;
 }
 
 export function formatVendorSlug(vendor: Vendor): string {
-	const formattedVendorName = vendor.name
-		.replace(/\s+/g, '-')
-		.toLowerCase();
+	const formattedProductName = vendor.name.replace(/,/g, '');
 
-	const slug = `${formattedVendorName}_${vendor.vendorId!.toLowerCase()}`;
+	const formattedVendorNameWithOutCommas = formattedProductName.replace(/\s+/g, '-').toLowerCase();
+
+	const slug = `${formattedVendorNameWithOutCommas}_${vendor.vendorId!.toLowerCase()}`;
 
 	return slug;
 }

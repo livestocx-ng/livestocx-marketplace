@@ -203,7 +203,7 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 			{isProductMediaModalOpen && <ProductMediaModal />}
 
 			<section className='sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 pb-20 sm:pb-0 md:pt-0'>
-				<h1 className='text-xl md:text-5xl font-medium text-white capitalize'>
+				<h1 className='text-xl md:text-5xl font-medium text-white capitalize px-6 sm:px-0 text-center'>
 					{product?.name}
 				</h1>
 

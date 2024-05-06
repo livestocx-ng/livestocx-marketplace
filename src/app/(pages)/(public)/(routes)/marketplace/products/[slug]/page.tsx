@@ -24,10 +24,11 @@ import SingleProductContent from '@/components/product/single-product-content';
 import EmptyAnimation from '../../../../../../../../public/animations/animation__3.json';
 import LoadingAnimation from '../../../../../../../../public/animations/animation__3.json';
 import {useRouter} from 'next/navigation';
+import {getProductIdFromSlug} from '@/utils/slug.formatter';
 
 interface ProductPageParams {
 	params: {
-		productId: string;
+		slug: string;
 	};
 }
 
@@ -35,7 +36,7 @@ type Tab = 'Seller Info' | 'Review' | 'More From Seller';
 
 const CurrentTabs: Tab[] = ['Seller Info', 'Review', 'More From Seller'];
 
-const MarketPlaceProductPage = ({params: {productId}}: ProductPageParams) => {
+const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 	const router = useRouter();
 
 	const isProductMediaModalOpen = useProductMediaModalStore(
@@ -57,16 +58,20 @@ const MarketPlaceProductPage = ({params: {productId}}: ProductPageParams) => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [currentTab, setCurrentTab] = useState<Tab>('Seller Info');
 
-	// console.log('[PRODUCT-ID] :: ', productId);
+	// console.log('[PRODUCT-ID] :: ', slug);
 
 	const fetchProduct = async () => {
 		try {
 			const [_product, _productInfo] = await Promise.all([
 				axios.get(
-					`${process.env.NEXT_PUBLIC_API_URL}/user/products/product/${productId}`
+					`${
+						process.env.NEXT_PUBLIC_API_URL
+					}/user/products/product/${getProductIdFromSlug(slug)}`
 				),
 				axios.get(
-					`${process.env.NEXT_PUBLIC_API_URL}/user/products/info/${productId}`
+					`${
+						process.env.NEXT_PUBLIC_API_URL
+					}/user/products/info/${getProductIdFromSlug(slug)}`
 				),
 			]);
 
@@ -85,7 +90,9 @@ const MarketPlaceProductPage = ({params: {productId}}: ProductPageParams) => {
 	const viewProduct = async () => {
 		try {
 			const {data} = await axios.get(
-				`${process.env.NEXT_PUBLIC_API_URL}/user/products/product/${productId}/view`,
+				`${
+					process.env.NEXT_PUBLIC_API_URL
+				}/user/products/product/${getProductIdFromSlug(slug)}/view`,
 				{
 					headers: {
 						Authorization: user?.accessToken,

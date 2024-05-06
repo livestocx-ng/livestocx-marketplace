@@ -29,11 +29,11 @@ export const metadata: Metadata = {
 	openGraph: {
 		images: [
 			{
-				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-sitemap.png',
+				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x200.png',
 				secureUrl:
-					'https://livestocx-media.s3.amazonaws.com/public/livestocx-sitemap.png',
+					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x200.png',
 				width: 300,
-				height: 300,
+				height: 200,
 			},
 		],
 	},

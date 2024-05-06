@@ -20,6 +20,7 @@ import {
 	ThumbsUp,
 } from 'lucide-react';
 import {getMediaImageUrl} from '@/utils/media/media.url';
+import {formatProductSlug, formatVendorSlug} from '@/utils/slug.formatter';
 
 interface ProductCardProps {
 	product: Product | null;
@@ -142,17 +143,23 @@ const ProductCard = ({product}: ProductCardProps) => {
 						!pathName.includes('sellers')
 					) {
 						return router.push(
-							`/marketplace/products/${product?.productId!.toLowerCase()}`
+							`/marketplace/products/${formatProductSlug(
+								product!
+							)}`
 						);
 					}
 					if (pathName.includes('marketplace')) {
 						return router.push(
-							`/marketplace/products/${product?.productId!.toLowerCase()}`
+							`/marketplace/products/${formatProductSlug(
+								product!
+							)}`
 						);
 					}
 					if (pathName.includes('sellers')) {
 						return router.push(
-							`/sellers/${vendor?.vendorId!.toLowerCase()}/products/${product?.productId!.toLowerCase()}`
+							`/sellers/${formatVendorSlug(vendor!)}/products/${formatProductSlug(
+								product!
+							)}`
 						);
 					}
 				}}
@@ -177,7 +184,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 
 				{product?.isPromotion && (
 					<div className='absolute top-0 right-0 bg-green-500 px-1 py-1 rounded-md shadow-lg shadow-slate-500'>
-						<Award className='text-white' size={16}/>
+						<Award className='text-white' size={16} />
 					</div>
 				)}
 

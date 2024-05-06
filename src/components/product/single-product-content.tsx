@@ -167,6 +167,8 @@ const SingleProductContent = ({
 				</div>
 				<div className='w-full md:w-[40%] flex flex-col justify-between md:h-full px-4 md:px-0'>
 					<div className='flex flex-col justify-between border border-slate-500 md:rounded-tr-lg p-4'>
+						<h1 className='font-semibold'>{product.name}</h1>
+
 						<div className='flex items-center justify-between w-full'>
 							<h1 className='text-sm font-medium'>
 								{product.isNegotiable &&
@@ -215,12 +217,12 @@ const SingleProductContent = ({
 							<Button
 								type='button'
 								variant={'outline'}
-								onClick={()=>{
-									const telLink = document.createElement('a')
+								onClick={() => {
+									const telLink = document.createElement('a');
 
-									telLink.href = `tel:${productInfo?.phoneNumber}`
+									telLink.href = `tel:${productInfo?.phoneNumber}`;
 
-									telLink.target = "_blank";
+									telLink.target = '_blank';
 
 									telLink.click();
 								}}
@@ -228,48 +230,6 @@ const SingleProductContent = ({
 							>
 								Call Seller
 							</Button>
-
-							{/* <Button
-								type='button'
-								variant={'outline'}
-								onClick={async () => {
-									if (user?.accessToken) {
-										await axios.get(
-											`${
-												process.env.NEXT_PUBLIC_API_URL
-											}/user/products/add-user-to-contact-seller?product=${product?.id}`,
-											{
-												headers: {
-													Authorization:
-														user?.accessToken,
-												},
-											}
-										);
-									}
-
-									const chatLink = `https://wa.me/+234${productInfo?.phoneNumber}`;
-
-									window.open(chatLink, '_blank');
-								}}
-								className='border-main text-main text-[10px] md:text-xs h-10 w-[45%] rounded-full py-2'
-							>
-								Chat with Seller
-							</Button> */}
-
-							{/* <ContactVendorAlertDialog
-								productInfo={productInfo}
-							/> */}
-							{/* <ProductContactAlertDialog
-								productInfo={productInfo}
-							/> */}
-							{/* 
-								<Button
-									type='button'
-									variant={'outline'}
-									className='border-main text-main text-[10px] md:text-xs h-10 w-[45%] rounded-full py-2'
-								>
-									Show contact
-								</Button> */}
 
 							<Button
 								type='button'
@@ -282,7 +242,7 @@ const SingleProductContent = ({
 						</div>
 					</div>
 
-					<div className='flex flex-col space-y-3 h-fl md:h-[60%] border border-red-500 text-red-600 p-4 mt-5 md:mt-0 rounded-br-lg'>
+					<div className='flex flex-col space-y-3 h-fl md:h-[50% border border-red-500 text-red-600 p-4 mt-5 md:mt-0 rounded-br-lg'>
 						<h1 className='text-sm font-semibold'>Safety Tips</h1>
 
 						<ul className='text-xs  list-disc pl-3 space-y-5'>

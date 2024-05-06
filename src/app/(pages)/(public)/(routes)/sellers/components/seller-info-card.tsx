@@ -7,6 +7,7 @@ import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {useGlobalStore} from '@/hooks/use-global-store';
+import { formatVendorSlug } from '@/utils/slug.formatter';
 
 const SellerInfoCard = ({vendor}: {vendor: Vendor}) => {
 	const router = useRouter();
@@ -53,7 +54,7 @@ const SellerInfoCard = ({vendor}: {vendor: Vendor}) => {
 				</div>
 
 				<div className='flex flex-row sm:flex-col space-x-5 sm:space-x-0 sm:space-y-2'>
-					<Link href={`/sellers/${vendor?.vendorId!.toLowerCase()}`}>
+					<Link href={`/sellers/${formatVendorSlug(vendor)}`}>
 						<Button
 							type='button'
 							variant={'outline'}

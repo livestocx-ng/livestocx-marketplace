@@ -12,7 +12,7 @@ export function formatProductSlug(product: Product): string {
 	// Concatenate product name and product ID with an underscore
 	const slug = `${formattedProductNameWithoutCommas}_${product.productId}`;
 
-	return slug;
+	return slug.toLowerCase();
 }
 
 export function formatVendorSlug(vendor: Vendor): string {
@@ -22,7 +22,7 @@ export function formatVendorSlug(vendor: Vendor): string {
 
 	const slug = `${formattedVendorNameWithOutCommas}_${vendor.vendorId!.toLowerCase()}`;
 
-	return slug;
+	return slug.toLowerCase();
 }
 
 export function getProductIdFromSlug(slug: string): string {

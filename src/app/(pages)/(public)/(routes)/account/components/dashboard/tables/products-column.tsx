@@ -18,6 +18,7 @@ import {Product} from '@/types/types';
 import {ColumnDef} from '@tanstack/react-table';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { formatProductSlug } from '@/utils/slug.formatter';
 
 export interface ProductColumn extends Product {}
 
@@ -157,19 +158,19 @@ export const columns: ColumnDef<ProductColumn>[] = [
 		cell: ({row}) => (
 			<div className='flex space-x-2'>
 				<WhatsappShareButton
-					url={`https://livestocx.com/marketplace/products/${row.original.productId.toLowerCase()}`}
+					url={`https://livestocx.com/marketplace/products/${formatProductSlug(row.original)}`}
 					title={`Check out my ${row.original.name} on livestocx: `}
 				>
 					<WhatsappIcon size={25} round />
 				</WhatsappShareButton>
 				<FacebookShareButton
-					url={`https://livestocx.com/marketplace/products/${row.original.productId.toLowerCase()}`}
+					url={`https://livestocx.com/marketplace/products/${formatProductSlug(row.original)}`}
 					title={`Check out my ${row.original.name} on livestocx: `}
 				>
 					<FacebookIcon size={25} round />
 				</FacebookShareButton>
 				<TwitterShareButton
-					url={`https://livestocx.com/marketplace/products/${row.original.productId.toLowerCase()}`}
+					url={`https://livestocx.com/marketplace/products/${formatProductSlug(row.original)}`}
 					title={`Check out my ${row.original.name} on livestocx: `}
 				>
 					<TwitterIcon size={25} round />
@@ -179,7 +180,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
 					onCopy={(text: string, result: boolean) => {
 						toast.success('Copied to clipboard');
 					}}
-					text={`https://livestocx.com/marketplace/products/${row.original.productId.toLowerCase()}`}
+					text={`https://livestocx.com/marketplace/products/${formatProductSlug(row.original)}`}
 				>
 					<div className='rounded-full border border-slate-400 h-7 w-7 flex items-center justify-center cursor-pointer'>
 						<Copy className='h-4 w-4' />

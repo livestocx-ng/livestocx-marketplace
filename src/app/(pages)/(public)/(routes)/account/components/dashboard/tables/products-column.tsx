@@ -208,23 +208,4 @@ export const columns: ColumnDef<ProductColumn>[] = [
 			);
 		},
 	},
-	// {
-	// 	accessorKey: 'id',
-	// 	header: '',
-	// 	cell: ({row}) => {
-	// 		const {updatePayload, onOpen} = useDeleteProductModalStore();
-
-	// 		return (
-	// 			<p
-	// 				onClick={() => {
-	// 					updatePayload(row.original);
-	// 					onOpen();
-	// 				}}
-	// 				className='text-red-500 text-sm underline font-medium cursor-pointer'
-	// 			>
-	// 				Delete
-	// 			</p>
-	// 		);
-	// 	},
-	// },
 ];

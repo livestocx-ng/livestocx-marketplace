@@ -8,13 +8,12 @@ import {
 	WhatsappShareButton,
 } from 'react-share';
 import Image from 'next/image';
-import {
-	useShareProductModalStore,
-} from '@/hooks/use-global-store';
+import {useShareProductModalStore} from '@/hooks/use-global-store';
 import {Copy, X} from 'lucide-react';
 import {toast} from 'react-hot-toast';
 import {Button} from '@/components/ui/button';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import {formatProductSlug} from '@/utils/slug.formatter';
 
 const ShareProductModal = () => {
 	const {payload, onClose} = useShareProductModalStore();
@@ -53,29 +52,39 @@ const ShareProductModal = () => {
 					</div>
 
 					<div className='flex items-center'>
-						<h1 className='text-sm font-medium'>Share On: &nbsp;</h1>
+						<h1 className='text-sm font-medium'>
+							Share On: &nbsp;
+						</h1>
 						<div className='flex space-x-2'>
 							<WhatsappShareButton
 								title={`Check out my ${payload.name} on livestocx: `}
-								url={`https://livestocx.com/marketplace/products/${payload.productId.toLowerCase()}`}
+								url={`https://livestocx.com/marketplace/products/${formatProductSlug(
+									payload!
+								)}`}
 							>
 								<WhatsappIcon size={30} round />
 							</WhatsappShareButton>
 							<FacebookShareButton
 								title={`Check out my ${payload.name} on livestocx: `}
-								url={`https://livestocx.com/marketplace/products/${payload.productId.toLowerCase()}`}
+								url={`https://livestocx.com/marketplace/products/${formatProductSlug(
+									payload!
+								)}`}
 							>
 								<FacebookIcon size={30} round />
 							</FacebookShareButton>
 							<TwitterShareButton
 								title={`Check out my ${payload.name} on livestocx: `}
-								url={`https://livestocx.com/marketplace/products/${payload.productId.toLowerCase()}`}
+								url={`https://livestocx.com/marketplace/products/${formatProductSlug(
+									payload!
+								)}`}
 							>
 								<TwitterIcon size={30} round />
 							</TwitterShareButton>
 
 							<CopyToClipboard
-								text={`https://livestocx.com/marketplace/products/${payload.productId.toLowerCase()}`}
+								text={`https://livestocx.com/marketplace/products/${formatProductSlug(
+									payload!
+								)}`}
 								onCopy={(text: string, result: boolean) => {
 									toast.success('Copied to clipboard');
 								}}

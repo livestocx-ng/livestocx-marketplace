@@ -1,24 +1,33 @@
 import axios from 'axios';
-import { default as Jimp } from 'jimp';
+import {default as Jimp} from 'jimp';
 
 export async function generateOGImageFromURL(
-    imageURL: string
+	imageURL: string,
+	productSlug: string
 ): Promise<string> {
-    try {
-        const response = await axios.get(imageURL, {
-            responseType: 'arraybuffer',
-        });
-        const imageData = Buffer.from(response.data, 'binary');
+	try {
+		const response = await axios.get(imageURL, {
+			responseType: 'arraybuffer',
+		});
+		const imageData = Buffer.from(response.data, 'binary');
 
-        const image = await Jimp.read(imageData);
-        image.resize(300, 200).cover(300, 200);
+		const image = await Jimp.read(imageData);
+		image.resize(300, 200).cover(300, 200);
 
-        console.log('Image cropped successfully!');
+		const imageBuffer = await image.getBufferAsync(Jimp.MIME_PNG);
 
-        return image.getBase64Async(Jimp.AUTO);
-    } catch (error) {
-        console.error('Error while generating SEO OG:image:', error);
+		const uploadUrl = `https://filebin.net/8rq1yyzg1htdpu2q/${productSlug}`;
 
-        return '';
-    }
+		await axios.post(uploadUrl, imageBuffer);
+
+		console.log('[OG-IMAGE-UPLOAD-URL] :: ', uploadUrl);
+
+		return uploadUrl;
+	} catch (error) {
+		console.error('Error while generating SEO OG:image:', error);
+
+		return '';
+	}
 }
+
+// https://filebin.net/8rq1yyzg1htdpu2q

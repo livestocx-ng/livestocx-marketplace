@@ -16,7 +16,11 @@ export async function generateOGImageFromURL(
 
 		const imageBuffer = await image.getBufferAsync(Jimp.MIME_PNG);
 
-		const uploadUrl = `https://filebin.net/8rq1yyzg1htdpu2q/${productSlug}`;
+        const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/admin/filebin`)
+
+        // console.log('[FILE-BIN-RESPONSE] :: ', data);
+
+		const uploadUrl = `${data.data.uploadUrl}/${productSlug}`;
 
 		await axios.post(uploadUrl, imageBuffer);
 

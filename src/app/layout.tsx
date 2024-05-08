@@ -43,6 +43,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 	return (
 		<html lang='en'>
 			<GoogleAnalyticsProvider />
+
 			<body className={poppins.className}>
 				<AuthProvider>
 					<SocketProvider>

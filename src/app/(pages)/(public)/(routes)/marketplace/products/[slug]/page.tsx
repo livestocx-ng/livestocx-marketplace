@@ -16,7 +16,7 @@ import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import SingleProductContent from '@/components/product/single-product-content';
 import EmptyAnimation from '../../../../../../../../public/animations/animation__3.json';
 import LoadingAnimation from '../../../../../../../../public/animations/animation__3.json';
-import type {Metadata} from 'next';
+import type {Metadata, ResolvingMetadata} from 'next';
 
 interface ProductPageParams {
 	params: {

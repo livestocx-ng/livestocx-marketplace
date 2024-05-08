@@ -12,11 +12,20 @@ import {Copy, X} from 'lucide-react';
 import {toast} from 'react-hot-toast';
 import {Button} from '@/components/ui/button';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-import { formatProductSlug } from '@/utils/slug.formatter';
+import {formatProductSlug} from '@/utils/slug.formatter';
 import {useShareNewProductModalStore} from '@/hooks/use-global-store';
+import { useEffect } from 'react';
 
 const ShareNewProductModal = () => {
 	const {payload, onClose} = useShareNewProductModalStore();
+
+	useEffect(() => {
+		fetch(
+			`https://livestocx.com/marketplace/products/${formatProductSlug(
+				payload!
+			)}`
+		);
+	}, []);
 
 	return (
 		<div className='fixed h-screen flex flex-col items-center justify-center w-full bg-[#11111190] backdrop-blur-sm z-10'>

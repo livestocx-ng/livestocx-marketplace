@@ -1,30 +1,22 @@
 'use client';
-import Image from 'next/image';
+import Head from 'next/head';
 import {
 	useGlobalStore,
 	useProductMediaModalStore,
 } from '@/hooks/use-global-store';
 import Lottie from 'lottie-react';
-import {
-	AlertDialog,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogTitle,
-	AlertDialogTrigger,
-	AlertDialogDescription,
-} from '@/components/ui/alert-dialog';
-import {toast} from 'react-hot-toast';
+import {Product} from '@/types/types';
 import axios, {AxiosError} from 'axios';
-import {useEffect, useState} from 'react';
-import {ProductInfo} from '@/types/types';
+import {useRouter} from 'next/navigation';
+import {Fragment, useEffect, useState} from 'react';
+import {getMediaImageUrl} from '@/utils/media/media.url';
+import {getProductIdFromSlug} from '@/utils/slug.formatter';
+import {generateOGImageFromURL} from '@/utils/og.image.generator';
 import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import SingleProductContent from '@/components/product/single-product-content';
 import EmptyAnimation from '../../../../../../../../public/animations/animation__3.json';
 import LoadingAnimation from '../../../../../../../../public/animations/animation__3.json';
-import {useRouter} from 'next/navigation';
-import {getProductIdFromSlug} from '@/utils/slug.formatter';
+import type {Metadata} from 'next';
 
 interface ProductPageParams {
 	params: {
@@ -56,9 +48,18 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 	} = useGlobalStore();
 
 	const [loading, setLoading] = useState<boolean>(false);
+	const [ogImage, setOGImage] = useState<string>('');
 	const [currentTab, setCurrentTab] = useState<Tab>('Seller Info');
 
-	// console.log('[PRODUCT-ID] :: ', slug);
+	const fetchProductOgImage = async (product: Product) => {
+		const imageUrl = getMediaImageUrl(product);
+
+		if (imageUrl.includes('https')) {
+			const ogImageBuffer = await generateOGImageFromURL(imageUrl);
+
+			setOGImage(ogImageBuffer);
+		}
+	};
 
 	const fetchProduct = async () => {
 		try {
@@ -110,7 +111,11 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 
 	useEffect(() => {
 		fetchProduct();
-	}, []);
+
+		if (product) {
+			fetchProductOgImage(product);
+		}
+	}, [product]);
 
 	useEffect(() => {
 		if (user) {
@@ -199,95 +204,64 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 	};
 
 	return (
-		<main className='w-full relative'>
-			{isProductMediaModalOpen && <ProductMediaModal />}
+		<Fragment>
+			<Head>
+				<title>{product?.name}</title>
+				<meta property='og:title' content={product?.name} />
+				<meta property='og:image' content={ogImage} />
+				<meta property='og:image:width' content='300' />
+				<meta property='og:image:height' content='200' />
+			</Head>
 
-			<section className='sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 pb-20 sm:pb-0 md:pt-0'>
-				<h1 className='text-xl md:text-5xl font-medium text-white capitalize px-6 sm:px-0 text-center'>
-					{product?.name}
-				</h1>
+			<main className='w-full relative'>
+				{isProductMediaModalOpen && <ProductMediaModal />}
 
-				{/* <SearchForm /> */}
-			</section>
+				<section className='sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 pb-20 sm:pb-0 md:pt-0'>
+					<h1 className='text-xl md:text-5xl font-medium text-white capitalize px-6 sm:px-0 text-center'>
+						{product?.name}
+					</h1>
 
-			{loading && (
-				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
-					<div className='h-[200px] w-1/2 mx-auto bg-white'>
-						<Lottie
-							loop={true}
-							className='h-full'
-							animationData={LoadingAnimation}
-						/>
+					{/* <SearchForm /> */}
+				</section>
+
+				{loading && (
+					<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
+						<div className='h-[200px] w-1/2 mx-auto bg-white'>
+							<Lottie
+								loop={true}
+								className='h-full'
+								animationData={LoadingAnimation}
+							/>
+						</div>
 					</div>
-				</div>
-			)}
+				)}
 
-			{!loading && !product && (
-				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
-					<div className='h-[200px] w-1/2 mx-auto bg-white'>
-						<Lottie
-							loop={true}
-							className='h-full'
-							animationData={EmptyAnimation}
-						/>
+				{!loading && !product && (
+					<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
+						<div className='h-[200px] w-1/2 mx-auto bg-white'>
+							<Lottie
+								loop={true}
+								className='h-full'
+								animationData={EmptyAnimation}
+							/>
+						</div>
 					</div>
-				</div>
-			)}
+				)}
 
-			{!loading && product && (
-				<SingleProductContent
-					loading={loading}
-					product={product}
-					currentTab={currentTab}
-					productInfo={productInfo}
-					setCurrentTab={setCurrentTab}
-					handleLikeUnlikeProduct={handleLikeUnlikeProduct}
-					handleAddToDesiredProducts={handleAddToDesiredProducts}
-				/>
-			)}
-		</main>
+				{!loading && product && (
+					<SingleProductContent
+						loading={loading}
+						product={product}
+						currentTab={currentTab}
+						productInfo={productInfo}
+						setCurrentTab={setCurrentTab}
+						handleLikeUnlikeProduct={handleLikeUnlikeProduct}
+						handleAddToDesiredProducts={handleAddToDesiredProducts}
+					/>
+				)}
+			</main>
+		</Fragment>
 	);
 };
 
 export default MarketPlaceProductPage;
-
-const ProductContactAlertDialog = ({
-	productInfo,
-}: {
-	productInfo: ProductInfo | null;
-}) => {
-	return (
-		<AlertDialog>
-			<AlertDialogTrigger className='border border-main text-main text-xs h-10 w-[45%] rounded-full py-2'>
-				Show Contact
-			</AlertDialogTrigger>
-			<AlertDialogContent>
-				<AlertDialogHeader>
-					<AlertDialogTitle>{productInfo?.name!}</AlertDialogTitle>
-					<AlertDialogDescription className='flex flex-col py-5 text-black'>
-						<div className='relative w-[150px] h-[150px] mx-auto border'>
-							<Image
-								fill
-								alt=''
-								unoptimized={true}
-								src={productInfo?.avatar!}
-								className='object-fill w-full h-full'
-							/>
-						</div>
-						<div className='grid grid-cols-2 gap-y-5 pt-2'>
-							<p className='font-medium text-sm'>Email</p>
-							<p>{productInfo?.email}</p>
-							<p className='font-medium text-sm'>
-								Contact number
-							</p>
-							<p>{productInfo?.phoneNumber}</p>
-						</div>
-					</AlertDialogDescription>
-				</AlertDialogHeader>
-				<AlertDialogFooter>
-					<AlertDialogCancel>Close</AlertDialogCancel>
-				</AlertDialogFooter>
-			</AlertDialogContent>
-		</AlertDialog>
-	);
-};

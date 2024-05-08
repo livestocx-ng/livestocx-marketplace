@@ -88,17 +88,17 @@ const SingleProductContent = ({
 			</h1> */}
 
 			<div className='flex flex-wrap justify-between items-start md:h-[500px] w-full'>
-				<div className='w-full md:w-[55%] h-[350px] md:h-full relative mb-5 md:mb-0 rounded-none md:rounded-l-l'>
+				<div className='w-full md:w-[58%] h-[350px] md:h-full relative mb-5 md:mb-0 rounded-none md:rounded-l-l'>
 					<Image
 						fill
 						unoptimized={true}
 						alt={'product'}
 						src={getMediaImageUrl(product)}
-						className='object-cover h-full w-full md:rounded-l-l border-0 md:border border-gray-600'
+						className='object-cover h-full w-full md:rounded-tl-lg md:rounded-bl-lg border-0 md:border border-gray-600'
 					/>
 
 					{product?.isNegotiable === true && (
-						<div className='absolute top-0 left-0 bg-slate-800 px-4 py-2'>
+						<div className='absolute top-0 left-0 bg-slate-800 px-4 py-2 md:rounded-tl-lg'>
 							<p className='text-[10px] text-white'>Negotiable</p>
 						</div>
 					)}
@@ -111,7 +111,7 @@ const SingleProductContent = ({
 					)}
 
 					<div className='absolute flex items-center bottom-0 left-0'>
-						<p className='bg-slate-800 border-0 text-white hover:bg-slate-800 hover:text-white text-[10px] py-2 px-2 flex items-center'>
+						<p className='bg-slate-800 border-0 text-white hover:bg-slate-800 hover:text-white text-[10px] py-2 px-2 flex items-center md:rounded-bl-lg'>
 							Posted on: {product?.createdAt?.slice(0, 10)}
 						</p>
 					</div>

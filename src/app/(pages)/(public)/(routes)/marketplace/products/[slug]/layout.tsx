@@ -1,50 +1,52 @@
-'use client';
-import Head from 'next/head';
-import {Product} from '@/types/types';
-import {Fragment, useEffect, useState} from 'react';
-import {getMediaImageUrl} from '@/utils/media/media.url';
-import {useGlobalStore} from '@/hooks/use-global-store';
-import {generateOGImageFromURL} from '@/utils/og.image.generator';
+import { getMediaImageUrl } from '@/utils/media/media.url';
+import { generateOGImageFromURL } from '@/utils/og.image.generator';
+import {getProductIdFromSlug} from '@/utils/slug.formatter';
+import axios from 'axios';
+import {Metadata, ResolvingMetadata} from 'next';
 
 interface ProductDescriptionLayoutProps {
+	params: {
+		slug: string;
+	};
 	children: React.ReactNode;
 }
 
-const ProductDescriptionPagesLayout = ({
-	children,
-}: ProductDescriptionLayoutProps) => {
-	const {product} = useGlobalStore();
+export async function generateMetadata(
+	{params}: ProductDescriptionLayoutProps,
+	parent: ResolvingMetadata
+): Promise<Metadata> {
+	console.log('SLUG ', params.slug);
 
-	const [ogImage, setOGImage] = useState<string>('');
+    let ogImage = '';
 
-	const fetchProductOgImage = async (product: Product) => {
-		const imageUrl = getMediaImageUrl(product);
-
-		if (imageUrl.includes('https')) {
-			const ogImageBuffer = await generateOGImageFromURL(imageUrl);
-
-			setOGImage(ogImageBuffer);
-		}
-	};
-
-	useEffect(() => {
-		if (product) {
-			fetchProductOgImage(product);
-		}
-	}, [product]);
-
-	return (
-		<Fragment>
-			<title>{product?.name}</title>
-			<Head>
-				<meta property='og:title' content={product?.name} />
-				<meta property='og:image' content={ogImage} />
-				<meta property='og:image:width' content='300' />
-				<meta property='og:image:height' content='200' />
-			</Head>
-			<div>{children}</div>
-		</Fragment>
+	const {data} = await axios.get(
+		`${
+			process.env.NEXT_PUBLIC_API_URL
+		}/user/products/product/${getProductIdFromSlug(params.slug)}`
 	);
-};
 
-export default ProductDescriptionPagesLayout;
+    const imageUrl = getMediaImageUrl(data.data);
+
+    if(imageUrl.includes('https')){
+        ogImage = await generateOGImageFromURL(imageUrl);
+    }
+
+	return {
+		title: `Livestocx - ${data.data.name}`,
+		openGraph: {
+			images: [
+                {
+                    url: ogImage,
+                    secureUrl:
+                        ogImage,
+                    width: 300,
+                    height: 200,
+                },
+            ],
+		},
+	};
+}
+
+export default function RootLayout({children}: ProductDescriptionLayoutProps) {
+	return <div>{children}</div>;
+}

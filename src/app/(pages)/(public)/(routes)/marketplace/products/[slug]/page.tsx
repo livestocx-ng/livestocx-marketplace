@@ -48,18 +48,7 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 	} = useGlobalStore();
 
 	const [loading, setLoading] = useState<boolean>(false);
-	const [ogImage, setOGImage] = useState<string>('');
 	const [currentTab, setCurrentTab] = useState<Tab>('Seller Info');
-
-	const fetchProductOgImage = async (product: Product) => {
-		const imageUrl = getMediaImageUrl(product);
-
-		if (imageUrl.includes('https')) {
-			const ogImageBuffer = await generateOGImageFromURL(imageUrl);
-
-			setOGImage(ogImageBuffer);
-		}
-	};
 
 	const fetchProduct = async () => {
 		try {
@@ -111,11 +100,7 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 
 	useEffect(() => {
 		fetchProduct();
-
-		if (product) {
-			fetchProductOgImage(product);
-		}
-	}, [product]);
+	}, []);
 
 	useEffect(() => {
 		if (user) {
@@ -204,63 +189,53 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 	};
 
 	return (
-		<Fragment>
-			<Head>
-				<title>{product?.name}</title>
-				<meta property='og:title' content={product?.name} />
-				<meta property='og:image' content={ogImage} />
-				<meta property='og:image:width' content='300' />
-				<meta property='og:image:height' content='200' />
-			</Head>
+		<main className='w-full relative'>
+			{isProductMediaModalOpen && <ProductMediaModal />}
 
-			<main className='w-full relative'>
-				{isProductMediaModalOpen && <ProductMediaModal />}
+			<section className='sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 pb-20 sm:pb-0 md:pt-0'>
+				<h1 className='text-xl md:text-5xl font-medium text-white capitalize px-6 sm:px-0 text-center'>
+					{product?.name}
+				</h1>
 
-				<section className='sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 pb-20 sm:pb-0 md:pt-0'>
-					<h1 className='text-xl md:text-5xl font-medium text-white capitalize px-6 sm:px-0 text-center'>
-						{product?.name}
-					</h1>
+				{/* <SearchForm /> */}
+			</section>
 
-					{/* <SearchForm /> */}
-				</section>
-
-				{loading && (
-					<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
-						<div className='h-[200px] w-1/2 mx-auto bg-white'>
-							<Lottie
-								loop={true}
-								className='h-full'
-								animationData={LoadingAnimation}
-							/>
-						</div>
+			{loading && (
+				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
+					<div className='h-[200px] w-1/2 mx-auto bg-white'>
+						<Lottie
+							loop={true}
+							className='h-full'
+							animationData={LoadingAnimation}
+						/>
 					</div>
-				)}
+				</div>
+			)}
 
-				{!loading && !product && (
-					<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
-						<div className='h-[200px] w-1/2 mx-auto bg-white'>
-							<Lottie
-								loop={true}
-								className='h-full'
-								animationData={EmptyAnimation}
-							/>
-						</div>
+			{!loading && !product && (
+				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
+					<div className='h-[200px] w-1/2 mx-auto bg-white'>
+						<Lottie
+							loop={true}
+							className='h-full'
+							animationData={EmptyAnimation}
+						/>
 					</div>
-				)}
+				</div>
+			)}
 
-				{!loading && product && (
-					<SingleProductContent
-						loading={loading}
-						product={product}
-						currentTab={currentTab}
-						productInfo={productInfo}
-						setCurrentTab={setCurrentTab}
-						handleLikeUnlikeProduct={handleLikeUnlikeProduct}
-						handleAddToDesiredProducts={handleAddToDesiredProducts}
-					/>
-				)}
-			</main>
-		</Fragment>
+			{!loading && product && (
+				<SingleProductContent
+					loading={loading}
+					product={product}
+					currentTab={currentTab}
+					productInfo={productInfo}
+					setCurrentTab={setCurrentTab}
+					handleLikeUnlikeProduct={handleLikeUnlikeProduct}
+					handleAddToDesiredProducts={handleAddToDesiredProducts}
+				/>
+			)}
+		</main>
 	);
 };
 

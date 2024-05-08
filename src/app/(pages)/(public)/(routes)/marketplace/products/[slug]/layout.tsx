@@ -35,13 +35,13 @@ const ProductDescriptionPagesLayout = ({
 
 	return (
 		<Fragment>
-			{/* <Head> */}
-				<title>{product?.name}</title>
+			<title>{product?.name}</title>
+			<Head>
 				<meta property='og:title' content={product?.name} />
 				<meta property='og:image' content={ogImage} />
 				<meta property='og:image:width' content='300' />
 				<meta property='og:image:height' content='200' />
-			{/* </Head> */}
+			</Head>
 			<div>{children}</div>
 		</Fragment>
 	);

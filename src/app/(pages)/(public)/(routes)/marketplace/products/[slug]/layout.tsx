@@ -1,6 +1,6 @@
-import { getMediaImageUrl } from '@/utils/media/media.url';
-import { generateOGImageFromURL } from '@/utils/og.image.generator';
-import {getProductIdFromSlug} from '@/utils/slug.formatter';
+import {getMediaImageUrl} from '@/utils/media/media.url';
+import {generateOGImageFromURL} from '@/utils/og.image.generator';
+import {formatProductSlug, getProductIdFromSlug} from '@/utils/slug.formatter';
 import axios from 'axios';
 import {Metadata, ResolvingMetadata} from 'next';
 
@@ -17,7 +17,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
 	console.log('SLUG ', params.slug);
 
-    let ogImage = '';
+	let ogImage = '';
 
 	const {data} = await axios.get(
 		`${
@@ -25,24 +25,26 @@ export async function generateMetadata(
 		}/user/products/product/${getProductIdFromSlug(params.slug)}`
 	);
 
-    const imageUrl = getMediaImageUrl(data.data);
+	const imageUrl = getMediaImageUrl(data.data);
 
-    if(imageUrl.includes('https')){
-        ogImage = await generateOGImageFromURL(imageUrl);
-    }
+	if (imageUrl.includes('https')) {
+		ogImage = await generateOGImageFromURL(
+			imageUrl,
+			formatProductSlug(data.data)
+		);
+	}
 
 	return {
 		title: `Livestocx - ${data.data.name}`,
 		openGraph: {
 			images: [
-                {
-                    url: ogImage,
-                    secureUrl:
-                        ogImage,
-                    width: 300,
-                    height: 200,
-                },
-            ],
+				{
+					url: ogImage,
+					secureUrl: ogImage,
+					width: 300,
+					height: 200,
+				},
+			],
 		},
 	};
 }

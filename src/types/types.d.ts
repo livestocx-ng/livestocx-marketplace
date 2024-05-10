@@ -64,7 +64,7 @@ export interface Product {
 	category: string;
 	description: string;
 	inStock: boolean;
-	impressionCount: boolean;
+	impressionCount: number;
 	isPromotion: boolean;
 	isNegotiable: boolean;
 	totalReviews: number;

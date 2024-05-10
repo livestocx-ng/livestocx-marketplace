@@ -46,7 +46,7 @@ import {getMediaImageUrl} from '@/utils/media/media.url';
 import SellerInfoTab from '../product-info/seller-info-tab';
 import ProductReviewTab from '../product-info/product-review-tab';
 import MoreFromSellerTab from '../product-info/more-from-seller-tab';
-import axios from 'axios';
+import { likesViewsImpressionFormatter } from '@/utils/like.view.impression.formatter';
 
 interface SingleProductContentProps {
 	currentTab: Tab;
@@ -126,15 +126,15 @@ const SingleProductContent = ({
 
 					<div className='absolute -bottom-8 left-0 bg-black border-t border-t-white h-6 flex items-center justify-between py-4 md:rounded-bl-lg'>
 						<div className='text-white border-r border-r-white flex items-center space-x-1 px-4'>
-							<p className='text-sm'>{product?.likeCount!} </p>
+							<p className='text-sm'>{likesViewsImpressionFormatter(product?.likeCount!)} </p>
 							<ThumbsUp size={14} />
 						</div>
 						<div className='text-white border-r border-r-white flex items-center space-x-1 px-4'>
-							<p className='text-sm'>{product.viewCount}</p>
+							<p className='text-sm'>{likesViewsImpressionFormatter(product.viewCount)}</p>
 							<EyeIcon size={14} />
 						</div>
 						<div className='text-white flex items-center space-x-1 px-4'>
-							<p className='text-sm'>{product.impressionCount}</p>
+							<p className='text-sm'>{likesViewsImpressionFormatter(product.impressionCount)}</p>
 							<LineChart size={14} />
 						</div>
 					</div>

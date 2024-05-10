@@ -13,6 +13,9 @@ import {
 	ThumbsDown,
 	FlagTriangleRight,
 	Copy,
+	EyeIcon,
+	LineChart,
+	Award,
 } from 'lucide-react';
 import Image from 'next/image';
 import {cn} from '@/lib/utils';
@@ -39,10 +42,10 @@ import {Product, ProductInfo} from '@/types/types';
 import React, {Dispatch, SetStateAction} from 'react';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import {getMediaImageUrl} from '@/utils/media/media.url';
 import SellerInfoTab from '../product-info/seller-info-tab';
 import ProductReviewTab from '../product-info/product-review-tab';
 import MoreFromSellerTab from '../product-info/more-from-seller-tab';
-import {getMediaImageUrl} from '@/utils/media/media.url';
 import axios from 'axios';
 
 interface SingleProductContentProps {
@@ -83,25 +86,30 @@ const SingleProductContent = ({
 
 	return (
 		<div className='flex flex-col justify-start items-start pt-0 md:pt-3 pb-10 md:px-8'>
-			{/* <h1 className='text-orange-500 text-3xl font-medium mb-4 px-4 md:px-0'>
-				{product?.name}
-			</h1> */}
-
 			<div className='flex flex-wrap justify-between items-start md:h-[500px] w-full'>
-				<div className='w-full md:w-[58%] h-[350px] md:h-full relative mb-5 md:mb-0 rounded-none md:rounded-l-l'>
+				<div className='w-full md:w-[58%] h-[350px] md:h-full relative mb-10 md:mb-0 rounded-none md:rounded-l-l'>
 					<Image
 						fill
-						unoptimized={true}
 						alt={'product'}
+						unoptimized={true}
 						src={getMediaImageUrl(product)}
-						className='object-cover h-full w-full md:rounded-tl-lg md:rounded-bl-lg border-0 md:border border-gray-600'
+						className='object-cover h-full w-full md:rounded-tl-lg border-0 md:border border-gray-600'
 					/>
 
-					{product?.isNegotiable === true && (
-						<div className='absolute top-0 left-0 bg-slate-800 px-4 py-2 md:rounded-tl-lg'>
-							<p className='text-[10px] text-white'>Negotiable</p>
-						</div>
-					)}
+					<div className='flex items-center absolute top-0 left-0'>
+						{product?.isPromotion === true && (
+							<div className="bg-green-600 px-4 py-2 md:rounded-tl-lg">
+								<Award className='text-white' size={16} />
+							</div>
+						)}
+						{product?.isNegotiable === true && (
+							<div className={`bg-slate-800 px-4 py-2 ${!product?.isPromotion && 'md:rounded-tl-lg'}`}>
+								<p className='text-[10px] text-white'>
+									Negotiable
+								</p>
+							</div>
+						)}
+					</div>
 					{product?.inStock === false && (
 						<div className='absolute top-0 right-0 bg-[#b21e1ec6] px-4 py-2'>
 							<p className='text-[10px] text-white'>
@@ -116,8 +124,23 @@ const SingleProductContent = ({
 						</p>
 					</div>
 
+					<div className='absolute -bottom-8 left-0 bg-black border-t border-t-white h-6 flex items-center justify-between py-4 md:rounded-bl-lg'>
+						<div className='text-white border-r border-r-white flex items-center space-x-1 px-4'>
+							<p className='text-sm'>{product?.likeCount!} </p>
+							<ThumbsUp size={14} />
+						</div>
+						<div className='text-white border-r border-r-white flex items-center space-x-1 px-4'>
+							<p className='text-sm'>{product.viewCount}</p>
+							<EyeIcon size={14} />
+						</div>
+						<div className='text-white flex items-center space-x-1 px-4'>
+							<p className='text-sm'>{product.impressionCount}</p>
+							<LineChart size={14} />
+						</div>
+					</div>
+
 					<div className='absolute flex items-center bottom-0 right-0'>
-						{product?.likedUsers?.length! > 0 && (
+						{/* {product?.likedUsers?.length! > 0 && (
 							<Button
 								type='button'
 								variant={'outline'}
@@ -128,7 +151,7 @@ const SingleProductContent = ({
 									? 'Like'
 									: 'Likes'}
 							</Button>
-						)}
+						)} */}
 						{user && (
 							<Button
 								type='button'
@@ -137,7 +160,9 @@ const SingleProductContent = ({
 
 									const formData: {value?: boolean} = {};
 									if (
-										product?.likedUsers?.includes(user?.id!)
+										product?.likedUsers?.includes(
+											parseInt(user?.id!)
+										)
 									) {
 										formData.value = false;
 									} else {
@@ -149,7 +174,9 @@ const SingleProductContent = ({
 								variant={'outline'}
 								className='bg-main border-0 text-white hover:bg-main hover:text-white text-xs h-10 py-4 flex items-center space-x-3 rounded-none'
 							>
-								{product?.likedUsers?.includes(user?.id!) ? (
+								{product?.likedUsers?.includes(
+									parseInt(user?.id!)
+								) ? (
 									<>
 										{' '}
 										<ThumbsDown className='h-3 md:h-4 w-3 md:w-4 text-white' />{' '}
@@ -165,6 +192,7 @@ const SingleProductContent = ({
 						)}
 					</div>
 				</div>
+
 				<div className='w-full md:w-[40%] flex flex-col justify-between md:h-full px-4 md:px-0'>
 					<div className='flex flex-col justify-between border border-slate-500 md:rounded-tr-lg p-4'>
 						<h1 className='font-semibold'>{product.name}</h1>
@@ -269,7 +297,7 @@ const SingleProductContent = ({
 			</div>
 
 			<div className='mt-10 px-4 md:px-0 w-full flex space-x-5 items-center justify-start'>
-				<h1 className='font-medium text-xl'>Share on:</h1>
+				<h1 className='font-medium text-base'>Share on:</h1>
 				<div className='flex space-x-2'>
 					<WhatsappShareButton
 						url={window.location.toString()}
@@ -304,14 +332,14 @@ const SingleProductContent = ({
 			</div>
 
 			<div className='mt-5 px-4 md:px-0'>
-				<h1 className='font-medium text-xl'>Description</h1>
-				<p>{product?.description}</p>
+				<h1 className='font-medium text-base'>Description</h1>
+				<p className='text-sm'>{product?.description}</p>
 			</div>
 
 			{product?.media?.filter((media) => media.mediaType === 'IMAGE')
 				.length > 0 && (
 				<div className='mt-5 w-full px-4 md:px-0'>
-					<h1 className='font-medium text-xl'>Images</h1>
+					<h1 className='font-medium text-base'>Images</h1>
 
 					<div className='grid grid-cols-2 gap-5 md:gap-5 md:flex items-center justify-start w-full rounded-lg'>
 						{product?.media
@@ -366,7 +394,7 @@ const SingleProductContent = ({
 			{product?.media?.filter((media) => media.mediaType === 'VIDEO')
 				.length > 0 && (
 				<div className='mt-5 px-4 md:px-0 w-full'>
-					<h1 className='font-medium text-xl'>Videos</h1>
+					<h1 className='font-medium text-base'>Videos</h1>
 
 					<div className='grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-5 md:flex items-center justify-start w-full rounded-lg'>
 						{product?.media

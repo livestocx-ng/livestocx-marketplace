@@ -64,13 +64,14 @@ export interface Product {
 	category: string;
 	description: string;
 	inStock: boolean;
+	impressionCount: boolean;
 	isPromotion: boolean;
 	isNegotiable: boolean;
 	totalReviews: number;
 	viewCount: number;
 	likeCount: number;
 	purchaseCount: number;
-	likedUsers: null | string[]; // Change the type of likedUsers accordingly
+	likedUsers: null | number[]; // Change the type of likedUsers accordingly
 	media: Media[];
 	createdAt: string;
 	vendor?: Vendor;

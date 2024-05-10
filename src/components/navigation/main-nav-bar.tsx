@@ -379,7 +379,7 @@ const MainNavbar = () => {
 				</div>
 			</nav>
 
-			{/* MOBILE TOGGLEBAR */}
+			{/* MOBILE TOGGLE-BAR */}
 			<div
 				className={`w-full py-4 px-4 pl-1 lg:pl-8 lg:px-8 lg:hidden fixed z-10 flex items-center justify-between ${
 					scrolling && 'bg-main backdrop-blur-sm'
@@ -404,7 +404,7 @@ const MainNavbar = () => {
 					/>
 				</Button>
 
-				<div className='flex items-center space-x-5'>
+				<div className='flex items-center space-x-2'>
 					{chatConversations?.filter(
 						(conversation) => conversation.unreadMessages !== 0
 					).length !== 0 && (
@@ -420,12 +420,12 @@ const MainNavbar = () => {
 									updateCurrentAccountTab('Messages');
 								}
 							}}
-							className={`h-10 w-10 ${
+							className={`h-8 w-8 ${
 								scrolling ? 'bg-white' : 'bg-main'
 							} rounded-full flex flex-col items-center justify-center cursor-pointer relative`}
 						>
 							<MessageCircle
-								className={`h-5 w-5 ${
+								className={`h-3 w-3 ${
 									scrolling ? 'text-main' : 'text-white'
 								}`}
 							/>
@@ -452,12 +452,12 @@ const MainNavbar = () => {
 								setSetShowAccountMenu(!showAccountMenu);
 							}
 						}}
-						className={`h-10 w-10 ${
+						className={`h-8 w-8 ${
 							scrolling ? 'bg-white' : 'bg-main'
 						} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
 					>
 						<User2
-							className={`h-5 w-5 ${
+							className={`h-3 w-3 ${
 								scrolling
 									? 'text-main'
 									: 'text-white cursor-pointer'
@@ -659,7 +659,7 @@ const MainNavbar = () => {
 								router.push('/account');
 							}
 						}}
-						className={`h-10 bg-orange-400 rounded-sm w-[80px] text-white text-sm flex flex-col items-center justify-center cursor-pointer`}
+						className={`h-8 bg-orange-400 rounded-sm w-[60px] text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
 					>
 						Sell
 					</div>

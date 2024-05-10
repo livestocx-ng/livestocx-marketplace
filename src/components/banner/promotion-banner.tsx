@@ -4,7 +4,7 @@ import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
 import {useGlobalStore} from '@/hooks/use-global-store';
 
-const AdvertisementBanner = () => {
+const PromotionBanner = () => {
 	const router = useRouter();
 
 	const {
@@ -56,4 +56,4 @@ const AdvertisementBanner = () => {
 	);
 };
 
-export default AdvertisementBanner;
+export default PromotionBanner;

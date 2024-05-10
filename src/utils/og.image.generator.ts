@@ -28,7 +28,7 @@ export async function generateOGImageFromURL(
 
 		return uploadUrl;
 	} catch (error) {
-		console.error('Error while generating SEO OG:image:', error);
+		console.error('Error while generating SEO OG:image');
 
 		return '';
 	}

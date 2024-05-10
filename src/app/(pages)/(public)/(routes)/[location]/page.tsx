@@ -6,7 +6,7 @@ import SearchForm from '../components/search-form';
 import HomeProducts from '../components/home-products';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import EmptyAnimation from '../../../../../../public/animations/animation__3.json';
-import AdvertisementBanner from '@/components/banner/advertisement-banner';
+import PromotionBanner from '@/components/banner/promotion-banner';
 
 interface SearchLocationPageParams {
 	params: {
@@ -36,7 +36,9 @@ const SearchLocationPage = ({params}: SearchLocationPageParams) => {
 
 			const {data} = await axios.get(
 				// `${process.env.NEXT_PUBLIC_API_URL}/user/products/fetch-location-products?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=${searchQuery}&page=${currentPage}`
-				`${process.env.NEXT_PUBLIC_API_URL}/user/products/search?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=${searchQuery}&category=&page=${currentPage}`
+				`${
+					process.env.NEXT_PUBLIC_API_URL
+				}/user/products/search?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=${searchQuery}&category=&page=${currentPage}`
 			);
 
 			// console.log('[DATA] ::  ', data);
@@ -68,7 +70,10 @@ const SearchLocationPage = ({params}: SearchLocationPageParams) => {
 
 		// console.log(queryParams);
 
-		updateSearchLocation(queryParams?.searchQueryCity, queryParams?.searchQueryState);
+		updateSearchLocation(
+			queryParams?.searchQueryCity,
+			queryParams?.searchQueryState
+		);
 	}, []);
 
 	useEffect(() => {
@@ -100,8 +105,8 @@ const SearchLocationPage = ({params}: SearchLocationPageParams) => {
 
 			{!loading && products?.length > 0 && (
 				<div className='flex flex-col w-full bg-white px-4 md:px-8 pt-16 sm:pt-[44px] pb-10 relative'>
-						<AdvertisementBanner />
-					
+					<PromotionBanner />
+
 					<HomeProducts
 						currentPage={currentPage}
 						updateCurrentPage={setCurrentPage}

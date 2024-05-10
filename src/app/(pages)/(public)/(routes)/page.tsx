@@ -10,8 +10,8 @@ import SearchForm from './components/search-form';
 import HomeProducts from './components/home-products';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import TestimonialSection from '@/components/common/testimonials';
+import PromotionBanner from '@/components/banner/promotion-banner';
 import EmptyAnimation from '../../../../../public/animations/animation__3.json';
-import AdvertisementBanner from '@/components/banner/advertisement-banner';
 
 export default function HomePage() {
 	const router = useRouter();
@@ -30,7 +30,7 @@ export default function HomePage() {
 	const fetchProducts = async () => {
 		try {
 			setLoading(false);
-			
+
 			const {data} = await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/recommended/fetch-all?page=${currentPage}`
 			);
@@ -59,7 +59,7 @@ export default function HomePage() {
 
 	return (
 		<main className='bg-[#28312B]'>
-			<section className='h-[28vh] md:h-[380px] w-full bg-white md:bg-home flex flex-col items-center justify-end gap-y-3 md:gap-y-10 py-2 pt20 md:py-10 md:pt-0'>
+			<section className='h-[28vh] md:h-[320px] w-full bg-white md:bg-home flex flex-col items-center justify-end gap-y-3 md:gap-y-10 py-2 md:py-10 md:pb-2'>
 				<h1 className='text-lg md:text-4xl font-medium text-black md:text-white'>
 					Best <span className='text-green-600'>deals.</span>{' '}
 					Everything <span className='text-green-600'>Animals</span>
@@ -94,7 +94,7 @@ export default function HomePage() {
 
 			{!loading && products?.length > 0 && (
 				<div className='flex flex-col w-full bg-white px-4 md:px-8 pt-16 sm:pt-[44px] pb-10 relative'>
-					<AdvertisementBanner />
+					<PromotionBanner />
 
 					<HomeProducts
 						currentPage={currentPage}

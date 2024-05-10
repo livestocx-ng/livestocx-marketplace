@@ -1,24 +1,23 @@
 'use client';
-import Image from 'next/image';
-import {useState} from 'react';
-import {
-	useGlobalStore,
-	useShareProductModalStore,
-} from '@/hooks/use-global-store';
-import {toast} from 'react-hot-toast';
-import {Product} from '@/types/types';
-import axios, {AxiosError} from 'axios';
-import {usePathname, useRouter} from 'next/navigation';
-import {PriceFormatter} from '@/utils/price.formatter';
 import {
 	Award,
 	Forward,
 	MapPin,
 	MessageCircle,
-	ShoppingCartIcon,
 	ThumbsDown,
 	ThumbsUp,
 } from 'lucide-react';
+import Image from 'next/image';
+import {useEffect, useState} from 'react';
+import {
+	useGlobalStore,
+	useShareProductModalStore,
+} from '@/hooks/use-global-store';
+import {Product} from '@/types/types';
+import axios, {AxiosError} from 'axios';
+import {usePathname, useRouter} from 'next/navigation';
+import {PriceFormatter} from '@/utils/price.formatter';
+import {useInView} from 'react-intersection-observer';
 import {getMediaImageUrl} from '@/utils/media/media.url';
 import {formatProductSlug, formatVendorSlug} from '@/utils/slug.formatter';
 
@@ -40,7 +39,24 @@ const ProductCard = ({product}: ProductCardProps) => {
 		updateShowChatConversation,
 	} = useGlobalStore();
 
+	const {ref, inView} = useInView();
 	const [loading, setLoading] = useState<boolean>(false);
+
+	useEffect(() => {
+		handleProductInView(inView);
+	}, [inView]);
+
+	const handleProductInView = (inView: boolean) => {
+		setTimeout(async () => {
+			if (inView) {
+				// console.log(`[PRODUCT-${product?.id}-IN-VIEW]`);
+
+				await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-impression`, {
+					productId: parseInt(product?.id!),
+				});
+			}
+		}, 3500);
+	};
 
 	const handleShareProductModal = () => {
 		shareProductModal.updatePayload(product!);
@@ -110,22 +126,6 @@ const ProductCard = ({product}: ProductCardProps) => {
 			updateCurrentAccountTab('Messages');
 
 			updateShowChatConversation(true);
-
-			// const {data} = await axios.post(
-			// 	`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-desired-product?productId=${product?.productId}`,
-			// 	{},
-			// 	{
-			// 		headers: {
-			// 			Authorization: user?.accessToken,
-			// 		},
-			// 	}
-			// );
-
-			// if (data.data === false) {
-			// 	return toast.success('Product already added to desired items');
-			// } else {
-			// 	return toast.success('Product added to desired items');
-			// }
 		} catch (error) {
 			// setLoading(false);
 			const _error = error as AxiosError;
@@ -135,7 +135,10 @@ const ProductCard = ({product}: ProductCardProps) => {
 	};
 
 	return (
-		<div className='w-[48%] sm:w-[150px] flex flex-col justify-between shadow__1 rounde relative'>
+		<div
+			ref={ref}
+			className='w-[48%] sm:w-[150px] flex flex-col justify-between shadow__1 rounde relative'
+		>
 			<div
 				onClick={() => {
 					if (
@@ -157,9 +160,9 @@ const ProductCard = ({product}: ProductCardProps) => {
 					}
 					if (pathName.includes('sellers')) {
 						return router.push(
-							`/sellers/${formatVendorSlug(vendor!)}/products/${formatProductSlug(
-								product!
-							)}`
+							`/sellers/${formatVendorSlug(
+								vendor!
+							)}/products/${formatProductSlug(product!)}`
 						);
 					}
 				}}

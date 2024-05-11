@@ -1,12 +1,13 @@
 'use client';
 import {useEffect} from 'react';
 import {
+	useGlobalStore,
+	useDownloadAppStore,
 	useShareProductModalStore,
 	useUpdateUserRoleModalStore,
 	useReadNotificationModalStore,
 	useUpdateVendorProfileModalStore,
 	useUpdateSearchLocationModalStore,
-	useGlobalStore,
 } from '@/hooks/use-global-store';
 import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
@@ -17,6 +18,7 @@ import ContactUsBanner from '@/components/modals/contact-us/contact-us-banner';
 import ShareProductModal from '@/components/modals/product/share-product-modal';
 import UpdateUserRoleModal from '@/components/modals/user/update-user-role-modal';
 import NotificationModal from '@/components/modals/notifications/notification-modal';
+import DownloadMobileAppModal from '@/components/modals/welcome/download-mobile-app-modal';
 import UpdateVendorProfileModal from '@/components/modals/user/update-vendor-profile-modal';
 import UpdateSearchLocationModal from '@/components/modals/utils/update-search-location-modal';
 
@@ -25,16 +27,22 @@ interface PagesLayoutProps {
 }
 
 const PagesLayout = ({children}: PagesLayoutProps) => {
-	const router = useRouter();
 	const {user} = useUserHook();
 
 	const {updateChatConversations} = useGlobalStore();
 
+	const downloadAppModal = useDownloadAppStore();
 	const shareProductModal = useShareProductModalStore();
 	const updateUserRoleModal = useUpdateUserRoleModalStore();
 	const readNotificationModal = useReadNotificationModalStore();
 	const updateVendorProfileModal = useUpdateVendorProfileModalStore();
 	const updateSearchLocationModal = useUpdateSearchLocationModalStore();
+
+	const initializeDownloadAppModal = () => {
+		setTimeout(() => {
+			downloadAppModal.onOpen();
+		}, 4500);
+	};
 
 	const fetchChatConversations = async () => {
 		try {
@@ -62,6 +70,10 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	};
 
 	useEffect(() => {
+		initializeDownloadAppModal();
+	}, []);
+
+	useEffect(() => {
 		if (
 			user &&
 			user?.role === 'FARMER' &&
@@ -76,6 +88,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 
 	return (
 		<div className='relative'>
+			{downloadAppModal.isOpen && <DownloadMobileAppModal />}
 			{shareProductModal.isOpen && <ShareProductModal />}
 			{updateUserRoleModal.isOpen && <UpdateUserRoleModal />}
 			{readNotificationModal.isOpen && <NotificationModal />}

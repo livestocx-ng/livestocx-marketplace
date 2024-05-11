@@ -58,7 +58,7 @@ const DownloadMobileAppModal = () => {
 					</Link> */}
 				</div>
 
-				<div className='mb-4 flex mx-auto justify-center h-[250px] w-[250px] relative border border-main rounded-lg shadow-lg shadow-teal-100'>
+				{/* <div className='mb-4 flex mx-auto justify-center h-[250px] w-[250px] relative border border-main rounded-lg shadow-lg shadow-teal-100'>
 					<Image
 						// width={150}
 						// height={200}
@@ -67,7 +67,7 @@ const DownloadMobileAppModal = () => {
 						src={'/gifs/mobile-app.jpg'}
 						className='h-full w-full object-contain rounded-lg'
 					/>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);

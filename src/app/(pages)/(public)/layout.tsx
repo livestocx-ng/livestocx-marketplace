@@ -41,7 +41,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const initializeDownloadAppModal = () => {
 		setTimeout(() => {
 			downloadAppModal.onOpen();
-		}, 4500);
+		}, 6500);
 	};
 
 	const fetchChatConversations = async () => {

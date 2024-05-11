@@ -8,13 +8,13 @@ import {
 	WhatsappShareButton,
 } from 'react-share';
 import Image from 'next/image';
-import {useShareProductModalStore} from '@/hooks/use-global-store';
+import {useEffect} from 'react';
 import {Copy, X} from 'lucide-react';
 import {toast} from 'react-hot-toast';
 import {Button} from '@/components/ui/button';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {formatProductSlug} from '@/utils/slug.formatter';
-import {useEffect} from 'react';
+import {useShareProductModalStore} from '@/hooks/use-global-store';
 
 const ShareProductModal = () => {
 	const {payload, onClose} = useShareProductModalStore();

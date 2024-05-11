@@ -118,6 +118,18 @@ interface CreateProductModal {
 	onClose: () => void;
 }
 
+interface DownloadAppModal {
+	isOpen: boolean;
+	onOpen: () => void;
+	onClose: () => void;
+}
+
+interface CreateProductModal {
+	isOpen: boolean;
+	onOpen: () => void;
+	onClose: () => void;
+}
+
 interface UpdateProductModal {
 	isOpen: boolean;
 	payload: Product;
@@ -176,6 +188,12 @@ export const useUpdateUserRoleModalStore = create<UpdateUserRoleModal>(
 );
 
 export const useCreateProductModalStore = create<CreateProductModal>((set) => ({
+	isOpen: false,
+	onOpen: () => set({isOpen: true}),
+	onClose: () => set({isOpen: false}),
+}));
+
+export const useDownloadAppStore = create<DownloadAppModal>((set) => ({
 	isOpen: false,
 	onOpen: () => set({isOpen: true}),
 	onClose: () => set({isOpen: false}),

@@ -10,8 +10,8 @@ const DownloadMobileAppModal = () => {
 
 	return (
 		<div className='fixed bottom-0 flex flex-col items-center justify-center w-full bg-[#ffffff20] backdrop-blur-sm z-10'>
-			<div className='flex flex-col w-[90%] md:w-[30%] bg-white border shadow-sm shadow-slate-200 px-4 my-5 rounded-lg overflow-y-auto scrollbar__1'>
-				<div className='flex items-center justify-between text-sm font-medium'>
+			<div className='flex flex-col w-[90%] md:w-[30%] bg-white border shadow-sm shadow-slate-200 px-4 my-2 sm:my-5 rounded-lg overflow-y-auto scrollbar__1'>
+				<div className='flex items-center justify-between text-xs sm:text-sm font-medium'>
 					<p>Download our mobile app</p>
 
 					<Button

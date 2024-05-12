@@ -16,6 +16,7 @@ import {
 	LineChart,
 	ThumbsDown,
 	FlagTriangleRight,
+	BarChart3,
 } from 'lucide-react';
 import Image from 'next/image';
 import {cn} from '@/lib/utils';
@@ -151,7 +152,7 @@ const SingleProductContent = ({
 									product.impressionCount
 								)}
 							</p>
-							<LineChart size={14} />
+							<BarChart3 size={14} />
 						</div>
 					</div>
 

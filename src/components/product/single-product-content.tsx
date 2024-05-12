@@ -124,7 +124,7 @@ const SingleProductContent = ({
 					)}
 
 					<div className='absolute flex items-center bottom-0 left-0'>
-						<p className='bg-slate-800 border-0 text-white hover:bg-slate-800 hover:text-white text-[10px] py-2 px-2 flex items-center md:rounded-bl-lg'>
+						<p className='bg-slate-800 border-0 text-white hover:bg-slate-800 hover:text-white text-[10px] py-2 px-2 flex items-center'>
 							Posted on: {product?.createdAt?.slice(0, 10)}
 						</p>
 					</div>
@@ -313,7 +313,7 @@ const SingleProductContent = ({
 				</div>
 			</div>
 
-			<div className='mt-10 px-4 md:px-0 w-full flex space-x-5 items-center justify-start'>
+			<div className='mt-14 px-4 md:px-0 w-full flex space-x-5 items-center justify-start'>
 				<h1 className='font-medium text-base'>Share on:</h1>
 				<div className='flex space-x-2'>
 					<WhatsappShareButton

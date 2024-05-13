@@ -238,17 +238,17 @@ const SearchForm = () => {
 								width={130}
 								height={60}
 								unoptimized={true}
-								className='object-cover'
+								className='object-contain'
 								src={'/icon__playstore__2.svg'}
 							/>
 						</Link>
 
 						<p
 							onClick={() => updateSearchLocationModal.onOpen()}
-							className='bg-slate-800 cursor-pointer text-white text-sm px-4 pl-2 py-2 flex md:hidden items-center capitalize rounded-md'
+							className='bg-slate-800 cursor-pointer text-white text-xs md:text-sm px-4 pl-2 py-2 flex md:hidden items-center capitalize rounded-md'
 						>
 							&nbsp;
-							<MapPin className='h-5 w-5' />{' '}
+							<MapPin className='h-5 w-5'/>{' '}
 							{searchQueryCity
 								? searchQueryCity
 								: searchQueryState}
@@ -271,31 +271,11 @@ const SearchForm = () => {
 					name='query'
 					value={formData.query}
 					handleChange={handleChange}
-					padding='px-5 py-3 md:py-4'
+					padding='px-5 py-[10px] md:py-3'
 					placeHolder='What are you looking for?'
-					classes='w-[70%] md:w-[60%] bg-[#00A65120] text-white text-sm placeholder:text-sm placeholder:italic border-2 border-green-600 focus:border-green-600 rounded-full'
+					classes='w-[70%] md:w-[60%] bg-[#00A65120] text-black md:text-white text-sm placeholder:text-xs placeholder:italic border-2 border-green-600 focus:border-green-600 rounded-full'
 				/>
 
-				{/* <div className='w-[85%] mt-4 md:mt-0 md:w-fit'>
-					<select
-						name='location'
-						className='w-full py-4 rounded-full bg-main px-3 text-sm text-white outline-none scrollbar__1'
-						onChange={handleSelectChange}
-					>
-						<option value=''>
-							{formData.location ? formData.location : 'Location'}
-						</option>
-						{NigerianStates.map((option) => (
-							<option
-								key={option}
-								value={option}
-								className='cursor-pointer'
-							>
-								{option}
-							</option>
-						))}
-					</select>
-				</div> */}
 				{loading ? (
 					<Button
 						type='button'

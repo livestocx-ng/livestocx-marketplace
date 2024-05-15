@@ -7,6 +7,8 @@ import UserPromotionsContent from '@/components/promotions/user-promotions-conte
 const PromotionsContent = () => {
 	const {userPromotionPlan} = useGlobalStore();
 
+	console.log('[USER-PROMOTION-PLAN] :: ', userPromotionPlan);
+
 	return (
 		<div className='w-full md:w-[78%] flex flex-col gap-5'>
 			{/* {!userPromotionPlan ? (
@@ -14,6 +16,7 @@ const PromotionsContent = () => {
 			) : (
 				<UserPromotionsContent />
 			)} */}
+
 			<div className='flex flex-col items-center justify-center py-20'>
 				<Image
 					alt='logo'

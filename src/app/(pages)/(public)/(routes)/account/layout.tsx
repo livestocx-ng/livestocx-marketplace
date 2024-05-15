@@ -1,6 +1,7 @@
 'use client';
 import {
 	useCreateProductModalStore,
+	useCreatePromotionModalStore,
 	useDeleteProductModalStore,
 	useGlobalStore,
 	useShareNewProductModalStore,
@@ -14,6 +15,7 @@ import AddProductModal from '@/components/modals/product/add-product-modal';
 import UpdateProductModal from '@/components/modals/product/update-product-modal';
 import DeleteProductModal from '@/components/modals/product/delete-product-modal';
 import ShareNewProductModal from '@/components/modals/product/share-new-product-modal';
+import CreatePromotionModal from '@/components/modals/promotions/create-promotion-modal';
 
 interface AccountLayoutProps {
 	children: React.ReactNode;
@@ -22,6 +24,10 @@ interface AccountLayoutProps {
 export default function AccountLayout({children}: AccountLayoutProps) {
 	const {user, error} = useUserHook();
 	const {updateChatConversations} = useGlobalStore();
+
+	const isCreatePromotionModalOpen = useCreatePromotionModalStore(
+		(state) => state.isOpen
+	);
 
 	const isCreateProductModalOpen = useCreateProductModalStore(
 		(state) => state.isOpen
@@ -73,6 +79,7 @@ export default function AccountLayout({children}: AccountLayoutProps) {
 		return (
 			<div className='relative'>
 				{' '}
+				{isCreatePromotionModalOpen && <CreatePromotionModal />}
 				{isCreateProductModalOpen && <AddProductModal />}
 				{isShareNewProductModalOpen && <ShareNewProductModal />}
 				{isUpdateProductModalOpen && <UpdateProductModal />}

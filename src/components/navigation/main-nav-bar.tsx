@@ -8,8 +8,8 @@ import {
 	Megaphone,
 	LogOutIcon,
 	ShoppingCart,
-	MessagesSquare,
 	MessageCircle,
+	MessagesSquare,
 } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link';
@@ -253,7 +253,7 @@ const MainNavbar = () => {
 											setSetShowAccountMenu(false);
 
 											updateCurrentAccountTab(
-												'Advertise'
+												'Promotions'
 											);
 										}}
 										className={` ${
@@ -264,7 +264,7 @@ const MainNavbar = () => {
 											className={`h-5 w-5 text-main`}
 										/>
 
-										<p className='text-xs'>Advertise</p>
+										<p className='text-xs'>Promotions</p>
 									</Link>
 								)}
 								<Link
@@ -535,7 +535,7 @@ const MainNavbar = () => {
 											setSetShowAccountMenu(false);
 
 											updateCurrentAccountTab(
-												'Advertise'
+												'Promotions'
 											);
 										}}
 										className={` ${
@@ -546,7 +546,7 @@ const MainNavbar = () => {
 											className={`h-5 w-5 text-main`}
 										/>
 
-										<p className='text-xs'>Advertise</p>
+										<p className='text-xs'>Promotions</p>
 									</Link>
 								)}
 								<Link

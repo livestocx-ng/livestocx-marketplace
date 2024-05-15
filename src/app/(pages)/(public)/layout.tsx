@@ -10,7 +10,6 @@ import {
 	useUpdateSearchLocationModalStore,
 } from '@/hooks/use-global-store';
 import axios, {AxiosError} from 'axios';
-import {useRouter} from 'next/navigation';
 import {useUserHook} from '@/hooks/use-user';
 import Footer from '@/components/navigation/footer';
 import Navbar from '@/components/navigation/main-nav-bar';
@@ -29,7 +28,7 @@ interface PagesLayoutProps {
 const PagesLayout = ({children}: PagesLayoutProps) => {
 	const {user} = useUserHook();
 
-	const {updateChatConversations} = useGlobalStore();
+	const {updateChatConversations, updateUserPromotionPlan, updatePromotionPlans} = useGlobalStore();
 
 	const downloadAppModal = useDownloadAppStore();
 	const shareProductModal = useShareProductModalStore();
@@ -69,8 +68,42 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 		}
 	};
 
+	const fetchUserPromotionPlan = async () => {
+		try {
+			if (!user) {
+				return;
+			}
+
+			const [userPlanRequest, promotionPlansRequest] = await Promise.all([
+				axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/promotions/plan`,
+					{
+						headers: {
+							Authorization: user?.accessToken,
+						},
+					}
+				),
+				axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/promotions/plans`
+				),
+			]);
+
+			// console.log(
+			// 	'[USER-PROMOTION-PLAN-RESPONSE] :: ',
+			// 	userPlanRequest.data
+			// );
+
+			updateUserPromotionPlan(userPlanRequest.data.data);
+			updatePromotionPlans(promotionPlansRequest.data.data);
+		} catch (error) {
+			const _error = error as AxiosError;
+
+			// console.log('[FETCH-USER-PROMOTION-PLAN-ERROR] :: ', _error);
+		}
+	};
+
 	useEffect(() => {
-		initializeDownloadAppModal();
+		// initializeDownloadAppModal();
 	}, []);
 
 	useEffect(() => {
@@ -84,6 +117,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 		}
 
 		fetchChatConversations();
+		fetchUserPromotionPlan();
 	}, [user]);
 
 	return (

@@ -63,7 +63,7 @@ export const HelpNavLinks: NavLink[] = [
 		url: '/contact-us',
 	},
 	{
-		title: 'Terms & Conditions',
+		title: 'Terms of Service',
 		url: '/terms-of-service',
 	},
 	{

@@ -11,6 +11,10 @@ import {
 	DesiredItemInfo,
 	ChatConversation,
 	ChatMessage,
+	PromotionPlan,
+	UserPromotionPlan,
+	Promotion,
+	PromotionProductInfo,
 } from '@/types/types';
 import { Socket } from 'socket.io-client';
 import {create} from 'zustand';
@@ -43,6 +47,30 @@ interface GlobalStore {
 	sellerTotalPages: number;
 	sellerHasNextPage: boolean;
 	currentAccountTab: Tab | 'Account' | null;
+	promotionPlans: PromotionPlan[];
+	userPromotionPlan: UserPromotionPlan | null;
+	promotions: Promotion[];
+	promotionProductsInfo: PromotionProductInfo[];
+	currentPromotionPlan: number;
+	promotionsTotalPages: number;
+	promotionsHasNextPage: boolean;
+	showPromotionInfo: boolean;
+	currentPromotion: Promotion | null;
+	promotionProducts: Product[];
+	promotionInfoProducts: Product[];
+	promotionProductsTotalPages: number;
+	promotionProductsHasNextPage: boolean;
+	updatePromotionInfoProducts: (value: Product[])=> void;
+	updatePromotionProducts: (value: Product[])=> void;
+	updateCurrentPromotion: (value: Promotion | null)=> void;
+	updateShowPromotionInfo: (value: boolean)=> void;
+	updateCurrentPromotionPlan: (value: number)=> void;
+	updatePromotionPlans: (value: PromotionPlan[])=> void;
+	updateUserPromotionPlan: (value: UserPromotionPlan)=> void;
+	updatePromotions: (value: Promotion[])=> void;
+	updatePromotionProductsInfo: (value: PromotionProductInfo[])=> void;
+	updatePromotionsPagination: (totalPages: number, hasNextPage: boolean) => void;
+	updatePromotionProductsPagination: (totalPages: number, hasNextPage: boolean) => void;
 	updateCookieConsentStatus: (value: boolean)=> void;
 	updateChatConversation: (value: ChatConversation | null)=> void;
 	updateChatConversations: (value: ChatConversation[])=> void;
@@ -70,6 +98,12 @@ interface GlobalStore {
 	updateProduct: (productId: string, product: Product) => void;
 	updatePagination: (totalPages: number, hasNextPage: boolean) => void;
 	updateSellerPagination: (totalPages: number, hasNextPage: boolean) => void;
+}
+
+interface CreatePromotionModal {
+	isOpen: boolean;
+	onOpen: () => void;
+	onClose: () => void;
 }
 
 interface UpdateVendorProfileModal {
@@ -148,6 +182,12 @@ interface DeleteProductModal {
 
 export const useUpdateVendorProfileModalStore =
 	create<UpdateVendorProfileModal>((set) => ({
+		isOpen: false,
+		onOpen: () => set({isOpen: true}),
+		onClose: () => set({isOpen: false}),
+	}));
+
+export const useCreatePromotionModalStore =	create<CreatePromotionModal>((set) => ({
 		isOpen: false,
 		onOpen: () => set({isOpen: true}),
 		onClose: () => set({isOpen: false}),
@@ -331,6 +371,30 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	hasNextPage: false,
 	productInfo: null,
 	currentAccountTab: 'Account',
+	promotionPlans: [],
+	userPromotionPlan: null,
+	promotions: [],
+	promotionProductsInfo: [],
+	currentPromotionPlan: 0,
+	promotionsTotalPages: 0,
+	promotionsHasNextPage: false,
+	showPromotionInfo: false,
+	currentPromotion: null,
+	promotionProducts: [],
+	promotionInfoProducts: [],
+	promotionProductsTotalPages: 0,
+	promotionProductsHasNextPage: false,
+	updatePromotionInfoProducts: (value: Product[]) => set({promotionInfoProducts: value}),
+	updatePromotionProducts: (value: Product[]) => set({promotionProducts: value}),
+	updateCurrentPromotion: (value: Promotion | null) => set({currentPromotion: value}),
+	updateShowPromotionInfo: (value: boolean) => set({showPromotionInfo: value}),
+	updateCurrentPromotionPlan: (value: number) => set({currentPromotionPlan: value}),
+	updatePromotionPlans: (value: PromotionPlan[]) => set({promotionPlans: value}),
+	updateUserPromotionPlan: (value: UserPromotionPlan) => set({userPromotionPlan: value}),
+	updatePromotions: (value: Promotion[]) => set({promotions: value}),
+	updatePromotionProductsInfo: (value: PromotionProductInfo[]) => set({promotionProductsInfo: value}),
+	updatePromotionsPagination: (totalPages: number, hasNextPage: boolean) => set({promotionsTotalPages: totalPages, promotionsHasNextPage: hasNextPage}),
+	updatePromotionProductsPagination: (totalPages: number, hasNextPage: boolean) => set({promotionProductsTotalPages: totalPages, promotionProductsHasNextPage: hasNextPage}),
 	updateCookieConsentStatus: (value: boolean) => set({cookieConsentStatus: value}),
 	updateChatConversation: (value: ChatConversation| null) => set({chatConversation: value}),
 	updateChatConversations: (value: ChatConversation[]) => set({chatConversations: value}),
@@ -343,18 +407,13 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	},
 	updateChatConversationMessages: (value: ChatMessage[]) => set({chatConversationMessages: value}),
 	updateSocketInstance: (value: Socket) => set({socket: value}),
-	updateShowChatConversation: (value: boolean) =>
-	set({showChatConversation: value}),
-	updateSearchQuery: (searchQuery: string) =>
-	set({searchQuery: searchQuery}),
-	updateSearchLocation: (searchQueryCity: string, searchQueryState: string) =>
-		set({searchQueryCity: searchQueryCity, searchQueryState: searchQueryState}),
+	updateShowChatConversation: (value: boolean) => set({showChatConversation: value}),
+	updateSearchQuery: (searchQuery: string) => set({searchQuery: searchQuery}),
+	updateSearchLocation: (searchQueryCity: string, searchQueryState: string) => set({searchQueryCity: searchQueryCity, searchQueryState: searchQueryState}),
 	updateNotifications: (value: Notification[]) => set({notifications: value}),
-	updateDesiredProductInfo: (value: DesiredItemInfo) =>
-		set({desiredProductInfo: value}),
+	updateDesiredProductInfo: (value: DesiredItemInfo) => set({desiredProductInfo: value}),
 	updateDesiredProduct: (value: DesiredItem) => set({desiredProduct: value}),
-	updateDesiredProducts: (value: DesiredItem[]) =>
-		set({desiredProducts: value}),
+	updateDesiredProducts: (value: DesiredItem[]) => set({desiredProducts: value}),
 	updateVendors: (value: Vendor[]) => set({vendors: value}),
 	updateCurrentAccountTab: (value: Tab) => set({currentAccountTab: value}),
 	updateProductInfo: (value: ProductInfo) => set({productInfo: value}),
@@ -389,13 +448,9 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 			return {notifications: updatedNotifications};
 		});
 	},
-	updatePagination: (totalPages: number, hasNextPage: boolean) =>
-		set({totalPages: totalPages, hasNextPage: hasNextPage}),
-	updateSellerPagination: (totalPages: number, hasNextPage: boolean) =>
-		set({sellerTotalPages: totalPages, sellerHasNextPage: hasNextPage}),
+	updatePagination: (totalPages: number, hasNextPage: boolean) => set({totalPages: totalPages, hasNextPage: hasNextPage}),
+	updateSellerPagination: (totalPages: number, hasNextPage: boolean) => set({sellerTotalPages: totalPages, sellerHasNextPage: hasNextPage}),
 	updateProducts: (products: Product[]) => set({products: products}),
-	updateSearchProducts: (products: Product[]) =>
-		set({searchProducts: products}),
-	updateSellerProducts: (products: Product[]) =>
-		set({sellerProducts: products}),
+	updateSearchProducts: (products: Product[]) => set({searchProducts: products}),
+	updateSellerProducts: (products: Product[]) => set({sellerProducts: products}),
 }));

@@ -2,14 +2,13 @@
 import Lottie from 'lottie-react';
 import axios, {AxiosError} from 'axios';
 import React, {useEffect, useState} from 'react';
-import SearchForm from '../../components/search-form';
 import SellerBanner from './components/seller-banner';
 import PageBanner from '@/components/banner/page-banner';
 import {useGlobalStore} from '@/hooks/use-global-store';
+import { getVendorIdFromSlug } from '@/utils/slug.formatter';
 import SellerInfoSearchForm from './components/seller-search-form';
 import SellerInfoProducts from './components/seller-info-products';
 import LoadingAnimation from '../../../../../../../public/animations/animation__3.json';
-import { getVendorIdFromSlug } from '@/utils/slug.formatter';
 
 interface SellerInfoPageProps {
 	params: {

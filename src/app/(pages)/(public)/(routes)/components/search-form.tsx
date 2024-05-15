@@ -1,19 +1,17 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import axios, {AxiosError} from 'axios';
-import {MapPin, Search} from 'lucide-react';
-import {Button} from '@/components/ui/button';
-import React, {useEffect, useReducer, useState} from 'react';
 import {
 	useGlobalStore,
 	useUpdateSearchLocationModalStore,
 } from '@/hooks/use-global-store';
+import axios, {AxiosError} from 'axios';
+import {usePathname} from 'next/navigation';
+import {MapPin, Search} from 'lucide-react';
+import {Button} from '@/components/ui/button';
+import React, {useEffect, useReducer, useState} from 'react';
 import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
-import ProductCard from '@/components/cards/product-card';
-import {NigerianStates} from '@/data';
-import {usePathname} from 'next/navigation';
 
 type FormData = {
 	query: string;

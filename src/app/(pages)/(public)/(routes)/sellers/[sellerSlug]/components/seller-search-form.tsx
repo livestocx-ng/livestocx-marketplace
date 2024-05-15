@@ -23,15 +23,17 @@ const initialState: FormData = {
 };
 
 const SellerInfoSearchForm = () => {
-	const {vendor, updateSellerProducts, updateSellerPagination} = useGlobalStore();
+	const {vendor, updateSellerProducts, updateSellerPagination} =
+		useGlobalStore();
 
 	const [search, setSearch] = useState<string>('');
-	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, updateFormData] = useState(initialState);
 	const [filterValue, setFilterValue] = useState<string>('');
 
 	useEffect(() => {
-		handleFilterSubmit();
+		if (filterValue.length > 0) {
+			handleFilterSubmit();
+		}
 	}, [filterValue]);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,22 +42,14 @@ const SellerInfoSearchForm = () => {
 
 	const handleFilterSubmit = async () => {
 		try {
-			setLoading(true);
-
-			// // console.log('[PAYLOAD] ::  ', search);
-			// // console.log('[PAYLOAD] ::  ', formData);
-
 			const {data} = await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/${vendor?.vendorId}/filter-products?search=${search}&recommended=${formData.recommended}&newest=${formData.newest}&oldest=${formData.oldest}&lowestPrice=${formData.lowestPrice}&highestPrice=${formData.highestPrice}`
 			);
-
-			// // console.log('[DATA] ::  ', data.data);
 
 			updateSellerProducts(data.data.products);
 			updateSellerPagination(data.data.totalPages, data.data.hasNext);
 
 			setSearch('');
-			setLoading(false);
 			updateFormData({
 				newest: undefined,
 				oldest: undefined,
@@ -64,7 +58,6 @@ const SellerInfoSearchForm = () => {
 				highestPrice: undefined,
 			});
 		} catch (error) {
-			setLoading(false);
 			const _error = error as AxiosError;
 
 			// // console.log('[FILTER-SELLER-PRODUCTS-ERROR] :: ', _error);

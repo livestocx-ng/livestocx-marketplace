@@ -1,11 +1,7 @@
 'use client';
-import Link from 'next/link';
-import Image from 'next/image';
 import Lottie from 'lottie-react';
 import axios, {AxiosError} from 'axios';
-import {useRouter} from 'next/navigation';
 import {useEffect, useState} from 'react';
-import {useUserHook} from '@/hooks/use-user';
 import SearchForm from './components/search-form';
 import HomeProducts from './components/home-products';
 import {useGlobalStore} from '@/hooks/use-global-store';
@@ -14,14 +10,11 @@ import PromotionBanner from '@/components/banner/promotion-banner';
 import EmptyAnimation from '../../../../../public/animations/animation__3.json';
 
 export default function HomePage() {
-	const router = useRouter();
-	const userStore = useUserHook();
 	const {
-		user,
 		products,
-		updateSearchLocation,
 		updateProducts,
 		updatePagination,
+		updateSearchLocation,
 	} = useGlobalStore();
 
 	const [loading, setLoading] = useState(true);
@@ -67,18 +60,6 @@ export default function HomePage() {
 
 				<SearchForm />
 			</section>
-
-			{/* {loading && (
-				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
-					<div className='h-[200px] w-1/2 mx-auto bg-white'>
-						<Lottie
-							loop={true}
-							className='h-full'
-							animationData={LoadingAnimation}
-						/>
-					</div>
-				</div>
-			)} */}
 
 			{!loading && products?.length === 0 && (
 				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>

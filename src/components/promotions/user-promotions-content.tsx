@@ -4,7 +4,10 @@ import axios, {AxiosError} from 'axios';
 import React, {useEffect, useState} from 'react';
 import PromotionCard from '../cards/promotion-card';
 import PromotionInfoContent from './promotion-info-content';
-import {useCreatePromotionModalStore, useGlobalStore} from '@/hooks/use-global-store';
+import {
+	useCreatePromotionModalStore,
+	useGlobalStore,
+} from '@/hooks/use-global-store';
 
 const UserPromotionsContent = () => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
@@ -13,12 +16,12 @@ const UserPromotionsContent = () => {
 		user,
 		promotions,
 		updatePromotions,
-        
+
 		showPromotionInfo,
 		updatePromotionsPagination,
-    } = useGlobalStore();
+	} = useGlobalStore();
 
-    const onCreatePromotionModalOpen = useCreatePromotionModalStore(
+	const onCreatePromotionModalOpen = useCreatePromotionModalStore(
 		(state) => state.onOpen
 	);
 

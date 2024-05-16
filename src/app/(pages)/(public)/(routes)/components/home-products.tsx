@@ -1,14 +1,10 @@
 'use client';
 import {RotateCw} from 'lucide-react';
-import {Dispatch, Fragment, SetStateAction, useEffect, useState} from 'react';
-import axios, {AxiosError} from 'axios';
-
+import {usePathname} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {useGlobalStore} from '@/hooks/use-global-store';
+import {Dispatch, Fragment, SetStateAction, useState} from 'react';
 import ProductCard from '../../../../../components/cards/product-card';
-import PaginationButton from '@/components/utils/pagination-button';
-import {usePathname} from 'next/navigation';
-import PromotionBanner from '@/components/banner/promotion-banner';
 
 interface Tab {
 	id: number;

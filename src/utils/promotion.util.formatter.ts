@@ -47,3 +47,16 @@ export function checkPromotionDaysRemaining(dateString: string): string {
 		return `${daysRemaining} days remaining`;
 	}
 }
+
+export function generateRandomPaymentReference(): string {
+	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'; // Characters to choose from
+	const length = 12; // Length of the reference ID
+	let result = '';
+
+	for (let i = 0; i < length; i++) {
+		const randomIndex = Math.floor(Math.random() * chars.length);
+		result += chars[randomIndex];
+	}
+
+	return result;
+}

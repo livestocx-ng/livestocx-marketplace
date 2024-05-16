@@ -129,9 +129,7 @@ const DesiredItemContent = () => {
 							variant={'outline'}
 							onClick={async () => {
 								await axios.get(
-									`${
-										process.env.NEXT_PUBLIC_API_URL
-									}/user/products/add-user-to-contact-seller?product=${product?.id}`,
+									`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-user-to-contact-seller?product=${product?.id}`,
 									{
 										headers: {
 											Authorization: user?.accessToken,

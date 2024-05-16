@@ -85,7 +85,11 @@ const MarketPlaceProductCard = ({product}: ProductCardProps) => {
 							if (loading) return;
 
 							const formData: {value?: boolean} = {};
-							if (product?.likedUsers?.includes(parseInt(user?.id!))) {
+							if (
+								product?.likedUsers?.includes(
+									parseInt(user?.id!)
+								)
+							) {
 								formData.value = false;
 							} else {
 								formData.value = true;

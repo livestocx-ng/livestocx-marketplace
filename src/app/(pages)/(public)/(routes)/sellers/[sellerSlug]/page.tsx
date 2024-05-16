@@ -5,7 +5,7 @@ import React, {useEffect, useState} from 'react';
 import SellerBanner from './components/seller-banner';
 import PageBanner from '@/components/banner/page-banner';
 import {useGlobalStore} from '@/hooks/use-global-store';
-import { getVendorIdFromSlug } from '@/utils/slug.formatter';
+import {getVendorIdFromSlug} from '@/utils/slug.formatter';
 import SellerInfoSearchForm from './components/seller-search-form';
 import SellerInfoProducts from './components/seller-info-products';
 import LoadingAnimation from '../../../../../../../public/animations/animation__3.json';
@@ -33,7 +33,9 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 			setLoading(true);
 
 			const {data} = await axios.get(
-				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/${getVendorIdFromSlug(params.sellerSlug)}`
+				`${
+					process.env.NEXT_PUBLIC_API_URL
+				}/user/sellers/${getVendorIdFromSlug(params.sellerSlug)}`
 			);
 
 			// // console.log('[DATA] ::  ', profile.data);
@@ -55,7 +57,11 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 			setLoading(true);
 
 			const {data} = await axios.get(
-				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/${getVendorIdFromSlug(params.sellerSlug)}/products?page=${currentPage}`
+				`${
+					process.env.NEXT_PUBLIC_API_URL
+				}/user/sellers/${getVendorIdFromSlug(
+					params.sellerSlug
+				)}/products?page=${currentPage}`
 			);
 
 			// // console.log('[DATA] ::  ', profile.data);

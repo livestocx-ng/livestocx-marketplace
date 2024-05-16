@@ -28,7 +28,11 @@ interface PagesLayoutProps {
 const PagesLayout = ({children}: PagesLayoutProps) => {
 	const {user} = useUserHook();
 
-	const {updateChatConversations, updateUserPromotionPlan, updatePromotionPlans} = useGlobalStore();
+	const {
+		updateChatConversations,
+		updateUserPromotionPlan,
+		updatePromotionPlans,
+	} = useGlobalStore();
 
 	const downloadAppModal = useDownloadAppStore();
 	const shareProductModal = useShareProductModalStore();
@@ -103,7 +107,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	};
 
 	useEffect(() => {
-		initializeDownloadAppModal();
+		// initializeDownloadAppModal();
 	}, []);
 
 	useEffect(() => {

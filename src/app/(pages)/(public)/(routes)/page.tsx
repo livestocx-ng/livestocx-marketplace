@@ -10,12 +10,8 @@ import PromotionBanner from '@/components/banner/promotion-banner';
 import EmptyAnimation from '../../../../../public/animations/animation__3.json';
 
 export default function HomePage() {
-	const {
-		products,
-		updateProducts,
-		updatePagination,
-		updateSearchLocation,
-	} = useGlobalStore();
+	const {products, updateProducts, updatePagination, updateSearchLocation} =
+		useGlobalStore();
 
 	const [loading, setLoading] = useState(true);
 	const [currentPage, setCurrentPage] = useState<number>(1);

@@ -7,7 +7,7 @@ import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {useGlobalStore} from '@/hooks/use-global-store';
-import { formatVendorSlug } from '@/utils/slug.formatter';
+import {formatVendorSlug} from '@/utils/slug.formatter';
 
 const SellerInfoCard = ({vendor}: {vendor: Vendor}) => {
 	const router = useRouter();

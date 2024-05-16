@@ -51,9 +51,12 @@ const ProductCard = ({product}: ProductCardProps) => {
 			if (inView) {
 				// console.log(`[PRODUCT-${product?.id}-IN-VIEW]`);
 
-				await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-impression`, {
-					productId: parseInt(product?.id!),
-				});
+				await axios.post(
+					`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-impression`,
+					{
+						productId: parseInt(product?.id!),
+					}
+				);
 			}
 		}, 3500);
 	};
@@ -214,7 +217,11 @@ const ProductCard = ({product}: ProductCardProps) => {
 								if (!user) return router.push('/signin');
 
 								const formData: {value?: boolean} = {};
-								if (product?.likedUsers?.includes(parseInt(user?.id!))) {
+								if (
+									product?.likedUsers?.includes(
+										parseInt(user?.id!)
+									)
+								) {
 									formData.value = false;
 								} else {
 									formData.value = true;
@@ -224,7 +231,9 @@ const ProductCard = ({product}: ProductCardProps) => {
 							}}
 							className=' flex items-center justify-center h-8 sm:h-8 w-8 sm:w-8 bg-main rounded-full cursor-pointer'
 						>
-							{product?.likedUsers?.includes(parseInt(user?.id!)) ? (
+							{product?.likedUsers?.includes(
+								parseInt(user?.id!)
+							) ? (
 								<ThumbsDown className='h-4 sm:h-4 w-4 sm:w-4 text-white' />
 							) : (
 								<ThumbsUp className='h-4 sm:h-4 w-4 sm:w-4 text-white' />

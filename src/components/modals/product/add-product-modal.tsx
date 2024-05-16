@@ -226,7 +226,7 @@ const AddProductModal = () => {
 
 			shareProductModal.onOpen();
 			shareProductModal.updatePayload(data.data);
-			
+
 			updateProducts([...products, data.data]);
 
 			// close modal
@@ -525,7 +525,9 @@ const AddProductModal = () => {
 									htmlFor='terms'
 									className='text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
 								>
-									{formData.inStock == true ? 'Available' : 'Sold Out'}
+									{formData.inStock == true
+										? 'Available'
+										: 'Sold Out'}
 								</label>
 							</div>
 						</div>

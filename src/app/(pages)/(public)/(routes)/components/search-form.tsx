@@ -246,7 +246,7 @@ const SearchForm = () => {
 							className='bg-slate-800 cursor-pointer text-white text-xs md:text-sm px-4 pl-2 py-2 flex md:hidden items-center capitalize rounded-md'
 						>
 							&nbsp;
-							<MapPin className='h-5 w-5'/>{' '}
+							<MapPin className='h-5 w-5' />{' '}
 							{searchQueryCity
 								? searchQueryCity
 								: searchQueryState}

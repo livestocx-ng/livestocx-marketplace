@@ -1,18 +1,12 @@
 import React from 'react';
 import {LineChart} from 'lucide-react';
-import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
 import {useGlobalStore} from '@/hooks/use-global-store';
 
 const PromotionBanner = () => {
 	const router = useRouter();
 
-	const {
-		user,
-		updateChatConversation,
-		updateCurrentAccountTab,
-		updateShowChatConversation,
-	} = useGlobalStore();
+	const {user, updateCurrentAccountTab} = useGlobalStore();
 
 	return (
 		<div
@@ -22,25 +16,10 @@ const PromotionBanner = () => {
 						router.push(`${!user && '/signin'}`);
 					}
 
-					const {data} = await axios.get(
-						`${process.env.NEXT_PUBLIC_API_URL}/chat/admin-conversation`,
-						{
-							headers: {
-								Authorization: user?.accessToken,
-							},
-						}
-					);
-
 					router.push('/account');
 
-					updateCurrentAccountTab('Messages');
-
-					updateShowChatConversation(true);
-
-					updateChatConversation(data.data);
+					updateCurrentAccountTab('Promotions');
 				} catch (error) {
-					const _error = error as AxiosError;
-
 					// console.log(_error);
 				}
 			}}

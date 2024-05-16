@@ -12,8 +12,8 @@ const PromotionBanner = () => {
 		<div
 			onClick={async () => {
 				try {
-					if (user?.id == null) {
-						router.push(`${!user && '/signin'}`);
+					if (user == null) {
+						router.push('/signin');
 					}
 
 					router.push('/account');

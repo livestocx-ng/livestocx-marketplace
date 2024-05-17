@@ -1,5 +1,23 @@
 import axios from 'axios';
+import * as AWS from 'aws-sdk';
 import {default as Jimp} from 'jimp';
+
+const s3 = new AWS.S3({
+	accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESSKEY! as string,
+	secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRETKEY! as string,
+	region: process.env.NEXT_PUBLIC_AWS_S3_REGION! as string,
+});
+
+const MediaIdGenerator = (len: number) => {
+	const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+	let id = 'LVSCX-MEDIA-';
+
+	for (let i = 0; i < len; i++) {
+		id += characters[Math.floor(Math.random() * characters.length)];
+	}
+
+	return id.toLocaleLowerCase();
+};
 
 export async function generateOGImageFromURL(
 	imageURL: string,
@@ -11,29 +29,38 @@ export async function generateOGImageFromURL(
 		});
 		const imageData = Buffer.from(response.data, 'binary');
 
-		const image = await Jimp.read(imageData);
-		image.resize(300, 200).cover(300, 200);
+		const resizedImage = await Jimp.read(imageData);
+		resizedImage.resize(300, 200).cover(300, 200);
 
-		const imageBuffer = await image.getBufferAsync(Jimp.MIME_PNG);
-
-		const {data} = await axios.get(
-			`${process.env.NEXT_PUBLIC_API_URL}/admin/filebin`
+		const imageBuffer: Buffer = await resizedImage.getBufferAsync(
+			Jimp.MIME_PNG
 		);
 
-		// console.log('[FILE-BIN-RESPONSE] :: ', data);
+		const fileName = MediaIdGenerator(14) + '.png';
 
-		const uploadUrl = `${data.data.uploadUrl}/${productSlug}`;
+		const params = {
+			Bucket: process.env.NEXT_PUBLIC_AWS_S3_BUCKET! as string,
+			Key: 'seo-images/' + fileName,
+			Body: imageBuffer,
+			ACL: 'public-read-write',
+			ContentType: 'image/png',
+			ContentDisposition: 'inline',
+			CreateBucketConfiguration: {
+				LocationConstraint: process.env
+					.NEXT_PUBLIC_AWS_S3_REGION! as string,
+			},
+		};
 
-		await axios.post(uploadUrl, imageBuffer);
+		const fileUploadResponse: AWS.S3.ManagedUpload.SendData = await s3
+			.upload(params)
+			.promise();
 
-		console.log('[OG-IMAGE-UPLOAD-URL] :: ', uploadUrl);
+		console.table(fileUploadResponse);
 
-		return uploadUrl;
+		return fileUploadResponse.Location;
 	} catch (error) {
-		console.error('Error while generating SEO OG:image');
+		console.error('Error while generating SEO OG:image :: ', error);
 
 		return '';
 	}
 }
-
-// https://filebin.net/8rq1yyzg1htdpu2q

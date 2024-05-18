@@ -29,7 +29,7 @@ const SellerInfoCard = ({vendor}: {vendor: Vendor}) => {
 						width={20}
 						height={20}
 						unoptimized={true}
-						src={'/logo.jpeg'}
+						src={'/mobile-logo.jpeg'}
 						className='rounded-full animate-pulse'
 					/>
 				</div>

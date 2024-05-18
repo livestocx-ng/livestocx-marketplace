@@ -29,7 +29,6 @@ const SellerInfoCard = ({vendor}: {vendor: Vendor}) => {
 						width={20}
 						height={20}
 						unoptimized={true}
-						// src={vendor?.avatar}
 						src={'/logo.jpeg'}
 						className='rounded-full animate-pulse'
 					/>

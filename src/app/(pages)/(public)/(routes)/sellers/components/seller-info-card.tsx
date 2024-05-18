@@ -39,7 +39,9 @@ const SellerInfoCard = ({vendor}: {vendor: Vendor}) => {
 						? `${vendor?.name.slice(0, 25)}...`
 						: vendor?.name}
 				</h1>
-				<p className='text-xs'>{vendor.state} State.</p>
+				<p className='text-xs'>
+					{vendor.state} {vendor?.state !== 'Abuja' ? 'State.' : ''}
+				</p>
 			</div>
 
 			<div className='flex flex-wrap items-center justify-between py-2 w-full'>

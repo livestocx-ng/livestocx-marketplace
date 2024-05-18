@@ -5,6 +5,8 @@ import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {useGlobalStore} from '@/hooks/use-global-store';
+import {MessageCircle, Phone} from 'lucide-react';
+import { formatVendorSlug } from '@/utils/slug.formatter';
 
 const SellerBanner = () => {
 	const router = useRouter();
@@ -18,33 +20,27 @@ const SellerBanner = () => {
 	} = useGlobalStore();
 
 	return (
-		<div className='w-[100%] md:h-[220px] flex flex-col sm:flex-row items-start justify-between border border-gray-400'>
-			<div className='w-full h-full sm:w-[20%] relative flex flex-col items-center justify-center'>
+		<div className='w-[100%] sm:h-[200px] flex flex-col sm:flex-row items-center sm:items-start justify-between'>
+			<div className='h-[200px] sm:h-full w-full sm:w-[15%] relative items-center justify-center'>
 				<Image
-					alt='logo'
 					fill
-					// width={160}
-					// height={160}
-					// src={'/vendor.jpg'}
-					src={vendor?.avatar!}
 					unoptimized={true}
-					className='h-full w-full object-cover'
+					src={vendor?.avatar!}
+					alt={formatVendorSlug(vendor!)}
+					className='h-full w-full object-cover border border-slate-300 shadow-lg shadow-slate-200 rounded-md'
 				/>
 			</div>
 
-			<div className='flex flex-col h-full space-y-5 md:w-[80%] px-4 md:px-10 border-t sm:border-l border-l-gray-400 py-6'>
-				<h1 className='text-center text-xl font-semibold uppercase'>
+			<div className='flex flex-col justify-be h-full sm:space-y-3 w-full sm:w-[85%] sm:px-10 mt-2 sm:mt-0'>
+				<h1 className='text-sm sm:text-xl font-semibold'>
 					{vendor?.name}
+					{/* Better Farms Better Farms Better Farms Better
+					Farms Better Farms */}
 				</h1>
-
-				<div className='flex flex-col space-y-'>
-					<p>
-						Location:{' '}
-						<span className='text-orange-500'>
-							{vendor?.address}, {vendor?.state} State, Nigeria
-						</span>
-					</p>
-					<p>
+				<p className='text-xs sm:text-sm'>
+					{vendor?.state} State, Nigeria
+				</p>
+				{/* <p>
 						Email:{' '}
 						<span className='text-orange-500'>{vendor?.email}</span>
 					</p>
@@ -53,47 +49,122 @@ const SellerBanner = () => {
 						<span className='text-orange-500'>
 							{vendor?.phoneNumber}
 						</span>
-					</p>
+					</p> */}
+				<div className='hidden sm:flex flex-col sm:flex-row sm:space-x-5'>
+					<Button
+						type='button'
+						variant={'outline'}
+						onClick={async () => {
+							try {
+								if (!user) return router.push('/signin');
 
-					<div className='w-full flex justify-end'>
-						<Button
-							type='button'
-							variant={'outline'}
-							onClick={async () => {
-								try {
-									if (!user) return router.push('/signin');
-
-									if (user?.id == vendor?.user) {
-										return;
-									}
-
-									const {data} = await axios.get(
-										`${process.env.NEXT_PUBLIC_API_URL}/chat/conversation?receiver=${vendor?.user}`,
-										{
-											headers: {
-												Authorization:
-													user?.accessToken,
-											},
-										}
-									);
-
-									updateChatConversation(data.data);
-
-									router.push('/account');
-
-									updateCurrentAccountTab('Messages');
-
-									updateShowChatConversation(true);
-								} catch (_error) {
-									const error = _error as AxiosError;
+								if (user?.id == vendor?.user) {
+									return;
 								}
-							}}
-							className='border border-main text-xs h-12 rounded-md py-3 w-fit'
-						>
-							Chat with Seller
-						</Button>
-					</div>
+
+								const {data} = await axios.get(
+									`${process.env.NEXT_PUBLIC_API_URL}/chat/conversation?receiver=${vendor?.user}`,
+									{
+										headers: {
+											Authorization: user?.accessToken,
+										},
+									}
+								);
+
+								updateChatConversation(data.data);
+
+								router.push('/account');
+
+								updateCurrentAccountTab('Messages');
+
+								updateShowChatConversation(true);
+							} catch (_error) {
+								const error = _error as AxiosError;
+							}
+						}}
+						className='flex items-center space-x-2 border border-main text-xs rounded-full py-3 w-full sm:w-[150px]'
+					>
+						<MessageCircle size={18} />
+						<p> Chat Seller</p>
+					</Button>
+					<Button
+						type='button'
+						variant={'default'}
+						onClick={async () => {
+							try {
+								const link = document.createElement('a');
+								link.href = `tel:${vendor?.phoneNumber}`;
+								link.target = '_blank';
+
+								link.click();
+							} catch (_error) {
+								console.log('[CALL-SELLER-ERROR] :: ', _error);
+							}
+						}}
+						className='flex items-center space-x-3 border border-main text-xs rounded-full py-3 w-full sm:w-[150px]'
+					>
+						<Phone size={18} />
+						<p> Call Seller</p>
+					</Button>
 				</div>
+			</div>
+
+			<div className='flex sm:hidden flex-col sm:flex-row sm:space-x-5 w-full'>
+				<Button
+					type='button'
+					variant={'outline'}
+					onClick={async () => {
+						try {
+							if (!user) return router.push('/signin');
+
+							if (user?.id == vendor?.user) {
+								return;
+							}
+
+							const {data} = await axios.get(
+								`${process.env.NEXT_PUBLIC_API_URL}/chat/conversation?receiver=${vendor?.user}`,
+								{
+									headers: {
+										Authorization: user?.accessToken,
+									},
+								}
+							);
+
+							updateChatConversation(data.data);
+
+							router.push('/account');
+
+							updateCurrentAccountTab('Messages');
+
+							updateShowChatConversation(true);
+						} catch (_error) {
+							const error = _error as AxiosError;
+						}
+					}}
+					className='flex items-center space-x-2 border border-main text-xs rounded-full py-3 w-full sm:w-[150px] my-2'
+					>
+						<MessageCircle size={18} />
+						<p> Chat Seller</p>
+					</Button>
+				<Button
+					type='button'
+					variant={'default'}
+					onClick={async () => {
+						try {
+							const link = document.createElement('a');
+							link.href = `tel:${vendor?.phoneNumber}`;
+							link.target = '_blank';
+
+							link.click();
+						} catch (_error) {
+							console.log('[CALL-SELLER-ERROR] :: ', _error);
+						}
+					}}
+					className='flex items-center space-x-3 border border-main text-xs rounded-full py-3 w-full sm:w-[150px]'
+				>
+					<Phone size={18} />
+					<p> Call Seller</p>
+				</Button>
 			</div>
 		</div>
 	);

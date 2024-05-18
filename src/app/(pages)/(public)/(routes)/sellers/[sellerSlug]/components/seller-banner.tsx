@@ -4,9 +4,9 @@ import Image from 'next/image';
 import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
-import {useGlobalStore} from '@/hooks/use-global-store';
 import {MessageCircle, Phone} from 'lucide-react';
-import { formatVendorSlug } from '@/utils/slug.formatter';
+import {useGlobalStore} from '@/hooks/use-global-store';
+import {formatVendorSlug} from '@/utils/slug.formatter';
 
 const SellerBanner = () => {
 	const router = useRouter();
@@ -142,10 +142,10 @@ const SellerBanner = () => {
 						}
 					}}
 					className='flex items-center space-x-2 border border-main text-xs rounded-full py-3 w-full sm:w-[150px] my-2'
-					>
-						<MessageCircle size={18} />
-						<p> Chat Seller</p>
-					</Button>
+				>
+					<MessageCircle size={18} />
+					<p> Chat Seller</p>
+				</Button>
 				<Button
 					type='button'
 					variant={'default'}

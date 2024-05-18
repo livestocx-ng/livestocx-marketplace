@@ -89,7 +89,7 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 
 	return (
 		<main className='bg-[#28312B]'>
-			<section className='sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 pb-20 sm:pb-0 md:pt-0'>
+			<section className='h-[22vh] md:h-[220px] w-full bg-home flex flex-col items-center justify-center'>
 				<h1 className='text-xl md:text-5xl font-medium text-white'>
 					{vendor?.name}
 				</h1>
@@ -110,10 +110,8 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 			)}
 
 			{!loading && vendor && (
-				<div className='flex flex-col w-full bg-white px-4 md:px-8 py-5 space-y-5'>
+				<div className='flex flex-col w-full bg-white px-4 md:px-8 py-5 space-y-2 sm:space-y-5'>
 					<SellerBanner />
-
-					{/* <PageBanner text='Products of Jigga Farms' /> */}
 
 					<div className='flex items-center justify-between w-full'>
 						<SellerInfoSearchForm />

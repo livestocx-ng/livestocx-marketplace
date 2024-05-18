@@ -68,7 +68,7 @@ const SellerInfoSearchForm = () => {
 		<div className='flex flex-col sm:flex-row items-center justify-between w-full space-y-4 sm:space-y-0'>
 			<div
 				// onSubmit={handleFilterSubmit}
-				className='w-full sm:w-[60%] flex items-center'
+				className='w-full sm:w-[60%] items-center hidden sm:flex'
 			>
 				<FormTextInput
 					name='search'

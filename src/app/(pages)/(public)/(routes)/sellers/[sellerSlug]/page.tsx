@@ -90,7 +90,7 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 	return (
 		<main className='bg-[#28312B]'>
 			<section className='h-[22vh] md:h-[220px] w-full bg-home flex flex-col items-center justify-center'>
-				<h1 className='text-xl md:text-5xl font-medium text-white'>
+				<h1 className='text-xl md:text-5xl font-medium text-white text-center'>
 					{vendor?.name}
 				</h1>
 

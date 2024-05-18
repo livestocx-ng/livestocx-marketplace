@@ -15,7 +15,7 @@ const HomeSellers = ({currentPage, updateCurrentPage}:HomeSellerProps) => {
 
 	return (
 		<Fragment>
-			<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2 mt-5'>
+			<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2'>
 				{vendors?.map((vendor) => (
 					<SellerInfoCard key={vendor.id} vendor={vendor} />
 				))}

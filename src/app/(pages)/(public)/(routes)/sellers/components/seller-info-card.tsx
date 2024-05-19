@@ -34,9 +34,9 @@ const SellerInfoCard = ({vendor}: {vendor: Vendor}) => {
 					/>
 				</div>
 
-				<h1 className='text-sm uppercase font-medium'>
-					{vendor?.name.length > 25
-						? `${vendor?.name.slice(0, 25)}...`
+				<h1 className='text-xs uppercase font-medium'>
+					{vendor?.name.length > 18
+						? `${vendor?.name.slice(0, 18)}...`
 						: vendor?.name}
 				</h1>
 				<p className='text-xs'>

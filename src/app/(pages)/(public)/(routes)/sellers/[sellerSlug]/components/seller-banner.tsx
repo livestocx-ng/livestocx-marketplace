@@ -38,7 +38,7 @@ const SellerBanner = () => {
 					Farms Better Farms */}
 				</h1>
 				<p className='text-xs sm:text-sm'>
-					{vendor?.state}{vendor?.state !== 'Abuja' ? 'State,' : ','}{' '}
+					{vendor?.state}{vendor?.state !== 'Abuja' ? ' State,' : ' ,'}{' '}
 					Nigeria
 				</p>
 				{/* <p>

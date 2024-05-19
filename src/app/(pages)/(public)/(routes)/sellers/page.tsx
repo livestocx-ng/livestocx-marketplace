@@ -18,11 +18,13 @@ const SellersPage = () => {
 
 	const fetchSellers = async () => {
 		try {
-			if (vendors?.length !== 0) {
+			if (vendors?.length !== 0 && currentPage === 1) {
 				return;
 			}
 
-			setLoading(true);
+			if(currentPage !== 1){
+				setLoading(true);
+			}
 
 			const {data} = await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/fetch-all?page=${currentPage}`

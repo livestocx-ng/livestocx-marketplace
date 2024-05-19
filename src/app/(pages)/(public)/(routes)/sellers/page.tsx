@@ -18,13 +18,15 @@ const SellersPage = () => {
 
 	const fetchSellers = async () => {
 		try {
+			if (vendors?.length !== 0) {
+				return;
+			}
+
 			setLoading(true);
 
 			const {data} = await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/fetch-all?page=${currentPage}`
 			);
-
-			// // console.log('[DATA] ::  ', data);
 
 			updateVendors(data.data.vendors);
 			updatePagination(data.data.totalPages, data.data.hasNext);

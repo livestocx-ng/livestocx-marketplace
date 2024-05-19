@@ -51,11 +51,11 @@ const SellerInfoCard = ({vendor}: {vendor: Vendor}) => {
 						unoptimized={true}
 						src={vendor?.avatar}
 						alt={formatVendorSlug(vendor!)}
-						className='object-cover h-full w-full absolute rounded-full shadow-lg shadow-slate-300'
+						className='object-cover h-full w-full absolute rounded-full shadow-md shadow-slate-500'
 					/>
 				</div>
 
-				<div className='w-full flex flex-row-reverse sm:flex-col justify-between sm:justify-normal sm:space-x-0 sm:space-y-2 mt-4'>
+				<div className='w-full flex flex-row-reverse sm:flex-col justify-between sm:justify-normal sm:space-x-0 sm:space-y-2 mt-2'>
 					<Link href={`/sellers/${formatVendorSlug(vendor)}`}>
 						<Button
 							type='button'

@@ -69,14 +69,15 @@ const SellerInfoProducts = ({
 						variant={'outline'}
 						onClick={() => {
 							updateCurrentPage(currentPage + 1);
+
 							window.scrollTo({
 								top: 50,
 								behavior: 'smooth',
 							});
 						}}
-						className='flex items-center space-x-1 bg-white border hover:bg:white focus:bg-white'
+						className='flex items-center space-x-1 bg-white border border-slate-600 hover:bg:white focus:bg-white text-[10px] h-8'
 					>
-						<RotateCw />
+						<RotateCw size={12} />
 						<span>Load More</span>
 					</Button>
 				</div>

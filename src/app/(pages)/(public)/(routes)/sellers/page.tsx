@@ -22,7 +22,7 @@ const SellersPage = () => {
 				return;
 			}
 
-			if(currentPage !== 1){
+			if(currentPage === 1){
 				setLoading(true);
 			}
 

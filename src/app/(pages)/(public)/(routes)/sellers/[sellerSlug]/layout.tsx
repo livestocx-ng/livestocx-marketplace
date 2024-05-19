@@ -2,35 +2,37 @@ import axios from 'axios';
 import {Metadata, ResolvingMetadata} from 'next';
 import {getMediaImageUrl} from '@/utils/media/media.url';
 import {generateOGImageFromURL} from '@/utils/og.image.generator';
-import {formatProductSlug, getProductIdFromSlug} from '@/utils/slug.formatter';
+import {formatProductSlug, formatVendorSlug, getProductIdFromSlug, getVendorIdFromSlug} from '@/utils/slug.formatter';
 
-interface ProductDescriptionLayoutProps {
+interface SellerProfileLayoutProps {
 	params: {
-		slug: string;
+		sellerSlug: string;
 	};
 	children: React.ReactNode;
 }
 
 export async function generateMetadata(
-	{params}: ProductDescriptionLayoutProps,
+	{params}: SellerProfileLayoutProps,
 	parent: ResolvingMetadata
 ): Promise<Metadata> {
-	console.log('SLUG ', params.slug);
+	console.log('SLUG ', params.sellerSlug);
 
 	let ogImage = '';
 
 	const {data} = await axios.get(
-		`${
-			process.env.NEXT_PUBLIC_API_URL
-		}/user/products/product/${getProductIdFromSlug(params.slug)}`
-	);
+        `${
+            process.env.NEXT_PUBLIC_API_URL
+        }/user/sellers/${getVendorIdFromSlug(params.sellerSlug)}`
+    );
 
-	const imageUrl = getMediaImageUrl(data.data);
+    // console.log('[SEO-SELLER-DATA] :: ', data);
+
+	const imageUrl = data.data.avatar;
 
 	if (imageUrl.includes('https')) {
 		ogImage = await generateOGImageFromURL(
 			imageUrl,
-			formatProductSlug(data.data)
+			formatVendorSlug(data.data)
 		);
 	}
 
@@ -47,8 +49,9 @@ export async function generateMetadata(
 			],
 		},
 	};
+     
 }
 
-export default function RootLayout({children}: ProductDescriptionLayoutProps) {
+export default function RootLayout({children}: SellerProfileLayoutProps) {
 	return <div>{children}</div>;
 }

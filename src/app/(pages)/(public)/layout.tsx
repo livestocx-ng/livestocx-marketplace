@@ -107,7 +107,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	};
 
 	useEffect(() => {
-		// initializeDownloadAppModal();
+		initializeDownloadAppModal();
 	}, []);
 
 	useEffect(() => {

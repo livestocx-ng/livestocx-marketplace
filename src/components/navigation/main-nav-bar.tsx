@@ -18,6 +18,7 @@ import {NavLinks} from '@/data';
 import {
 	useGlobalStore,
 	useUpdateUserRoleModalStore,
+	useUpgradeToPremiumAccessStore,
 } from '@/hooks/use-global-store';
 import {Button} from '../ui/button';
 import {toast} from 'react-hot-toast';
@@ -38,6 +39,7 @@ const MainNavbar = () => {
 	} = useGlobalStore();
 
 	const updateUserRoleModal = useUpdateUserRoleModalStore();
+	const upgradeToPremiumAccessModal = useUpgradeToPremiumAccessStore();
 
 	const [scrolling, setScrolling] = useState<boolean>(false);
 	const [showMenu, setSetShowMenu] = useState<boolean>(false);
@@ -80,18 +82,18 @@ const MainNavbar = () => {
 					scrolling && 'bg-main backdrop-blur-sm'
 				}`}
 			>
-				<Link href={'/'}>
-					<Image
-						alt='logo'
-						width={40}
-						height={40}
-						className=''
-						unoptimized={true}
-						src={'/logo.svg'}
-					/>
-				</Link>
-
 				<div className='flex items-center gap-x-8'>
+					<Link href={'/'}>
+						<Image
+							alt='logo'
+							width={40}
+							height={40}
+							className=''
+							unoptimized={true}
+							src={'/logo.svg'}
+						/>
+					</Link>
+
 					{NavLinks.map((link) => (
 						<Link
 							href={link.url}
@@ -376,6 +378,22 @@ const MainNavbar = () => {
 					>
 						Sell
 					</div>
+
+					{/* <div
+						onClick={() => {
+							upgradeToPremiumAccessModal.onOpen();
+						}}
+						className={`h-10 bg-blue-600 border border-[#ffffff80] hover:border-white px-4 rounded-sm text-white text-sm flex items-center justify-center space-x-2 cursor-pointer`}
+					>
+						<Image
+							alt={''}
+							width={20}
+							height={20}
+							className='rounded-sm'
+							src={'/mobile-logo.jpeg'}
+						/>
+						<p>Pro Access</p>
+					</div> */}
 				</div>
 			</nav>
 

@@ -8,6 +8,7 @@ import {
 	useReadNotificationModalStore,
 	useUpdateVendorProfileModalStore,
 	useUpdateSearchLocationModalStore,
+	useUpgradeToPremiumAccessStore,
 } from '@/hooks/use-global-store';
 import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';
@@ -20,6 +21,7 @@ import NotificationModal from '@/components/modals/notifications/notification-mo
 import DownloadMobileAppModal from '@/components/modals/welcome/download-mobile-app-modal';
 import UpdateVendorProfileModal from '@/components/modals/user/update-vendor-profile-modal';
 import UpdateSearchLocationModal from '@/components/modals/utils/update-search-location-modal';
+import UpgradeToPremiumModal from '@/components/modals/premium/upgrade-to-premium-modal';
 
 interface PagesLayoutProps {
 	children: React.ReactNode;
@@ -39,6 +41,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const updateUserRoleModal = useUpdateUserRoleModalStore();
 	const readNotificationModal = useReadNotificationModalStore();
 	const updateVendorProfileModal = useUpdateVendorProfileModalStore();
+	const upgradeToPremiumAccessModal = useUpgradeToPremiumAccessStore();
 	const updateSearchLocationModal = useUpdateSearchLocationModalStore();
 
 	const initializeDownloadAppModal = () => {
@@ -130,12 +133,13 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 			{shareProductModal.isOpen && <ShareProductModal />}
 			{updateUserRoleModal.isOpen && <UpdateUserRoleModal />}
 			{readNotificationModal.isOpen && <NotificationModal />}
+			{upgradeToPremiumAccessModal.isOpen && <UpgradeToPremiumModal />}
 			{updateSearchLocationModal.isOpen && <UpdateSearchLocationModal />}
 			{updateVendorProfileModal.isOpen && <UpdateVendorProfileModal />}
 
 			<Navbar />
 			{children}
-			<ContactUsBanner />
+			{/* <ContactUsBanner /> */}
 			<Footer />
 		</div>
 	);

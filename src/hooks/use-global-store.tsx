@@ -158,6 +158,12 @@ interface DownloadAppModal {
 	onClose: () => void;
 }
 
+interface UpgradeToPremiumAccessModal {
+	isOpen: boolean;
+	onOpen: () => void;
+	onClose: () => void;
+}
+
 interface CreateProductModal {
 	isOpen: boolean;
 	onOpen: () => void;
@@ -234,6 +240,12 @@ export const useCreateProductModalStore = create<CreateProductModal>((set) => ({
 }));
 
 export const useDownloadAppStore = create<DownloadAppModal>((set) => ({
+	isOpen: false,
+	onOpen: () => set({isOpen: true}),
+	onClose: () => set({isOpen: false}),
+}));
+
+export const useUpgradeToPremiumAccessStore = create<UpgradeToPremiumAccessModal>((set) => ({
 	isOpen: false,
 	onOpen: () => set({isOpen: true}),
 	onClose: () => set({isOpen: false}),

@@ -107,7 +107,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 		} catch (error) {
 			const _error = error as AxiosError;
 
-			console.log('[FETCH-USER-PROMOTION-PLAN-ERROR] :: ', _error);
+			// console.log('[FETCH-USER-PROMOTION-PLAN-ERROR] :: ', _error);
 		}
 	};
 
@@ -130,7 +130,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 		} catch (error) {
 			const _error = error as AxiosError;
 
-			console.log('[FETCH-USER-PROMOTION-PLAN-ERROR] :: ', _error);
+			// console.log('[FETCH-USER-PROMOTION-PLAN-ERROR] :: ', _error);
 		}
 	};
 

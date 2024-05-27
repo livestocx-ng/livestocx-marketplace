@@ -10,6 +10,7 @@ import {
 	ShoppingCart,
 	MessageCircle,
 	MessagesSquare,
+	ZapIcon,
 } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link';
@@ -36,6 +37,8 @@ const MainNavbar = () => {
 		chatConversations,
 		updateCurrentAccountTab,
 		updateChatConversations,
+		userPremiumSubscription,
+		updateUserPremiumSubscription,
 	} = useGlobalStore();
 
 	const updateUserRoleModal = useUpdateUserRoleModalStore();
@@ -86,8 +89,8 @@ const MainNavbar = () => {
 					<Link href={'/'}>
 						<Image
 							alt='logo'
-							width={40}
-							height={40}
+							width={35}
+							height={35}
 							className=''
 							unoptimized={true}
 							src={'/logo.svg'}
@@ -98,7 +101,7 @@ const MainNavbar = () => {
 						<Link
 							href={link.url}
 							key={link.title}
-							className={`text-sm ${
+							className={`text-xs ${
 								scrolling ? 'text-white' : 'text-white'
 							}`}
 						>
@@ -123,12 +126,12 @@ const MainNavbar = () => {
 									updateCurrentAccountTab('Messages');
 								}
 							}}
-							className={`h-10 w-10 ${
+							className={`h-8 w-8 ${
 								scrolling ? 'bg-white' : 'bg-main'
 							} rounded-full flex flex-col items-center justify-center cursor-pointer relative`}
 						>
 							<MessageCircle
-								className={`h-5 w-5 ${
+								className={`h-4 w-4 ${
 									scrolling ? 'text-main' : 'text-white'
 								}`}
 							/>
@@ -155,12 +158,12 @@ const MainNavbar = () => {
 								setSetShowAccountMenu(!showAccountMenu);
 							}
 						}}
-						className={`h-10 w-10 ${
+						className={`h-8 w-8 ${
 							scrolling ? 'bg-white' : 'bg-main'
 						} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
 					>
 						<User2
-							className={`h-5 w-5 ${
+							className={`h-4 w-4 ${
 								scrolling
 									? 'text-main'
 									: 'text-white cursor-pointer'
@@ -374,26 +377,22 @@ const MainNavbar = () => {
 								router.push('/account');
 							}
 						}}
-						className={`h-10 bg-orange-400 rounded-sm w-[80px] text-white text-sm flex flex-col items-center justify-center cursor-pointer`}
+						className={`h-8 bg-orange-400 rounded-sm w-[80px] text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
 					>
 						Sell
 					</div>
 
-					{/* <div
-						onClick={() => {
-							upgradeToPremiumAccessModal.onOpen();
-						}}
-						className={`h-10 bg-blue-600 border border-[#ffffff80] hover:border-white px-4 rounded-sm text-white text-sm flex items-center justify-center space-x-2 cursor-pointer`}
-					>
-						<Image
-							alt={''}
-							width={20}
-							height={20}
-							className='rounded-sm'
-							src={'/mobile-logo.jpeg'}
-						/>
-						<p>Pro Access</p>
-					</div> */}
+					{!userPremiumSubscription && (
+						<div
+							onClick={() => {
+								upgradeToPremiumAccessModal.onOpen();
+							}}
+							className={`h-8 bg-blue-600 border border-[#ffffff80] hover:border-white px-4 rounded-sm text-white text-xs flex items-center justify-center space-x-2 cursor-pointer`}
+						>
+							<ZapIcon size={14} />
+							<p>Pro Access</p>
+						</div>
+					)}
 				</div>
 			</nav>
 
@@ -423,6 +422,39 @@ const MainNavbar = () => {
 				</Button>
 
 				<div className='flex items-center space-x-2'>
+					<div
+						onClick={() => {
+							if (!user) {
+								router.push(`/signup?seller=true`);
+							}
+
+							if (user && user?.role === 'CUSTOMER') {
+								updateUserRoleModal.onOpen();
+							}
+
+							if (user && user?.role === 'FARMER') {
+								updateCurrentAccountTab('Products');
+
+								router.push('/account');
+							}
+						}}
+						className={`h-8 bg-orange-400 rounded-sm w-[60px] text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
+					>
+						Sell
+					</div>
+
+					{!userPremiumSubscription && (
+						<div
+							onClick={() => {
+								upgradeToPremiumAccessModal.onOpen();
+							}}
+							className={`h-8 bg-blue-600 px-2 rounded-sm text-white text-xs flex items-center justify-center space-x-2 cursor-pointer`}
+						>
+							<ZapIcon size={14} />
+							<p>Pro Access</p>
+						</div>
+					)}
+
 					{chatConversations?.filter(
 						(conversation) => conversation.unreadMessages !== 0
 					).length !== 0 && (
@@ -626,6 +658,7 @@ const MainNavbar = () => {
 
 											updateUser(null);
 											setSetShowAccountMenu(false);
+											updateUserPremiumSubscription(null);
 
 											router.push('/');
 
@@ -653,33 +686,6 @@ const MainNavbar = () => {
 								</p>
 							</div>
 						)}
-					</div>
-
-					<div
-						onClick={() => {
-							if (!user) {
-								router.push(`/signup?seller=true`);
-							}
-
-							if (user && user?.role === 'CUSTOMER') {
-								updateUserRoleModal.onOpen();
-
-								// console.log('[UPDATE-USER-ROLE]');
-								//  console.log(
-								// 	'[UPDATE-USER-ROLE] :: ',
-								// 	updateUserRoleModal
-								// );
-							}
-
-							if (user && user?.role === 'FARMER') {
-								updateCurrentAccountTab('Products');
-
-								router.push('/account');
-							}
-						}}
-						className={`h-8 bg-orange-400 rounded-sm w-[60px] text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
-					>
-						Sell
 					</div>
 				</div>
 			</div>

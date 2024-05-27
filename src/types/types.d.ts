@@ -265,3 +265,32 @@ export interface PromotionProductInfo {
 	discountPrice: number;
 	media: Media[];
 }
+
+export interface PremiumSubscription {
+	id: number;
+	subscription_date: Date;
+	expiration_date: Date;
+	payment_method: string;
+	amount_paid: number;
+	payment_reference: string;
+	payment_gateway: string;
+	payment_date: Date;
+	isExpired: boolean;
+	user: number;
+	plan: number;
+}
+
+export interface PremiumSubscriptionPlan {
+	id: number;
+	title: string;
+	description: string;
+	price: number;
+	duration: string;
+	duration_days: number;
+	bonus_days: number;
+	position: number;
+	info: {
+		id: number;
+		title: string;
+	}[];
+}

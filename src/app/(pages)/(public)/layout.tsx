@@ -31,9 +31,11 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const {user} = useUserHook();
 
 	const {
+		updatePromotionPlans,
 		updateChatConversations,
 		updateUserPromotionPlan,
-		updatePromotionPlans,
+		updateUserPremiumSubscription,
+		updatePremiumSubscriptionPlans,
 	} = useGlobalStore();
 
 	const downloadAppModal = useDownloadAppStore();
@@ -81,7 +83,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 				return;
 			}
 
-			const [userPlanRequest, promotionPlansRequest] = await Promise.all([
+			const [userPromotionPlanRequest, userPremiumSubscriptionRequest] = await Promise.all([
 				axios.get(
 					`${process.env.NEXT_PUBLIC_API_URL}/promotions/plan`,
 					{
@@ -91,21 +93,44 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 					}
 				),
 				axios.get(
-					`${process.env.NEXT_PUBLIC_API_URL}/promotions/plans`
+					`${process.env.NEXT_PUBLIC_API_URL}/vendor/premium-subscription`,
+					{
+						headers: {
+							Authorization: user?.accessToken,
+						},
+					}
 				),
 			]);
 
-			// console.log(
-			// 	'[USER-PROMOTION-PLAN-RESPONSE] :: ',
-			// 	userPlanRequest.data
-			// );
-
-			updateUserPromotionPlan(userPlanRequest.data.data);
-			updatePromotionPlans(promotionPlansRequest.data.data);
+			updateUserPromotionPlan(userPromotionPlanRequest.data.data);
+			updateUserPremiumSubscription(userPremiumSubscriptionRequest.data.data);
 		} catch (error) {
 			const _error = error as AxiosError;
 
-			// console.log('[FETCH-USER-PROMOTION-PLAN-ERROR] :: ', _error);
+			console.log('[FETCH-USER-PROMOTION-PLAN-ERROR] :: ', _error);
+		}
+	};
+
+	const fetchSubscriptionPlans = async () => {
+		try {
+			const [promotionPlansRequest, premiumSubscriptionPlansRequest] =
+				await Promise.all([
+					axios.get(
+						`${process.env.NEXT_PUBLIC_API_URL}/promotions/plans`
+					),
+					axios.get(
+						`${process.env.NEXT_PUBLIC_API_URL}/vendor/premium-subscription-plans`
+					),
+				]);
+
+			updatePromotionPlans(promotionPlansRequest.data.data);
+			updatePremiumSubscriptionPlans(
+				premiumSubscriptionPlansRequest.data.data
+			);
+		} catch (error) {
+			const _error = error as AxiosError;
+
+			console.log('[FETCH-USER-PROMOTION-PLAN-ERROR] :: ', _error);
 		}
 	};
 
@@ -125,6 +150,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 
 		fetchChatConversations();
 		fetchUserPromotionPlan();
+		fetchSubscriptionPlans();
 	}, [user]);
 
 	return (
@@ -139,7 +165,6 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 
 			<Navbar />
 			{children}
-			{/* <ContactUsBanner /> */}
 			<Footer />
 		</div>
 	);

@@ -90,7 +90,7 @@ const CreatePromotionModal = () => {
 	const handleSuccess = async (response: any) => {
 		try {
 			setLoading(true);
-			console.log(response);
+			// console.log(response);
 
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/promotions/create`,
@@ -150,7 +150,7 @@ const CreatePromotionModal = () => {
 				{
 					display_name: 'product_ids',
 					variable_name: 'product_ids',
-					value: productIds,
+					value: productIds.toString(),
 				},
 			],
 		},

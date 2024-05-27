@@ -382,7 +382,7 @@ const MainNavbar = () => {
 						Sell
 					</div>
 
-					{!userPremiumSubscription && (
+					{/* {!userPremiumSubscription && (
 						<div
 							onClick={() => {
 								upgradeToPremiumAccessModal.onOpen();
@@ -392,7 +392,7 @@ const MainNavbar = () => {
 							<ZapIcon size={14} />
 							<p>Pro Access</p>
 						</div>
-					)}
+					)} */}
 				</div>
 			</nav>
 
@@ -443,7 +443,7 @@ const MainNavbar = () => {
 						Sell
 					</div>
 
-					{!userPremiumSubscription && (
+					{/* {!userPremiumSubscription && (
 						<div
 							onClick={() => {
 								upgradeToPremiumAccessModal.onOpen();
@@ -453,7 +453,7 @@ const MainNavbar = () => {
 							<ZapIcon size={14} />
 							<p>Pro Access</p>
 						</div>
-					)}
+					)} */}
 
 					{chatConversations?.filter(
 						(conversation) => conversation.unreadMessages !== 0

@@ -1,8 +1,7 @@
 import axios from 'axios';
 import {Metadata, ResolvingMetadata} from 'next';
-import {getMediaImageUrl} from '@/utils/media/media.url';
 import {generateOGImageFromURL} from '@/utils/og.image.generator';
-import {formatProductSlug, formatVendorSlug, getProductIdFromSlug, getVendorIdFromSlug} from '@/utils/slug.formatter';
+import {formatVendorSlug, getVendorIdFromSlug} from '@/utils/slug.formatter';
 
 interface SellerProfileLayoutProps {
 	params: {
@@ -20,12 +19,12 @@ export async function generateMetadata(
 	let ogImage = '';
 
 	const {data} = await axios.get(
-        `${
-            process.env.NEXT_PUBLIC_API_URL
-        }/user/sellers/${getVendorIdFromSlug(params.sellerSlug)}`
-    );
+		`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/${getVendorIdFromSlug(
+			params.sellerSlug
+		)}`
+	);
 
-    // console.log('[SEO-SELLER-DATA] :: ', data);
+	// console.log('[SEO-SELLER-DATA] :: ', data);
 
 	const imageUrl = data.data.avatar;
 
@@ -49,7 +48,6 @@ export async function generateMetadata(
 			],
 		},
 	};
-     
 }
 
 export default function RootLayout({children}: SellerProfileLayoutProps) {

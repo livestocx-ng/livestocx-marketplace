@@ -55,7 +55,7 @@ export async function generateOGImageFromURL(
 			.upload(params)
 			.promise();
 
-		console.table(fileUploadResponse);
+		// console.table(fileUploadResponse);
 
 		return fileUploadResponse.Location;
 	} catch (error) {

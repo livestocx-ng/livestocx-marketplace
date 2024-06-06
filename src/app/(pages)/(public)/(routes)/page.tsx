@@ -7,7 +7,7 @@ import HomeProducts from './components/home-products';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import TestimonialSection from '@/components/common/testimonials';
 import PromotionBanner from '@/components/banner/promotion-banner';
-import EmptyAnimation from '../../../../../public/animations/animation__3.json';
+import ProductCardSkeleton from '@/components/skeletons/product-card-skeleton';
 
 export default function HomePage() {
 	const {products, updateProducts, updatePagination, updateSearchLocation} =
@@ -58,13 +58,15 @@ export default function HomePage() {
 			</section>
 
 			{!loading && products?.length === 0 && (
-				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
-					<div className='h-[200px] w-1/2 mx-auto bg-white'>
-						<Lottie
-							loop={false}
-							className='h-full'
-							animationData={EmptyAnimation}
-						/>
+				<div className='flex flex-col w-full bg-white px-4 md:px-8 sm:pt-6 pb-10 relative'>
+					<PromotionBanner />
+
+					<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2 pt-8 sm:pt-0 mt-8'>
+						{Array(50)
+							.fill(1)
+							.map((item, index) => (
+								<ProductCardSkeleton key={index} />
+							))}
 					</div>
 				</div>
 			)}

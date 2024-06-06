@@ -1,5 +1,4 @@
 'use client';
-import Lottie from 'lottie-react';
 import axios, {AxiosError} from 'axios';
 import {useEffect, useState} from 'react';
 import SearchForm from './components/search-form';

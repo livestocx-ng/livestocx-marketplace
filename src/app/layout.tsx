@@ -22,18 +22,18 @@ const poppins = Poppins({
 export const metadata: Metadata = {
 	title: 'Livestocx - Best deals, Everything Animals',
 	description: 'Best deals, Everything Animals',
-	keywords: ['livestocx', 'Livestock', 'Nigeria', 'Animals', 'Meat'],
+	keywords: ['Livestocx', 'Livestock', 'Nigeria', 'Animals', 'Meat'],
 	other: {
 		'facebook-domain-verification': 'yy2fxudmyl6e8nxtl2zjx9lss8j8dl',
 	},
 	openGraph: {
 		images: [
 			{
-				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-sitemap.png',
+				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x200.png',
 				secureUrl:
-					'https://livestocx-media.s3.amazonaws.com/public/livestocx-sitemap.png',
+					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x200.png',
 				width: 300,
-				height: 300,
+				height: 200,
 			},
 		],
 	},
@@ -42,15 +42,8 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
 	return (
 		<html lang='en'>
-			<Head>
-				<meta
-					property='og:image'
-					content={
-						'https://livestocx-media.s3.amazonaws.com/public/livestocx-sitemap.png'
-					}
-				/>
-			</Head>
 			<GoogleAnalyticsProvider />
+
 			<body className={poppins.className}>
 				<AuthProvider>
 					<SocketProvider>

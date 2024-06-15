@@ -1,19 +1,17 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import axios, {AxiosError} from 'axios';
-import {MapPin, Search} from 'lucide-react';
-import {Button} from '@/components/ui/button';
-import React, {useEffect, useReducer, useState} from 'react';
 import {
 	useGlobalStore,
 	useUpdateSearchLocationModalStore,
 } from '@/hooks/use-global-store';
+import axios, {AxiosError} from 'axios';
+import {usePathname} from 'next/navigation';
+import {MapPin, Search} from 'lucide-react';
+import {Button} from '@/components/ui/button';
+import React, {useEffect, useReducer, useState} from 'react';
 import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
-import ProductCard from '@/components/cards/product-card';
-import {NigerianStates} from '@/data';
-import {usePathname} from 'next/navigation';
 
 type FormData = {
 	query: string;
@@ -84,7 +82,7 @@ const SearchForm = () => {
 		if (formData.query === '' && !pathName.includes('sellers')) {
 			fetchProducts();
 		}
-		
+
 		if (formData.query === '' && pathName.includes('sellers')) {
 			fetchSellers();
 		}
@@ -148,7 +146,13 @@ const SearchForm = () => {
 			) {
 				const {data} = await axios.get(
 					// `${process.env.NEXT_PUBLIC_API_URL}/user/products/search?query=${formData.query}&location=${formData.location}`
-					`${process.env.NEXT_PUBLIC_API_URL}/user/products/search?state=${formData.location}&city=${formData.location}&query=${formData.query}&category=&page=1&user=${user ? user?.id: 0}`
+					`${
+						process.env.NEXT_PUBLIC_API_URL
+					}/user/products/search?state=${formData.location}&city=${
+						formData.location
+					}&query=${formData.query}&category=&page=1&user=${
+						user ? user?.id : 0
+					}`
 				);
 
 				updateProducts([]);
@@ -167,7 +171,9 @@ const SearchForm = () => {
 						// }/user/products/fetch-location-products?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=${
 						// 	formData.query
 						// }&page=1`
-					}/user/products/search?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=${searchQuery}&category=&page=1&user=${user ? user?.id: 0}`
+					}/user/products/search?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=${searchQuery}&category=&page=1&user=${
+						user ? user?.id : 0
+					}`
 				);
 
 				updateProducts([]);
@@ -180,7 +186,9 @@ const SearchForm = () => {
 					// `${process.env.NEXT_PUBLIC_API_URL}/user/products/search?query=${formData.query}&location=${formData.location}`
 					`${
 						process.env.NEXT_PUBLIC_API_URL
-					}/user/products/search?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=${searchQuery}&category=&page=1&user=${user ? user?.id: 0}`
+					}/user/products/search?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=${searchQuery}&category=&page=1&user=${
+						user ? user?.id : 0
+					}`
 				);
 
 				// console.log('[DATA] ::  ', data);
@@ -215,28 +223,41 @@ const SearchForm = () => {
 		<div className='w-full flex flex-col justify-center items-center'>
 			{!pathName.includes('sellers') &&
 				!pathName.includes('marketplace') && (
-					<Link
-						className=''
-						target='_blank'
-						href={
-							'https://play.google.com/store/apps/details?id=com.livestocx.livestocx_mobile&pcampaignid=web_share'
-						}
-					>
-						<Image
-							alt={''}
-							width={130}
-							height={60}
-							unoptimized={true}
-							className='object-cover'
-							src={'/icon__playstore__2.svg'}
-						/>
-					</Link>
+					<div className='flex items-center space-x-3 pb-2 md:pb-0'>
+						<Link
+							className=''
+							target='_blank'
+							href={
+								'https://play.google.com/store/apps/details?id=com.livestocx.livestocx_mobile&pcampaignid=web_share'
+							}
+						>
+							<Image
+								alt={''}
+								width={130}
+								height={60}
+								unoptimized={true}
+								className='object-contain'
+								src={'/icon__playstore__2.svg'}
+							/>
+						</Link>
+
+						<p
+							onClick={() => updateSearchLocationModal.onOpen()}
+							className='bg-slate-800 cursor-pointer text-white text-xs md:text-sm px-4 pl-2 py-2 flex md:hidden items-center capitalize rounded-md'
+						>
+							&nbsp;
+							<MapPin className='h-5 w-5' />{' '}
+							{searchQueryCity
+								? searchQueryCity
+								: searchQueryState}
+						</p>
+					</div>
 				)}
-			<div className='text-white text-sm flex items-center space-x-2 py-2'>
+			<div className='text-white text-sm hidden md:flex items-center space-x-2 py-2'>
 				<p> Find anything Livestock in </p>
 				<p
 					onClick={() => updateSearchLocationModal.onOpen()}
-					className='bg-slate-800 cursor-pointer text-white px-4 pl-2 py-2 flex items-center capitalize'
+					className='bg-slate-800 cursor-pointer text-white text-sm px-4 pl-2 py-2 flex items-center capitalize rounded-md'
 				>
 					&nbsp;
 					<MapPin className='h-5 w-5' />{' '}
@@ -248,30 +269,11 @@ const SearchForm = () => {
 					name='query'
 					value={formData.query}
 					handleChange={handleChange}
+					padding='px-5 py-[10px] md:py-3'
 					placeHolder='What are you looking for?'
-					classes='w-[70%] md:w-[60%] bg-[#00A65120] text-white text-sm placeholder:text-sm placeholder:italic border-2 border-green-600 focus:border-green-600 rounded-full'
+					classes='w-[70%] md:w-[60%] bg-[#00A65120] text-black md:text-white text-sm placeholder:text-xs placeholder:italic border-2 border-green-600 focus:border-green-600 rounded-full'
 				/>
 
-				{/* <div className='w-[85%] mt-4 md:mt-0 md:w-fit'>
-					<select
-						name='location'
-						className='w-full py-4 rounded-full bg-main px-3 text-sm text-white outline-none scrollbar__1'
-						onChange={handleSelectChange}
-					>
-						<option value=''>
-							{formData.location ? formData.location : 'Location'}
-						</option>
-						{NigerianStates.map((option) => (
-							<option
-								key={option}
-								value={option}
-								className='cursor-pointer'
-							>
-								{option}
-							</option>
-						))}
-					</select>
-				</div> */}
 				{loading ? (
 					<Button
 						type='button'

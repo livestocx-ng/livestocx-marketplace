@@ -85,7 +85,11 @@ const MarketPlaceProductCard = ({product}: ProductCardProps) => {
 							if (loading) return;
 
 							const formData: {value?: boolean} = {};
-							if (product?.likedUsers?.includes(user?.id!)) {
+							if (
+								product?.likedUsers?.includes(
+									parseInt(user?.id!)
+								)
+							) {
 								formData.value = false;
 							} else {
 								formData.value = true;
@@ -95,7 +99,7 @@ const MarketPlaceProductCard = ({product}: ProductCardProps) => {
 						}}
 						className='absolute right-14 -bottom-[14px] z-[3] flex items-center justify-center h-6 sm:h-8 w-6 sm:w-8 bg-main rounded-full cursor-pointer'
 					>
-						{product?.likedUsers?.includes(user?.id!) ? (
+						{product?.likedUsers?.includes(parseInt(user?.id!)) ? (
 							<ThumbsDown className='h-3 sm:h-4 w-3 sm:w-4 text-white' />
 						) : (
 							<ThumbsUp className='h-3 sm:h-4 w-3 sm:w-4 text-white' />

@@ -100,10 +100,10 @@ const ContactUsBanner = () => {
 							/>
 						</div>
 
-						<div className='p-2 border border-slate-400 text-[10px] md:text-sm text-black w-[200px] rounded-md bg-white shadow-[#ffffff80] shadow-lg'>
+						{/* <div className='p-2 border border-slate-400 text-[10px] md:text-sm text-black w-[200px] rounded-md bg-white shadow-[#ffffff80] shadow-lg'>
 							Give us your special request lets get you the
 							product seller within an hour🕰️.
-						</div>
+						</div> */}
 					</div>
 				)}
 		</>

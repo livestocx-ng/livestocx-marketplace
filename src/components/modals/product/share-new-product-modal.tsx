@@ -8,16 +8,24 @@ import {
 	WhatsappShareButton,
 } from 'react-share';
 import Image from 'next/image';
-import {
-	useShareNewProductModalStore,
-} from '@/hooks/use-global-store';
 import {Copy, X} from 'lucide-react';
 import {toast} from 'react-hot-toast';
 import {Button} from '@/components/ui/button';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import {formatProductSlug} from '@/utils/slug.formatter';
+import {useShareNewProductModalStore} from '@/hooks/use-global-store';
+import { useEffect } from 'react';
 
 const ShareNewProductModal = () => {
 	const {payload, onClose} = useShareNewProductModalStore();
+
+	useEffect(() => {
+		fetch(
+			`https://livestocx.com/marketplace/products/${formatProductSlug(
+				payload!
+			)}`
+		);
+	}, []);
 
 	return (
 		<div className='fixed h-screen flex flex-col items-center justify-center w-full bg-[#11111190] backdrop-blur-sm z-10'>
@@ -53,29 +61,54 @@ const ShareNewProductModal = () => {
 					</div>
 
 					<div className='flex items-center'>
-						<h1 className='text-sm font-medium'>Share On: &nbsp;</h1>
+						<h1 className='text-sm font-medium'>
+							Share On: &nbsp;
+						</h1>
 						<div className='flex space-x-2'>
 							<WhatsappShareButton
+<<<<<<< HEAD
 								title='Check out this awesome product on Livestocx: '
 								url={`https://livestocx.com/marketplace/products/${payload.productId.toLowerCase()}`}
+=======
+								title={`Check out my ${payload.name} on livestocx: `}
+								url={`https://livestocx.com/marketplace/products/${formatProductSlug(
+									payload!
+								)}`}
+>>>>>>> 3ead5968c41fd841833b689abc5f6c6c0ef91b2d
 							>
 								<WhatsappIcon size={30} round />
 							</WhatsappShareButton>
 							<FacebookShareButton
+<<<<<<< HEAD
 								title='Check out this awesome product on Livestocx: '
 								url={`https://livestocx.com/marketplace/products/${payload.productId.toLowerCase()}`}
+=======
+								title={`Check out my ${payload.name} on livestocx: `}
+								url={`https://livestocx.com/marketplace/products/${formatProductSlug(
+									payload!
+								)}`}
+>>>>>>> 3ead5968c41fd841833b689abc5f6c6c0ef91b2d
 							>
 								<FacebookIcon size={30} round />
 							</FacebookShareButton>
 							<TwitterShareButton
+<<<<<<< HEAD
 								title='Check out this awesome product on Livestocx: '
 								url={`https://livestocx.com/marketplace/products/${payload.productId.toLowerCase()}`}
+=======
+								title={`Check out my ${payload.name} on livestocx: `}
+								url={`https://livestocx.com/marketplace/products/${formatProductSlug(
+									payload!
+								)}`}
+>>>>>>> 3ead5968c41fd841833b689abc5f6c6c0ef91b2d
 							>
 								<TwitterIcon size={30} round />
 							</TwitterShareButton>
 
 							<CopyToClipboard
-								text={`https://livestocx.com/marketplace/products/${payload.productId.toLowerCase()}`}
+								text={`https://livestocx.com/marketplace/products/${formatProductSlug(
+									payload!
+								)}`}
 								onCopy={(text: string, result: boolean) => {
 									toast.success('Copied to clipboard');
 								}}

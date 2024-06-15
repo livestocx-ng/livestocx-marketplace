@@ -4,12 +4,6 @@ import {useRouter} from 'next/navigation';
 import {useUserHook} from '@/hooks/use-user';
 import Footer from '@/components/navigation/footer';
 import Navbar from '@/components/navigation/main-nav-bar';
-import {
-	useUpdateUserRoleModalStore,
-	useUpdateWelcomeFarmerModalStore,
-} from '@/hooks/use-global-store';
-import WelcomeFarmerModal from '@/components/modals/welcome/welcome-farmer-modal';
-import UpdateUserRoleModal from '@/components/modals/user/update-user-role-modal';
 
 interface AuthPagesLayoutProps {
 	children: React.ReactNode;
@@ -18,8 +12,6 @@ interface AuthPagesLayoutProps {
 const PagesLayout = ({children}: AuthPagesLayoutProps) => {
 	const router = useRouter();
 	const {user} = useUserHook();
-
-	const welcomeFarmerModal = useUpdateWelcomeFarmerModalStore();
 
 	useEffect(() => {
 		if (user && user?.isProfileUpdated && user?.isVendorProfileUpdated) {
@@ -32,8 +24,6 @@ const PagesLayout = ({children}: AuthPagesLayoutProps) => {
 
 	return (
 		<div className='relative'>
-			{welcomeFarmerModal.isOpen && <WelcomeFarmerModal />}
-
 			<Navbar />
 			{children}
 			<Footer />

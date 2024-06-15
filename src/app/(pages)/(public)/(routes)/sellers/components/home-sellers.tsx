@@ -10,12 +10,12 @@ interface HomeSellerProps {
 	updateCurrentPage: Dispatch<SetStateAction<number>>;
 }
 
-const HomeSellers = ({currentPage, updateCurrentPage}:HomeSellerProps) => {
-	const {hasNextPage, totalPages,vendors} = useGlobalStore();
+const HomeSellers = ({currentPage, updateCurrentPage}: HomeSellerProps) => {
+	const {hasNextPage, totalPages, vendors} = useGlobalStore();
 
 	return (
 		<Fragment>
-			<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2 mt-5'>
+			<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2'>
 				{vendors?.map((vendor) => (
 					<SellerInfoCard key={vendor.id} vendor={vendor} />
 				))}
@@ -36,6 +36,7 @@ const HomeSellers = ({currentPage, updateCurrentPage}:HomeSellerProps) => {
 					</Button>
 				</div>
 			)}
+
 			{hasNextPage && (
 				<div className='flex justify-center mt-10'>
 					<Button
@@ -43,10 +44,15 @@ const HomeSellers = ({currentPage, updateCurrentPage}:HomeSellerProps) => {
 						variant={'outline'}
 						onClick={() => {
 							updateCurrentPage(currentPage + 1);
+
+							window.scrollTo({
+								top: 50,
+								behavior: 'smooth',
+							});
 						}}
-						className='flex items-center space-x-1 bg-white border hover:bg:white focus:bg-white'
+						className='flex items-center space-x-1 bg-white border border-slate-600 hover:bg:white focus:bg-white text-[10px] h-8'
 					>
-						<RotateCw />
+						<RotateCw size={12} />
 						<span>Load More</span>
 					</Button>
 				</div>

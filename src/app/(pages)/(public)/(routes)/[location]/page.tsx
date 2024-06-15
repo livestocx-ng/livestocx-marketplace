@@ -6,6 +6,7 @@ import SearchForm from '../components/search-form';
 import HomeProducts from '../components/home-products';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import EmptyAnimation from '../../../../../../public/animations/animation__3.json';
+import PromotionBanner from '@/components/banner/promotion-banner';
 
 interface SearchLocationPageParams {
 	params: {
@@ -35,7 +36,9 @@ const SearchLocationPage = ({params}: SearchLocationPageParams) => {
 
 			const {data} = await axios.get(
 				// `${process.env.NEXT_PUBLIC_API_URL}/user/products/fetch-location-products?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=${searchQuery}&page=${currentPage}`
-				`${process.env.NEXT_PUBLIC_API_URL}/user/products/search?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=${searchQuery}&category=&page=${currentPage}`
+				`${
+					process.env.NEXT_PUBLIC_API_URL
+				}/user/products/search?state=${searchQueryState.toLowerCase()}&city=${searchQueryCity.toLowerCase()}&query=${searchQuery}&category=&page=${currentPage}`
 			);
 
 			// console.log('[DATA] ::  ', data);
@@ -67,7 +70,10 @@ const SearchLocationPage = ({params}: SearchLocationPageParams) => {
 
 		// console.log(queryParams);
 
-		updateSearchLocation(queryParams?.searchQueryCity, queryParams?.searchQueryState);
+		updateSearchLocation(
+			queryParams?.searchQueryCity,
+			queryParams?.searchQueryState
+		);
 	}, []);
 
 	useEffect(() => {
@@ -76,7 +82,7 @@ const SearchLocationPage = ({params}: SearchLocationPageParams) => {
 
 	return (
 		<main className='bg-[#28312B]'>
-			<section className='h-[40vh] md:h-[50vh md:h-[380px]] w-full bg-home flex flex-col items-center justify-end gap-y-5 md:gap-y-10 py-5 md:py-10 md:pt-0'>
+			<section className='h-[22vh] md:h-[50vh md:h-[300px] w-full bg-white md:bg-home flex flex-col items-center justify-end gap-y-3 md:gap-y-10 py-2 md:py-10 md:pt-0'>
 				{/* <h1 className='text-xl md:text-4xl font-medium text-white'>
 					Best <span className='text-green-600'>deals.</span>{' '}
 					Everything <span className='text-green-600'>Livestocx</span>
@@ -98,7 +104,9 @@ const SearchLocationPage = ({params}: SearchLocationPageParams) => {
 			)}
 
 			{!loading && products?.length > 0 && (
-				<div className='flex flex-col w-full bg-white px-4 md:px-8 pt-5 pb-10'>
+				<div className='flex flex-col w-full bg-white px-4 md:px-8 pt-16 sm:pt-[44px] pb-10 relative'>
+					<PromotionBanner />
+
 					<HomeProducts
 						currentPage={currentPage}
 						updateCurrentPage={setCurrentPage}

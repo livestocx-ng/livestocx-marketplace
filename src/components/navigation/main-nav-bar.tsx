@@ -8,8 +8,9 @@ import {
 	Megaphone,
 	LogOutIcon,
 	ShoppingCart,
-	MessagesSquare,
 	MessageCircle,
+	MessagesSquare,
+	ZapIcon,
 } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link';
@@ -18,6 +19,7 @@ import {NavLinks} from '@/data';
 import {
 	useGlobalStore,
 	useUpdateUserRoleModalStore,
+	useUpgradeToPremiumAccessStore,
 } from '@/hooks/use-global-store';
 import {Button} from '../ui/button';
 import {toast} from 'react-hot-toast';
@@ -29,10 +31,18 @@ const MainNavbar = () => {
 	const router = useRouter();
 	const session = useSession();
 
-	const {user, updateUser, chatConversations, updateCurrentAccountTab} =
-		useGlobalStore();
+	const {
+		user,
+		updateUser,
+		chatConversations,
+		updateCurrentAccountTab,
+		updateChatConversations,
+		userPremiumSubscription,
+		updateUserPremiumSubscription,
+	} = useGlobalStore();
 
 	const updateUserRoleModal = useUpdateUserRoleModalStore();
+	const upgradeToPremiumAccessModal = useUpgradeToPremiumAccessStore();
 
 	const [scrolling, setScrolling] = useState<boolean>(false);
 	const [showMenu, setSetShowMenu] = useState<boolean>(false);
@@ -75,23 +85,23 @@ const MainNavbar = () => {
 					scrolling && 'bg-main backdrop-blur-sm'
 				}`}
 			>
-				<Link href={'/'}>
-					<Image
-						alt='logo'
-						width={40}
-						height={40}
-						className=''
-						unoptimized={true}
-						src={'/logo.svg'}
-					/>
-				</Link>
-
 				<div className='flex items-center gap-x-8'>
+					<Link href={'/'}>
+						<Image
+							alt='logo'
+							width={35}
+							height={35}
+							className=''
+							unoptimized={true}
+							src={'/logo.svg'}
+						/>
+					</Link>
+
 					{NavLinks.map((link) => (
 						<Link
 							href={link.url}
 							key={link.title}
-							className={`text-sm ${
+							className={`text-xs ${
 								scrolling ? 'text-white' : 'text-white'
 							}`}
 						>
@@ -116,12 +126,12 @@ const MainNavbar = () => {
 									updateCurrentAccountTab('Messages');
 								}
 							}}
-							className={`h-10 w-10 ${
+							className={`h-8 w-8 ${
 								scrolling ? 'bg-white' : 'bg-main'
 							} rounded-full flex flex-col items-center justify-center cursor-pointer relative`}
 						>
 							<MessageCircle
-								className={`h-5 w-5 ${
+								className={`h-4 w-4 ${
 									scrolling ? 'text-main' : 'text-white'
 								}`}
 							/>
@@ -148,12 +158,12 @@ const MainNavbar = () => {
 								setSetShowAccountMenu(!showAccountMenu);
 							}
 						}}
-						className={`h-10 w-10 ${
+						className={`h-8 w-8 ${
 							scrolling ? 'bg-white' : 'bg-main'
 						} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
 					>
 						<User2
-							className={`h-5 w-5 ${
+							className={`h-4 w-4 ${
 								scrolling
 									? 'text-main'
 									: 'text-white cursor-pointer'
@@ -248,7 +258,7 @@ const MainNavbar = () => {
 											setSetShowAccountMenu(false);
 
 											updateCurrentAccountTab(
-												'Advertise'
+												'Promotions'
 											);
 										}}
 										className={` ${
@@ -259,7 +269,7 @@ const MainNavbar = () => {
 											className={`h-5 w-5 text-main`}
 										/>
 
-										<p className='text-xs'>Advertise</p>
+										<p className='text-xs'>Promotions</p>
 									</Link>
 								)}
 								<Link
@@ -320,6 +330,7 @@ const MainNavbar = () => {
 											toast.success('Logged out!');
 
 											updateUser(null);
+											updateChatConversations([]);
 											setSetShowAccountMenu(false);
 
 											router.push('/');
@@ -366,16 +377,28 @@ const MainNavbar = () => {
 								router.push('/account');
 							}
 						}}
-						className={`h-10 bg-orange-400 rounded-sm w-[80px] text-white text-sm flex flex-col items-center justify-center cursor-pointer`}
+						className={`h-8 bg-orange-400 rounded-sm w-[80px] text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
 					>
 						Sell
 					</div>
+
+					{/* {!userPremiumSubscription && (
+						<div
+							onClick={() => {
+								upgradeToPremiumAccessModal.onOpen();
+							}}
+							className={`h-8 bg-blue-600 border border-[#ffffff80] hover:border-white px-4 rounded-sm text-white text-xs flex items-center justify-center space-x-2 cursor-pointer`}
+						>
+							<ZapIcon size={14} />
+							<p>Pro Access</p>
+						</div>
+					)} */}
 				</div>
 			</nav>
 
-			{/* MOBILE TOGGLEBAR */}
+			{/* MOBILE TOGGLE-BAR */}
 			<div
-				className={`w-full py-4 px-4 pl-1 lg:pl-8 lg:px-8 lg:hidden fixed z-10 flex items-center justify-between ${
+				className={`w-full py-1 px-4 pl-1 lg:pl-8 lg:px-8 lg:hidden fixed z-10 flex items-center justify-between ${
 					scrolling && 'bg-main backdrop-blur-sm'
 				}`}
 			>
@@ -398,7 +421,40 @@ const MainNavbar = () => {
 					/>
 				</Button>
 
-				<div className='flex items-center space-x-5'>
+				<div className='flex items-center space-x-2'>
+					<div
+						onClick={() => {
+							if (!user) {
+								router.push(`/signup?seller=true`);
+							}
+
+							if (user && user?.role === 'CUSTOMER') {
+								updateUserRoleModal.onOpen();
+							}
+
+							if (user && user?.role === 'FARMER') {
+								updateCurrentAccountTab('Products');
+
+								router.push('/account');
+							}
+						}}
+						className={`h-8 bg-orange-400 rounded-sm w-[60px] text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
+					>
+						Sell
+					</div>
+
+					{/* {!userPremiumSubscription && (
+						<div
+							onClick={() => {
+								upgradeToPremiumAccessModal.onOpen();
+							}}
+							className={`h-8 bg-blue-600 px-2 rounded-sm text-white text-xs flex items-center justify-center space-x-2 cursor-pointer`}
+						>
+							<ZapIcon size={14} />
+							<p>Pro Access</p>
+						</div>
+					)} */}
+
 					{chatConversations?.filter(
 						(conversation) => conversation.unreadMessages !== 0
 					).length !== 0 && (
@@ -414,12 +470,12 @@ const MainNavbar = () => {
 									updateCurrentAccountTab('Messages');
 								}
 							}}
-							className={`h-10 w-10 ${
+							className={`h-8 w-8 ${
 								scrolling ? 'bg-white' : 'bg-main'
 							} rounded-full flex flex-col items-center justify-center cursor-pointer relative`}
 						>
 							<MessageCircle
-								className={`h-5 w-5 ${
+								className={`h-3 w-3 ${
 									scrolling ? 'text-main' : 'text-white'
 								}`}
 							/>
@@ -446,12 +502,12 @@ const MainNavbar = () => {
 								setSetShowAccountMenu(!showAccountMenu);
 							}
 						}}
-						className={`h-10 w-10 ${
+						className={`h-8 w-8 ${
 							scrolling ? 'bg-white' : 'bg-main'
 						} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
 					>
 						<User2
-							className={`h-5 w-5 ${
+							className={`h-3 w-3 ${
 								scrolling
 									? 'text-main'
 									: 'text-white cursor-pointer'
@@ -529,7 +585,7 @@ const MainNavbar = () => {
 											setSetShowAccountMenu(false);
 
 											updateCurrentAccountTab(
-												'Advertise'
+												'Promotions'
 											);
 										}}
 										className={` ${
@@ -540,7 +596,7 @@ const MainNavbar = () => {
 											className={`h-5 w-5 text-main`}
 										/>
 
-										<p className='text-xs'>Advertise</p>
+										<p className='text-xs'>Promotions</p>
 									</Link>
 								)}
 								<Link
@@ -602,6 +658,7 @@ const MainNavbar = () => {
 
 											updateUser(null);
 											setSetShowAccountMenu(false);
+											updateUserPremiumSubscription(null);
 
 											router.push('/');
 
@@ -629,33 +686,6 @@ const MainNavbar = () => {
 								</p>
 							</div>
 						)}
-					</div>
-
-					<div
-						onClick={() => {
-							if (!user) {
-								router.push(`/signup?seller=true`);
-							}
-
-							if (user && user?.role === 'CUSTOMER') {
-								updateUserRoleModal.onOpen();
-
-								// console.log('[UPDATE-USER-ROLE]');
-								//  console.log(
-								// 	'[UPDATE-USER-ROLE] :: ',
-								// 	updateUserRoleModal
-								// );
-							}
-
-							if (user && user?.role === 'FARMER') {
-								updateCurrentAccountTab('Products');
-
-								router.push('/account');
-							}
-						}}
-						className={`h-10 bg-orange-400 rounded-sm w-[80px] text-white text-sm flex flex-col items-center justify-center cursor-pointer`}
-					>
-						Sell
 					</div>
 				</div>
 			</div>

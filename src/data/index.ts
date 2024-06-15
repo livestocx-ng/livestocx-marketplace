@@ -14,10 +14,6 @@ export const NavLinks: NavLink[] = [
 		url: '/',
 	},
 	{
-		title: 'Marketplace',
-		url: '/marketplace',
-	},
-	{
 		title: 'Sellers',
 		url: '/sellers',
 	},
@@ -29,6 +25,10 @@ export const NavLinks: NavLink[] = [
 		title: 'Contact Us',
 		url: '/contact-us',
 	},
+	// {
+	// 	title: 'Enterprise',
+	// 	url: '/enterprise',
+	// },
 ];
 
 export const AccountNavLinks: FooterNavLink[] = [
@@ -63,7 +63,7 @@ export const HelpNavLinks: NavLink[] = [
 		url: '/contact-us',
 	},
 	{
-		title: 'Terms & Conditions',
+		title: 'Terms of Service',
 		url: '/terms-of-service',
 	},
 	{

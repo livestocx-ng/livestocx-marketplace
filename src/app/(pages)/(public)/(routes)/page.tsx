@@ -1,28 +1,16 @@
 'use client';
-import Link from 'next/link';
-import Image from 'next/image';
-import Lottie from 'lottie-react';
 import axios, {AxiosError} from 'axios';
-import {useRouter} from 'next/navigation';
 import {useEffect, useState} from 'react';
-import {useUserHook} from '@/hooks/use-user';
 import SearchForm from './components/search-form';
 import HomeProducts from './components/home-products';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import TestimonialSection from '@/components/common/testimonials';
-import EmptyAnimation from '../../../../../public/animations/animation__3.json';
-import AdvertisementBanner from '@/components/banner/advertisement-banner';
+import PromotionBanner from '@/components/banner/promotion-banner';
+import ProductCardSkeleton from '@/components/skeletons/product-card-skeleton';
 
 export default function HomePage() {
-	const router = useRouter();
-	const userStore = useUserHook();
-	const {
-		user,
-		products,
-		updateSearchLocation,
-		updateProducts,
-		updatePagination,
-	} = useGlobalStore();
+	const {products, updateProducts, updatePagination, updateSearchLocation} =
+		useGlobalStore();
 
 	const [loading, setLoading] = useState(true);
 	const [currentPage, setCurrentPage] = useState<number>(1);
@@ -59,8 +47,8 @@ export default function HomePage() {
 
 	return (
 		<main className='bg-[#28312B]'>
-			<section className='h-[40vh] md:h-[50vh md:h-[380px] w-full bg-home flex flex-col items-center justify-end gap-y-8 md:gap-y-10 py-5 md:py-10 md:pt-0'>
-				<h1 className='text-xl md:text-4xl font-medium text-white'>
+			<section className='h-[28vh] md:h-[320px] w-full bg-white md:bg-home flex flex-col items-center justify-end gap-y-3 md:gap-y-10 py-2 md:py-10 md:pb-2'>
+				<h1 className='text-lg md:text-4xl font-medium text-black md:text-white'>
 					Best <span className='text-green-600'>deals.</span>{' '}
 					Everything <span className='text-green-600'>Animals</span>
 				</h1>
@@ -68,33 +56,23 @@ export default function HomePage() {
 				<SearchForm />
 			</section>
 
-			{/* {loading && (
-				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
-					<div className='h-[200px] w-1/2 mx-auto bg-white'>
-						<Lottie
-							loop={true}
-							className='h-full'
-							animationData={LoadingAnimation}
-						/>
-					</div>
-				</div>
-			)} */}
-
 			{!loading && products?.length === 0 && (
-				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
-					<div className='h-[200px] w-1/2 mx-auto bg-white'>
-						<Lottie
-							loop={false}
-							className='h-full'
-							animationData={Animation}
-						/>
+				<div className='flex flex-col w-full bg-white px-4 md:px-8 sm:pt-6 pb-10 relative'>
+					<PromotionBanner />
+
+					<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2 pt-8 sm:pt-0 mt-8'>
+						{Array(50)
+							.fill(1)
+							.map((item, index) => (
+								<ProductCardSkeleton key={index} />
+							))}
 					</div>
 				</div>
 			)}
 
 			{!loading && products?.length > 0 && (
 				<div className='flex flex-col w-full bg-white px-4 md:px-8 pt-16 sm:pt-[44px] pb-10 relative'>
-					<AdvertisementBanner />
+					<PromotionBanner />
 
 					<HomeProducts
 						currentPage={currentPage}

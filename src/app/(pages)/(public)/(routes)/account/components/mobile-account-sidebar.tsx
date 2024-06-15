@@ -12,6 +12,7 @@ import {
 	Megaphone,
 	ShoppingCart,
 	Menu,
+	LineChart,
 } from 'lucide-react';
 import axios from 'axios';
 import {cn} from '@/lib/utils';
@@ -37,7 +38,7 @@ const CustomerTabs: Tab[] = [
 const FarmerTabs: Tab[] = [
 	'Account',
 	'Products',
-	'Advertise',
+	'Promotions',
 	'Messages',
 	'Notifications',
 	'Settings',
@@ -222,8 +223,8 @@ const MobileAccountSideBar = ({}: AccountSideBarProps) => {
 												}`}
 											/>
 										)}
-										{tab === 'Advertise' && (
-											<Megaphone
+										{tab === 'Promotions' && (
+											<LineChart
 												className={`h-6 w-6 ${
 													currentAccountTab == tab &&
 													'text-green-600'

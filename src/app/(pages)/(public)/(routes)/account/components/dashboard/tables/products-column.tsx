@@ -18,6 +18,7 @@ import {Product} from '@/types/types';
 import {ColumnDef} from '@tanstack/react-table';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import {formatProductSlug} from '@/utils/slug.formatter';
 
 export interface ProductColumn extends Product {}
 
@@ -32,6 +33,12 @@ export const columns: ColumnDef<ProductColumn>[] = [
 		header: 'Product',
 		cell: ({row}) => {
 			const {updatePayload, updateCurrentAccountTab} = useGlobalStore();
+
+			fetch(
+				`https://livestocx.com/marketplace/products/${formatProductSlug(
+					row.original
+				)}`
+			);
 
 			return (
 				<div
@@ -157,20 +164,41 @@ export const columns: ColumnDef<ProductColumn>[] = [
 		cell: ({row}) => (
 			<div className='flex space-x-2'>
 				<WhatsappShareButton
+<<<<<<< HEAD
 					url={`https://livestocx.com/marketplace/products/${row.original.productId.toLowerCase()}`}
 					title='Check out this awesome product on Livestocx: '
+=======
+					url={`https://livestocx.com/marketplace/products/${formatProductSlug(
+						row.original
+					)}`}
+					title={`Check out my ${row.original.name} on livestocx: `}
+>>>>>>> 3ead5968c41fd841833b689abc5f6c6c0ef91b2d
 				>
 					<WhatsappIcon size={25} round />
 				</WhatsappShareButton>
 				<FacebookShareButton
+<<<<<<< HEAD
 					url={`https://livestocx.com/marketplace/products/${row.original.productId.toLowerCase()}`}
 					title='Check out this awesome product on Livestocx: '
+=======
+					url={`https://livestocx.com/marketplace/products/${formatProductSlug(
+						row.original
+					)}`}
+					title={`Check out my ${row.original.name} on livestocx: `}
+>>>>>>> 3ead5968c41fd841833b689abc5f6c6c0ef91b2d
 				>
 					<FacebookIcon size={25} round />
 				</FacebookShareButton>
 				<TwitterShareButton
+<<<<<<< HEAD
 					url={`https://livestocx.com/marketplace/products/${row.original.productId.toLowerCase()}`}
 					title='Check out this awesome product on Livestocx: '
+=======
+					url={`https://livestocx.com/marketplace/products/${formatProductSlug(
+						row.original
+					)}`}
+					title={`Check out my ${row.original.name} on livestocx: `}
+>>>>>>> 3ead5968c41fd841833b689abc5f6c6c0ef91b2d
 				>
 					<TwitterIcon size={25} round />
 				</TwitterShareButton>
@@ -179,7 +207,9 @@ export const columns: ColumnDef<ProductColumn>[] = [
 					onCopy={(text: string, result: boolean) => {
 						toast.success('Copied to clipboard');
 					}}
-					text={`https://livestocx.com/marketplace/products/${row.original.productId.toLowerCase()}`}
+					text={`https://livestocx.com/marketplace/products/${formatProductSlug(
+						row.original
+					)}`}
 				>
 					<div className='rounded-full border border-slate-400 h-7 w-7 flex items-center justify-center cursor-pointer'>
 						<Copy className='h-4 w-4' />
@@ -207,23 +237,4 @@ export const columns: ColumnDef<ProductColumn>[] = [
 			);
 		},
 	},
-	// {
-	// 	accessorKey: 'id',
-	// 	header: '',
-	// 	cell: ({row}) => {
-	// 		const {updatePayload, onOpen} = useDeleteProductModalStore();
-
-	// 		return (
-	// 			<p
-	// 				onClick={() => {
-	// 					updatePayload(row.original);
-	// 					onOpen();
-	// 				}}
-	// 				className='text-red-500 text-sm underline font-medium cursor-pointer'
-	// 			>
-	// 				Delete
-	// 			</p>
-	// 		);
-	// 	},
-	// },
 ];

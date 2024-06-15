@@ -8,7 +8,7 @@ export type Tab =
 	| 'Order History'
 	| 'Wishlist'
 	| 'Shopping Cart'
-	| 'Advertise'
+	| 'Promotions'
 	| 'Messages'
 	| 'Notifications'
 	| 'Settings'
@@ -50,6 +50,7 @@ export interface Vendor {
 	avatar: string;
 	avatarKey: string;
 	email: string;
+	user: string;
 	phoneNumber: string;
 	isUpdated: boolean;
 }
@@ -63,13 +64,14 @@ export interface Product {
 	category: string;
 	description: string;
 	inStock: boolean;
+	impressionCount: number;
 	isPromotion: boolean;
 	isNegotiable: boolean;
 	totalReviews: number;
 	viewCount: number;
 	likeCount: number;
 	purchaseCount: number;
-	likedUsers: null | string[]; // Change the type of likedUsers accordingly
+	likedUsers: null | number[]; // Change the type of likedUsers accordingly
 	media: Media[];
 	createdAt: string;
 	vendor?: Vendor;
@@ -200,4 +202,95 @@ export interface ChatMessage {
 	sender: number;
 	recipient: number;
 	conversation: number;
+}
+
+export interface PromotionPlan {
+	id: number;
+	title: string;
+	description: string;
+	duration: string;
+	price: number;
+	position: number;
+	discount_price: number;
+	createdAt: Date;
+	updatedAt: Date;
+	plan_info: {
+		id: number;
+		title: string;
+		description: string;
+	}[];
+}
+
+export interface UserPromotionPlan {
+	id: number;
+	user: number;
+	plan: number;
+	plan_info: {
+		title: string;
+		description: string;
+		duration: string;
+		price: number;
+		product_count: number;
+		discount_price: number;
+	};
+}
+
+export interface Promotion {
+	id: number;
+	subscription_date: Date;
+	expiration_date: Date;
+	payment_method: string;
+	amount_paid: number;
+	position: number;
+	payment_reference: string;
+	payment_gateway: string;
+	payment_date: Date;
+	plan: {
+		id: number;
+		title: string;
+		description: string;
+		duration: string;
+		price: number;
+		discount_price: number;
+	};
+	products: number[];
+}
+
+export interface PromotionProductInfo {
+	id: number;
+	name: string;
+	price: number;
+	category: string;
+	isNegotiable: boolean;
+	discountPrice: number;
+	media: Media[];
+}
+
+export interface PremiumSubscription {
+	id: number;
+	subscription_date: Date;
+	expiration_date: Date;
+	payment_method: string;
+	amount_paid: number;
+	payment_reference: string;
+	payment_gateway: string;
+	payment_date: Date;
+	isExpired: boolean;
+	user: number;
+	plan: number;
+}
+
+export interface PremiumSubscriptionPlan {
+	id: number;
+	title: string;
+	description: string;
+	price: number;
+	duration: string;
+	duration_days: number;
+	bonus_days: number;
+	position: number;
+	info: {
+		id: number;
+		title: string;
+	}[];
 }

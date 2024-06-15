@@ -3,7 +3,6 @@ import {
 	useGlobalStore,
 	useProductMediaModalStore,
 } from '@/hooks/use-global-store';
-import AuthHeader from '@/components/header/auth-header';
 import AccountSideBar from './components/account-side-bar';
 import ProductContent from './components/dashboard/product-content';
 import ProductsContent from './components/dashboard/products-content';
@@ -11,10 +10,10 @@ import SettingsContent from './components/dashboard/settings-content';
 import MessagesContent from './components/dashboard/messages-content';
 import MobileAccountSideBar from './components/mobile-account-sidebar';
 import DashboardContent from './components/dashboard/dashboard-content';
-import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import DesiredItemContent from './components/dashboard/desired-item-content';
+import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import DesiredItemsContent from './components/dashboard/desired-items-content';
-import AdvertisementContent from './components/dashboard/advertisement-content';
+import PromotionsContent from './components/dashboard/promotions-content';
 import NotificationsContent from './components/dashboard/notifications-content';
 
 const AccountPage = () => {
@@ -56,8 +55,8 @@ const AccountPage = () => {
 						<DesiredItemContent />
 					)}
 
-					{currentAccountTab === 'Advertise' && (
-						<AdvertisementContent />
+					{currentAccountTab === 'Promotions' && (
+						<PromotionsContent />
 					)}
 
 					{currentAccountTab === 'Messages' && <MessagesContent />}

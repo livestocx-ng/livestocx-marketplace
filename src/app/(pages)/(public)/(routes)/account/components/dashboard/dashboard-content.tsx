@@ -17,6 +17,7 @@ import {useGlobalStore} from '@/hooks/use-global-store';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import ButtonLoader from '@/components/loader/button-loader';
 import {RecentOrderColumn, columns} from './tables/recent-orders-columns';
+import {Vendor} from '@/types/types';
 
 const RecentOrders: RecentOrderColumn[] = [
 	{
@@ -138,6 +139,22 @@ const DashboardContent = ({}: DashboardContentProps) => {
 		}
 	};
 
+	const formatVendorSlug = (vendor: Vendor): string => {
+		if (vendor) {
+			const formattedProductName = vendor?.name.replace(/,/g, '');
+
+			const formattedVendorNameWithOutCommas = formattedProductName
+				.replace(/\s+/g, '-')
+				.toLowerCase();
+
+			const slug = `${formattedVendorNameWithOutCommas}_${vendor?.vendorId!.toLowerCase()}`;
+
+			return slug.toLowerCase();
+		}
+
+		return '';
+	};
+
 	return (
 		<div className='w-full md:w-[78%] flex flex-col gap-5'>
 			<div className='flex flex-col md:flex-row items-center justify-between w-full'>
@@ -175,19 +192,25 @@ const DashboardContent = ({}: DashboardContentProps) => {
 
 							<div className='flex space-x-2'>
 								<WhatsappShareButton
-									url={`https://livestocx.com/sellers/${vendor?.vendorId?.toLowerCase()}`}
+									url={`https://livestocx.com/sellers/${formatVendorSlug(
+										vendor!
+									)}`}
 									title='Check out my seller profile on Livestocx: '
 								>
 									<WhatsappIcon size={25} round />
 								</WhatsappShareButton>
 								<FacebookShareButton
-									url={`https://livestocx.com/sellers/${vendor?.vendorId?.toLowerCase()}`}
+									url={`https://livestocx.com/sellers/${formatVendorSlug(
+										vendor!
+									)}`}
 									title='Check out my seller profile on Livestocx: '
 								>
 									<FacebookIcon size={25} round />
 								</FacebookShareButton>
 								<TwitterShareButton
-									url={`https://livestocx.com/sellers/${vendor?.vendorId?.toLowerCase()}`}
+									url={`https://livestocx.com/sellers/${formatVendorSlug(
+										vendor!
+									)}`}
 									title='Check out my seller profile on Livestocx: '
 								>
 									<TwitterIcon size={25} round />
@@ -197,7 +220,9 @@ const DashboardContent = ({}: DashboardContentProps) => {
 									onCopy={(text: string, result: boolean) => {
 										toast.success('Copied to clipboard');
 									}}
-									text={`https://livestocx.com/sellers/${vendor?.vendorId?.toLowerCase()}`}
+									text={`https://livestocx.com/sellers/${formatVendorSlug(
+										vendor!
+									)}`}
 								>
 									<div className='rounded-full border border-slate-400 h-7 w-7 flex items-center justify-center cursor-pointer'>
 										<Copy className='h-4 w-4' />

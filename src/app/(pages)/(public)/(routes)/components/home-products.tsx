@@ -1,14 +1,10 @@
 'use client';
 import {RotateCw} from 'lucide-react';
-import {Dispatch, Fragment, SetStateAction, useEffect, useState} from 'react';
-import axios, {AxiosError} from 'axios';
-
+import {usePathname} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {useGlobalStore} from '@/hooks/use-global-store';
+import {Dispatch, Fragment, SetStateAction, useState} from 'react';
 import ProductCard from '../../../../../components/cards/product-card';
-import PaginationButton from '@/components/utils/pagination-button';
-import {usePathname} from 'next/navigation';
-import AdvertisementBanner from '@/components/banner/advertisement-banner';
 
 interface Tab {
 	id: number;
@@ -43,7 +39,6 @@ const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 	return (
 		<Fragment>
 			<div className='flex item-center space-x-4'>
-
 				{pathName.length <= 1 && (
 					<>
 						{TabItems.map((tab) => (
@@ -58,7 +53,7 @@ const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 								onClick={() => {
 									const index = TabItems.findIndex(
 										(item) => item.id === tab.id
-									);	
+									);
 
 									setCurrentTab(TabItems[index]);
 								}}
@@ -102,14 +97,15 @@ const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 						variant={'outline'}
 						onClick={() => {
 							updateCurrentPage(currentPage + 1);
+
 							window.scrollTo({
 								top: 50,
 								behavior: 'smooth',
 							});
 						}}
-						className='flex items-center space-x-1 bg-white border hover:bg:white focus:bg-white'
+						className='flex items-center space-x-1 bg-white border border-slate-600 hover:bg:white focus:bg-white text-[10px] h-8'
 					>
-						<RotateCw />
+						<RotateCw size={12} />
 						<span>Load More</span>
 					</Button>
 				</div>

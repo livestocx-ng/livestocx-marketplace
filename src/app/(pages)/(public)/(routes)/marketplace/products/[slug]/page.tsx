@@ -1,41 +1,26 @@
 'use client';
-import {cn} from '@/lib/utils';
-import Image from 'next/image';
-import Lottie from 'lottie-react';
+import Head from 'next/head';
 import {
-	AlertDialog,
-	AlertDialogTitle,
-	AlertDialogCancel,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogContent,
-	AlertDialogTrigger,
-	AlertDialogDescription,
-} from '@/components/ui/alert-dialog';
-import {toast} from 'react-hot-toast';
+	useGlobalStore,
+	useProductMediaModalStore,
+} from '@/hooks/use-global-store';
+import Lottie from 'lottie-react';
+import {Product} from '@/types/types';
 import axios, {AxiosError} from 'axios';
-import {useEffect, useState} from 'react';
-import {ProductInfo} from '@/types/types';
-import {Badge} from '@/components/ui/badge';
-import {Button} from '@/components/ui/button';
-import {PriceFormatter} from '@/utils/price.formatter';
-import {useGlobalStore} from '@/hooks/use-global-store';
-import AuthHeader from '@/components/header/auth-header';
-import {useProductMediaModalStore} from '@/hooks/use-global-store';
-import {FlagTriangleRight, ThumbsDown, ThumbsUp} from 'lucide-react';
-import ProductCard from '../../src/components/cards/product-card';
-import SellerInfoTab from '../../src/components/product-info/seller-info-tab';
-import EmptyAnimation from '../animations/animation__2.json';
-import ProductMediaModal from '../../src/components/modals/product/product-media-modal';
-import ProductReviewTab from '../../src/components/product-info/product-review-tab';
-import MoreFromSellerTab from '../../src/components/product-info/more-from-seller-tab';
-import LoadingAnimation from '../animations/loading__animation__1.json';
-import SingleProductContent from '@/components/product/single-product-content';
 import {useRouter} from 'next/navigation';
+import {Fragment, useEffect, useState} from 'react';
+import {getMediaImageUrl} from '@/utils/media/media.url';
+import {getProductIdFromSlug} from '@/utils/slug.formatter';
+import {generateOGImageFromURL} from '@/utils/og.image.generator';
+import ProductMediaModal from '@/components/modals/product/product-media-modal';
+import SingleProductContent from '@/components/product/single-product-content';
+import EmptyAnimation from '../../../../../../../../public/animations/animation__3.json';
+import LoadingAnimation from '../../../../../../../../public/animations/animation__3.json';
+import type {Metadata, ResolvingMetadata} from 'next';
 
 interface ProductPageParams {
 	params: {
-		productId: string;
+		slug: string;
 	};
 }
 
@@ -43,17 +28,11 @@ type Tab = 'Seller Info' | 'Review' | 'More From Seller';
 
 const CurrentTabs: Tab[] = ['Seller Info', 'Review', 'More From Seller'];
 
-const ProductPage = ({params: {productId}}: ProductPageParams) => {
+const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 	const router = useRouter();
 
 	const isProductMediaModalOpen = useProductMediaModalStore(
 		(state) => state.isOpen
-	);
-	const onProductMediaModalOpen = useProductMediaModalStore(
-		(state) => state.onOpen
-	);
-	const updateProductModalPayload = useProductMediaModalStore(
-		(state) => state.updatePayload
 	);
 
 	const {
@@ -75,15 +54,19 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 		try {
 			const [_product, _productInfo] = await Promise.all([
 				axios.get(
-					`${process.env.NEXT_PUBLIC_API_URL}/user/products/product/${productId}`
+					`${
+						process.env.NEXT_PUBLIC_API_URL
+					}/user/products/product/${getProductIdFromSlug(slug)}`
 				),
 				axios.get(
-					`${process.env.NEXT_PUBLIC_API_URL}/user/products/info/${productId}`
+					`${
+						process.env.NEXT_PUBLIC_API_URL
+					}/user/products/info/${getProductIdFromSlug(slug)}`
 				),
 			]);
 
-			console.log('[DATA] ::  ', _product.data.data);
-			// console.log('[DATA] ::  ', _productInfo.data.data);
+			// // console.log('[DATA] ::  ', _product.data.data);
+			// // console.log('[DATA] ::  ', data);
 
 			updatePayload(_product.data.data);
 			updateProductInfo(_productInfo.data.data);
@@ -94,16 +77,39 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 		}
 	};
 
+	const viewProduct = async () => {
+		try {
+			const {data} = await axios.get(
+				`${
+					process.env.NEXT_PUBLIC_API_URL
+				}/user/products/product/${getProductIdFromSlug(slug)}/view`,
+				{
+					headers: {
+						Authorization: user?.accessToken,
+					},
+				}
+			);
+
+			console.log('[VIEW-PRODUCT-DATA] ::  ', data);
+		} catch (error) {
+			const _error = error as AxiosError;
+
+			console.log('[VIEW-PRODUCT-ERROR] :: ', _error);
+		}
+	};
+
 	useEffect(() => {
 		fetchProduct();
 	}, []);
 
+	useEffect(() => {
+		if (user) {
+			viewProduct();
+		}
+	}, [user]);
+
 	const handleLikeUnlikeProduct = async (formData: {value?: boolean}) => {
 		try {
-			setLoading(true);
-
-			// // console.log('[LIKE-UNLIKE-PRODUCT-PAYLOAD] :: ', formData);
-
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/like-unlike-product?productId=${product?.productId}`,
 				formData,
@@ -114,16 +120,12 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 				}
 			);
 
-			// // console.log('[LIKE-UNLIKE-PRODUCT-SUCCESS] :: ', data);
-
-			setLoading(false);
-
 			updatePayload(data.data);
 		} catch (error) {
-			setLoading(false);
+			// setLoading(false);
 			const _error = error as AxiosError;
 
-			// console.log('[ERROR] :: ', _error);
+			console.log('[ERROR] :: ', _error);
 		}
 	};
 
@@ -191,7 +193,7 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 			{isProductMediaModalOpen && <ProductMediaModal />}
 
 			<section className='sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 pb-20 sm:pb-0 md:pt-0'>
-				<h1 className='text-xl md:text-5xl font-medium text-white'>
+				<h1 className='text-xl md:text-5xl font-medium text-white capitalize px-6 sm:px-0 text-center'>
 					{product?.name}
 				</h1>
 
@@ -237,45 +239,4 @@ const ProductPage = ({params: {productId}}: ProductPageParams) => {
 	);
 };
 
-export default ProductPage;
-
-const ProductContactAlertDialog = ({
-	productInfo,
-}: {
-	productInfo: ProductInfo | null;
-}) => {
-	return (
-		<AlertDialog>
-			<AlertDialogTrigger className='border border-main text-main text-xs h-10 w-[45%] rounded-full py-2'>
-				Show Contact
-			</AlertDialogTrigger>
-			<AlertDialogContent>
-				<AlertDialogHeader>
-					<AlertDialogTitle>{productInfo?.name!}</AlertDialogTitle>
-					<AlertDialogDescription className='flex flex-col py-5 text-black'>
-						<div className='relative w-[150px] h-[150px] mx-auto border'>
-							<Image
-								fill
-								alt=''
-								unoptimized={true}
-								src={productInfo?.avatar!}
-								className='object-fill w-full h-full'
-							/>
-						</div>
-						<div className='grid grid-cols-2 gap-y-5 pt-2'>
-							<p className='font-medium text-sm'>Email</p>
-							<p>{productInfo?.email}</p>
-							<p className='font-medium text-sm'>
-								Contact number
-							</p>
-							<p>{productInfo?.phoneNumber}</p>
-						</div>
-					</AlertDialogDescription>
-				</AlertDialogHeader>
-				<AlertDialogFooter>
-					<AlertDialogCancel>Close</AlertDialogCancel>
-				</AlertDialogFooter>
-			</AlertDialogContent>
-		</AlertDialog>
-	);
-};
+export default MarketPlaceProductPage;

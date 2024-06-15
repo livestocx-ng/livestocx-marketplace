@@ -24,10 +24,11 @@ import EmptyAnimation from '../../../../../../../../../public/animations/animati
 import LoadingAnimation from '../../../../../../../../../public/animations/animation__3.json';
 import ProductMediaModal from '../../../../../../../../components/modals/product/product-media-modal';
 import {useRouter} from 'next/navigation';
+import {getProductIdFromSlug} from '@/utils/slug.formatter';
 
 interface SellerProductPageParams {
 	params: {
-		productId: string;
+		slug: string;
 	};
 }
 
@@ -35,7 +36,7 @@ type Tab = 'Seller Info' | 'Review' | 'More From Seller';
 
 const CurrentTabs: Tab[] = ['Seller Info', 'Review', 'More From Seller'];
 
-const SellerProductPage = ({params: {productId}}: SellerProductPageParams) => {
+const SellerProductPage = ({params: {slug}}: SellerProductPageParams) => {
 	const router = useRouter();
 
 	const isProductMediaModalOpen = useProductMediaModalStore(
@@ -63,10 +64,14 @@ const SellerProductPage = ({params: {productId}}: SellerProductPageParams) => {
 		try {
 			const [_product, _productInfo] = await Promise.all([
 				axios.get(
-					`${process.env.NEXT_PUBLIC_API_URL}/user/products/product/${productId}`
+					`${
+						process.env.NEXT_PUBLIC_API_URL
+					}/user/products/product/${getProductIdFromSlug(slug)}`
 				),
 				axios.get(
-					`${process.env.NEXT_PUBLIC_API_URL}/user/products/info/${productId}`
+					`${
+						process.env.NEXT_PUBLIC_API_URL
+					}/user/products/info/${getProductIdFromSlug(slug)}`
 				),
 			]);
 
@@ -85,7 +90,9 @@ const SellerProductPage = ({params: {productId}}: SellerProductPageParams) => {
 	const viewProduct = async () => {
 		try {
 			const {data} = await axios.get(
-				`${process.env.NEXT_PUBLIC_API_URL}/user/products/product/${productId}/view`,
+				`${
+					process.env.NEXT_PUBLIC_API_URL
+				}/user/products/product/${getProductIdFromSlug(slug)}/view`,
 				{
 					headers: {
 						Authorization: user?.accessToken,

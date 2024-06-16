@@ -131,7 +131,11 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 
 	const handleAddToDesiredProducts = async () => {
 		try {
-			if (!user) return;
+			if (!user)
+				return router.push(
+					`/signin?redirect_to=
+						marketplace${window.location.href.split('/marketplace')[1]}`
+				);
 
 			if (loading) return;
 
@@ -164,22 +168,6 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 			updateCurrentAccountTab('Messages');
 
 			updateShowChatConversation(true);
-
-			// const {data} = await axios.post(
-			// 	`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-desired-product?productId=${product?.productId}`,
-			// 	{},
-			// 	{
-			// 		headers: {
-			// 			Authorization: user?.accessToken,
-			// 		},
-			// 	}
-			// );
-
-			// if (data.data === false) {
-			// 	return toast.success('Product already added to desired items');
-			// } else {
-			// 	return toast.success('Product added to desired items');
-			// }
 		} catch (error) {
 			// setLoading(false);
 			const _error = error as AxiosError;

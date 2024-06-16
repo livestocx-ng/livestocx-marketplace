@@ -37,7 +37,7 @@ import {
 	AlertDialogDescription,
 } from '@/components/ui/alert-dialog';
 import {toast} from 'react-hot-toast';
-import {usePathname} from 'next/navigation';
+import {useRouter} from 'next/navigation';
 import ProductCard from '../cards/product-card';
 import {Product, ProductInfo} from '@/types/types';
 import React, {Dispatch, SetStateAction} from 'react';
@@ -48,6 +48,7 @@ import SellerInfoTab from '../product-info/seller-info-tab';
 import ProductReviewTab from '../product-info/product-review-tab';
 import MoreFromSellerTab from '../product-info/more-from-seller-tab';
 import {likesViewsImpressionFormatter} from '@/utils/like.view.impression.formatter';
+import {formatVendorSlug} from '@/utils/slug.formatter';
 
 interface SingleProductContentProps {
 	currentTab: Tab;
@@ -71,7 +72,7 @@ const SingleProductContent = ({
 	handleLikeUnlikeProduct,
 	handleAddToDesiredProducts,
 }: SingleProductContentProps) => {
-	const pathName = usePathname();
+	const router = useRouter();
 
 	const {user, products} = useGlobalStore();
 
@@ -229,7 +230,16 @@ const SingleProductContent = ({
 							)}
 						</div>
 
-						<div className='flex items-center space-x-3 py-3'>
+						<div
+							onClick={() => {
+								router.push(
+									`/sellers/${formatVendorSlug(
+										productInfo?.vendor!
+									)}`
+								);
+							}}
+							className='flex items-center space-x-3 py-3 cursor-pointer'
+						>
 							<Image
 								width={40}
 								height={40}

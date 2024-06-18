@@ -15,12 +15,17 @@ import {
 import {PaystackButton} from 'react-paystack';
 import ButtonLoader from '@/components/loader/button-loader';
 import {Check, CheckCircle} from 'lucide-react';
+import {PriceFormatter} from '@/utils/price.formatter';
 
 const PricingPage = () => {
 	const router = useRouter();
 
-	const {user, premiumSubscriptionPlans, updateUserPremiumSubscription} =
-		useGlobalStore();
+	const {
+		user,
+		premiumSubscriptionPlans,
+		userPremiumSubscription,
+		updateUserPremiumSubscription,
+	} = useGlobalStore();
 
 	const {onClose} = useUpgradeToPremiumAccessStore();
 
@@ -52,6 +57,8 @@ const PricingPage = () => {
 			);
 
 			setLoading(false);
+
+			setCurrentPlan({id: 0, amount: 0, buttonTitle: ''});
 
 			updateUserPremiumSubscription(data.data);
 
@@ -106,15 +113,9 @@ const PricingPage = () => {
 					</h1>
 
 					<p className='text-sm text-white font-medium text-center md:text-left'>
-						Lorem ipsum dolor sit, amet consectetur adipisicing
-						elit. Totam, hic minima. Eius placeat porro similique,
-						corporis atque dolorum natus nostrum ad deserunt
-						delectus neque fugiat praesentium officiis commodi?
-						Asperiores optio, beatae pariatur voluptatibus maiores
-						aliquam dolor ipsum obcaecati ut iste ex similique
-						corporis. Cupiditate natus earum porro nostrum, nesciunt
-						beatae accusamus exercitationem repellat unde architecto
-						ipsa velit, rerum labore tempora?
+						Expand your business reach. Sell to thousands on our
+						Marketplace and showcase your products with our custom
+						website and catalog built for you.
 					</p>
 
 					<Button
@@ -125,63 +126,36 @@ const PricingPage = () => {
 					</Button>
 				</div>
 
-				<div className='h-[350px] w-full md:w-[50%] relative bg-orange-200 mt-10 md:mt-0'>
-					{/* <Image
+				<div className='h-[400px] w-full md:w-[50%] relative bg-orange-20 mt-10 md:mt-0'>
+					<Image
 						alt=''
 						fill
-						src={'/pricing/mobile-ads-promotions.jpg'}
 						className='object-cover rounded-sm'
-					/> */}
+						src={'/enterprise/image__header__2.jpg'}
+					/>
 				</div>
 			</section>
 
 			<div className='space-y-10 my-14'>
 				<h1 className='text-xl font-semibold text-center'>
-					Lorem, ipsum dolor.
+					What you get
 				</h1>
-				<div className='flex flex-wrap items-start justify-between w-full px-4 md:px-8'>
+				<div className='flex flex-wrap items-center justify-between w-full px-4 md:px-8'>
 					<div className='h-[400px] w-full md:w-[45%] relative bg-orange-200 mb-10 md:mb-0'>
-						{/* <Image
-						alt=''
-						fill
-						src={'/pricing/mobile-ads-promotions.jpg'}
-						className='object-cover rounded-sm'
-					/> */}
+						<Image
+							alt=''
+							fill
+							className='object-cover rounded-sm'
+							src={'/enterprise/image__header__3.jpg'}
+						/>
 					</div>
 					<div className='w-full md:w-[50%] space-y-3'>
-						<h1 className='text-base font-medium'>
-							Lorem ipsum dolor sit.
-						</h1>
-						<p className='text-sm'>
-							Lorem ipsum dolor sit amet consectetur adipisicing
-							elit. Ab autem ullam omnis obcaecati eaque nobis eos
-							repellat error beatae fugit?
-						</p>
-						<h1 className='text-base font-medium'>
-							Lorem, ipsum dolor.
-						</h1>
-						<p className='text-sm'>
-							Lorem ipsum, dolor sit amet consectetur adipisicing
-							elit. Officia quisquam quos nam quae amet voluptas,
-							quidem quas accusantium accusamus qui architecto
-							explicabo omnis.
-						</p>
-						<h1 className='text-base font-medium'>
-							Lorem ipsum dolor sit.
-						</h1>
-						<p className='text-sm'>
-							Lorem ipsum dolor sit amet consectetur adipisicing
-							elit. Ab autem ullam omnis obcaecati eaque nobis eos
-							repellat error beatae fugit?
-						</p>
-						<h1 className='text-base font-medium'>
-							Lorem, ipsum dolor.
-						</h1>
-						<p className='text-sm'>
-							Lorem ipsum, dolor sit amet consectetur adipisicing
-							elit. Officia quisquam quos nam quae amet voluptas,
-							quidem quas accusantium accusamus qui architecto
-							explicabo omnis.
+						<p className='text-sm md:text-lg'>
+							Our enterprise platform features a custom online
+							store, marketplace listings, sales management and
+							analytics, weekly product promotions, business logo
+							creation, and branded resources including social
+							media flyers.
 						</p>
 					</div>
 				</div>
@@ -191,14 +165,17 @@ const PricingPage = () => {
 				{premiumSubscriptionPlans?.map((plan, index) => (
 					<div
 						key={plan.id}
-						className={`flex flex-col items-center space-y-5 border rounded-md py-12 px-6 w-[350px] hover:scale-105 transition-all duration-700 ${
-							plan.duration === 'THREE_MONTHS'
-								? 'border-sky-200 shadow-xl shadow-sky-300'
-								: 'border-slate-200 shadow-md shadow-slate-200'
-						}`}
+						className={`flex flex-col items-center space-y-5 border rounded-md py-12 px-6 w-full md:w-[400px] hover:scale-105 transition-all duration-700 border-slate-300 shadow-xl shadow-slate-300
+							${plan.duration === 'SIX_MONTHS' && 'md:scale-110 hover:scale-110'}`}
 					>
 						<h1 className='text-xl font-medium'>{plan.title}</h1>
 						<h1 className='text-lg'>{plan.description}</h1>
+						<h1 className='text-lg font-semibold'>
+							{PriceFormatter(plan.price)} /{' '}
+							{premiumSubscriptionPlanDurationFormatter(
+								plan.duration
+							)}
+						</h1>
 
 						{loading && currentPlan.id === plan.id ? (
 							<Button
@@ -206,12 +183,12 @@ const PricingPage = () => {
 								disabled={true}
 								className={`text-white h-10 w-fit rounded-full py-3 text-xs ${
 									plan.duration === 'ONE_MONTH'
-										? 'bg-green-400 hover:bg-green-500'
+										? 'bg-green-600 hover:bg-green-700'
 										: plan.duration === 'THREE_MONTHS'
 										? 'bg-sky-500 hover:bg-sky-600'
 										: plan.duration === 'SIX_MONTHS'
-										? 'bg-indigo-400 hover:bg-indigo-500'
-										: 'bg-red-600 hover:bg-red-700'
+										? 'bg-indigo-600 hover:bg-indigo-700'
+										: 'bg-sky-600 hover:bg-sky-700'
 								}`}
 							>
 								<ButtonLoader />
@@ -236,7 +213,10 @@ const PricingPage = () => {
 								) : (
 									<Button
 										type='button'
-										disabled={loading}
+										disabled={
+											loading ||
+											userPremiumSubscription !== null
+										}
 										onClick={() => {
 											if (!user) {
 												return router.push('/signin');
@@ -262,13 +242,13 @@ const PricingPage = () => {
 										}}
 										className={`text-white h-10 w-fit rounded-full py-3 text-xs ${
 											plan.duration === 'ONE_MONTH'
-												? 'bg-green-200 hover:bg-green-500'
+												? 'bg-green-600 hover:bg-green-700'
 												: plan.duration ===
 												  'THREE_MONTHS'
 												? 'bg-sky-500 hover:bg-sky-600'
 												: plan.duration === 'SIX_MONTHS'
-												? 'bg-indigo-200 hover:bg-indigo-500'
-												: 'bg-red-600 hover:bg-red-700'
+												? 'bg-indigo-600 hover:bg-indigo-700'
+												: 'bg-sky-600 hover:bg-sky-700'
 										}`}
 									>
 										Subscribe to{' '}

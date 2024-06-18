@@ -155,7 +155,7 @@ const SignInPage = () => {
 							</div>
 							<Link
 								href='/forgot-password'
-								className='text-sm text-green-600'
+							className='text-sm text-green-600'
 							>
 								Forgot password?
 							</Link>

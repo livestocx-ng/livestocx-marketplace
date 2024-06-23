@@ -34,9 +34,7 @@ const isNumberRegEX = new RegExp(/^[0-9]+$/);
 
 const emailRegEX = new RegExp(/^\S+@\S+\.\S+$/);
 
-const passwordRegEX = new RegExp(
-	'(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[^ws]).{8,60}$'
-);
+const passwordRegEX = new RegExp('^.{8,}$');
 
 export function ValidateSigninFormData(formData: SigninDto): string {
 	let message = '';
@@ -89,7 +87,7 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 	}
 	if (!passwordRegEX.test(formData.password)) {
 		return (message =
-			'Password must be at least 8 characters, include a capital letters and small letters.');
+			'Password must be at least 8 characters');
 	}
 
 	if (formData.role === 'CUSTOMER' && !formData.location) {

@@ -8,6 +8,7 @@ import {useRouter, useSearchParams} from 'next/navigation';
 import AuthHeader from '../../../../components/header/auth-header';
 import FormPasswordInput from '@/components/input/form-password-input';
 import ButtonLoader from '@/components/loader/button-loader';
+import { ValidateResetPasswordFormData } from '@/utils/form-validations/password.validation';
 
 type FormData = {
 	newPassword: string;
@@ -53,12 +54,17 @@ const SignInPage = () => {
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		if (formData.newPassword !== formData.confirmPassword) {
-			return toast.error('Passwords do not match');
-		}
-
 		try {
 			setLoading(true);
+
+
+			const validationError = ValidateResetPasswordFormData(formData);
+
+			if (validationError) {
+				setLoading(false);
+
+				return toast.error(validationError);
+			}
 
 			await axios.patch(
 				`/api/auth/reset-password?email=${email}&token=${token}`,

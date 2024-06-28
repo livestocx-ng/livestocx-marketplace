@@ -46,6 +46,7 @@ export interface Vendor {
 	name: string;
 	state?: string;
 	city?: string;
+	slug: string;
 	address: string;
 	avatar: string;
 	avatarKey: string;
@@ -295,4 +296,10 @@ export interface PremiumSubscriptionPlan {
 		id: number;
 		title: string;
 	}[];
+}
+
+export interface EnterprisePlanComparison {
+	feature: string;
+	platform: string;
+	customBusinessWebsite: string;
 }

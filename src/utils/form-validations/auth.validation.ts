@@ -28,11 +28,18 @@ interface SignupDto {
 	role: 'FARMER' | 'CUSTOMER';
 }
 
+interface PremiumSubscriptionCheckoutDto extends VendorProfileDto {
+	slug: string;
+}
+
+
 const phoneRegEX = new RegExp(/^\d{11}$/);
 
 const isNumberRegEX = new RegExp(/^[0-9]+$/);
 
 const emailRegEX = new RegExp(/^\S+@\S+\.\S+$/);
+
+const sellerSlugRegEX = new RegExp(/^[a-z]+$/);
 
 const passwordRegEX = new RegExp('^.{8,}$');
 
@@ -137,6 +144,52 @@ export function ValidateVendorProfileFormData(formData: VendorProfileDto): strin
 
 	if (!formData.address) {
 		return (message = 'Business address is required.');
+	}
+
+	if (!formData.state) {
+		return (message = 'Business state is required.');
+	}
+
+	if (!formData.city) {
+		return (message = 'Business city is required.');
+	}
+
+	return message;
+}
+
+export function ValidatePremiumSubscriptionCheckoutFormData(
+	formData: PremiumSubscriptionCheckoutDto
+): string {
+	let message = '';
+
+	if (!formData.name) {
+		return (message = 'Business name is required.');
+	}
+
+	if (!formData.email) {
+		return (message = 'Business email is required.');
+	}
+	if (!emailRegEX.test(formData.email)) {
+		return (message = 'Invalid email input.');
+	}
+
+	if (!formData.phoneNumber) {
+		return (message = 'Phone number is required.');
+	}
+	if (!isNumberRegEX.test(formData.phoneNumber)) {
+		return (message = 'Invalid phone number.');
+	}
+
+	if (!formData.address) {
+		return (message = 'Business address is required.');
+	}
+
+	if (!formData.slug) {
+		return (message = 'Business domain handle is required.');
+	}
+	if (!sellerSlugRegEX.test(formData.slug)) {
+		return (message =
+			'Invalid domain handle, use lowercase characters without space.');
 	}
 
 	if (!formData.state) {

@@ -147,7 +147,7 @@ const DashboardContent = ({}: DashboardContentProps) => {
 				.replace(/\s+/g, '-')
 				.toLowerCase();
 
-			const slug = `${formattedVendorNameWithOutCommas}_${vendor?.vendorId!.toLowerCase()}`;
+			const slug = `${formattedVendorNameWithOutCommas}_${vendor?.vendorId!}`;
 
 			return slug.toLowerCase();
 		}

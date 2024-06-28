@@ -25,10 +25,10 @@ export const NavLinks: NavLink[] = [
 		title: 'Contact Us',
 		url: '/contact-us',
 	},
-	// {
-	// 	title: 'Enterprise',
-	// 	url: '/enterprise',
-	// },
+	{
+		title: 'Enterprise',
+		url: '/enterprise',
+	},
 ];
 
 export const AccountNavLinks: FooterNavLink[] = [

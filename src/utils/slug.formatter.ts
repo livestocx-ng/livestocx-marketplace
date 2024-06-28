@@ -20,7 +20,7 @@ export function formatVendorSlug(vendor: Vendor): string {
 
 	const formattedVendorNameWithOutCommas = formattedProductName.replace(/\s+/g, '-').toLowerCase();
 
-	const slug = `${formattedVendorNameWithOutCommas}_${vendor?.vendorId!.toLowerCase()}`;
+	const slug = `${formattedVendorNameWithOutCommas}_${vendor?.vendorId!}`;
 
 	return slug.toLowerCase();
 }

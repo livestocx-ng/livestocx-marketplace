@@ -10,6 +10,7 @@ import {
 	useUpdateWelcomeFarmerModalStore,
 	useUpdateVendorProfileModalStore,
 	useUpdateSearchLocationModalStore,
+	usePremiumSubscriptionCheckoutModalStore,
 } from '@/hooks/use-global-store';
 import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';
@@ -23,6 +24,7 @@ import UpgradeToPremiumModal from '@/components/modals/premium/upgrade-to-premiu
 import DownloadMobileAppModal from '@/components/modals/welcome/download-mobile-app-modal';
 import UpdateVendorProfileModal from '@/components/modals/user/update-vendor-profile-modal';
 import UpdateSearchLocationModal from '@/components/modals/utils/update-search-location-modal';
+import PremiumSubscriptionCheckoutModal from '@/components/modals/premium/premium-subscription-checkout-modal';
 
 interface PagesLayoutProps {
 	children: React.ReactNode;
@@ -47,6 +49,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const updateVendorProfileModal = useUpdateVendorProfileModalStore();
 	const upgradeToPremiumAccessModal = useUpgradeToPremiumAccessStore();
 	const updateSearchLocationModal = useUpdateSearchLocationModalStore();
+	const premiumSubscriptionCheckoutModal = usePremiumSubscriptionCheckoutModalStore();
 
 	const initializeDownloadAppModal = () => {
 		setTimeout(() => {
@@ -168,6 +171,9 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 			{upgradeToPremiumAccessModal.isOpen && <UpgradeToPremiumModal />}
 			{updateVendorProfileModal.isOpen && <UpdateVendorProfileModal />}
 			{updateSearchLocationModal.isOpen && <UpdateSearchLocationModal />}
+			{premiumSubscriptionCheckoutModal.isOpen && (
+				<PremiumSubscriptionCheckoutModal />
+			)}
 
 			<Navbar />
 			{children}

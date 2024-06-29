@@ -1,21 +1,23 @@
 'use client';
-import Link from 'next/link';
 import Image from 'next/image';
-import {useState} from 'react';
-import {toast} from 'react-hot-toast';
-import axios, {AxiosError} from 'axios';
-import {useRouter} from 'next/navigation';
-import {Button} from '@/components/ui/button';
-import {premiumSubscriptionPlanDurationFormatter} from '@/utils';
-import {generateRandomPaymentReference} from '@/utils/promotion.util.formatter';
 import {
 	useGlobalStore,
 	useUpgradeToPremiumAccessStore,
+	usePremiumSubscriptionCheckoutModalStore,
 } from '@/hooks/use-global-store';
+import {toast} from 'react-hot-toast';
+import {useRef, useState} from 'react';
+import axios, {AxiosError} from 'axios';
+import {useRouter} from 'next/navigation';
+import {Button} from '@/components/ui/button';
 import {PaystackButton} from 'react-paystack';
-import ButtonLoader from '@/components/loader/button-loader';
-import {Check, CheckCircle} from 'lucide-react';
+import {enterprisePlanComparisons} from '@/data';
+import {DataTable} from '@/components/ui/data-table';
 import {PriceFormatter} from '@/utils/price.formatter';
+import ButtonLoader from '@/components/loader/button-loader';
+import {premiumSubscriptionPlanDurationFormatter} from '@/utils';
+import {generateRandomPaymentReference} from '@/utils/promotion.util.formatter';
+import {EnterprisePlansComparisonsColumns} from './components/pricing-columns';
 
 const PricingPage = () => {
 	const router = useRouter();
@@ -25,9 +27,14 @@ const PricingPage = () => {
 		premiumSubscriptionPlans,
 		userPremiumSubscription,
 		updateUserPremiumSubscription,
+		updatePremiumSubscriptionPlanInfo,
 	} = useGlobalStore();
 
+	const premiumSubscriptionCheckoutModal =
+		usePremiumSubscriptionCheckoutModalStore();
+
 	const {onClose} = useUpgradeToPremiumAccessStore();
+	const subscriptionPlansRef = useRef<HTMLDivElement>(null);
 
 	const [loading, setLoading] = useState<boolean>(false);
 	const [currentPlan, setCurrentPlan] = useState<{
@@ -108,11 +115,11 @@ const PricingPage = () => {
 		<main>
 			<section className='w-full bg-gradient-to-b from-green-800 to-white flex flex-col md:flex-row items-center justify-between px-4 md:px-8 pt-20'>
 				<div className='flex flex-col space-y-4 w-full md:w-[45%]'>
-					<h1 className='text-xl md:text-4xl text-white font-semibold text-center md:text-left'>
+					<h1 className='text-xl md:text-5xl text-white font-semibold text-center md:text-left'>
 						Livestocx Enterprise
 					</h1>
 
-					<p className='text-sm text-white font-medium text-center md:text-left'>
+					<p className='text-sm md:text-lg text-white font-medium text-center md:text-left leading-8'>
 						Expand your business reach. Sell to thousands on our
 						Marketplace and showcase your products with our custom
 						website and catalog built for you.
@@ -120,27 +127,34 @@ const PricingPage = () => {
 
 					<Button
 						type='button'
+						onClick={() => {
+							if (subscriptionPlansRef.current) {
+								subscriptionPlansRef.current.scrollIntoView({
+									behavior: 'smooth',
+								});
+							}
+						}}
 						className='bg-sky-600 text-white hover:bg-sky-700 w-fit rounded-none py-8 px-4 md:px-8 mx-auto md:mx-0'
 					>
-						Watch Demo
+						Get Started
 					</Button>
 				</div>
 
-				<div className='h-[400px] w-full md:w-[50%] relative bg-orange-20 mt-10 md:mt-0'>
+				<div className='h-[250px] w-full md:w-[50%] md:h-[400px] relative bg-orange-20 mt-5 md:mt-0'>
 					<Image
 						alt=''
 						fill
-						className='object-cover rounded-sm'
-						src={'/enterprise/image__header__2.jpg'}
+						className='object-fill md:object-cover rounded-sm'
+						src={'/enterprise/image__header__1.png'}
 					/>
 				</div>
 			</section>
 
 			<div className='space-y-10 my-14'>
-				<h1 className='text-xl font-semibold text-center'>
+				<h1 className='text-lg md:text-5xl font-semibold text-center'>
 					What you get
 				</h1>
-				<div className='flex flex-wrap items-center justify-between w-full px-4 md:px-8'>
+				<div className='flex flex-wrap items-start justify-between w-full px-4 md:px-8'>
 					<div className='h-[400px] w-full md:w-[45%] relative bg-orange-200 mb-10 md:mb-0'>
 						<Image
 							alt=''
@@ -161,6 +175,21 @@ const PricingPage = () => {
 				</div>
 			</div>
 
+			<div
+				ref={subscriptionPlansRef}
+				className='w-full px-4 md:px-[160px] mb-20 flex flex-col space-y-5'
+			>
+				<h1 className='font-medium text-lg md:text-4xl text-center'>
+					Comparing Livestocx to owning a regular website/store
+				</h1>
+				<DataTable
+					hasPagination={false}
+					borderRadius='rounded-b'
+					data={enterprisePlanComparisons}
+					columns={EnterprisePlansComparisonsColumns}
+				/>
+			</div>
+
 			<div className='flex flex-col lg:flex-row lg:flex-wrap items-center lg:items-start justify-center lg:justify-evenly gap-y-10 w-full py-5 px-4 md:px-8 lg:px-0 mb-10'>
 				{premiumSubscriptionPlans?.map((plan, index) => (
 					<div
@@ -169,7 +198,7 @@ const PricingPage = () => {
 							${plan.duration === 'SIX_MONTHS' && 'md:scale-110 hover:scale-110'}`}
 					>
 						<h1 className='text-xl font-medium'>{plan.title}</h1>
-						<h1 className='text-lg'>{plan.description}</h1>
+						{/* <h1 className='text-lg'>{plan.description}</h1> */}
 						<h1 className='text-lg font-semibold'>
 							{PriceFormatter(plan.price)} /{' '}
 							{premiumSubscriptionPlanDurationFormatter(
@@ -197,20 +226,50 @@ const PricingPage = () => {
 							<>
 								{currentPlan.id !== 0 &&
 								plan.id === currentPlan.id ? (
-									<PaystackButton
-										{...payStackButtonProps}
-										className={`text-white h-10 w-fit rounded-full px-4 py-3 text-xs ${
+									<Button
+										type='button'
+										disabled={
+											loading ||
+											userPremiumSubscription !== null
+										}
+										onClick={async () => {
+											if (!user) {
+												return router.push('/signin');
+											}
+
+											premiumSubscriptionCheckoutModal.onOpen();
+											updatePremiumSubscriptionPlanInfo(
+												currentPlan?.id,
+												currentPlan?.amount
+											);
+										}}
+										className={`text-white h-10 w-fit rounded-full py-3 text-xs ${
 											plan.duration === 'ONE_MONTH'
-												? 'bg-green-600 hover:bg-green-600'
+												? 'bg-green-600 hover:bg-green-700'
 												: plan.duration ===
 												  'THREE_MONTHS'
-												? 'bg-sky-700 hover:bg-sky-700'
+												? 'bg-sky-500 hover:bg-sky-600'
 												: plan.duration === 'SIX_MONTHS'
-												? 'bg-indigo-600 hover:bg-indigo-600'
-												: 'bg-red-700 hover:bg-red-700'
+												? 'bg-indigo-600 hover:bg-indigo-700'
+												: 'bg-sky-600 hover:bg-sky-700'
 										}`}
-									/>
+									>
+										{currentPlan?.buttonTitle}
+									</Button>
 								) : (
+									// <PaystackButton
+									// 	{...payStackButtonProps}
+									// 	className={`text-white h-10 w-fit rounded-full px-4 py-3 text-xs ${
+									// 		plan.duration === 'ONE_MONTH'
+									// 			? 'bg-green-600 hover:bg-green-600'
+									// 			: plan.duration ===
+									// 			  'THREE_MONTHS'
+									// 			? 'bg-sky-700 hover:bg-sky-700'
+									// 			: plan.duration === 'SIX_MONTHS'
+									// 			? 'bg-indigo-600 hover:bg-indigo-600'
+									// 			: 'bg-red-700 hover:bg-red-700'
+									// 	}`}
+									// />
 									<Button
 										type='button'
 										disabled={
@@ -235,9 +294,7 @@ const PricingPage = () => {
 											setCurrentPlan({
 												id: plan.id,
 												amount: plan.price,
-												buttonTitle: `Proceed to pay for ${premiumSubscriptionPlanDurationFormatter(
-													plan.duration
-												)} plan`,
+												buttonTitle: `Proceed to checkout`,
 											});
 										}}
 										className={`text-white h-10 w-fit rounded-full py-3 text-xs ${
@@ -261,7 +318,7 @@ const PricingPage = () => {
 							</>
 						)}
 
-						<div className='text-sm space-y-3'>
+						{/* <div className='text-sm space-y-3'>
 							{plan.info.map((item) => (
 								<div
 									key={item.id}
@@ -274,7 +331,7 @@ const PricingPage = () => {
 									<p>{item.title}</p>
 								</div>
 							))}
-						</div>
+						</div> */}
 					</div>
 				))}
 			</div>

@@ -1,22 +1,17 @@
 'use client';
-import Head from 'next/head';
 import {
 	useGlobalStore,
 	useProductMediaModalStore,
 } from '@/hooks/use-global-store';
 import Lottie from 'lottie-react';
-import {Product} from '@/types/types';
 import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
-import {Fragment, useEffect, useState} from 'react';
-import {getMediaImageUrl} from '@/utils/media/media.url';
+import {useEffect, useState} from 'react';
 import {getProductIdFromSlug} from '@/utils/slug.formatter';
-import {generateOGImageFromURL} from '@/utils/og.image.generator';
-import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import SingleProductContent from '@/components/product/single-product-content';
+import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import EmptyAnimation from '../../../../../../../../public/animations/animation__3.json';
 import LoadingAnimation from '../../../../../../../../public/animations/animation__3.json';
-import type {Metadata, ResolvingMetadata} from 'next';
 
 interface ProductPageParams {
 	params: {

@@ -33,10 +33,14 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 		try {
 			setLoading(true);
 
+			// const {data} = await axios.get(
+			// 	`${
+			// 		process.env.NEXT_PUBLIC_API_URL
+			// 	}/user/sellers/${getVendorIdFromSlug(params.sellerSlug)}`
+			// );
+
 			const {data} = await axios.get(
-				`${
-					process.env.NEXT_PUBLIC_API_URL
-				}/user/sellers/${getVendorIdFromSlug(params.sellerSlug)}`
+				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/profile?slug=${params.sellerSlug}`
 			);
 
 			updateVendor(data.data);
@@ -54,12 +58,15 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 		try {
 			setLoading(true);
 
+			// const {data} = await axios.get(
+			// 	`${
+			// 		process.env.NEXT_PUBLIC_API_URL
+			// 	}/user/sellers/${getVendorIdFromSlug(
+			// 		params.sellerSlug
+			// 	)}/products?page=${currentPage}`
+			// );
 			const {data} = await axios.get(
-				`${
-					process.env.NEXT_PUBLIC_API_URL
-				}/user/sellers/${getVendorIdFromSlug(
-					params.sellerSlug
-				)}/products?page=${currentPage}`
+				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/profile/products?slug=${params.sellerSlug}&page=${currentPage}`
 			);
 
 			// // console.log('[DATA] ::  ', profile.data);

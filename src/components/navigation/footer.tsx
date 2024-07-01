@@ -1,32 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import {AccountNavLinks, HelpNavLinks, NavLinks, OtherNavLinks} from '@/data';
-import {Facebook, Instagram, Linkedin} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import {useGlobalStore} from '@/hooks/use-global-store';
-
-interface IconLinkProps {
-	href: string;
-	icon: string;
-	width: number;
-	height: number;
-}
-
-const IconLink = ({href, icon, width, height}: IconLinkProps) => {
-	return (
-		<Link href={href} className=''>
-			<Image
-				alt={href}
-				src={icon}
-				width={width}
-				height={height}
-				unoptimized={true}
-				className='object-cover'
-			/>
-		</Link>
-	);
-};
+import {AccountNavLinks, HelpNavLinks, OtherNavLinks} from '@/data';
 
 const Footer = () => {
 	const router = useRouter();
@@ -34,19 +11,19 @@ const Footer = () => {
 	const {updateCurrentAccountTab} = useGlobalStore();
 
 	return (
-		<div className='pt-10 md:pt-20 w-full bg-main flex flex-col px-5 sm:px-10'>
+		<div className='pt-5 md:pt-10 w-full bg-main flex flex-col px-5 sm:px-10'>
 			<div className='flex flex-row flex-wrap items-start justify-between w-full'>
-				<div className='mb-10 sm:mb-0 flex flex-col space-y-5'>
+				<div className='mb-10 sm:mb-0 flex flex-col space-y-5 w-full md:w-fit'>
 					<Image
 						alt='logo'
-						width={60}
-						height={60}
+						width={30}
+						height={30}
 						className=''
-						unoptimized={true}
 						src={'/logo.svg'}
+						unoptimized={true}
 					/>
 
-					<h1 className='text-white text-xs'>Livestocx Limited</h1>
+					<h1 className='text-white text-xs'>Livestocx</h1>
 
 					<div className='flex flex-wrap items-center'>
 						<p className='bg-black text-white text-xs'>
@@ -59,7 +36,7 @@ const Footer = () => {
 					</div>
 				</div>
 
-				<div className='mb-10 sm:mb-0 flex flex-col space-y-5'>
+				<div className='mb-5 md:mb-10 sm:mb-0 flex flex-col space-y-5'>
 					<h1 className='text-white text-sm'>My Account</h1>
 
 					{AccountNavLinks.map((link) => (
@@ -79,7 +56,7 @@ const Footer = () => {
 					))}
 				</div>
 
-				<div className='mb-10 sm:mb-0 flex flex-col space-y-5'>
+				<div className='mb-5 md:mb-10 sm:mb-0 flex flex-col space-y-5'>
 					<h1 className='text-white text-sm'>Helps</h1>
 
 					{HelpNavLinks.map((link) => (
@@ -93,7 +70,7 @@ const Footer = () => {
 					))}
 				</div>
 
-				<div className='mb-10 sm:mb-0 flex flex-col space-y-5'>
+				<div className='mb-5 md:mb-10 sm:mb-0 flex flex-col space-y-5'>
 					<h1 className='text-white text-sm'>Other</h1>
 
 					{OtherNavLinks.map((link) => (
@@ -107,7 +84,7 @@ const Footer = () => {
 					))}
 				</div>
 
-				<div className='flex flex-col items-center justify-center space-y-5 mt-10'>
+				<div className='flex flex-col justify-start md:items-center md:justify-center space-y-5 mt-5'>
 					<div className='flex items-center space-x-10 sm:space-x-3'>
 						<Link
 							target='_blank'
@@ -170,6 +147,7 @@ const Footer = () => {
 						<Link
 							className=''
 							target='_blank'
+							// href={'#'}
 							href={
 								'https://play.google.com/store/apps/details?id=com.livestocx.livestocx_mobile&pcampaignid=web_share'
 							}
@@ -187,8 +165,8 @@ const Footer = () => {
 				</div>
 			</div>
 
-			<div className='border-t border-t-[#ffffff80] w-full mt-20 py-3 text-center text-[#ffffff80] text-xs'>
-				Livestocx &copy; {new Date().getFullYear()}. All Rights Reserved
+			<div className='border-t border-t-[#ffffff80] w-full mt-5 md:mt-0 py-3 text-center text-[#ffffff80] text-xs'>
+				Powered by Livestocx Inc &copy; {new Date().getFullYear()}. All Rights Reserved
 			</div>
 		</div>
 	);

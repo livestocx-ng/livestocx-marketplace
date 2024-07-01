@@ -16,7 +16,7 @@ export const EnterprisePlansComparisonsColumns: ColumnDef<EnterprisePlanComparis
 			cell: ({row}) => {
 				return (
 					<div className='flex items-center space-x-4 cursor-pointer'>
-						<p className='text-sm font-medium'>
+						<p className='text-[10px] sm:text-sm font-medium'>
 							{row.original.feature}
 						</p>
 					</div>
@@ -32,7 +32,7 @@ export const EnterprisePlansComparisonsColumns: ColumnDef<EnterprisePlanComparis
 						<span>
 							<X size={14} className='text-red-400'/>
 						</span>{' '}
-						<p className='hidden sm:block'> {row.original.customBusinessWebsite}</p>
+						<p className='hidde text-[10px] sm:text-sm'> {row.original.customBusinessWebsite}</p>
 					</div>
 				);
 			},
@@ -46,7 +46,7 @@ export const EnterprisePlansComparisonsColumns: ColumnDef<EnterprisePlanComparis
 						<span>
 							<Check size={16} className='text-green-600' />
 						</span>{' '}
-						<p className='hidden sm:block'>{row.original.platform}</p>
+						<p className='hidde text-[10px] sm:text-sm'>{row.original.platform}</p>
 					</div>
 				);
 			},

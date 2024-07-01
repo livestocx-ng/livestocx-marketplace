@@ -348,7 +348,7 @@ export const enterprisePlanComparisons: EnterprisePlanComparison[] = [
 	{
 		feature: 'Initial Cost',
 		customBusinessWebsite: 'High (design, development, hosting, domain) $3,000 - $10,000 initial + $100 - $300/month maintenance',
-		platform: 'Low (starting at $21/month)',
+		platform: 'Low (starting at ₦10,050/year)',
 	},
 	{
 		feature: 'Maintenance Cost',

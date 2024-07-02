@@ -18,14 +18,15 @@ import ButtonLoader from '@/components/loader/button-loader';
 import {premiumSubscriptionPlanDurationFormatter} from '@/utils';
 import {generateRandomPaymentReference} from '@/utils/promotion.util.formatter';
 import {EnterprisePlansComparisonsColumns} from './components/pricing-columns';
+import {BadgeCheck, Circle, Laptop, Award, PieChart} from 'lucide-react';
 
 const PricingPage = () => {
 	const router = useRouter();
 
 	const {
 		user,
-		premiumSubscriptionPlans,
 		userPremiumSubscription,
+		premiumSubscriptionPlans,
 		updateUserPremiumSubscription,
 		updatePremiumSubscriptionPlanInfo,
 	} = useGlobalStore();
@@ -116,7 +117,7 @@ const PricingPage = () => {
 			<section className='w-full bg-gradient-to-b from-green-800 to-white flex flex-col md:flex-row items-center justify-between px-4 md:px-8 pt-20'>
 				<div className='flex flex-col space-y-4 w-full md:w-[45%]'>
 					<h1 className='text-xl md:text-5xl text-white font-semibold text-center md:text-left'>
-						Livestocx Enterprise
+						Livestocx for Businesses
 					</h1>
 
 					<p className='text-sm md:text-lg text-white font-medium text-center md:text-left leading-8'>
@@ -159,26 +160,35 @@ const PricingPage = () => {
 						<Image
 							alt=''
 							fill
-							className='object-cover rounded-sm'
-							src={'/enterprise/image__header__3.jpg'}
+							className='object-contai object-fill rounded-md'
+							src={'/animals/image__chicken__2.jpg'}
 						/>
 					</div>
-					<div className='w-full md:w-[50%] space-y-3'>
-						<p className='text-sm md:text-lg'>
-							Our enterprise platform features a custom online
-							store, marketplace listings, sales management and
-							analytics, weekly product promotions, business logo
-							creation, and branded resources including social
-							media flyers.
-						</p>
-					</div>
+					<ul className='w-full md:w-[50%] space-y-3 list-none'>
+						<li className='text-sm md:text-lg flex items-center space-x-2'>
+							<BadgeCheck size={16} className='text-green-600' />{' '}
+							<p>Become verified</p>{' '}
+						</li>
+						<li className='text-sm md:text-lg flex items-center space-x-2'>
+							<Laptop size={16} className='text-green-600' />
+							<p>
+								⁠Have a mini-website/online store for your
+								business that you can share with your customers.
+							</p>
+						</li>
+						<li className='text-sm md:text-lg flex items-center space-x-2'>
+							<Award size={16} className='text-green-600' />
+							<p> Get one free monthly product promotion</p>
+						</li>
+						<li className='text-sm md:text-lg flex items-center space-x-2'>
+							<PieChart size={16} className='text-green-600' />
+							<p>⁠Have access to analytics and sales features.</p>
+						</li>
+					</ul>
 				</div>
 			</div>
 
-			<div
-				ref={subscriptionPlansRef}
-				className='w-full px-4 md:px-[160px] mb-20 flex flex-col space-y-5'
-			>
+			<div className='w-full px-4 md:px-[160px] mb-20 flex flex-col space-y-5'>
 				<h1 className='font-medium text-lg md:text-4xl text-center'>
 					Comparing Livestocx to owning a regular website/store
 				</h1>
@@ -190,7 +200,10 @@ const PricingPage = () => {
 				/>
 			</div>
 
-			<div className='flex flex-col lg:flex-row lg:flex-wrap items-center lg:items-start justify-center lg:justify-evenly gap-y-10 w-full py-5 px-4 md:px-8 lg:px-0 mb-10'>
+			<div
+				ref={subscriptionPlansRef}
+				className='flex flex-col lg:flex-row lg:flex-wrap items-center lg:items-start justify-center lg:justify-evenly gap-y-10 w-full py-5 px-4 md:px-8 lg:px-0 mb-10'
+			>
 				{premiumSubscriptionPlans?.map((plan, index) => (
 					<div
 						key={plan.id}

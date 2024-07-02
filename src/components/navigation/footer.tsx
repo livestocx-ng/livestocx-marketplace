@@ -25,12 +25,14 @@ const Footer = () => {
 
 					<h1 className='text-white text-xs'>Livestocx</h1>
 
-					<div className='flex flex-wrap items-center'>
-						<p className='bg-black text-white text-xs'>
-							+234 806 289 9590
+					<div className='flex flex-col items-start space-y-2'>
+						<p className='text-white text-xs'>
+							1680 East Barstow Avenue, <br /> Fresno California, United States
 						</p>
-						&nbsp;
-						<p className='bg-black text-white text-xs'>
+						<p className='text-white text-xs'>+1(559)6683783</p>
+						<p className='text-white text-xs'>+23432549273</p>
+						
+						<p className='text-white text-xs'>
 							livestocxltd@gmail.com
 						</p>
 					</div>
@@ -166,7 +168,8 @@ const Footer = () => {
 			</div>
 
 			<div className='border-t border-t-[#ffffff80] w-full mt-5 md:mt-0 py-3 text-center text-[#ffffff80] text-xs'>
-				Powered by Livestocx Inc &copy; {new Date().getFullYear()}. All Rights Reserved
+				Powered by Livestocx Inc &copy; {new Date().getFullYear()}. All
+				Rights Reserved
 			</div>
 		</div>
 	);

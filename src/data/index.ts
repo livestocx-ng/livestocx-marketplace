@@ -14,8 +14,8 @@ export const NavLinks: NavLink[] = [
 		url: '/',
 	},
 	{
-		title: 'Enterprise',
-		url: '/enterprise',
+		title: 'Business',
+		url: '/business',
 	},
 	// {
 	// 	title: 'Sellers',
@@ -347,28 +347,28 @@ export const FaqItems: FaqOption[] = [
 export const enterprisePlanComparisons: EnterprisePlanComparison[] = [
 	{
 		feature: 'Initial Cost',
-		customBusinessWebsite: 'High (design, development, hosting, domain) ₦800,000 - ₦5,000,000 initial + ₦150,000 - ₦200,000/month maintenance',
+		customBusinessWebsite: 'High (design, development, hosting, domain) ₦150,000 - ₦8000,000',
 		platform: 'Low (starting at ₦10,050/year)',
 	},
 	{
 		feature: 'Maintenance Cost',
-		customBusinessWebsite: 'High (ongoing maintenance, updates, hosting)',
+		customBusinessWebsite: 'High (maintenance, hosting)',
 		platform: 'Included in subscription',
 	},
-	{
-		feature: 'Time to Launch',
-		customBusinessWebsite: 'Long (weeks to months for development)',
-		platform: 'Short (immediate setup upon subscription)',
-	},
-	{
-		feature: 'Technical Skills Required',
-		customBusinessWebsite: 'High (coding, design, server management)',
-		platform: 'None (user-friendly interface)',
-	},
+	// {
+	// 	feature: 'Time to Launch',
+	// 	customBusinessWebsite: 'Long (weeks to months for development)',
+	// 	platform: 'Short (immediate setup upon subscription)',
+	// },
+	// {
+	// 	feature: 'Technical Skills Required',
+	// 	customBusinessWebsite: 'High (coding, design, server management)',
+	// 	platform: 'None (user-friendly interface)',
+	// },
 	{
 		feature: 'Product Uploads',
 		customBusinessWebsite: 'Additional setup and costs',
-		platform: 'Unlimited uploads for $5/month',
+		platform: 'Unlimited uploads',
 	},
 	{
 		feature: 'Sales Management Tools',

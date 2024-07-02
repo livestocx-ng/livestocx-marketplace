@@ -301,7 +301,7 @@ const PremiumSubscriptionCheckoutModal = () => {
 
 					<div className='w-full'>
 						<p className='text-sm font-medium flex items-center space-x-2'>
-							<p>Business Domain Handle</p>
+							<p>Business Handle</p>
 							<TooltipProvider>
 								<Tooltip>
 									<TooltipTrigger asChild>
@@ -310,9 +310,9 @@ const PremiumSubscriptionCheckoutModal = () => {
 									<TooltipContent className='w-[350px]'>
 										<p className='text-sm font-normal'>
 											This value will be used to create
-											your custom domain handle. &nbsp;
+											your custom domain link. &nbsp;
 											<span className='font-medium'>
-												https://domain.com/store/handle
+												https://livestocx.com/store/link
 											</span>
 										</p>
 									</TooltipContent>
@@ -329,7 +329,7 @@ const PremiumSubscriptionCheckoutModal = () => {
 							padding='py-4 px-4'
 							value={formData.slug}
 							handleChange={handleChange}
-							placeHolder='Domain Handle'
+							placeHolder='Enter store name to see how your handle will look'
 							classes='w-full text-sm placeholder:text-xs border focus:border-slate-500 rounded'
 						/>
 
@@ -337,7 +337,7 @@ const PremiumSubscriptionCheckoutModal = () => {
 							variant={'secondary'}
 							className='text-sky-500 text-xs'
 						>
-							https://domain.com/store/{formData.slug}
+							https://livestocx.com/store/{formData.slug}
 						</Badge>
 					</div>
 

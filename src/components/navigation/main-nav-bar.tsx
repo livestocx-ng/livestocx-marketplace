@@ -11,6 +11,7 @@ import {
 	MessageCircle,
 	MessagesSquare,
 	ZapIcon,
+	Store,
 } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link';
@@ -34,6 +35,7 @@ const MainNavbar = () => {
 	const {
 		user,
 		updateUser,
+		vendorProfile,
 		chatConversations,
 		updateCurrentAccountTab,
 		updateChatConversations,
@@ -149,8 +151,25 @@ const MainNavbar = () => {
 						</div>
 					)}
 
+					{userPremiumSubscription && user?.role === 'FARMER' && ( 
+						<Link
+							target='_blank'
+							href={`/store/${vendorProfile?.slug}`}
+							className={`h-8 w-8 ${
+								scrolling ? 'bg-white' : 'bg-main'
+							} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
+						>
+							<Store
+								className={`h-4 w-4 ${
+									scrolling
+										? 'text-main'
+										: 'text-white cursor-pointer'
+								}`}
+							/>
+						</Link>
+					)}
+
 					<div
-						// href={user ? '/account' : '/signin'}
 						onClick={() => {
 							if (!user) {
 								router.push(`${!user && '/signin'}`);

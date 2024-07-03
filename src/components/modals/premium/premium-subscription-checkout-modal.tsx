@@ -8,6 +8,7 @@ import {
 import {
 	useGlobalStore,
 	usePremiumSubscriptionCheckoutModalStore,
+	usePremiumSubscriptionSuccessModalStore,
 } from '@/hooks/use-global-store';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
@@ -68,6 +69,8 @@ const PremiumSubscriptionCheckoutModal = () => {
 	} = useGlobalStore();
 
 	const {onClose} = usePremiumSubscriptionCheckoutModalStore();
+	const premiumSubscriptionSuccessModal =
+		usePremiumSubscriptionSuccessModalStore();
 
 	const [vendorSlugExists, setVendorSlugExists] = useState<boolean>(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
@@ -106,9 +109,11 @@ const PremiumSubscriptionCheckoutModal = () => {
 			type: 'UPDATE_FORMDATA',
 			payload: {
 				name: vendorProfile?.name,
-				address: vendorProfile?.address,
-				email: vendorProfile?.email,
 				slug: vendorProfile?.slug,
+				city: vendorProfile?.city,
+				state: vendorProfile?.state,
+				email: vendorProfile?.email,
+				address: vendorProfile?.address,
 				phoneNumber: vendorProfile?.phoneNumber,
 			},
 		});
@@ -134,10 +139,14 @@ const PremiumSubscriptionCheckoutModal = () => {
 
 	const handleSubmit = async () => {
 		try {
+			setCreatePremiumSubscriptionPending(true);
+			
 			const validationError =
 				ValidatePremiumSubscriptionCheckoutFormData(formData);
 
 			if (validationError) {
+				setCreatePremiumSubscriptionPending(false);
+
 				return toast.error(validationError, {
 					duration: 10000,
 					className: 'text-sm',
@@ -161,7 +170,9 @@ const PremiumSubscriptionCheckoutModal = () => {
 			}
 
 			setIsFormDataValidated(true);
+			setCreatePremiumSubscriptionPending(false);
 		} catch (error) {
+			setCreatePremiumSubscriptionPending(false);
 			const _error = error as AxiosError;
 
 			// console.log('[UPDATE-VENDOR-PROFILE-ERROR]', _error);
@@ -214,6 +225,7 @@ const PremiumSubscriptionCheckoutModal = () => {
 				);
 
 				updateUser(cookieUpdate.data);
+				updateVendorProfile(profileUpdateResponse.data.data);
 
 				setCreatePremiumSubscriptionPending(false);
 
@@ -227,6 +239,8 @@ const PremiumSubscriptionCheckoutModal = () => {
 				});
 
 				onClose();
+
+				premiumSubscriptionSuccessModal.onOpen();
 			}
 		} catch (error) {
 			setCreatePremiumSubscriptionPending(false);

@@ -145,13 +145,15 @@ export const useUpdateVendorProfileModalStore =
 		isOpen: false,
 		onOpen: () => set({isOpen: true}),
 		onClose: () => set({isOpen: false}),
-	}));
+	})
+);
 
 export const useCreatePromotionModalStore =	create<ActivateModal>((set) => ({
 		isOpen: false,
 		onOpen: () => set({isOpen: true}),
 		onClose: () => set({isOpen: false}),
-	}));
+	})
+);
 
 export const useReadNotificationModalStore = create<ReadNotificationModal>(
 	(set) => ({
@@ -206,6 +208,12 @@ export const useUpgradeToPremiumAccessStore = create<ActivateModal>((set) => ({
 }));
 
 export const usePremiumSubscriptionCheckoutModalStore =	create<ActivateModal>((set) => ({
+	isOpen: false,
+	onOpen: () => set({isOpen: true}),
+	onClose: () => set({isOpen: false}),
+}));
+
+export const usePremiumSubscriptionSuccessModalStore =	create<ActivateModal>((set) => ({
 	isOpen: false,
 	onOpen: () => set({isOpen: true}),
 	onClose: () => set({isOpen: false}),

@@ -44,77 +44,9 @@ const PricingPage = () => {
 		buttonTitle: string;
 	}>({id: 0, amount: 0, buttonTitle: ''});
 
-	const handleSuccess = async (response: any) => {
-		try {
-			setLoading(true);
-			// console.log(response);
-
-			const {data} = await axios.post(
-				`${process.env.NEXT_PUBLIC_API_URL}/vendor/create-premium-subscription?plan=${currentPlan.id}`,
-				{
-					payment_gateway: 'PAYSTACK',
-					payment_date: new Date(),
-					payment_reference: response.reference,
-					payment_method: 'WEB',
-				},
-				{
-					headers: {
-						Authorization: user?.accessToken,
-					},
-				}
-			);
-
-			setLoading(false);
-
-			setCurrentPlan({id: 0, amount: 0, buttonTitle: ''});
-
-			updateUserPremiumSubscription(data.data);
-
-			onClose();
-
-			toast.success(`Success!`, {duration: 3500});
-		} catch (error) {
-			setLoading(false);
-
-			const _error = error as AxiosError;
-
-			// console.log('[PROMOTION-PAYMENT-ERROR]', _error);
-
-			toast.error('An error occurred.');
-		}
-	};
-
-	const handleClose = () => {
-		toast.error('Payment cancelled!');
-	};
-
-	const payStackButtonProps = {
-		reference: generateRandomPaymentReference(),
-		email: user?.email!,
-		metadata: {
-			custom_fields: [
-				{
-					display_name: 'payment_type',
-					variable_name: 'payment_type',
-					value: 'PREMIUM_SUBSCRIPTION',
-				},
-				{
-					display_name: 'premium_subscription_plan',
-					variable_name: 'premium_subscription_plan',
-					value: currentPlan.id,
-				},
-			],
-		},
-		amount: currentPlan.amount * 100,
-		publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
-		text: currentPlan.buttonTitle,
-		onSuccess: (response: any) => handleSuccess(response),
-		onClose: handleClose,
-	};
-
 	return (
 		<main>
-			<section className='w-full bg-gradient-to-b from-green-800 to-white flex flex-col md:flex-row items-center justify-between px-4 md:px-8 pt-20'>
+			<section className='w-full bg-gradient-to-b from-green-800 to-green-50 flex flex-col md:flex-row items-center justify-between px-4 md:px-8 pt-20'>
 				<div className='flex flex-col space-y-4 w-full md:w-[45%]'>
 					<h1 className='text-xl md:text-5xl text-white font-semibold text-center md:text-left'>
 						Livestocx for Businesses
@@ -165,24 +97,53 @@ const PricingPage = () => {
 						/>
 					</div>
 					<ul className='w-full md:w-[50%] space-y-3 list-none'>
-						<li className='text-sm md:text-lg flex items-center space-x-2'>
-							<BadgeCheck size={16} className='text-green-600' />{' '}
-							<p>Become verified</p>{' '}
+						<li className=' flex items-center space-x-2'>
+							{/* <BadgeCheck size={16} className='text-green-600' />{' '} */}
+							<Image
+								alt=''
+								width={26}
+								height={26}
+								className=''
+								src={'/icon__check.svg'}
+							/>
+							<p className='text-sm md:text-lg'>Become verified</p>{' '}
 						</li>
-						<li className='text-sm md:text-lg flex items-center space-x-2'>
-							<Laptop size={16} className='text-green-600' />
-							<p>
+						<li className='flex items-center space-x-2'>
+							{/* <Laptop size={16} className='text-green-600' /> */}
+							<Image
+								alt=''
+								width={26}
+								height={26}
+								className=''
+								src={'/icon__laptop.svg'}
+							/>
+
+							<p className='text-sm md:text-lg '>
 								⁠Have a mini-website/online store for your
 								business that you can share with your customers.
 							</p>
 						</li>
-						<li className='text-sm md:text-lg flex items-center space-x-2'>
-							<Award size={16} className='text-green-600' />
-							<p> Get one free monthly product promotion</p>
+						<li className=' flex items-center space-x-2'>
+							{/* <Award size={16} className='text-green-600' /> */}
+							<Image
+								alt=''
+								width={26}
+								height={26}
+								className=''
+								src={'/icon__badge.svg'}
+							/>
+							<p className='text-sm md:text-lg'> Get one free monthly product promotion</p>
 						</li>
-						<li className='text-sm md:text-lg flex items-center space-x-2'>
-							<PieChart size={16} className='text-green-600' />
-							<p>⁠Have access to analytics and sales features.</p>
+						<li className=' flex items-center space-x-2'>
+							{/* <PieChart size={16} className='text-green-600' /> */}
+							<Image
+								alt=''
+								width={26}
+								height={26}
+								className=''
+								src={'/icon__chart_line.svg'}
+							/>
+							<p className='text-sm md:text-lg'>⁠Have access to analytics and sales features.</p>
 						</li>
 					</ul>
 				</div>

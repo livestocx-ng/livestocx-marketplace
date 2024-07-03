@@ -110,7 +110,7 @@ const SignInPage = () => {
 
 	return (
 		<div className='w-full'>
-			<section className='h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
+			<section className='h-[35vh] w-full md:bg-gradient-to-b md:from-green-800 md:to-green-50 flex flex-col items-center justify-center pt-10 md:pt-0'>
 				<h1 className='text-xl md:text-5xl font-medium text-white'>
 					Sign In
 				</h1>

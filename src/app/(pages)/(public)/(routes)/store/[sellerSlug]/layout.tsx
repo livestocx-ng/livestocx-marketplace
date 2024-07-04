@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {Metadata, ResolvingMetadata} from 'next';
 import {generateOGImageFromURL} from '@/utils/og.image.generator';
-import {formatVendorSlug, getVendorIdFromSlug} from '@/utils/slug.formatter';
 
 interface SellerProfileLayoutProps {
 	params: {
@@ -16,7 +15,8 @@ export async function generateMetadata(
 ): Promise<Metadata> {
 	console.log('SLUG ', params.sellerSlug);
 
-	let ogImage = '';
+	let ogImage300x200 = '';
+	let ogImage300x300 = '';
 
 	const {data} = await axios.get(
 		`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/profile?slug=${params.sellerSlug}`
@@ -27,9 +27,15 @@ export async function generateMetadata(
 	const imageUrl = data.data.avatar;
 
 	if (imageUrl.includes('https')) {
-		ogImage = await generateOGImageFromURL(
+		ogImage300x200 = await generateOGImageFromURL(
+			300,
+			200,
 			imageUrl,
-			formatVendorSlug(data.data)
+		);
+		ogImage300x300 = await generateOGImageFromURL(
+			300,
+			300,
+			imageUrl,
 		);
 	}
 
@@ -38,10 +44,32 @@ export async function generateMetadata(
 		openGraph: {
 			images: [
 				{
-					url: ogImage,
-					secureUrl: ogImage,
+					url: ogImage300x200,
+					secureUrl: ogImage300x200,
 					width: 300,
 					height: 200,
+				},
+				{
+					url: ogImage300x300,
+					secureUrl: ogImage300x300,
+					width: 300,
+					height: 300,
+				},
+			],
+		},
+		twitter: {
+			images: [
+				{
+					url: ogImage300x200,
+					secureUrl: ogImage300x200,
+					width: 300,
+					height: 200,
+				},
+				{
+					url: ogImage300x300,
+					secureUrl: ogImage300x300,
+					width: 300,
+					height: 300,
 				},
 			],
 		},

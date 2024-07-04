@@ -1,5 +1,6 @@
 import React from 'react';
 import {Rocket} from 'lucide-react';
+import {motion} from 'framer-motion';
 import {useRouter} from 'next/navigation';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {useGlobalStore} from '@/hooks/use-global-store';
@@ -7,11 +8,18 @@ import {useGlobalStore} from '@/hooks/use-global-store';
 const PromotionBanner = () => {
 	const router = useRouter();
 
-	const {user, updateCurrentAccountTab, premiumSubscriptionPlans} =
-		useGlobalStore();
+	const {premiumSubscriptionPlans} = useGlobalStore();
 
 	return (
-		<div
+		<motion.div
+			initial={{opacity: 0.6}}
+			animate={{opacity: 1}}
+			transition={{
+				duration: 2.5,
+				repeat: Infinity,
+				// delay: 1.5,
+				repeatDelay: 2.5,
+			}}
 			onClick={async () => {
 				try {
 					// if (user == null) {
@@ -42,8 +50,8 @@ const PromotionBanner = () => {
 				.
 			</p>
 
-			<Rocket size={20} className='text-white animate-pulse' />
-		</div>
+			<Rocket size={20} className='text-white animate-puls' />
+		</motion.div>
 	);
 };
 

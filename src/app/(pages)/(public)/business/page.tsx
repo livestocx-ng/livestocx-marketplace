@@ -19,6 +19,7 @@ import {premiumSubscriptionPlanDurationFormatter} from '@/utils';
 import {generateRandomPaymentReference} from '@/utils/promotion.util.formatter';
 import {EnterprisePlansComparisonsColumns} from './components/pricing-columns';
 import {BadgeCheck, Circle, Laptop, Award, PieChart} from 'lucide-react';
+import {FaStar} from 'react-icons/fa';
 
 const PricingPage = () => {
 	const router = useRouter();
@@ -67,13 +68,13 @@ const PricingPage = () => {
 								});
 							}
 						}}
-						className='bg-sky-600 text-white hover:bg-sky-700 w-fit rounded-none py-8 px-4 md:px-8 mx-auto md:mx-0'
+						className='bg-sky-600 text-white hover:bg-sky-700 w-fit rounded-md py-8 px-4 md:px-8 mx-auto md:mx-0'
 					>
 						Get Started
 					</Button>
 				</div>
 
-				<div className='h-[250px] w-full md:w-[50%] md:h-[400px] relative bg-orange-20 mt-5 md:mt-0'>
+				<div className='h-[250px] w-full md:w-[50%] md:h-[400px] relative mt-5 md:mt-0'>
 					<Image
 						alt=''
 						fill
@@ -88,7 +89,7 @@ const PricingPage = () => {
 					What you get
 				</h1>
 				<div className='flex flex-wrap items-start justify-between w-full px-4 md:px-8'>
-					<div className='h-[400px] w-full md:w-[45%] relative bg-orange-200 mb-10 md:mb-0'>
+					<div className='h-[300px] md:h-[400px] w-full md:w-[45%] relative mb-10 md:mb-0'>
 						<Image
 							alt=''
 							fill
@@ -96,56 +97,115 @@ const PricingPage = () => {
 							src={'/animals/image__chicken__2.jpg'}
 						/>
 					</div>
-					<ul className='w-full md:w-[50%] space-y-3 list-none'>
-						<li className=' flex items-center space-x-2'>
-							{/* <BadgeCheck size={16} className='text-green-600' />{' '} */}
-							<Image
-								alt=''
-								width={26}
-								height={26}
-								className=''
-								src={'/icon__check.svg'}
-							/>
-							<p className='text-sm md:text-lg'>Become verified</p>{' '}
-						</li>
-						<li className='flex items-center space-x-2'>
-							{/* <Laptop size={16} className='text-green-600' /> */}
-							<Image
-								alt=''
-								width={26}
-								height={26}
-								className=''
-								src={'/icon__laptop.svg'}
-							/>
+					<div className='w-full md:w-[50%] space-y-10'>
+						<div className='space-y-3 list-none'>
+							<div className=' flex items-start justify-between space-x-'>
+								<div className='h-[30px] w-[30px] relativ'>
+									<BadgeCheck
+										size={22}
+										className='text-green-600'
+									/>
+									{/* <Image
+									alt=''
+									fill
+									src={'/icon__check.svg'}
+									className='object-fill absolute'
+								/> */}
+								</div>
+								<p className='text-sm md:text-base w-[90%] md:w-[95%]'>
+									Become verified
+								</p>
+							</div>
+							<div className='flex items-start justify-between space-x-'>
+								<div className='h-[30px] w-[30px] relativ'>
+									<Laptop
+										size={22}
+										className='text-green-600'
+									/>
+									{/* <Image
+									alt=''
+									fill
+									src={'/icon__laptop.svg'}
+									className='object-fill absolute'
+								/> */}
+								</div>
 
-							<p className='text-sm md:text-lg '>
-								⁠Have a mini-website/online store for your
-								business that you can share with your customers.
+								<p className='text-sm md:text-base w-[90%] md:w-[95%]'>
+									Have a mini-website/online store for your
+									business that you can share with your
+									customers.
+								</p>
+							</div>
+							<div className=' flex items-start justify-between space-x-'>
+								<div className='h-[30px] w-[30px] relativ'>
+									<Award
+										size={22}
+										className='text-green-600'
+									/>
+									{/* <Image
+									alt=''
+									fill
+									src={'/icon__badge.svg'}
+									className='object-fill absolute'
+								/> */}
+								</div>
+								<p className='text-sm md:text-base w-[90%] md:w-[95%]'>
+									Get one free monthly product promotion
+								</p>
+							</div>
+							<div className=' flex items-start justify-between space-x-'>
+								<div className='h-[30px] w-[30px] relativ'>
+									<PieChart
+										size={22}
+										className='text-green-600'
+									/>
+									{/* <Image
+									alt=''
+									fill
+									src={'/icon__chart_line.svg'}
+									className='object-cover absolute'
+								/> */}
+								</div>
+								<p className='text-sm md:text-base w-[90%] md:w-[95%]'>
+									Have access to analytics and sales features.
+								</p>
+							</div>
+						</div>
+
+						<div className='flex flex-col space-y-2'>
+							<div className='flex items-center font-medium space-x-4'>
+								<Image
+									width={60}
+									height={60}
+									alt='testimonial'
+									unoptimized={true}
+									src={'/vendor.jpg'}
+									className='border border-slate-300 shadow-md shadow-slate-200 rounded-full'
+								/>
+
+								<p className='text-sm md:text-base font-semibold'>
+									Grace Horizon Foods Limited
+								</p>
+							</div>
+
+							<p className='text-sm md:text-base'>
+								Thanks to Livestocx, my poultry business now has
+								a professional online presence. The platform's
+								features are top-notch, and the ease of setting
+								up a custom store has saved me so much time.
+								Sales have never been better!
 							</p>
-						</li>
-						<li className=' flex items-center space-x-2'>
-							{/* <Award size={16} className='text-green-600' /> */}
-							<Image
-								alt=''
-								width={26}
-								height={26}
-								className=''
-								src={'/icon__badge.svg'}
-							/>
-							<p className='text-sm md:text-lg'> Get one free monthly product promotion</p>
-						</li>
-						<li className=' flex items-center space-x-2'>
-							{/* <PieChart size={16} className='text-green-600' /> */}
-							<Image
-								alt=''
-								width={26}
-								height={26}
-								className=''
-								src={'/icon__chart_line.svg'}
-							/>
-							<p className='text-sm md:text-lg'>⁠Have access to analytics and sales features.</p>
-						</li>
-					</ul>
+							{/* <div className='flex space-x-3 items-center justify-end'>
+								{[1, 2, 3, 4, 5].map((item) => (
+									<FaStar
+										key={item}
+										className='text-orange-500'
+										size={15}
+									/>
+								))}
+							</div> */}
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -208,7 +268,9 @@ const PricingPage = () => {
 										}
 										onClick={async () => {
 											if (!user) {
-												return router.push('/signin');
+												return router.push(
+													'/signin?redirect_to=business'
+												);
 											}
 
 											premiumSubscriptionCheckoutModal.onOpen();
@@ -252,7 +314,9 @@ const PricingPage = () => {
 										}
 										onClick={() => {
 											if (!user) {
-												return router.push('/signin');
+												return router.push(
+													'/signin?redirect_to=business'
+												);
 											}
 
 											if (user?.role !== 'FARMER') {

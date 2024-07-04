@@ -17,6 +17,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
 	// console.log('SLUG ', params.slug);
 
+	let ogImage200x200 = '';
 	let ogImage300x200 = '';
 	let ogImage300x300 = '';
 
@@ -29,6 +30,7 @@ export async function generateMetadata(
 	const imageUrl = getMediaImageUrl(data.data);
 
 	if (imageUrl.includes('https')) {
+		ogImage200x200 = await generateOGImageFromURL(200, 200, imageUrl);
 		ogImage300x200 = await generateOGImageFromURL(300, 200, imageUrl);
 		ogImage300x300 = await generateOGImageFromURL(300, 300, imageUrl);
 	}
@@ -37,6 +39,12 @@ export async function generateMetadata(
 		title: `Store - ${data.data.name}`,
 		openGraph: {
 			images: [
+				{
+					url: ogImage200x200,
+					secureUrl: ogImage200x200,
+					width: 200,
+					height: 200,
+				},
 				{
 					url: ogImage300x200,
 					secureUrl: ogImage300x200,
@@ -53,6 +61,12 @@ export async function generateMetadata(
 		},
 		twitter: {
 			images: [
+				{
+					url: ogImage200x200,
+					secureUrl: ogImage200x200,
+					width: 200,
+					height: 200,
+				},
 				{
 					url: ogImage300x200,
 					secureUrl: ogImage300x200,

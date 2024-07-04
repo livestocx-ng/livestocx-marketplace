@@ -80,6 +80,23 @@ const MainNavbar = () => {
 		});
 	}, []);
 
+	const handleLogout = async () => async () => {
+		try {
+			await axios.get('/api/auth/signout');
+
+			toast.success('Logged out!', {className: 'text-sm'});
+
+			updateUser(null);
+			updateChatConversations([]);
+			setSetShowAccountMenu(false);
+			updateUserPremiumSubscription(null);
+
+			router.push('/');
+		} catch (error) {
+			toast.error('Error!');
+		}
+	};
+
 	return (
 		<div className='relative'>
 			<nav
@@ -151,7 +168,7 @@ const MainNavbar = () => {
 						</div>
 					)}
 
-					{userPremiumSubscription && user?.role === 'FARMER' && ( 
+					{userPremiumSubscription && user?.role === 'FARMER' && (
 						<Link
 							target='_blank'
 							href={`/store/${vendorProfile?.slug}`}
@@ -340,30 +357,7 @@ const MainNavbar = () => {
 								</Link>
 								<p
 									// href={'#'}
-									onClick={async () => {
-										try {
-											await axios.get(
-												'/api/auth/signout'
-											);
-
-											toast.success('Logged out!');
-
-											updateUser(null);
-											updateChatConversations([]);
-											setSetShowAccountMenu(false);
-
-											router.push('/');
-
-											// window.location.reload();
-										} catch (error) {
-											//  console.log(
-											// 	'[LOGOUT-ERROR] :: ',
-											// 	error
-											// );
-
-											toast.error('Error!');
-										}
-									}}
+									onClick={handleLogout}
 									className={` ${
 										scrolling ? 'bg-white' : 'bg-mai'
 									} pt-10 rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in cursor-pointer`}
@@ -512,8 +506,25 @@ const MainNavbar = () => {
 						</div>
 					)}
 
+					{userPremiumSubscription && user?.role === 'FARMER' && (
+						<Link
+							target='_blank'
+							href={`/store/${vendorProfile?.slug}`}
+							className={`h-8 w-8 ${
+								scrolling ? 'bg-white' : 'bg-main'
+							} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
+						>
+							<Store
+								className={`h-3 w-3 ${
+									scrolling
+										? 'text-main'
+										: 'text-white cursor-pointer'
+								}`}
+							/>
+						</Link>
+					)}
+
 					<div
-						// href={user ? '/account' : '/signin'}
 						onClick={() => {
 							if (!user) {
 								router.push(`${!user && '/signin'}`);
@@ -667,30 +678,7 @@ const MainNavbar = () => {
 								</Link>
 								<p
 									// href={'#'}
-									onClick={async () => {
-										try {
-											await axios.get(
-												'/api/auth/signout'
-											);
-
-											toast.success('Logged out!');
-
-											updateUser(null);
-											setSetShowAccountMenu(false);
-											updateUserPremiumSubscription(null);
-
-											router.push('/');
-
-											// window.location.reload();
-										} catch (error) {
-											//  console.log(
-											// 	'[LOGOUT-ERROR] :: ',
-											// 	error
-											// );
-
-											toast.error('Error!');
-										}
-									}}
+									onClick={handleLogout}
 									className={` ${
 										scrolling ? 'bg-white' : 'bg-mai'
 									} pt-10 rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in cursor-pointer`}

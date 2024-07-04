@@ -30,7 +30,7 @@ export async function generateMetadata(
 
 	if (imageUrl.includes('https')) {
 		ogImage300x200 = await generateOGImageFromURL(300, 200, imageUrl);
-		ogImage300x300 = await generateOGImageFromURL(300, 200, imageUrl);
+		ogImage300x300 = await generateOGImageFromURL(300, 300, imageUrl);
 	}
 
 	return {

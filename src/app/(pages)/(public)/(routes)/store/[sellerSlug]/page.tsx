@@ -133,7 +133,7 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 							</div>
 
 							<PageBanner
-								text={`${sellerProducts?.length} Products Found`}
+								text={`Our Products`}
 							/>
 
 							<SellerInfoProducts

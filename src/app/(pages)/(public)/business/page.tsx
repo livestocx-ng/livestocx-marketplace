@@ -96,7 +96,7 @@ const PricingPage = () => {
 					</Button>
 				</div>
 
-				<div className='h-[250px] w-full md:w-[50%] md:h-[400px] relative mt-5 md:mt-0'>
+				<div className='h-[220px] md:h-[400px] w-full md:w-[50%] relative mt-5 md:mt-0'>
 					<Image
 						alt=''
 						fill

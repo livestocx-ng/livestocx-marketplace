@@ -111,7 +111,7 @@ const PricingPage = () => {
 					What you get
 				</h1>
 				<div className='flex flex-wrap items-start justify-between w-full px-4 md:px-8'>
-					<div className='h-[260px] md:h-[400px] w-full md:w-[45%] relative mb-10 md:mb-0'>
+					<div className='h-[220px] md:h-[400px] w-full md:w-[45%] relative mb-10 md:mb-0'>
 						<Image
 							alt=''
 							fill

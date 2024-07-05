@@ -379,7 +379,7 @@ const PricingPage = () => {
 					Livestocx Plugin
 				</h1>
 
-				<p className='leading-8'>
+				<p className='text-sm md:text-lg'>
 					You can now seamlessly integrate your Livestocx catalog or
 					products into your existing website, similar to how Calendly
 					and Typeform work. This powerful feature allows you to

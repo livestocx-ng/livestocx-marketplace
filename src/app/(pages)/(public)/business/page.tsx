@@ -68,7 +68,7 @@ const PricingPage = () => {
 			<section className='w-full bg-gradient-to-b from-green-800 to-green-50 flex flex-col md:flex-row items-center justify-between px-4 md:px-8 pt-20'>
 				<div className='flex flex-col space-y-4 w-full md:w-[45%]'>
 					<h1 className='text-xl md:text-5xl text-white font-semibold text-center md:text-left'>
-						Livestocx for Businesses
+						Livestocx for businesses
 					</h1>
 
 					<p className='text-sm md:text-lg text-white font-medium text-center md:text-left leading-8'>

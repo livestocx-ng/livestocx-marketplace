@@ -57,7 +57,7 @@ const PricingPage = () => {
 			<Link
 				target='_blank'
 				href={`https://wa.me/+2348132549273`}
-				className='fixed bottom-[200px] right-5 space-y-1 flex flex-col items-center cursor-pointer'
+				className='fixed bottom-[200px] right-5 space-y-1 flex flex-col items-center cursor-pointer z-10'
 			>
 				<div className=' h-10 w-10 bg-green-500 border border-white rounded-full flex items-center justify-center'>
 					<MessageCircle size={18} className='text-white' />

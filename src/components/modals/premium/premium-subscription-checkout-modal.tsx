@@ -272,7 +272,7 @@ const PremiumSubscriptionCheckoutModal = () => {
 		},
 		amount: premiumSubscriptionPlanAmount * 100,
 		publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
-		text: 'Proceed to pay',
+		text: 'Proceed to payment',
 		onSuccess: (response: any) => handleSuccess(response),
 		onClose: handleClose,
 	};

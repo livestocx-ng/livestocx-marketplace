@@ -2,24 +2,19 @@
 import Image from 'next/image';
 import {
 	useGlobalStore,
-	useUpgradeToPremiumAccessStore,
 	usePremiumSubscriptionCheckoutModalStore,
 } from '@/hooks/use-global-store';
 import {toast} from 'react-hot-toast';
 import {useRef, useState} from 'react';
-import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
-import {PaystackButton} from 'react-paystack';
 import {enterprisePlanComparisons} from '@/data';
 import {DataTable} from '@/components/ui/data-table';
 import {PriceFormatter} from '@/utils/price.formatter';
 import ButtonLoader from '@/components/loader/button-loader';
 import {premiumSubscriptionPlanDurationFormatter} from '@/utils';
-import {generateRandomPaymentReference} from '@/utils/promotion.util.formatter';
+import {BadgeCheck, Laptop, Award, PieChart} from 'lucide-react';
 import {EnterprisePlansComparisonsColumns} from './components/pricing-columns';
-import {BadgeCheck, Circle, Laptop, Award, PieChart} from 'lucide-react';
-import {FaStar} from 'react-icons/fa';
 
 const PricingPage = () => {
 	const router = useRouter();
@@ -28,14 +23,12 @@ const PricingPage = () => {
 		user,
 		userPremiumSubscription,
 		premiumSubscriptionPlans,
-		updateUserPremiumSubscription,
 		updatePremiumSubscriptionPlanInfo,
 	} = useGlobalStore();
 
 	const premiumSubscriptionCheckoutModal =
 		usePremiumSubscriptionCheckoutModalStore();
 
-	const {onClose} = useUpgradeToPremiumAccessStore();
 	const subscriptionPlansRef = useRef<HTMLDivElement>(null);
 
 	const [loading, setLoading] = useState<boolean>(false);
@@ -195,15 +188,6 @@ const PricingPage = () => {
 								up a custom store has saved me so much time.
 								Sales have never been better!
 							</p>
-							{/* <div className='flex space-x-3 items-center justify-end'>
-								{[1, 2, 3, 4, 5].map((item) => (
-									<FaStar
-										key={item}
-										className='text-orange-500'
-										size={15}
-									/>
-								))}
-							</div> */}
 						</div>
 					</div>
 				</div>
@@ -232,7 +216,6 @@ const PricingPage = () => {
 							${plan.duration === 'SIX_MONTHS' && 'md:scale-110 hover:scale-110'}`}
 					>
 						<h1 className='text-xl font-medium'>{plan.title}</h1>
-						{/* <h1 className='text-lg'>{plan.description}</h1> */}
 						<h1 className='text-lg font-semibold'>
 							{PriceFormatter(plan.price)} /{' '}
 							{premiumSubscriptionPlanDurationFormatter(
@@ -293,19 +276,6 @@ const PricingPage = () => {
 										{currentPlan?.buttonTitle}
 									</Button>
 								) : (
-									// <PaystackButton
-									// 	{...payStackButtonProps}
-									// 	className={`text-white h-10 w-fit rounded-full px-4 py-3 text-xs ${
-									// 		plan.duration === 'ONE_MONTH'
-									// 			? 'bg-green-600 hover:bg-green-600'
-									// 			: plan.duration ===
-									// 			  'THREE_MONTHS'
-									// 			? 'bg-sky-700 hover:bg-sky-700'
-									// 			: plan.duration === 'SIX_MONTHS'
-									// 			? 'bg-indigo-600 hover:bg-indigo-600'
-									// 			: 'bg-red-700 hover:bg-red-700'
-									// 	}`}
-									// />
 									<Button
 										type='button'
 										disabled={

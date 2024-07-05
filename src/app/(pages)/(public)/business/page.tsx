@@ -13,8 +13,10 @@ import {DataTable} from '@/components/ui/data-table';
 import {PriceFormatter} from '@/utils/price.formatter';
 import ButtonLoader from '@/components/loader/button-loader';
 import {premiumSubscriptionPlanDurationFormatter} from '@/utils';
-import {BadgeCheck, Laptop, Award, PieChart} from 'lucide-react';
+import {BadgeCheck, Laptop, Award, PieChart, MessageCircle} from 'lucide-react';
 import {EnterprisePlansComparisonsColumns} from './components/pricing-columns';
+import axios from 'axios';
+import Link from 'next/link';
 
 const PricingPage = () => {
 	const router = useRouter();
@@ -38,8 +40,31 @@ const PricingPage = () => {
 		buttonTitle: string;
 	}>({id: 0, amount: 0, buttonTitle: ''});
 
+	const handlePremiumSubscriptionInquiry = async () => {
+		await axios.post(
+			`${process.env.NEXT_PUBLIC_API_URL}/vendor/premium-subscription-inquiry`,
+			{},
+			{
+				headers: {
+					Authorization: user?.accessToken,
+				},
+			}
+		);
+	};
+
 	return (
-		<main>
+		<main className='relative'>
+			<Link
+				target='_blank'
+				href={`https://wa.me/+2348132549273`}
+				className='fixed bottom-[200px] right-5 space-y-1 flex flex-col items-center cursor-pointer'
+			>
+				<div className=' h-10 w-10 bg-green-500 border border-white rounded-full flex items-center justify-center'>
+					<MessageCircle size={18} className='text-white' />
+				</div>
+				<p className='text-xs font-medium'>Contact us</p>
+			</Link>
+
 			<section className='w-full bg-gradient-to-b from-green-800 to-green-50 flex flex-col md:flex-row items-center justify-between px-4 md:px-8 pt-20'>
 				<div className='flex flex-col space-y-4 w-full md:w-[45%]'>
 					<h1 className='text-xl md:text-5xl text-white font-semibold text-center md:text-left'>
@@ -54,11 +79,15 @@ const PricingPage = () => {
 
 					<Button
 						type='button'
-						onClick={() => {
+						onClick={async () => {
 							if (subscriptionPlansRef.current) {
 								subscriptionPlansRef.current.scrollIntoView({
 									behavior: 'smooth',
 								});
+							}
+
+							if (user) {
+								handlePremiumSubscriptionInquiry();
 							}
 						}}
 						className='bg-sky-600 text-white hover:bg-sky-700 w-fit rounded-md py-8 px-4 md:px-8 mx-auto md:mx-0'
@@ -86,7 +115,7 @@ const PricingPage = () => {
 						<Image
 							alt=''
 							fill
-							className='object-contai object-fill rounded-md'
+							className='object-fill rounded-md'
 							src={'/animals/image__chicken__2.jpg'}
 						/>
 					</div>
@@ -304,6 +333,8 @@ const PricingPage = () => {
 												amount: plan.price,
 												buttonTitle: `Proceed to checkout`,
 											});
+
+											handlePremiumSubscriptionInquiry();
 										}}
 										className={`text-white h-10 w-fit rounded-full py-3 text-xs ${
 											plan.duration === 'ONE_MONTH'

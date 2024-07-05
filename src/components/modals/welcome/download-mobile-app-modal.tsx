@@ -2,14 +2,21 @@
 import Link from 'next/link';
 import {X} from 'lucide-react';
 import Image from 'next/image';
+import {usePathname} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {useDownloadAppStore} from '@/hooks/use-global-store';
 
 const DownloadMobileAppModal = () => {
+	const pathName = usePathname();
+
 	const {onClose} = useDownloadAppStore();
 
 	return (
-		<div className='fixed bottom-0 flex flex-col items-center justify-center w-full bg-[#ffffff20] backdrop-blur-sm z-10'>
+		<div
+			className={`fixed bottom-0 ${
+				pathName.includes('business') ? 'hidden' : 'flex'
+			} flex-col items-center justify-center w-full bg-[#ffffff20] backdrop-blur-sm z-10`}
+		>
 			<div className='flex flex-col w-[90%] md:w-[30%] bg-white border shadow-sm shadow-slate-200 px-4 my-2 sm:my-5 rounded-lg overflow-y-auto scrollbar__1'>
 				<div className='flex items-center justify-between text-xs sm:text-sm font-medium'>
 					<p>Download our mobile app</p>

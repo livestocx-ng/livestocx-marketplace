@@ -62,7 +62,7 @@ const PricingPage = () => {
 				<div className='h-10 w-10 bg-green-500 rounded-full flex items-center justify-center'>
 					<MessageCircle size={18} className='text-white' />
 				</div>
-				<p className='text-xs font-medium'>Contact us</p>
+				<p className='text-[10px] md:text-xs font-medium'>Contact us</p>
 			</Link>
 
 			<section className='w-full bg-gradient-to-b from-green-800 to-green-50 flex flex-col md:flex-row items-center justify-between px-4 md:px-8 pt-20'>

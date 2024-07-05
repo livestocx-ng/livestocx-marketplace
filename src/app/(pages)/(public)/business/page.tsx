@@ -373,6 +373,22 @@ const PricingPage = () => {
 					</div>
 				))}
 			</div>
+
+			<div className='w-full py-5 px-4 md:px-[160px] my-10 flex flex-col space-y-5'>
+				<h1 className='font-medium text-lg md:text-4xl text-center'>
+					Livestocx Plugin
+				</h1>
+
+				<p className='leading-8'>
+					You can now seamlessly integrate your Livestocx catalog or
+					products into your existing website, similar to how Calendly
+					and Typeform work. This powerful feature allows you to
+					display your products directly on your site, enhancing your
+					online presence and engaging customers without requiring
+					them to leave your platform. Email us for more information
+					at support@livestocx.com
+				</p>
+			</div>
 		</main>
 	);
 };

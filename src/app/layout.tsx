@@ -27,6 +27,11 @@ export const metadata: Metadata = {
 		'facebook-domain-verification': 'yy2fxudmyl6e8nxtl2zjx9lss8j8dl',
 	},
 	openGraph: {
+		title: 'Livestocx',
+		description: 'Best deals, Everything Animals',
+		url: 'https://livestocx.com',
+		siteName: 'Livestocx',
+		type: 'website',
 		images: [
 			{
 				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x200.png',

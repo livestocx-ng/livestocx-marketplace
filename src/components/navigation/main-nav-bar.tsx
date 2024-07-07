@@ -80,7 +80,7 @@ const MainNavbar = () => {
 		});
 	}, []);
 
-	const handleLogout = async () => async () => {
+	const handleLogout = async () => {
 		try {
 			await axios.get('/api/auth/signout');
 
@@ -394,18 +394,6 @@ const MainNavbar = () => {
 					>
 						Sell
 					</div>
-
-					{/* {!userPremiumSubscription && (
-						<div
-							onClick={() => {
-								upgradeToPremiumAccessModal.onOpen();
-							}}
-							className={`h-8 bg-blue-600 border border-[#ffffff80] hover:border-white px-4 rounded-sm text-white text-xs flex items-center justify-center space-x-2 cursor-pointer`}
-						>
-							<ZapIcon size={14} />
-							<p>Pro Access</p>
-						</div>
-					)} */}
 				</div>
 			</nav>
 
@@ -455,18 +443,6 @@ const MainNavbar = () => {
 					>
 						Sell
 					</div>
-
-					{/* {!userPremiumSubscription && (
-						<div
-							onClick={() => {
-								upgradeToPremiumAccessModal.onOpen();
-							}}
-							className={`h-8 bg-blue-600 px-2 rounded-sm text-white text-xs flex items-center justify-center space-x-2 cursor-pointer`}
-						>
-							<ZapIcon size={14} />
-							<p>Pro Access</p>
-						</div>
-					)} */}
 
 					{chatConversations?.filter(
 						(conversation) => conversation?.unreadMessages !== 0

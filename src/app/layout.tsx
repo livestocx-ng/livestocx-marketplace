@@ -33,32 +33,32 @@ export const metadata: Metadata = {
 		siteName: 'Livestocx',
 		type: 'website',
 		images: [
-			// {
-			// 	url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x200.png',
-			// 	secureUrl:
-			// 		'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x200.png',
-			// 	width: 300,
-			// 	height: 200,
-			// },
-			// {
-			// 	url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
-			// 	secureUrl:
-			// 		'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
-			// 	width: 300,
-			// 	height: 300,
-			// },
 			{
-				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
+				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x200.png',
 				secureUrl:
-					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
-				alt: 'Livestocx Banner',
-				width: 1200,
-				height: 630,
+					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x200.png',
+				width: 300,
+				height: 200,
 			},
 			{
 				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
 				secureUrl:
 					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
+				width: 300,
+				height: 300,
+			},
+			{
+				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-1200x630.png',
+				secureUrl:
+					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-1200x630.png',
+				alt: 'Livestocx Banner',
+				width: 1200,
+				height: 630,
+			},
+			{
+				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-1200x630.png',
+				secureUrl:
+					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-1200x630.png',
 				alt: 'Livestocx Banner',
 			},
 		],
@@ -86,17 +86,17 @@ export const metadata: Metadata = {
 				height: 300,
 			},
 			{
-				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
+				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-1200x630.png',
 				secureUrl:
-					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
+					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-1200x630.png',
 				alt: 'Livestocx Banner',
 				width: 1200,
 				height: 630,
 			},
 			{
-				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
+				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-1200x630.png',
 				secureUrl:
-					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
+					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-1200x630.png',
 				alt: 'Livestocx Banner',
 			},
 		],

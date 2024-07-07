@@ -45,11 +45,16 @@ export const metadata: Metadata = {
 		],
 	},
 	twitter: {
+		card: 'summary_large_image',
+		site: '@livestocx',
+		creator: '@livestocx',
+		title: 'Livestocx',
+		description: 'Best deals, Everything Animals',
 		images: [
 			{
 				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x200.png',
 				secureUrl:
-				'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x200.png',
+					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x200.png',
 				width: 300,
 				height: 200,
 			},
@@ -59,6 +64,12 @@ export const metadata: Metadata = {
 					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
 				width: 300,
 				height: 300,
+			},
+			{
+				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
+				secureUrl:
+					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
+				alt: 'Livestocx Banner',
 			},
 		],
 	},

@@ -47,6 +47,20 @@ export const metadata: Metadata = {
 				width: 300,
 				height: 300,
 			},
+			{
+				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
+				secureUrl:
+					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
+				alt: 'Livestocx Banner',
+				width: 1200,
+				height: 630,
+			},
+			{
+				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
+				secureUrl:
+					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
+				alt: 'Livestocx Banner',
+			},
 		],
 	},
 	twitter: {
@@ -69,6 +83,14 @@ export const metadata: Metadata = {
 					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
 				width: 300,
 				height: 300,
+			},
+			{
+				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
+				secureUrl:
+					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
+				alt: 'Livestocx Banner',
+				width: 1200,
+				height: 630,
 			},
 			{
 				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',

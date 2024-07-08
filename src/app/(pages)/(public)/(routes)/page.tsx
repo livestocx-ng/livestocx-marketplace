@@ -60,7 +60,7 @@ export default function HomePage() {
 				<div className='flex flex-col w-full bg-white px-4 md:px-8 sm:pt-6 pb-10 relative'>
 					<PromotionBanner />
 
-					<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2 pt-8 sm:pt-0 mt-8'>
+					<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2 pt-5 sm:pt-0 mt-8'>
 						{Array(50)
 							.fill(1)
 							.map((item, index) => (
@@ -71,7 +71,7 @@ export default function HomePage() {
 			)}
 
 			{!loading && products?.length > 0 && (
-				<div className='flex flex-col w-full bg-white px-4 md:px-8 pt-16 sm:pt-[44px] pb-10 relative'>
+				<div className='flex flex-col w-full bg-white px-4 md:px-8 pt-10 sm:pt-10 pb-10 relative'>
 					<PromotionBanner />
 
 					<HomeProducts

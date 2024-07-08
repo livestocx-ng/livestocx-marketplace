@@ -45,7 +45,7 @@ const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 							<Button
 								key={tab.id}
 								type='button'
-								className={`border bg-white hover:bg-white h-4 py-3 text-xs rounded-md ${
+								className={`border bg-white hover:bg-white h-4 py-3 text-[10px] sm:text-xs rounded-md ${
 									currentTab.id === tab.id
 										? 'border-main text-main'
 										: 'border-black text-black'

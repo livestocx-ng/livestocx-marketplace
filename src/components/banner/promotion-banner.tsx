@@ -35,7 +35,7 @@ const PromotionBanner = () => {
 			}}
 			className='absolute top-0 left-0 w-full py-2 bg-gradient-to-tr from-indigo-200 to-indigo-500 text-sm px-4 flex items-center justify-center space-x-3 cursor-pointer'
 		>
-			<p className='text-[10px] md:text-sm font-medium flex space-x-2'>
+			<p className='text-[10px] md:text-sm font-medium flex space-x-'>
 				{/* Want to sell very fast? Boost your product with just &#8358;810
 				per week */}
 				Want to sell very fast? Get an online store for{' '}
@@ -46,10 +46,9 @@ const PromotionBanner = () => {
 							).split('.00')[0]
 					  }/year`
 					: ''}
-				.
+				. &nbsp;
+				<Rocket size={20} className='text-white animate-puls' />
 			</p>
-
-			<Rocket size={20} className='text-white animate-puls' />
 		</motion.div>
 	);
 };

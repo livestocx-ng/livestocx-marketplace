@@ -43,12 +43,12 @@ import {Product, ProductInfo} from '@/types/types';
 import React, {Dispatch, SetStateAction} from 'react';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import {formatVendorSlug} from '@/utils/slug.formatter';
 import {getMediaImageUrl} from '@/utils/media/media.url';
 import SellerInfoTab from '../product-info/seller-info-tab';
 import ProductReviewTab from '../product-info/product-review-tab';
 import MoreFromSellerTab from '../product-info/more-from-seller-tab';
 import {likesViewsImpressionFormatter} from '@/utils/like.view.impression.formatter';
-import {formatVendorSlug} from '@/utils/slug.formatter';
 import Link from 'next/link';
 
 interface SingleProductContentProps {
@@ -56,6 +56,7 @@ interface SingleProductContentProps {
 	loading: boolean;
 	product: Product;
 	productInfo: ProductInfo | null;
+	handleAddUserToCallSeller: () => void;
 	handleAddToDesiredProducts: () => void;
 	setCurrentTab: Dispatch<SetStateAction<Tab>>;
 	handleLikeUnlikeProduct: (formData: {value?: boolean}) => void;
@@ -71,6 +72,7 @@ const SingleProductContent = ({
 	productInfo,
 	setCurrentTab,
 	handleLikeUnlikeProduct,
+	handleAddUserToCallSeller,
 	handleAddToDesiredProducts,
 }: SingleProductContentProps) => {
 	const router = useRouter();
@@ -159,18 +161,6 @@ const SingleProductContent = ({
 					</div>
 
 					<div className='absolute flex items-center bottom-0 right-0'>
-						{/* {product?.likedUsers?.length! > 0 && (
-							<Button
-								type='button'
-								variant={'outline'}
-								className='bg-slate-800 border-0 text-white hover:bg-slate-800 hover:text-white text-xs py-2 flex items-center space-x-3 rounded-none'
-							>
-								{product?.likedUsers?.length!}{' '}
-								{product?.likedUsers?.length == 1
-									? 'Like'
-									: 'Likes'}
-							</Button>
-						)} */}
 						{user && (
 							<Button
 								type='button'
@@ -270,6 +260,8 @@ const SingleProductContent = ({
 								type='button'
 								variant={'outline'}
 								onClick={() => {
+									handleAddUserToCallSeller();
+
 									const telLink = document.createElement('a');
 
 									telLink.href = `tel:${productInfo?.phoneNumber}`;

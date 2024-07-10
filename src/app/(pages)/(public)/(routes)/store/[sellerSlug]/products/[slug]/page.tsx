@@ -101,6 +101,25 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 		}
 	}, [user]);
 
+	const handleAddUserToCallSeller = async () => {
+		try {
+			await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-user-to-call-seller?product=${product?.id}`,
+				{
+					headers: {
+						Authorization: user?.accessToken,
+					},
+				}
+			);
+
+		} catch (error) {
+			// setLoading(false);
+			const _error = error as AxiosError;
+
+			// console.log('[ERROR] :: ', _error);
+		}
+	};
+
 	const handleLikeUnlikeProduct = async (formData: {value?: boolean}) => {
 		try {
 			const {data} = await axios.post(
@@ -213,6 +232,7 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 					productInfo={productInfo}
 					setCurrentTab={setCurrentTab}
 					handleLikeUnlikeProduct={handleLikeUnlikeProduct}
+					handleAddUserToCallSeller={handleAddUserToCallSeller}
 					handleAddToDesiredProducts={handleAddToDesiredProducts}
 				/>
 			)}

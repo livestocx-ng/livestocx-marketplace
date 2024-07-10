@@ -21,8 +21,6 @@ interface ProductPageParams {
 
 type Tab = 'Seller Info' | 'Review' | 'More From Seller';
 
-const CurrentTabs: Tab[] = ['Seller Info', 'Review', 'More From Seller'];
-
 const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 	const router = useRouter();
 
@@ -33,7 +31,6 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 	const {
 		user,
 		product,
-		products,
 		updatePayload,
 		productInfo,
 		updateProductInfo,
@@ -121,6 +118,30 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 			const _error = error as AxiosError;
 
 			console.log('[ERROR] :: ', _error);
+		}
+	};
+
+	const handleAddUserToCallSeller = async () => {
+		try {
+			if (!user) return;
+
+			console.log('[]ADD-USER-TO-CALL-SELLER-PROCESSING]');
+
+			await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-user-to-call-seller?product=${product?.id}`,
+				{
+					headers: {
+						Authorization: user?.accessToken,
+					},
+				}
+			);
+
+			console.log('[]ADD-USER-TO-CALL-SELLER-SUCCESS]');
+		} catch (error) {
+			// setLoading(false);
+			const _error = error as AxiosError;
+
+			// console.log('[ERROR] :: ', _error);
 		}
 	};
 
@@ -215,6 +236,7 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 					productInfo={productInfo}
 					setCurrentTab={setCurrentTab}
 					handleLikeUnlikeProduct={handleLikeUnlikeProduct}
+					handleAddUserToCallSeller={handleAddUserToCallSeller}
 					handleAddToDesiredProducts={handleAddToDesiredProducts}
 				/>
 			)}

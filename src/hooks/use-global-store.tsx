@@ -155,6 +155,13 @@ export const useCreatePromotionModalStore =	create<ActivateModal>((set) => ({
 	})
 );
 
+export const useShareSellerStoreModalStore = create<ActivateModal>((set) => ({
+		isOpen: false,
+		onOpen: () => set({isOpen: true}),
+		onClose: () => set({isOpen: false}),
+	})
+);
+
 export const useReadNotificationModalStore = create<ReadNotificationModal>(
 	(set) => ({
 		isOpen: false,

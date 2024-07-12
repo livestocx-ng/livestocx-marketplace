@@ -6,12 +6,15 @@ import {
 import Lottie from 'lottie-react';
 import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
-import {useEffect, useState} from 'react';
+import {Fragment, useEffect, useState} from 'react';
 import {getProductIdFromSlug} from '@/utils/slug.formatter';
 import SingleProductContent from '@/components/product/single-product-content';
 import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import EmptyAnimation from '../../../../../../../../public/animations/animation__3.json';
 import LoadingAnimation from '../../../../../../../../public/animations/animation__3.json';
+import MainNavbar from '@/components/navigation/main-nav-bar';
+import Footer from '@/components/navigation/footer';
+import LoadingAnimationOne from '@/components/loader/loading-animation-one';
 
 interface ProductPageParams {
 	params: {
@@ -44,6 +47,8 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 
 	const fetchProduct = async () => {
 		try {
+			setLoading(true);
+			
 			const [_product, _productInfo] = await Promise.all([
 				axios.get(
 					`${
@@ -56,13 +61,17 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 					}/user/products/info/${getProductIdFromSlug(slug)}`
 				),
 			]);
-
+			
 			// // console.log('[DATA] ::  ', _product.data.data);
 			// // console.log('[DATA] ::  ', data);
-
+			
 			updatePayload(_product.data.data);
 			updateProductInfo(_productInfo.data.data);
+			
+			setLoading(false);
 		} catch (error) {
+			setLoading(false);
+
 			const _error = error as AxiosError;
 
 			// console.log('[FETCH-PRODUCT-ERROR] :: ', _error);
@@ -193,54 +202,59 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 	};
 
 	return (
-		<main className='w-full relative'>
-			{isProductMediaModalOpen && <ProductMediaModal />}
+		<Fragment>
+			<MainNavbar />
+			<main className='w-full relative'>
+				{isProductMediaModalOpen && <ProductMediaModal />}
 
-			<section className='sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 pb-20 sm:pb-0 md:pt-0'>
-				<h1 className='text-xl md:text-5xl font-medium text-white capitalize px-6 sm:px-0 text-center'>
-					{product?.name}
-				</h1>
+				<section className='sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 pb-20 sm:pb-0 md:pt-0'>
+					<h1 className='text-xl md:text-5xl font-medium text-white capitalize px-6 sm:px-0 text-center'>
+						{product?.name}
+					</h1>
 
-				{/* <SearchForm /> */}
-			</section>
+					{/* <SearchForm /> */}
+				</section>
 
-			{loading && (
-				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
-					<div className='h-[200px] w-1/2 mx-auto bg-white'>
-						<Lottie
-							loop={true}
-							className='h-full'
-							animationData={LoadingAnimation}
-						/>
+				{loading && (
+					<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
+						{/* <div className='h-[200px] w-1/2 mx-auto bg-white'>
+							<Lottie
+								loop={true}
+								className='h-full'
+								animationData={LoadingAnimation}
+							/>
+						</div> */}
+						<LoadingAnimationOne />
 					</div>
-				</div>
-			)}
+				)}
 
-			{!loading && !product && (
-				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
-					<div className='h-[200px] w-1/2 mx-auto bg-white'>
-						<Lottie
-							loop={true}
-							className='h-full'
-							animationData={EmptyAnimation}
-						/>
+				{!loading && !product && (
+					<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
+						<div className='h-[200px] w-1/2 mx-auto bg-white'>
+							<Lottie
+								loop={true}
+								className='h-full'
+								animationData={EmptyAnimation}
+							/>
+						</div>
 					</div>
-				</div>
-			)}
+				)}
 
-			{!loading && product && (
-				<SingleProductContent
-					loading={loading}
-					product={product}
-					currentTab={currentTab}
-					productInfo={productInfo}
-					setCurrentTab={setCurrentTab}
-					handleLikeUnlikeProduct={handleLikeUnlikeProduct}
-					handleAddUserToCallSeller={handleAddUserToCallSeller}
-					handleAddToDesiredProducts={handleAddToDesiredProducts}
-				/>
-			)}
-		</main>
+				{!loading && product && (
+					<SingleProductContent
+						loading={loading}
+						product={product}
+						currentTab={currentTab}
+						productInfo={productInfo}
+						setCurrentTab={setCurrentTab}
+						handleLikeUnlikeProduct={handleLikeUnlikeProduct}
+						handleAddUserToCallSeller={handleAddUserToCallSeller}
+						handleAddToDesiredProducts={handleAddToDesiredProducts}
+					/>
+				)}
+			</main>
+			<Footer />
+		</Fragment>
 	);
 };
 

@@ -28,21 +28,9 @@ export async function generateMetadata(
 	const imageUrl = data.data.avatar;
 
 	if (imageUrl.includes('https')) {
-		ogImage200x200 = await generateOGImageFromURL(
-			200,
-			200,
-			imageUrl,
-		);
-		ogImage300x200 = await generateOGImageFromURL(
-			300,
-			200,
-			imageUrl,
-		);
-		ogImage300x300 = await generateOGImageFromURL(
-			300,
-			300,
-			imageUrl,
-		);
+		ogImage200x200 = await generateOGImageFromURL(200, 200, imageUrl);
+		ogImage300x200 = await generateOGImageFromURL(300, 200, imageUrl);
+		ogImage300x300 = await generateOGImageFromURL(300, 300, imageUrl);
 	}
 
 	return {

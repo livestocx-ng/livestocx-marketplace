@@ -38,7 +38,7 @@ const PromotionBanner = () => {
 			<p className='text-[10px] md:text-sm font-medium flex space-x-'>
 				{/* Want to sell very fast? Boost your product with just &#8358;810
 				per week */}
-				Want to sell very fast? Get an online store for{' '}
+				Want to sell very fast? Get your Livestocx online store for{' '}
 				{premiumSubscriptionPlans?.length > 0
 					? `${
 							PriceFormatter(

@@ -347,7 +347,7 @@ export const FaqItems: FaqOption[] = [
 export const enterprisePlanComparisons: EnterprisePlanComparison[] = [
 	{
 		feature: 'Initial Cost',
-		customBusinessWebsite: 'High (design, development, hosting, domain) ₦150,000 - ₦8000,000',
+		customBusinessWebsite: 'High (design, development, hosting, domain) ₦150,000 - ₦800,000',
 		platform: 'Low (starting at ₦10,050/year)',
 	},
 	{

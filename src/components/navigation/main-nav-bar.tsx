@@ -3,6 +3,7 @@ import {
 	Bell,
 	User2,
 	Mails,
+	Store,
 	Package,
 	Settings,
 	Megaphone,
@@ -10,27 +11,20 @@ import {
 	ShoppingCart,
 	MessageCircle,
 	MessagesSquare,
-	ZapIcon,
-	Store,
 } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link';
 import Image from 'next/image';
 import {NavLinks} from '@/data';
-import {
-	useGlobalStore,
-	useUpdateUserRoleModalStore,
-	useUpgradeToPremiumAccessStore,
-} from '@/hooks/use-global-store';
+import {useGlobalStore} from '@/hooks/use-global-store';
 import {Button} from '../ui/button';
 import {toast} from 'react-hot-toast';
-import {useRouter} from 'next/navigation';
 import {useEffect, useState} from 'react';
-import {signOut, useSession} from 'next-auth/react';
+import {usePathname, useRouter} from 'next/navigation';
 
 const MainNavbar = () => {
 	const router = useRouter();
-	const session = useSession();
+	const pathName = usePathname();
 
 	const {
 		user,
@@ -42,9 +36,6 @@ const MainNavbar = () => {
 		userPremiumSubscription,
 		updateUserPremiumSubscription,
 	} = useGlobalStore();
-
-	const updateUserRoleModal = useUpdateUserRoleModalStore();
-	const upgradeToPremiumAccessModal = useUpgradeToPremiumAccessStore();
 
 	const [scrolling, setScrolling] = useState<boolean>(false);
 	const [showMenu, setSetShowMenu] = useState<boolean>(false);
@@ -189,7 +180,15 @@ const MainNavbar = () => {
 					<div
 						onClick={() => {
 							if (!user) {
-								router.push(`${!user && '/signin'}`);
+								if (pathName.length > 1) {
+									router.push(
+										`/signin?redirect_to=${pathName.slice(
+											1
+										)}`
+									);
+								} else {
+									router.push('/signin');
+								}
 							} else {
 								setSetShowAccountMenu(!showAccountMenu);
 							}
@@ -374,7 +373,7 @@ const MainNavbar = () => {
 						)}
 					</div>
 
-					<div
+					{/* <div
 						onClick={() => {
 							if (!user) {
 								router.push(`/signup?seller=true`);
@@ -393,7 +392,7 @@ const MainNavbar = () => {
 						className={`h-8 bg-orange-400 rounded-sm w-[80px] text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
 					>
 						Sell
-					</div>
+					</div> */}
 				</div>
 			</nav>
 
@@ -423,7 +422,7 @@ const MainNavbar = () => {
 				</Button>
 
 				<div className='flex items-center space-x-2'>
-					<div
+					{/* <div
 						onClick={() => {
 							if (!user) {
 								router.push(`/signup?seller=true`);
@@ -442,7 +441,7 @@ const MainNavbar = () => {
 						className={`h-8 bg-orange-400 rounded-sm w-[60px] text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
 					>
 						Sell
-					</div>
+					</div> */}
 
 					{chatConversations?.filter(
 						(conversation) => conversation?.unreadMessages !== 0
@@ -503,7 +502,15 @@ const MainNavbar = () => {
 					<div
 						onClick={() => {
 							if (!user) {
-								router.push(`${!user && '/signin'}`);
+								if (pathName.length > 1) {
+									router.push(
+										`/signin?redirect_to=${pathName.slice(
+											1
+										)}`
+									);
+								} else {
+									router.push('/signin');
+								}
 							} else {
 								setSetShowAccountMenu(!showAccountMenu);
 							}

@@ -66,6 +66,8 @@ const BusinessPage = () => {
 		);
 	};
 
+	// console.log('[DOCUMENT-COOKIE] :: ', document.cookie);
+
 	return (
 		<Fragment>
 			<MainNavbar />

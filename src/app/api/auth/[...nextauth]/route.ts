@@ -91,9 +91,12 @@ const handler = NextAuth({
 			// const redirectUrl = redirectUrlCookie?.value.includes('business')
 			// 	? `/business?subscription_now=true`
 			// 	: redirectUrlCookie?.value || baseUrl;
-
+			
 			const redirectUrlCookie = cookies().get(LIVESTOCX_AUTH_REDIRECT);
-            const redirectUrl = redirectUrlCookie?.value || baseUrl;
+			const redirectUrl = redirectUrlCookie?.value.includes('business')
+				? `/business?subscription_now=true`
+				: redirectUrlCookie?.value || baseUrl;
+            // const redirectUrl = redirectUrlCookie?.value || baseUrl;
 
 			return redirectUrl! || baseUrl;
 		},

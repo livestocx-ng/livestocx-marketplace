@@ -141,7 +141,7 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 		}
 	};
 
-	const handleAddToDesiredProducts = async () => {
+	const handleMessageSeller = async () => {
 		try {
 			if (!user)
 				return router.push(
@@ -233,7 +233,7 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 					setCurrentTab={setCurrentTab}
 					handleLikeUnlikeProduct={handleLikeUnlikeProduct}
 					handleAddUserToCallSeller={handleAddUserToCallSeller}
-					handleAddToDesiredProducts={handleAddToDesiredProducts}
+					handleMessageSeller={handleMessageSeller}
 				/>
 			)}
 		</main>

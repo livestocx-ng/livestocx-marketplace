@@ -96,11 +96,11 @@ const ProductCard = ({product}: ProductCardProps) => {
 		}
 	};
 
-	const handleAddToDesiredProducts = async () => {
+	const handleMessageSeller = async () => {
 		try {
 			if (loading) return;
 
-			if (!user) return router.push('/signin');
+			if (!user) return router.push(`/signin`);
 
 			if (user?.id === product?.user.toString()) return;
 
@@ -241,7 +241,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 						</div>
 
 						<div
-							onClick={handleAddToDesiredProducts}
+							onClick={handleMessageSeller}
 							className=' flex items-center justify-center h-8 sm:h-8 w-8 sm:w-8 bg-main rounded-full cursor-pointer'
 						>
 							<MessageCircle className='h-4 sm:h-4 w-4 sm:w-4 text-white' />

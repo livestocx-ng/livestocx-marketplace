@@ -49,7 +49,7 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 	const fetchProduct = async () => {
 		try {
 			setLoading(true);
-			
+
 			const [_product, _productInfo] = await Promise.all([
 				axios.get(
 					`${
@@ -62,13 +62,13 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 					}/user/products/info/${getProductIdFromSlug(slug)}`
 				),
 			]);
-			
+
 			// // console.log('[DATA] ::  ', _product.data.data);
 			// // console.log('[DATA] ::  ', data);
-			
+
 			updatePayload(_product.data.data);
 			updateProductInfo(_productInfo.data.data);
-			
+
 			setLoading(false);
 		} catch (error) {
 			setLoading(false);
@@ -81,7 +81,7 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 
 	const viewProduct = async () => {
 		try {
-			const {data} = await axios.get(
+			axios.get(
 				`${
 					process.env.NEXT_PUBLIC_API_URL
 				}/user/products/product/${getProductIdFromSlug(slug)}/view`,
@@ -133,15 +133,10 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 
 	const handleAddUserToCallSeller = async () => {
 		try {
-			if (!user) return router.push(
-				`/signin?redirect_to=${pathName.slice(
-					1
-				)}`
-			);;
+			if (!user)
+				return router.push(`/signin?redirect_to=${pathName.slice(1)}`);
 
-			// console.log('[]ADD-USER-TO-CALL-SELLER-PROCESSING]');
-
-			await axios.get(
+			axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-user-to-call-seller?product=${product?.id}`,
 				{
 					headers: {
@@ -150,12 +145,15 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 				}
 			);
 
-			// console.log('[]ADD-USER-TO-CALL-SELLER-SUCCESS]');
-		} catch (error) {
-			// setLoading(false);
-			const _error = error as AxiosError;
+			const telLink = document.createElement('a');
 
-			// console.log('[ERROR] :: ', _error);
+			telLink.href = `tel:${productInfo?.phoneNumber}`;
+
+			telLink.target = '_blank';
+
+			telLink.click();
+		} catch (error) {
+			const _error = error as AxiosError;
 		}
 	};
 
@@ -168,8 +166,6 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 				);
 
 			if (loading) return;
-
-			console.log('[PRODUCT-USER] :: ', product?.user);
 
 			if (user?.id === product?.user.toString()) return;
 
@@ -201,8 +197,6 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 		} catch (error) {
 			// setLoading(false);
 			const _error = error as AxiosError;
-
-			// console.log('[ERROR] :: ', _error);
 		}
 	};
 
@@ -252,9 +246,9 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 						currentTab={currentTab}
 						productInfo={productInfo}
 						setCurrentTab={setCurrentTab}
+						handleMessageSeller={handleMessageSeller}
 						handleLikeUnlikeProduct={handleLikeUnlikeProduct}
 						handleAddUserToCallSeller={handleAddUserToCallSeller}
-						handleMessageSeller={handleMessageSeller}
 					/>
 				)}
 			</main>

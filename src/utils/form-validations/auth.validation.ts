@@ -10,7 +10,7 @@ interface VendorProfileDto {
 	state: string;
 	city: string;
 	phoneNumber: string;
-};
+}
 
 interface SignupDto {
 	firstName: string;
@@ -30,8 +30,10 @@ interface SignupDto {
 
 interface PremiumSubscriptionCheckoutDto extends VendorProfileDto {
 	slug: string;
+	facebookUrl?: string;
+	instagramUrl?: string;
+	twitterUrl?: string;
 }
-
 
 const phoneRegEX = new RegExp(/^\d{11}$/);
 
@@ -42,6 +44,10 @@ const emailRegEX = new RegExp(/^\S+@\S+\.\S+$/);
 const sellerSlugRegEX = new RegExp(/^[a-z]+$/);
 
 const passwordRegEX = new RegExp('^.{8,}$');
+
+const socialMediaRegEX = new RegExp(
+	/^(https?:\/\/)?(www\.|web\.)?(facebook\.com\/.+|instagram\.com\/.+|twitter\.com\/.+)$/
+);
 
 export function ValidateSigninFormData(formData: SigninDto): string {
 	let message = '';
@@ -93,8 +99,7 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 		return (message = 'Passwords do match.');
 	}
 	if (!passwordRegEX.test(formData.password)) {
-		return (message =
-			'Password must be at least 8 characters');
+		return (message = 'Password must be at least 8 characters');
 	}
 
 	if (formData.role === 'CUSTOMER' && !formData.location) {
@@ -115,13 +120,16 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 	}
 
 	if (formData.acceptedTerms === false) {
-		return (message = 'Please accept our terms of service and privacy policy.');
+		return (message =
+			'Please accept our terms of service and privacy policy.');
 	}
 
 	return message;
 }
 
-export function ValidateVendorProfileFormData(formData: VendorProfileDto): string {
+export function ValidateVendorProfileFormData(
+	formData: VendorProfileDto
+): string {
 	let message = '';
 
 	if (!formData.name) {
@@ -198,6 +206,16 @@ export function ValidatePremiumSubscriptionCheckoutFormData(
 
 	if (!formData.city) {
 		return (message = 'Business city is required.');
+	}
+
+	if (formData.facebookUrl && !socialMediaRegEX.test(formData.facebookUrl)) {
+		return (message = 'Invalid facebook url.');
+	}
+	if (formData.instagramUrl && !socialMediaRegEX.test(formData.instagramUrl)) {
+		return (message = 'Invalid instagram url.');
+	}
+	if (formData.twitterUrl && !socialMediaRegEX.test(formData.twitterUrl)) {
+		return (message = 'Invalid twitter url.');
 	}
 
 	return message;

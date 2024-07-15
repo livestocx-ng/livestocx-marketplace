@@ -68,6 +68,8 @@ const handler = NextAuth({
 					// 	return Promise.resolve('/');
 					// }
 					account.redirect_url = redirectUrl;
+					
+					console.log('[REDIRECT_URL] :: ', account.redirectUrl);
 
 					// return Promise.resolve('/');
 					return true;
@@ -82,6 +84,9 @@ const handler = NextAuth({
 		},
 		async jwt({token, account}) {
 			if (account?.redirectUrl) {
+
+				console.log('[REDIRECT_URL] :: ', account.redirectUrl);
+
 				token.redirectUrl = account.redirectUrl;
 			}
 			return token;

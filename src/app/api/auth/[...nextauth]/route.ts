@@ -71,7 +71,7 @@ const handler = NextAuth({
 
 					console.log('[REDIRECT_URL] :: ', account.redirectUrl);
 
-					return Promise.resolve(redirectUrl);
+					return Promise.resolve(redirectUrl!);
 					// return true;
 				} catch (error) {
 					// console.error('[GOOGLE-SIGN-API-ERROR]', error);

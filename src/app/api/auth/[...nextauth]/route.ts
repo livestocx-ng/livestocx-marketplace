@@ -60,7 +60,7 @@ const handler = NextAuth({
 						'business'
 					)
 						? `/business?subscription_now=true`
-						: redirectUrlCookie?.value || '';
+						: redirectUrlCookie?.value;
 
 					if (redirectUrl!) {
 						return Promise.resolve(redirectUrl);
@@ -78,19 +78,6 @@ const handler = NextAuth({
 
 			return true; // Do different verification for other providers that don't have `email`
 		},
-		  async jwt({ token, account, user }) {
-			if (account?.provider === 'google' && user) {
-			  const redirectUrlCookie = cookies().get(LIVESTOCX_AUTH_REDIRECT);
-			  const redirectUrl = redirectUrlCookie?.value.includes('business')
-				? `/business?subscription_now=true`
-				: redirectUrlCookie?.value || '';
-	  
-			  if (redirectUrl) {
-				token.redirectUrl = redirectUrl;
-			  }
-			}
-			return token;
-		  },
 	},
 });
 

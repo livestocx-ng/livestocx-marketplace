@@ -205,6 +205,7 @@ const SignInPage = () => {
 									.includes('business')
 									? 'business?subscription_now=true'
 									: searchParams.get('redirect_to')!;
+									
 								document.cookie = `${LIVESTOCX_AUTH_REDIRECT}=${redirectUrl}; Max-Age=${COOKIE_MAX_AGE}; Path=/; SameSite=Strict; Secure=${
 									process.env.NODE_ENV === 'production'
 								}`;

@@ -89,7 +89,7 @@ const handler = NextAuth({
 			// 	? `/business?subscription_now=true`
 			// 	: redirectUrlCookie?.value || baseUrl;
 
-			return redirectUrl;
+			return redirectUrl! || baseUrl;
 		},
 	},
 });

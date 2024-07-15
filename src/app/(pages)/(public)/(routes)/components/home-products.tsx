@@ -38,7 +38,7 @@ const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 
 	return (
 		<Fragment>
-			<div className='flex item-center space-x-4 mt-1'>
+			<div className='flex item-center space-x-4 mt-6 sm:mt-1'>
 				{pathName.length <= 1 && (
 					<>
 						{TabItems.map((tab) => (

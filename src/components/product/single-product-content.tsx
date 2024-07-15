@@ -57,7 +57,7 @@ interface SingleProductContentProps {
 	product: Product;
 	productInfo: ProductInfo | null;
 	handleAddUserToCallSeller: () => void;
-	handleAddToDesiredProducts: () => void;
+	handleMessageSeller: () => void;
 	setCurrentTab: Dispatch<SetStateAction<Tab>>;
 	handleLikeUnlikeProduct: (formData: {value?: boolean}) => void;
 }
@@ -73,7 +73,7 @@ const SingleProductContent = ({
 	setCurrentTab,
 	handleLikeUnlikeProduct,
 	handleAddUserToCallSeller,
-	handleAddToDesiredProducts,
+	handleMessageSeller,
 }: SingleProductContentProps) => {
 	const router = useRouter();
 
@@ -251,7 +251,7 @@ const SingleProductContent = ({
 							<Button
 								type='button'
 								variant={'outline'}
-								onClick={handleAddToDesiredProducts}
+								onClick={handleMessageSeller}
 								className='bg-main text-white hover:bg-main hover:text-white text-[10px] md:text-xs h-10 w-[45%] rounded-full py-2'
 							>
 								Chat with Seller

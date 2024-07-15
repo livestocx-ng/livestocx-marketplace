@@ -5,16 +5,16 @@ import {
 } from '@/hooks/use-global-store';
 import Lottie from 'lottie-react';
 import axios, {AxiosError} from 'axios';
-import {useRouter} from 'next/navigation';
 import {Fragment, useEffect, useState} from 'react';
+import Footer from '@/components/navigation/footer';
+import {usePathname, useRouter} from 'next/navigation';
 import {getProductIdFromSlug} from '@/utils/slug.formatter';
+import MainNavbar from '@/components/navigation/main-nav-bar';
+import LoadingAnimationOne from '@/components/loader/loading-animation-one';
 import SingleProductContent from '@/components/product/single-product-content';
 import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import EmptyAnimation from '../../../../../../../../public/animations/animation__3.json';
 import LoadingAnimation from '../../../../../../../../public/animations/animation__3.json';
-import MainNavbar from '@/components/navigation/main-nav-bar';
-import Footer from '@/components/navigation/footer';
-import LoadingAnimationOne from '@/components/loader/loading-animation-one';
 
 interface ProductPageParams {
 	params: {
@@ -26,6 +26,7 @@ type Tab = 'Seller Info' | 'Review' | 'More From Seller';
 
 const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 	const router = useRouter();
+	const pathName = usePathname();
 
 	const isProductMediaModalOpen = useProductMediaModalStore(
 		(state) => state.isOpen
@@ -91,11 +92,11 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 				}
 			);
 
-			console.log('[VIEW-PRODUCT-DATA] ::  ', data);
+			// console.log('[VIEW-PRODUCT-DATA] ::  ', data);
 		} catch (error) {
 			const _error = error as AxiosError;
 
-			console.log('[VIEW-PRODUCT-ERROR] :: ', _error);
+			// console.log('[VIEW-PRODUCT-ERROR] :: ', _error);
 		}
 	};
 
@@ -132,9 +133,13 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 
 	const handleAddUserToCallSeller = async () => {
 		try {
-			if (!user) return;
+			if (!user) return router.push(
+				`/signin?redirect_to=${pathName.slice(
+					1
+				)}`
+			);;
 
-			console.log('[]ADD-USER-TO-CALL-SELLER-PROCESSING]');
+			// console.log('[]ADD-USER-TO-CALL-SELLER-PROCESSING]');
 
 			await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-user-to-call-seller?product=${product?.id}`,
@@ -145,7 +150,7 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 				}
 			);
 
-			console.log('[]ADD-USER-TO-CALL-SELLER-SUCCESS]');
+			// console.log('[]ADD-USER-TO-CALL-SELLER-SUCCESS]');
 		} catch (error) {
 			// setLoading(false);
 			const _error = error as AxiosError;
@@ -154,7 +159,7 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 		}
 	};
 
-	const handleAddToDesiredProducts = async () => {
+	const handleMessageSeller = async () => {
 		try {
 			if (!user)
 				return router.push(
@@ -249,7 +254,7 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 						setCurrentTab={setCurrentTab}
 						handleLikeUnlikeProduct={handleLikeUnlikeProduct}
 						handleAddUserToCallSeller={handleAddUserToCallSeller}
-						handleAddToDesiredProducts={handleAddToDesiredProducts}
+						handleMessageSeller={handleMessageSeller}
 					/>
 				)}
 			</main>

@@ -61,11 +61,11 @@ const handler = NextAuth({
 							? `/business?subscription_now=true`
 							: lsRedirectUrl;
 
-					// if (redirectUrl) {
-					// 	return Promise.resolve(redirectUrl);
-					// } else {
-					// 	return Promise.resolve('/');
-					// }
+					if (redirectUrl!) {
+						return Promise.resolve(redirectUrl);
+					} else {
+						return Promise.resolve('/');
+					}
 				} catch (error) {
 					// console.error('[GOOGLE-SIGN-API-ERROR]', error);
 				}
@@ -75,22 +75,22 @@ const handler = NextAuth({
 
 			return true; // Do different verification for other providers that don't have `email`
 		},
-		async redirect({url, baseUrl}) {
-			const lsRedirectUrl = localStorage.getItem(
-				LIVESTOCX_AUTH_REDIRECT
-			);
-			const redirectUrl =
-				lsRedirectUrl && lsRedirectUrl?.includes('business')
-					? `/business?subscription_now=true`
-					: lsRedirectUrl;
+		// async redirect({url, baseUrl}) {
+		// 	const lsRedirectUrl = localStorage.getItem(
+		// 		LIVESTOCX_AUTH_REDIRECT
+		// 	);
+		// 	const redirectUrl =
+		// 		lsRedirectUrl && lsRedirectUrl?.includes('business')
+		// 			? `/business?subscription_now=true`
+		// 			: lsRedirectUrl;
 
-			const redirectUrlCookie = cookies().get('redirect_url');
-			// const redirectUrl = redirectUrlCookie?.value.includes('business')
-			// 	? `/business?subscription_now=true`
-			// 	: redirectUrlCookie?.value || baseUrl;
+		// 	const redirectUrlCookie = cookies().get('redirect_url');
+		// 	// const redirectUrl = redirectUrlCookie?.value.includes('business')
+		// 	// 	? `/business?subscription_now=true`
+		// 	// 	: redirectUrlCookie?.value || baseUrl;
 
-			return redirectUrl! || baseUrl;
-		},
+		// 	return redirectUrl! || baseUrl;
+		// },
 	},
 });
 

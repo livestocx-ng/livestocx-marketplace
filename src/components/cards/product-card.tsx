@@ -8,18 +8,18 @@ import {
 	ThumbsUp,
 } from 'lucide-react';
 import Image from 'next/image';
-import {useEffect, useState} from 'react';
 import {
 	useGlobalStore,
 	useShareProductModalStore,
 } from '@/hooks/use-global-store';
 import {Product} from '@/types/types';
 import axios, {AxiosError} from 'axios';
+import {useEffect, useState} from 'react';
+import {useInView} from 'react-intersection-observer';
 import {usePathname, useRouter} from 'next/navigation';
 import {PriceFormatter} from '@/utils/price.formatter';
-import {useInView} from 'react-intersection-observer';
 import {getMediaImageUrl} from '@/utils/media/media.url';
-import {formatProductSlug, formatVendorSlug} from '@/utils/slug.formatter';
+import {formatProductSlug} from '@/utils/slug.formatter';
 
 interface ProductCardProps {
 	product: Product | null;
@@ -32,7 +32,6 @@ const ProductCard = ({product}: ProductCardProps) => {
 	const shareProductModal = useShareProductModalStore();
 	const {
 		user,
-		vendor,
 		updateProduct,
 		updateChatConversation,
 		updateCurrentAccountTab,
@@ -49,8 +48,6 @@ const ProductCard = ({product}: ProductCardProps) => {
 	const handleProductInView = (inView: boolean) => {
 		setTimeout(async () => {
 			if (inView) {
-				// console.log(`[PRODUCT-${product?.id}-IN-VIEW]`);
-
 				await axios.post(
 					`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-impression`,
 					{
@@ -71,8 +68,6 @@ const ProductCard = ({product}: ProductCardProps) => {
 		try {
 			setLoading(true);
 
-			// console.log('[LIKE-UNLIKE-PRODUCT-PAYLOAD] :: ', formData);
-
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/like-unlike-product?productId=${product?.productId}`,
 				formData,
@@ -83,16 +78,12 @@ const ProductCard = ({product}: ProductCardProps) => {
 				}
 			);
 
-			// console.log('[LIKE-UNLIKE-PRODUCT-SUCCESS] :: ', data);
-
 			setLoading(false);
 
 			updateProduct(product?.id!, data.data);
 		} catch (error) {
 			setLoading(false);
 			const _error = error as AxiosError;
-
-			// console.log('[ERROR] :: ', _error);
 		}
 	};
 
@@ -130,7 +121,6 @@ const ProductCard = ({product}: ProductCardProps) => {
 
 			updateShowChatConversation(true);
 		} catch (error) {
-			// setLoading(false);
 			const _error = error as AxiosError;
 
 			console.log('[ERROR] :: ', _error);
@@ -140,20 +130,10 @@ const ProductCard = ({product}: ProductCardProps) => {
 	return (
 		<div
 			ref={ref}
-			className='w-[48%] sm:w-[150px] flex flex-col justify-between shadow__1 rounde relative'
+			className='w-[48%] sm:w-[150px] flex flex-col justify-between shadow__1 relative'
 		>
 			<div
 				onClick={() => {
-					if (
-						!pathName.includes('marketplace') &&
-						!pathName.includes('sellers')
-					) {
-						return router.push(
-							`/marketplace/products/${formatProductSlug(
-								product!
-							)}`
-						);
-					}
 					if (pathName.includes('marketplace')) {
 						return router.push(
 							`/marketplace/products/${formatProductSlug(
@@ -161,15 +141,8 @@ const ProductCard = ({product}: ProductCardProps) => {
 							)}`
 						);
 					}
-					if (pathName.includes('sellers')) {
-						return router.push(
-							`/sellers/${formatVendorSlug(
-								vendor!
-							)}/products/${formatProductSlug(product!)}`
-						);
-					}
 				}}
-				className='h-[180px] relative cursor-pointer rela'
+				className='h-[180px] relative cursor-pointer'
 			>
 				<Image
 					fill

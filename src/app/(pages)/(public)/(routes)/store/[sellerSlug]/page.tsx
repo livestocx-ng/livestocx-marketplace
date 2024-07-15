@@ -125,7 +125,7 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 					<div className='flex flex-col w-full bg-white px-4 md:px-8 py-5 space-y-2 sm:space-y-5'>
 						<SellerBanner />
 
-						<div className='relative'>
+						<div className='relative space-y-2'>
 							{vendorProfile?.isAccountDisabled === true && (
 								<div className='absolute top-0 left-0 h-full w-full bg-[#ffffff90] backdrop-blur-md z-[5] flex flex-col items-center justify-center'>
 									<p className='text-center text-sm sm:text-lg font-medium'>

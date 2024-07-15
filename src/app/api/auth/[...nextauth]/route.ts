@@ -76,10 +76,19 @@ const handler = NextAuth({
 			return true; // Do different verification for other providers that don't have `email`
 		},
 		async redirect({url, baseUrl}) {
+			const lsRedirectUrl = localStorage.getItem(
+				LIVESTOCX_AUTH_REDIRECT
+			);
+			const redirectUrl =
+				lsRedirectUrl && lsRedirectUrl?.includes('business')
+					? `/business?subscription_now=true`
+					: lsRedirectUrl;
+
 			const redirectUrlCookie = cookies().get('redirect_url');
-			const redirectUrl = redirectUrlCookie?.value.includes('business')
-				? `/business?subscription_now=true`
-				: redirectUrlCookie?.value || baseUrl;
+			// const redirectUrl = redirectUrlCookie?.value.includes('business')
+			// 	? `/business?subscription_now=true`
+			// 	: redirectUrlCookie?.value || baseUrl;
+
 			return redirectUrl;
 		},
 	},

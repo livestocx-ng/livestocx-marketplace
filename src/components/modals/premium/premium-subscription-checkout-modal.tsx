@@ -7,8 +7,8 @@ import {
 } from '@/components/ui/tooltip';
 import {
 	useGlobalStore,
-	usePremiumSubscriptionCheckoutModalStore,
 	usePremiumSubscriptionSuccessModalStore,
+	usePremiumSubscriptionCheckoutModalStore,
 } from '@/hooks/use-global-store';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
@@ -31,6 +31,9 @@ type FormData = {
 	slug: string;
 	state: string;
 	city: string;
+	facebookUrl: string;
+	instagramUrl: string;
+	twitterUrl: string;
 };
 
 type FormAction = {
@@ -46,6 +49,9 @@ const initialState: FormData = {
 	slug: '',
 	state: '',
 	city: '',
+	facebookUrl: '',
+	instagramUrl: '',
+	twitterUrl: '',
 };
 
 const formReducer = (state: FormData, action: FormAction) => {
@@ -72,6 +78,7 @@ const PremiumSubscriptionCheckoutModal = () => {
 	const premiumSubscriptionSuccessModal =
 		usePremiumSubscriptionSuccessModalStore();
 
+	const [formStep, setFormStep] = useState<number>(1);
 	const [vendorSlugExists, setVendorSlugExists] = useState<boolean>(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
 	const [isFormDataValidated, setIsFormDataValidated] =
@@ -95,8 +102,6 @@ const PremiumSubscriptionCheckoutModal = () => {
 			updateVendorProfile(data.data);
 		} catch (error) {
 			const _error = error as AxiosError;
-
-			// console.log('[FETCH-VENDOR-PROFILE-ERROR] :: ', _error);
 		}
 	};
 
@@ -140,7 +145,7 @@ const PremiumSubscriptionCheckoutModal = () => {
 	const handleSubmit = async () => {
 		try {
 			setCreatePremiumSubscriptionPending(true);
-			
+
 			const validationError =
 				ValidatePremiumSubscriptionCheckoutFormData(formData);
 
@@ -296,201 +301,222 @@ const PremiumSubscriptionCheckoutModal = () => {
 					</Button>
 				</div>
 
-				<div className='flex flex-col space-y-2 w-full py-3'>
-					<div className='w-full'>
-						<p className='text-sm font-medium'>
-							Business Name{' '}
-							<span className='text-red-500'>*</span>
-						</p>
-						<FormTextInput
-							name='name'
-							disabled={isCreatePremiumSubscriptionPending}
-							padding='py-4 px-4'
-							placeHolder='Business Name'
-							value={formData.name}
-							handleChange={handleChange}
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-						/>
-					</div>
+				{formStep === 1 && (
+					<div className='flex flex-col space-y-2 w-full py-3'>
+						<div className='w-full'>
+							<p className='text-sm font-medium'>
+								Business Name{' '}
+								<span className='text-red-500'>*</span>
+							</p>
+							<FormTextInput
+								name='name'
+								padding='py-4 px-4'
+								value={formData.name}
+								placeHolder='Business Name'
+								handleChange={handleChange}
+								disabled={isCreatePremiumSubscriptionPending}
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
+						</div>
 
-					<div className='w-full'>
-						<p className='text-sm font-medium flex items-center space-x-2'>
-							<p>Business Handle</p>
-							<TooltipProvider>
-								<Tooltip>
-									<TooltipTrigger asChild>
-										<Info size={14} />
-									</TooltipTrigger>
-									<TooltipContent className='w-[350px]'>
-										<p className='text-sm font-normal'>
-											This value will be used to create
-											your custom domain link. &nbsp;
-											<span className='font-medium'>
-												https://livestocx.com/store/link
-											</span>
-										</p>
-									</TooltipContent>
-								</Tooltip>
-							</TooltipProvider>
-							<p className='text-red-500'>*</p>
-						</p>
-						<FormTextInput
-							name='slug'
-							disabled={
-								isCreatePremiumSubscriptionPending ||
-								vendorSlugExists
-							}
-							padding='py-4 px-4'
-							value={formData.slug}
-							handleChange={handleChange}
-							placeHolder='Enter store name to see how your handle will look'
-							classes='w-full text-sm placeholder:text-xs border focus:border-slate-500 rounded'
-						/>
+						<div className='w-full'>
+							<p className='text-sm font-medium flex items-center space-x-2'>
+								<p>Business Handle</p>
+								<TooltipProvider>
+									<Tooltip>
+										<TooltipTrigger asChild>
+											<Info size={14} />
+										</TooltipTrigger>
+										<TooltipContent className='w-[350px]'>
+											<p className='text-sm font-normal'>
+												This value will be used to
+												create your custom domain link.
+												&nbsp;
+												<span className='font-medium'>
+													https://livestocx.com/store/link
+												</span>
+											</p>
+										</TooltipContent>
+									</Tooltip>
+								</TooltipProvider>
+								<p className='text-red-500'>*</p>
+							</p>
+							<FormTextInput
+								name='slug'
+								disabled={
+									isCreatePremiumSubscriptionPending ||
+									vendorSlugExists
+								}
+								padding='py-4 px-4'
+								value={formData.slug}
+								handleChange={handleChange}
+								placeHolder='Enter store name to see how your handle will look'
+								classes='w-full text-sm placeholder:text-xs border focus:border-slate-500 rounded'
+							/>
 
-						<Badge
-							variant={'secondary'}
-							className='text-sky-500 text-xs'
-						>
-							https://livestocx.com/store/{formData.slug}
-						</Badge>
-					</div>
-
-					<div className='w-full'>
-						<p className='text-sm font-medium'>
-							Business Email{' '}
-							<span className='text-red-500'>*</span>
-						</p>
-						<FormTextInput
-							name='email'
-							disabled={isCreatePremiumSubscriptionPending}
-							padding='py-4 px-4'
-							placeHolder='Business Email'
-							value={formData.email}
-							handleChange={handleChange}
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-						/>
-					</div>
-
-					<div className='w-full'>
-						<p className='text-sm font-medium'>
-							Phone Number <span className='text-red-500'>*</span>
-						</p>
-						<FormTextInput
-							type='text'
-							name='phoneNumber'
-							padding='py-3 px-4'
-							disabled={isCreatePremiumSubscriptionPending}
-							placeHolder='Phone Number'
-							value={formData.phoneNumber}
-							handleChange={handleChange}
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-						/>
-					</div>
-
-					<div className='w-full'>
-						<p className='text-sm font-medium'>
-							Business Address{' '}
-							<span className='text-red-500'>*</span>
-						</p>
-						<FormTextInput
-							type='text'
-							name='address'
-							padding='py-3 px-4'
-							disabled={isCreatePremiumSubscriptionPending}
-							placeHolder='Business Address'
-							value={formData.address}
-							handleChange={handleChange}
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-						/>
-					</div>
-
-					<div className='w-full'>
-						<p className='text-sm font-medium'>
-							Business State{' '}
-							<span className='text-red-500'>*</span>
-						</p>
-						<div>
-							<select
-								name='state'
-								className='w-full border py-4 rounded px-3 text-sm scrollbar__1'
-								onChange={handleSelectChange}
+							<Badge
+								variant={'secondary'}
+								className='text-sky-500 text-xs'
 							>
-								<option value=''>
-									{formData.state
-										? formData.state
-										: 'Business State'}
-								</option>
-								{NigerianStates.map((option) => (
-									<option
-										key={option}
-										value={option}
-										className='cursor-pointer'
-									>
-										{option}
-									</option>
-								))}
-							</select>
+								https://livestocx.com/store/{formData.slug}
+							</Badge>
+						</div>
+
+						<div className='w-full'>
+							<p className='text-sm font-medium'>
+								Business Email{' '}
+								<span className='text-red-500'>*</span>
+							</p>
+							<FormTextInput
+								name='email'
+								disabled={isCreatePremiumSubscriptionPending}
+								padding='py-4 px-4'
+								placeHolder='Business Email'
+								value={formData.email}
+								handleChange={handleChange}
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
+						</div>
+
+						<div className='w-full'>
+							<p className='text-sm font-medium'>
+								Phone Number{' '}
+								<span className='text-red-500'>*</span>
+							</p>
+							<FormTextInput
+								type='text'
+								name='phoneNumber'
+								padding='py-3 px-4'
+								disabled={isCreatePremiumSubscriptionPending}
+								placeHolder='Phone Number'
+								value={formData.phoneNumber}
+								handleChange={handleChange}
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
+						</div>
+
+						<div className='w-full'>
+							<p className='text-sm font-medium'>
+								Business Address{' '}
+								<span className='text-red-500'>*</span>
+							</p>
+							<FormTextInput
+								type='text'
+								name='address'
+								padding='py-3 px-4'
+								disabled={isCreatePremiumSubscriptionPending}
+								placeHolder='Business Address'
+								value={formData.address}
+								handleChange={handleChange}
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
 						</div>
 					</div>
+				)}
 
-					<div className='w-full'>
-						<p className='text-sm font-medium'>
-							Business City{' '}
-							<span className='text-red-500'>*</span>
-						</p>
-						<div>
-							<select
-								name='city'
-								className='w-full border py-4 rounded px-3 text-sm scrollbar__1'
-								onChange={handleSelectChange}
-							>
-								<option value=''>
-									{formData.city
-										? formData.city
-										: 'Business City'}
-								</option>
-								{NigerianCities[
-									formData.state ? formData.state : 'Abia'
-								].map((option) => (
-									<option
-										key={option}
-										value={option}
-										className='cursor-pointer'
-									>
-										{option}
+				{formStep === 2 && (
+					<div className='flex flex-col space-y-2 w-full py-3'>
+						<div className='w-full'>
+							<p className='text-sm font-medium'>
+								Business State{' '}
+								<span className='text-red-500'>*</span>
+							</p>
+							<div>
+								<select
+									name='state'
+									className='w-full border py-4 rounded px-3 text-sm scrollbar__1'
+									onChange={handleSelectChange}
+								>
+									<option value=''>
+										{formData.state
+											? formData.state
+											: 'Business State'}
 									</option>
-								))}
-							</select>
+									{NigerianStates.map((option) => (
+										<option
+											key={option}
+											value={option}
+											className='cursor-pointer'
+										>
+											{option}
+										</option>
+									))}
+								</select>
+							</div>
+						</div>
+
+						<div className='w-full'>
+							<p className='text-sm font-medium'>
+								Business City{' '}
+								<span className='text-red-500'>*</span>
+							</p>
+							<div>
+								<select
+									name='city'
+									className='w-full border py-4 rounded px-3 text-sm scrollbar__1'
+									onChange={handleSelectChange}
+								>
+									<option value=''>
+										{formData.city
+											? formData.city
+											: 'Business City'}
+									</option>
+									{NigerianCities[
+										formData.state ? formData.state : 'Abia'
+									].map((option) => (
+										<option
+											key={option}
+											value={option}
+											className='cursor-pointer'
+										>
+											{option}
+										</option>
+									))}
+								</select>
+							</div>
 						</div>
 					</div>
-				</div>
+				)}
 
-				<div className='flex justify-end'>
-					{isCreatePremiumSubscriptionPending ? (
-						<Button
-							type='button'
-							variant={'outline'}
-							className='w-full bg-sky-600 hover:bg-sky-600 text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0'
-						>
-							<ButtonLoader />
-						</Button>
-					) : isFormDataValidated ? (
-						<PaystackButton
-							{...payStackButtonProps}
-							className={`text-white h-12 w-full rounded px-4 py-3 text-xs bg-sky-600 hover:bg-sky-600`}
-						/>
-					) : (
-						<Button
-							type='button'
-							variant={'outline'}
-							onClick={handleSubmit}
-							className='w-full bg-sky-600 hover:bg-sky-600 text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0 flex items-center space-x-2'
-						>
-							<p>Proceed to Checkout</p>{' '}
-							<CircleDollarSign size={15} />
-						</Button>
-					)}
-				</div>
+				{formStep === 1 && (
+					<Button
+						type='button'
+						variant={'outline'}
+						onClick={() => setFormStep(2)}
+						className='w-full bg-sky-600 hover:bg-sky-600 text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0'
+					>
+						Next
+					</Button>
+				)}
+
+				{formStep === 2 && (
+					<div className='flex justify-end'>
+						{isCreatePremiumSubscriptionPending ? (
+							<Button
+								type='button'
+								variant={'outline'}
+								className='w-full bg-sky-600 hover:bg-sky-600 text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0'
+							>
+								<ButtonLoader />
+							</Button>
+						) : isFormDataValidated ? (
+							<PaystackButton
+								{...payStackButtonProps}
+								className={`text-white h-12 w-full rounded px-4 py-3 text-xs bg-sky-600 hover:bg-sky-600`}
+							/>
+						) : (
+							<Button
+								type='button'
+								variant={'outline'}
+								onClick={handleSubmit}
+								className='w-full bg-sky-600 hover:bg-sky-600 text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0 flex items-center space-x-2'
+							>
+								<p>Proceed to Checkout</p>{' '}
+								<CircleDollarSign size={15} />
+							</Button>
+						)}
+					</div>
+				)}
 			</div>
 		</div>
 	);

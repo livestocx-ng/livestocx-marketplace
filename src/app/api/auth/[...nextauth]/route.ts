@@ -61,11 +61,11 @@ const handler = NextAuth({
 							? `/business?subscription_now=true`
 							: lsRedirectUrl;
 
-					if (redirectUrl) {
-						return Promise.resolve(redirectUrl);
-					} else {
-						return Promise.resolve('/');
-					}
+					// if (redirectUrl) {
+					// 	return Promise.resolve(redirectUrl);
+					// } else {
+					// 	return Promise.resolve('/');
+					// }
 				} catch (error) {
 					// console.error('[GOOGLE-SIGN-API-ERROR]', error);
 				}
@@ -74,6 +74,13 @@ const handler = NextAuth({
 			// return profile?.email && profile?.email.endsWith("@example.com")
 
 			return true; // Do different verification for other providers that don't have `email`
+		},
+		async redirect({url, baseUrl}) {
+			const redirectUrlCookie = cookies().get('redirect_url');
+			const redirectUrl = redirectUrlCookie?.value.includes('business')
+				? `/business?subscription_now=true`
+				: redirectUrlCookie?.value || baseUrl;
+			return redirectUrl;
 		},
 	},
 });

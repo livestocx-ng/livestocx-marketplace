@@ -13,6 +13,7 @@ import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
 import FormPasswordInput from '@/components/input/form-password-input';
 import {ValidateSigninFormData} from '@/utils/form-validations/auth.validation';
+import {COOKIE_MAX_AGE, LIVESTOCX_AUTH_REDIRECT} from '@/lib/constants';
 
 type FormData = {
 	email: string;
@@ -198,7 +199,18 @@ const SignInPage = () => {
 						<Button
 							type='button'
 							variant={'outline'}
-							onClick={() => signIn('google')}
+							onClick={() => {
+								const redirectUrl = searchParams
+									.get('redirect_to')!
+									.includes('business')
+									? 'business?subscription_now=true'
+									: searchParams.get('redirect_to')!;
+								document.cookie = `${LIVESTOCX_AUTH_REDIRECT}=${redirectUrl}; Max-Age=${COOKIE_MAX_AGE}; Path=/; SameSite=Strict; Secure=${
+									process.env.NODE_ENV === 'production'
+								}`;
+
+								signIn('google');
+							}}
 							className='flex items-center gap-x-4 h-12 justify-center w-full rounded-full py-4'
 						>
 							<Image

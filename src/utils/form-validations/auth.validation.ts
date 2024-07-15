@@ -30,9 +30,9 @@ interface SignupDto {
 
 interface PremiumSubscriptionCheckoutDto extends VendorProfileDto {
 	slug: string;
-	facebookUrl: string;
-	instagramUrl: string;
-	twitterUrl: string;
+	facebookUrl?: string;
+	instagramUrl?: string;
+	twitterUrl?: string;
 }
 
 const phoneRegEX = new RegExp(/^\d{11}$/);

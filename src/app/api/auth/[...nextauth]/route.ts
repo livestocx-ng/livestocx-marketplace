@@ -67,7 +67,7 @@ const handler = NextAuth({
 					// 	return Promise.resolve('/');
 					// }
 
-					return Promise.resolve('/');
+					// return Promise.resolve('/');
 				} catch (error) {
 					// console.error('[GOOGLE-SIGN-API-ERROR]', error);
 				}
@@ -97,6 +97,8 @@ const handler = NextAuth({
 				? `/business?subscription_now=true`
 				: redirectUrlCookie?.value || baseUrl;
             // const redirectUrl = redirectUrlCookie?.value || baseUrl;
+
+			console.log('[REDIRECT_URL] :: ', redirectUrl);
 
 			return redirectUrl! || baseUrl;
 		},

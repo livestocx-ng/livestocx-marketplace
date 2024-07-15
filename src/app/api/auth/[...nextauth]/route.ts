@@ -53,19 +53,20 @@ const handler = NextAuth({
 						secure: process.env.NODE_ENV === 'production',
 					});
 
-					const lsRedirectUrl = localStorage.getItem(
+					const redirectUrlCookie = cookies().get(
 						LIVESTOCX_AUTH_REDIRECT
 					);
-					const redirectUrl =
-						lsRedirectUrl && lsRedirectUrl?.includes('business')
-							? `/business?subscription_now=true`
-							: lsRedirectUrl;
+					const redirectUrl = redirectUrlCookie?.value.includes(
+						'business'
+					)
+						? `/business?subscription_now=true`
+						: redirectUrlCookie?.value || '';
 
-					// if (redirectUrl!) {
-					// 	return Promise.resolve(redirectUrl);
-					// } else {
-					// 	return Promise.resolve('/');
-					// }
+					if (redirectUrl!) {
+						return Promise.resolve(redirectUrl);
+					} else {
+						return Promise.resolve('/');
+					}
 
 					// return Promise.resolve('/');
 				} catch (error) {
@@ -77,31 +78,31 @@ const handler = NextAuth({
 
 			return true; // Do different verification for other providers that don't have `email`
 		},
-		async redirect({url, baseUrl}) {
-			// const lsValue = window.localStorage.getItem(LIVESTOCX_AUTH_REDIRECT);
+		// async redirect({url, baseUrl}) {
+		// 	// const lsValue = window.localStorage.getItem(LIVESTOCX_AUTH_REDIRECT);
 
-			// const lsRedirectUrl = lsValue ? JSON.parse(lsValue) : '';
+		// 	// const lsRedirectUrl = lsValue ? JSON.parse(lsValue) : '';
 
-			// const redirectUrl =
-			// 	lsRedirectUrl && lsRedirectUrl?.includes('business')
-			// 		? `/business?subscription_now=true`
-			// 		: lsRedirectUrl;
+		// 	// const redirectUrl =
+		// 	// 	lsRedirectUrl && lsRedirectUrl?.includes('business')
+		// 	// 		? `/business?subscription_now=true`
+		// 	// 		: lsRedirectUrl;
 
-			// const redirectUrlCookie = cookies().get('redirect_url');
-			// const redirectUrl = redirectUrlCookie?.value.includes('business')
-			// 	? `/business?subscription_now=true`
-			// 	: redirectUrlCookie?.value || baseUrl;
-			
-			const redirectUrlCookie = cookies().get(LIVESTOCX_AUTH_REDIRECT);
-			const redirectUrl = redirectUrlCookie?.value.includes('business')
-				? `/business?subscription_now=true`
-				: redirectUrlCookie?.value || baseUrl;
-            // const redirectUrl = redirectUrlCookie?.value || baseUrl;
+		// 	// const redirectUrlCookie = cookies().get('redirect_url');
+		// 	// const redirectUrl = redirectUrlCookie?.value.includes('business')
+		// 	// 	? `/business?subscription_now=true`
+		// 	// 	: redirectUrlCookie?.value || baseUrl;
 
-			console.log('[REDIRECT_URL] :: ', redirectUrl);
+		// 	const redirectUrlCookie = cookies().get(LIVESTOCX_AUTH_REDIRECT);
+		// 	const redirectUrl = redirectUrlCookie?.value.includes('business')
+		// 		? `/business?subscription_now=true`
+		// 		: redirectUrlCookie?.value || baseUrl;
+		// 	// const redirectUrl = redirectUrlCookie?.value || baseUrl;
 
-			return redirectUrl! || baseUrl;
-		},
+		// 	console.log('[REDIRECT_URL] :: ', redirectUrl);
+
+		// 	return redirectUrl! || baseUrl;
+		// },
 	},
 });
 

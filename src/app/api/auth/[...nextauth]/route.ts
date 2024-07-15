@@ -53,25 +53,20 @@ const handler = NextAuth({
 						secure: process.env.NODE_ENV === 'production',
 					});
 
-					const redirectUrlCookie = cookies().get(
-						LIVESTOCX_AUTH_REDIRECT
-					);
-					const redirectUrl = redirectUrlCookie?.value.includes(
-						'business'
-					)
-						? `/business?subscription_now=true`
-						: redirectUrlCookie?.value;
+					// const redirectUrlCookie = cookies().get(
+					// 	LIVESTOCX_AUTH_REDIRECT
+					// );
+					// const redirectUrl = redirectUrlCookie?.value.includes(
+					// 	'business'
+					// )
+					// 	? `/business?subscription_now=true`
+					// 	: redirectUrlCookie?.value;
 
-					// if (redirectUrl!) {
-					// 	return Promise.resolve(redirectUrl);
-					// } else {
-					// 	return Promise.resolve('/');
-					// }
-					account.redirect_url = redirectUrl;
+					// account.redirect_url = redirectUrl;
 
-					console.log('[REDIRECT_URL] :: ', account.redirectUrl);
+					// console.log('[REDIRECT_URL] :: ', account.redirectUrl);
 
-					return Promise.resolve(redirectUrl!);
+					// return Promise.resolve(redirectUrl!);
 					// return true;
 				} catch (error) {
 					// console.error('[GOOGLE-SIGN-API-ERROR]', error);
@@ -82,14 +77,13 @@ const handler = NextAuth({
 
 			return true; // Do different verification for other providers that don't have `email`
 		},
-		async jwt({token, account}) {
-			if (account?.redirectUrl) {
+		async redirect({url, baseUrl}) {
+			const redirectUrlCookie = cookies().get(LIVESTOCX_AUTH_REDIRECT);
+			const redirectUrl = redirectUrlCookie?.value.includes('business')
+				? `/business?subscription_now=true`
+				: redirectUrlCookie?.value;
 
-				console.log('[REDIRECT_URL] :: ', account.redirectUrl);
-
-				token.redirectUrl = account.redirectUrl;
-			}
-			return token;
+			return redirectUrl || baseUrl;
 		},
 	},
 });

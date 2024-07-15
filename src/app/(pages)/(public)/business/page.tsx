@@ -7,9 +7,9 @@ import {
 	usePremiumSubscriptionCheckoutModalStore,
 } from '@/hooks/use-global-store';
 import {toast} from 'react-hot-toast';
-import {useRouter} from 'next/navigation';
+import {useRouter, useSearchParams} from 'next/navigation';
 import {Button} from '@/components/ui/button';
-import {Fragment, useRef, useState} from 'react';
+import {Fragment, useEffect, useRef, useState} from 'react';
 import {enterprisePlanComparisons} from '@/data';
 import Footer from '@/components/navigation/footer';
 import {DataTable} from '@/components/ui/data-table';
@@ -22,6 +22,7 @@ import {BadgeCheck, Laptop, Award, PieChart, MessageCircle} from 'lucide-react';
 
 const BusinessPage = () => {
 	const router = useRouter();
+	const searchParams = useSearchParams();
 
 	const {
 		user,
@@ -41,6 +42,17 @@ const BusinessPage = () => {
 		amount: number;
 		buttonTitle: string;
 	}>({id: 0, amount: 0, buttonTitle: ''});
+
+	useEffect(() => {
+		if (
+			searchParams.get('subscription_now')! === 'true' &&
+			subscriptionPlansRef !== null
+		) {
+			subscriptionPlansRef.current!.scrollIntoView({
+				behavior: 'smooth',
+			});
+		}
+	}, [searchParams, subscriptionPlansRef]);
 
 	const handlePremiumSubscriptionInquiry = async () => {
 		await axios.post(

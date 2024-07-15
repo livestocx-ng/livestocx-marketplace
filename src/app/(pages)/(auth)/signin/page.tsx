@@ -12,8 +12,8 @@ import {useRouter, useSearchParams} from 'next/navigation';
 import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
 import FormPasswordInput from '@/components/input/form-password-input';
-import {ValidateSigninFormData} from '@/utils/form-validations/auth.validation';
 import {COOKIE_MAX_AGE, LIVESTOCX_AUTH_REDIRECT} from '@/lib/constants';
+import {ValidateSigninFormData} from '@/utils/form-validations/auth.validation';
 
 type FormData = {
 	email: string;

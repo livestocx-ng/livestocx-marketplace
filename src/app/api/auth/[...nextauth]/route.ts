@@ -53,21 +53,40 @@ const handler = NextAuth({
 						secure: process.env.NODE_ENV === 'production',
 					});
 
-					// const redirectUrlCookie = cookies().get(
-					// 	LIVESTOCX_AUTH_REDIRECT
-					// );
-					// const redirectUrl = redirectUrlCookie?.value.includes(
-					// 	'business'
-					// )
-					// 	? `/business?subscription_now=true`
-					// 	: redirectUrlCookie?.value;
+					const cookiesInstance = cookies();
+					const redirectUrlCookie = cookiesInstance.get(
+						LIVESTOCX_AUTH_REDIRECT
+					);
 
-					// account.redirect_url = redirectUrl;
+					console.info(
+						'[CALLBACK_LIVESTOCX_AUTH_REDIRECT] :: ',
+						redirectUrlCookie
+					);
+					console.info(
+						'[CALLBACK_LIVESTOCX_AUTH_REDIRECT_VALUE] :: ',
+						redirectUrlCookie?.value
+					);
+					console.info(
+						'[CALLBACK_LIVESTOCX_AUTH_REDIRECT_VALUE_INCLUDES_BUSINESS] :: ',
+						redirectUrlCookie?.value.includes('business')
+					);
 
-					// console.log('[REDIRECT_URL] :: ', account.redirectUrl);
+					if (redirectUrlCookie?.value.includes('business')) {
+						const redirectUrl = redirectUrlCookie?.value.includes(
+							'business'
+						)
+							? '/business?subscription_now=true'
+							: redirectUrlCookie?.value;
 
-					// return Promise.resolve(redirectUrl!);
-					// return true;
+						console.info(
+							'[RETURN_LIVESTOCX_AUTH_REDIRECT] :: ',
+							redirectUrlCookie
+						);
+
+						return Promise.resolve(redirectUrl);
+					}
+
+					return Promise.resolve('/');
 				} catch (error) {
 					// console.error('[GOOGLE-SIGN-API-ERROR]', error);
 				}
@@ -77,31 +96,31 @@ const handler = NextAuth({
 
 			return true; // Do different verification for other providers that don't have `email`
 		},
-		async redirect({url, baseUrl}) {
-			const cookiesInstance = cookies();
-			const redirectUrlCookie = cookiesInstance.get(
-				LIVESTOCX_AUTH_REDIRECT
-			);
+		// async redirect({url, baseUrl}) {
+		// 	const cookiesInstance = cookies();
+		// 	const redirectUrlCookie = cookiesInstance.get(
+		// 		LIVESTOCX_AUTH_REDIRECT
+		// 	);
 
-			console.info('[LIVESTOCX_AUTH_REDIRECT] :: ', redirectUrlCookie);
-			console.info('[LIVESTOCX_AUTH_REDIRECT_VALUE] :: ', redirectUrlCookie?.value);
-			console.info('[LIVESTOCX_AUTH_REDIRECT_VALUE_INCLUDES_BUSINESS] :: ', redirectUrlCookie?.value.includes('business'));
+		// 	console.info('[LIVESTOCX_AUTH_REDIRECT] :: ', redirectUrlCookie);
+		// 	console.info('[LIVESTOCX_AUTH_REDIRECT_VALUE] :: ', redirectUrlCookie?.value);
+		// 	console.info('[LIVESTOCX_AUTH_REDIRECT_VALUE_INCLUDES_BUSINESS] :: ', redirectUrlCookie?.value.includes('business'));
 
-			if (redirectUrlCookie?.value.includes('business')) {
-				const redirectUrl = redirectUrlCookie?.value.includes('business')
-					? '/business?subscription_now=true'
-					: redirectUrlCookie?.value;
+		// 	if (redirectUrlCookie?.value.includes('business')) {
+		// 		const redirectUrl = redirectUrlCookie?.value.includes('business')
+		// 			? '/business?subscription_now=true'
+		// 			: redirectUrlCookie?.value;
 
-				console.info(
-					'[LIVESTOCX_AUTH_REDIRECT] :: ',
-					redirectUrlCookie
-				);
+		// 		console.info(
+		// 			'[LIVESTOCX_AUTH_REDIRECT] :: ',
+		// 			redirectUrlCookie
+		// 		);
 
-				return redirectUrl;
-			}
+		// 		return redirectUrl;
+		// 	}
 
-			return baseUrl;
-		},
+		// 	return baseUrl;
+		// },
 	},
 });
 

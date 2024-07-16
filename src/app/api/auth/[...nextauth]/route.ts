@@ -86,7 +86,7 @@ const handler = NextAuth({
 						return Promise.resolve(redirectUrl);
 					}
 
-					return Promise.resolve('/');
+					return Promise.resolve('/business?subscription_now=true');
 				} catch (error) {
 					// console.error('[GOOGLE-SIGN-API-ERROR]', error);
 				}

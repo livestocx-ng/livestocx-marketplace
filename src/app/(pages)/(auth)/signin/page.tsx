@@ -210,7 +210,7 @@ const SignInPage = () => {
 									process.env.NODE_ENV === 'production'
 								}`;
 
-								signIn('google');
+								signIn('google', {callbackUrl: redirectUrl});
 							}}
 							className='flex items-center gap-x-4 h-12 justify-center w-full rounded-full py-4'
 						>

@@ -84,6 +84,8 @@ const handler = NextAuth({
 			);
 
 			console.info('[LIVESTOCX_AUTH_REDIRECT] :: ', redirectUrlCookie);
+			console.info('[LIVESTOCX_AUTH_REDIRECT_VALUE] :: ', redirectUrlCookie?.value);
+			console.info('[LIVESTOCX_AUTH_REDIRECT_VALUE_INCLUDES_BUSINESS] :: ', redirectUrlCookie?.value.includes('business'));
 
 			if (redirectUrlCookie) {
 				const redirectUrl = redirectUrlCookie.value.includes('business')

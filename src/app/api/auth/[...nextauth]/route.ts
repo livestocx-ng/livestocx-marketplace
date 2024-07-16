@@ -83,12 +83,15 @@ const handler = NextAuth({
 				LIVESTOCX_AUTH_REDIRECT
 			);
 
-			const redirectUrl = redirectUrlCookie?.value.includes('business')
-				? `/business?subscription_now=true`
-				: '/';
-			// : '/business';
+			if (redirectUrlCookie) {
+				const redirectUrl = redirectUrlCookie.value.includes('business')
+					? '/business?subscription_now=true'
+					: redirectUrlCookie.value;
 
-			return redirectUrl;
+				return redirectUrl;
+			}
+
+			return baseUrl;
 		},
 	},
 });

@@ -83,10 +83,17 @@ const handler = NextAuth({
 				LIVESTOCX_AUTH_REDIRECT
 			);
 
+			console.info('[LIVESTOCX_AUTH_REDIRECT] :: ', redirectUrlCookie);
+
 			if (redirectUrlCookie) {
 				const redirectUrl = redirectUrlCookie.value.includes('business')
 					? '/business?subscription_now=true'
 					: redirectUrlCookie.value;
+
+				console.info(
+					'[LIVESTOCX_AUTH_REDIRECT] :: ',
+					redirectUrlCookie
+				);
 
 				return redirectUrl;
 			}

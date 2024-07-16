@@ -337,11 +337,85 @@ const PrivacyPolicyPage = () => {
 					</ol>
 
 					<div className='text-sm font-semibold'>
-						10. Changes to this Privacy Policy
+						10. Livestock Agritech Solutions LTD complies with the
+						Google API Service: User Data Policy regarding the
+						access, use, storage, and sharing of Google user data.
+						This includes:{' '}
 					</div>
 					<ol className='space-y-5 px-4 list-none'>
 						<li className='text-sm leading-7'>
-							10.1 We may update this Privacy Policy occasionally
+							10.1 Information Collection and Use: When you use
+							our application through Google OAuth, we collect the
+							following information from your Google account, with
+							your explicit consent:
+							<ul className='space-y-2 px-4 list-noe'>
+								<li className='text-sm leading-7'>
+									1. Basic Profile Information: Name, email
+									address, and profile picture.
+								</li>
+								<li className='text-sm leading-7'>
+									2. Additional Information: Any other data
+									points authorized by you during the OAuth
+									consent process.
+								</li>
+							</ul>
+						</li>
+						<li className='text-sm leading-7'>
+							10.2 Purpose of Data Collection: We use the
+							collected information to:
+							<ol className='space-y-2 px-4 list-none'>
+								<li className='text-sm leading-7'>
+									1. Authenticate and identify users.
+								</li>
+								<li className='text-sm leading-7'>
+									2. Provide personalized services and
+									features.
+								</li>
+								<li className='text-sm leading-7'>
+									3. Improve our application's performance and
+									user experience.
+								</li>
+							</ol>
+						</li>
+						<li className='text-sm leading-7'>
+							10.3 Data Sharing and Disclosure We do not share
+							your Google account information with third parties,
+							except:
+							<ol className='space-y-2 px-4 list-none'>
+								<li className='text-sm leading-7'>
+									1. As necessary to comply with legal
+									obligations.
+								</li>
+								<li className='text-sm leading-7'>
+									2. To protect the security and integrity of
+									our services.
+								</li>
+							</ol>
+						</li>
+						<li className='text-sm leading-7'>
+							10.4 Data Security We implement industry-standard
+							security measures to protect your data against
+							unauthorized access, alteration, disclosure, or
+							destruction. This includes encryption, access
+							controls, and regular security audits.
+						</li>
+						<li className='text-sm leading-7'>
+							10.5 User Rights You have the right to:
+							<ol className='space-y-2 px-4 list-none'>
+								<li className='text-sm leading-7'>
+									1. Access, update, or delete your
+									information.
+								</li>
+							</ol>
+						</li>
+					</ol>
+
+					<div className='text-sm font-semibold'>
+						11. Changes to this Privacy Policy
+					</div>
+					<ol className='space-y-5 px-4 list-none'>
+						<li className='text-sm leading-7'>
+							11.1 We may update this Privacy Policy occasionally
 							to reflect changes in our practices or legal
 							obligations. We will provide notice of any material
 							changes by posting the updated Policy on our Website
@@ -349,21 +423,21 @@ const PrivacyPolicyPage = () => {
 						</li>
 					</ol>
 
-					<div className='text-sm font-semibold'>11. Contact Us</div>
+					<div className='text-sm font-semibold'>12. Contact Us</div>
 					<ol className='space-y-5 px-4 list-none'>
 						<li className='text-sm leading-7'>
-							11.1 If you have any questions, concerns, or
+							12.1 If you have any questions, concerns, or
 							requests regarding this Privacy Policy or our data
 							practices, please contact us at info@livestocx.com.
 						</li>
 					</ol>
 
 					<div className='text-sm font-semibold'>
-						12. Governing Law
+						13. Governing Law
 					</div>
 					<ol className='space-y-5 px-4 list-none'>
 						<li className='text-sm leading-7'>
-							12.1 This Privacy Policy shall be governed by and
+							13.1 This Privacy Policy shall be governed by and
 							construed in accordance with the laws of Nigeria.
 							Any disputes arising out of or relating to this
 							Policy shall be resolved in the courts of Nigeria.

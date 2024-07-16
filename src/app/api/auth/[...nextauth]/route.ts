@@ -85,7 +85,7 @@ const handler = NextAuth({
 
 			const redirectUrl = redirectUrlCookie?.value.includes('business')
 				? `/business?subscription_now=true`
-				: '/';j
+				: '/';
 			// : '/business';
 
 			return redirectUrl;

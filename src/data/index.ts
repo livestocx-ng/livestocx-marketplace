@@ -14,9 +14,13 @@ export const NavLinks: NavLink[] = [
 		url: '/',
 	},
 	{
-		title: 'Sellers',
-		url: '/sellers',
+		title: 'Business',
+		url: '/business',
 	},
+	// {
+	// 	title: 'Sellers',
+	// 	url: '/sellers',
+	// },
 	{
 		title: 'About Us',
 		url: '/about-us',
@@ -24,10 +28,6 @@ export const NavLinks: NavLink[] = [
 	{
 		title: 'Contact Us',
 		url: '/contact-us',
-	},
-	{
-		title: 'Enterprise',
-		url: '/enterprise',
 	},
 ];
 
@@ -347,28 +347,28 @@ export const FaqItems: FaqOption[] = [
 export const enterprisePlanComparisons: EnterprisePlanComparison[] = [
 	{
 		feature: 'Initial Cost',
-		customBusinessWebsite: 'High (design, development, hosting, domain) $3,000 - $10,000 initial + $100 - $300/month maintenance',
-		platform: 'Low (starting at $21/month)',
+		customBusinessWebsite: 'High (design, development, hosting, domain) ₦150,000 - ₦800,000',
+		platform: 'Low (starting at ₦10,050/year)',
 	},
 	{
 		feature: 'Maintenance Cost',
-		customBusinessWebsite: 'High (ongoing maintenance, updates, hosting)',
+		customBusinessWebsite: 'High (maintenance, hosting)',
 		platform: 'Included in subscription',
 	},
-	{
-		feature: 'Time to Launch',
-		customBusinessWebsite: 'Long (weeks to months for development)',
-		platform: 'Short (immediate setup upon subscription)',
-	},
-	{
-		feature: 'Technical Skills Required',
-		customBusinessWebsite: 'High (coding, design, server management)',
-		platform: 'None (user-friendly interface)',
-	},
+	// {
+	// 	feature: 'Time to Launch',
+	// 	customBusinessWebsite: 'Long (weeks to months for development)',
+	// 	platform: 'Short (immediate setup upon subscription)',
+	// },
+	// {
+	// 	feature: 'Technical Skills Required',
+	// 	customBusinessWebsite: 'High (coding, design, server management)',
+	// 	platform: 'None (user-friendly interface)',
+	// },
 	{
 		feature: 'Product Uploads',
 		customBusinessWebsite: 'Additional setup and costs',
-		platform: 'Unlimited uploads for $5/month',
+		platform: 'Unlimited uploads',
 	},
 	{
 		feature: 'Sales Management Tools',

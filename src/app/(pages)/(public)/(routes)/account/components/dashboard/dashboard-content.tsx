@@ -8,70 +8,23 @@ import {
 } from 'react-share';
 import Image from 'next/image';
 import {Copy} from 'lucide-react';
+import {Vendor} from '@/types/types';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useEffect, useState} from 'react';
 import {Button} from '@/components/ui/button';
-import {DataTable} from '@/components/ui/data-table';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import ButtonLoader from '@/components/loader/button-loader';
-import {RecentOrderColumn, columns} from './tables/recent-orders-columns';
-import {Vendor} from '@/types/types';
 
-const RecentOrders: RecentOrderColumn[] = [
-	{
-		id: '1',
-		productId: '#123',
-		date: '8 Sep, 2023',
-		total: '₦13,500 (2 Products)',
-		status: 'Processing',
-	},
-	{
-		id: '2',
-		productId: '#259',
-		date: '8 Sep, 2023',
-		total: '₦17,500 (2 Products)',
-		status: 'Delivered',
-	},
-	{
-		id: '3',
-		productId: '#260',
-		date: '8 Oct, 2023',
-		total: '₦14,500 (2 Products)',
-		status: 'Delivered',
-	},
-	{
-		id: '4',
-		productId: '#460',
-		date: '8 Sep, 2023',
-		total: '₦13,500 (2 Products)',
-		status: 'Processing',
-	},
-	{
-		id: '5',
-		productId: '#782',
-		date: '8 Sep, 2023',
-		total: '₦17,500 (2 Products)',
-		status: 'Delivered',
-	},
-	{
-		id: '6',
-		productId: '#030',
-		date: '8 Oct, 2023',
-		total: '₦14,500 (2 Products)',
-		status: 'Delivered',
-	},
-];
-
-interface DashboardContentProps {
-	// user: User | null;
-	// updateTab: Dispatch<SetStateAction<Tab>>;
-}
-
-const DashboardContent = ({}: DashboardContentProps) => {
-	const {user, vendor, updateUser, updateVendor, updateCurrentAccountTab} =
-		useGlobalStore();
+const DashboardContent = () => {
+	const {
+		user,
+		vendorProfile,
+		updateUser,
+		updateVendorProfile,
+		updateCurrentAccountTab,
+	} = useGlobalStore();
 
 	const [loading, setLoading] = useState<boolean>(false);
 
@@ -88,7 +41,7 @@ const DashboardContent = ({}: DashboardContentProps) => {
 
 			// console.log('[DATA] ::  ', data);
 
-			updateVendor(data.data);
+			updateVendorProfile(data.data);
 		} catch (error) {
 			const _error = error as AxiosError;
 
@@ -103,9 +56,6 @@ const DashboardContent = ({}: DashboardContentProps) => {
 	const handleUpdateUserRole = async (role: string) => {
 		try {
 			setLoading(true);
-
-			// console.log('[UPDATE-USER-ROLE-PAYLOAD] :: ', user);
-			// console.log('[UPDATE-USER-ROLE-PAYLOAD] :: ', role);
 
 			const {data} = await axios.patch(
 				`${process.env.NEXT_PUBLIC_API_URL}/auth/update-user-role`,
@@ -139,6 +89,7 @@ const DashboardContent = ({}: DashboardContentProps) => {
 		}
 	};
 
+<<<<<<< HEAD
 	const formatVendorSlug = (vendor: Vendor): string => {
 		if (vendor) {
 			const formattedProductName = vendor?.name.replace(/,/g, '');
@@ -155,6 +106,8 @@ const DashboardContent = ({}: DashboardContentProps) => {
 		return '';
 	};
 
+=======
+>>>>>>> 96786d9fdd93321b006fe77a73c763b703a3a574
 	return (
 		<div className='w-full md:w-[78%] flex flex-col gap-5'>
 			<div className='flex flex-col md:flex-row items-center justify-between w-full'>
@@ -181,61 +134,61 @@ const DashboardContent = ({}: DashboardContentProps) => {
 						</p>
 					</div>
 
-					{user?.role === 'FARMER' && (
-						<div className='flex items-center space-x-4'>
-							<p
-								// onClick={() => updateCurrentAccountTab('Settings')}
-								className='text-sm'
-							>
-								Share Profile:
-							</p>
+					{user?.role === 'FARMER' &&
+						vendorProfile?.slug?.length! > 1 && (
+							<div className='flex items-center space-x-4'>
+								<p
+									// onClick={() => updateCurrentAccountTab('Settings')}
+									className='text-sm'
+								>
+									Share Profile:
+								</p>
 
-							<div className='flex space-x-2'>
-								<WhatsappShareButton
-									url={`https://livestocx.com/sellers/${formatVendorSlug(
-										vendor!
-									)}`}
-									title='Check out my seller profile on Livestocx: '
-								>
-									<WhatsappIcon size={25} round />
-								</WhatsappShareButton>
-								<FacebookShareButton
-									url={`https://livestocx.com/sellers/${formatVendorSlug(
-										vendor!
-									)}`}
-									title='Check out my seller profile on Livestocx: '
-								>
-									<FacebookIcon size={25} round />
-								</FacebookShareButton>
-								<TwitterShareButton
-									url={`https://livestocx.com/sellers/${formatVendorSlug(
-										vendor!
-									)}`}
-									title='Check out my seller profile on Livestocx: '
-								>
-									<TwitterIcon size={25} round />
-								</TwitterShareButton>
+								<div className='flex space-x-2'>
+									<WhatsappShareButton
+										url={`https://livestocx.com/store/${vendorProfile?.slug}`}
+										title={`Check out my min-website/online store ${vendorProfile?.name} on Livestocx: `}
+									>
+										<WhatsappIcon size={25} round />
+									</WhatsappShareButton>
+									<FacebookShareButton
+										url={`https://livestocx.com/store/${vendorProfile?.slug}`}
+										title={`Check out my min-website/online store ${vendorProfile?.name} on Livestocx: `}
+									>
+										<FacebookIcon size={25} round />
+									</FacebookShareButton>
+									<TwitterShareButton
+										url={`https://livestocx.com/store/${vendorProfile?.slug}`}
+										title={`Check out my min-website/online store ${vendorProfile?.name} on Livestocx: `}
+									>
+										<TwitterIcon size={25} round />
+									</TwitterShareButton>
 
-								<CopyToClipboard
-									onCopy={(text: string, result: boolean) => {
-										toast.success('Copied to clipboard');
-									}}
-									text={`https://livestocx.com/sellers/${formatVendorSlug(
-										vendor!
-									)}`}
-								>
-									<div className='rounded-full border border-slate-400 h-7 w-7 flex items-center justify-center cursor-pointer'>
-										<Copy className='h-4 w-4' />
-									</div>
-								</CopyToClipboard>
+									<CopyToClipboard
+										onCopy={(
+											text: string,
+											result: boolean
+										) => {
+											toast.success(
+												'Copied to clipboard'
+											);
+										}}
+										text={`https://livestocx.com/store/${vendorProfile?.slug}`}
+									>
+										<div className='rounded-full border border-slate-400 h-7 w-7 flex items-center justify-center cursor-pointer'>
+											<Copy className='h-4 w-4' />
+										</div>
+									</CopyToClipboard>
+								</div>
 							</div>
-						</div>
-					)}
+						)}
 				</div>
 				<div className='flex flex-col items-start justify-between h-[350px] w-full md:w-[45%]'>
 					<div className='p-5 flex flex-col items-start w-full h-[300px] justify-between border rounded-lg'>
 						<div className='space-y-3'>
-							<h1 className='text-base font-medium'>Profile</h1>
+							<h1 className='text-base font-medium'>
+								Personal Details
+							</h1>
 							<div className='space-y-1 '>
 								<h1 className='text-sm'>
 									<span className='font-medium'>Name: </span>
@@ -253,12 +206,12 @@ const DashboardContent = ({}: DashboardContentProps) => {
 								</h1>
 							</div>
 						</div>
-						<p
+						{/* <p
 							onClick={() => updateCurrentAccountTab('Settings')}
 							className='text-main text-sm font-semibold cursor-pointer'
 						>
 							Edit Profile
-						</p>
+						</p> */}
 					</div>
 
 					{loading ? (

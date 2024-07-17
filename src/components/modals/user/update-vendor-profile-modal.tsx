@@ -1,14 +1,14 @@
 'use client';
-import {useEffect, useReducer, useState} from 'react';
 import {X} from 'lucide-react';
 import {
 	useGlobalStore,
 	useUpdateVendorProfileModalStore,
 } from '@/hooks/use-global-store';
-import {NigerianCities, NigerianStates} from '@/data';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {Button} from '@/components/ui/button';
+import {NigerianCities, NigerianStates} from '@/data';
+import {useEffect, useReducer, useState} from 'react';
 import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
 import {ValidateVendorProfileFormData} from '@/utils/form-validations/auth.validation';
@@ -46,7 +46,7 @@ const formReducer = (state: FormData, action: FormAction) => {
 };
 
 const UpdateVendorProfileModal = () => {
-	const {user, vendor, updateUser, updateVendor} = useGlobalStore();
+	const {user, vendorProfile, updateUser, updateVendorProfile} = useGlobalStore();
 
 	const {onClose} = useUpdateVendorProfileModalStore();
 
@@ -64,9 +64,7 @@ const UpdateVendorProfileModal = () => {
 				}
 			);
 
-			// console.log('[DATA] ::  ', data);
-
-			updateVendor(data.data);
+			updateVendorProfile(data.data);
 		} catch (error) {
 			const _error = error as AxiosError;
 
@@ -82,15 +80,15 @@ const UpdateVendorProfileModal = () => {
 		updateFormData({
 			type: 'UPDATE_FORMDATA',
 			payload: {
-				name: vendor?.name,
-				state: vendor?.state,
-				city: vendor?.city,
-				address: vendor?.address,
-				email: vendor?.email,
-				phoneNumber: vendor?.phoneNumber,
+				name: vendorProfile?.name,
+				state: vendorProfile?.state,
+				city: vendorProfile?.city,
+				address: vendorProfile?.address,
+				email: vendorProfile?.email,
+				phoneNumber: vendorProfile?.phoneNumber,
 			},
 		});
-	}, [vendor]);
+	}, [vendorProfile]);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		updateFormData({

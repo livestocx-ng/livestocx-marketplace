@@ -2,6 +2,7 @@ import axios from 'axios';
 import {Metadata, ResolvingMetadata} from 'next';
 import {generateOGImageFromURL} from '@/utils/og.image.generator';
 import {formatVendorSlug, getVendorIdFromSlug} from '@/utils/slug.formatter';
+import React from 'react';
 
 interface SellerProfileLayoutProps {
 	params: {

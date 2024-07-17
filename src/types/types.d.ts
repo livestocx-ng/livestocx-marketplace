@@ -52,6 +52,10 @@ export interface Vendor {
 	avatarKey: string;
 	email: string;
 	user: string;
+	isVerified: boolean;
+	facebookUrl: string,
+	twitterUrl: string,
+	instagramUrl: string,
 	isAccountDisabled: boolean;
 	phoneNumber: string;
 	isUpdated: boolean;

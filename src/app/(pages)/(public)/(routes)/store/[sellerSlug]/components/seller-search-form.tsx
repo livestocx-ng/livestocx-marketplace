@@ -23,7 +23,7 @@ const initialState: FormData = {
 };
 
 const SellerInfoSearchForm = () => {
-	const {vendor, updateSellerProducts, updateSellerPagination} =
+	const {vendorProfile, updateSellerProducts, updateSellerPagination} =
 		useGlobalStore();
 
 	const [search, setSearch] = useState<string>('');
@@ -43,7 +43,7 @@ const SellerInfoSearchForm = () => {
 	const handleFilterSubmit = async () => {
 		try {
 			const {data} = await axios.get(
-				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/${vendor?.vendorId}/filter-products?search=${search}&recommended=${formData.recommended}&newest=${formData.newest}&oldest=${formData.oldest}&lowestPrice=${formData.lowestPrice}&highestPrice=${formData.highestPrice}`
+				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/${vendorProfile?.vendorId}/filter-products?search=${search}&recommended=${formData.recommended}&newest=${formData.newest}&oldest=${formData.oldest}&lowestPrice=${formData.lowestPrice}&highestPrice=${formData.highestPrice}`
 			);
 
 			updateSellerProducts(data.data.products);
@@ -88,7 +88,7 @@ const SellerInfoSearchForm = () => {
 				</Button>
 			</div>
 
-			<div className='w-full sm:w-fit'>
+			{/* <div className='w-full sm:w-fit'>
 				<select
 					name='search'
 					className='w-full border py-3 rounded px-3 text-xs scrollbar__1'
@@ -115,7 +115,7 @@ const SellerInfoSearchForm = () => {
 						</option>
 					))}
 				</select>
-			</div>
+			</div> */}
 		</div>
 	);
 };

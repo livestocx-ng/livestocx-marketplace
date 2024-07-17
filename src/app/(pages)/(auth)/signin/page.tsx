@@ -4,14 +4,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {toast} from 'react-hot-toast';
 import {signIn} from 'next-auth/react';
-import {useReducer, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {Separator} from '@/components/ui/separator';
+import {useEffect, useReducer, useState} from 'react';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import {useRouter, useSearchParams} from 'next/navigation';
 import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
 import FormPasswordInput from '@/components/input/form-password-input';
+import {COOKIE_MAX_AGE, LIVESTOCX_AUTH_REDIRECT} from '@/lib/constants';
 import {ValidateSigninFormData} from '@/utils/form-validations/auth.validation';
 
 type FormData = {
@@ -47,6 +48,15 @@ const SignInPage = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
 
+	useEffect(() => {
+		if (searchParams.get('redirect_to') !== null) {
+			localStorage.setItem(
+				'LIVESTOCX_AUTH_REDIRECT',
+				searchParams.get('redirect_to')!
+			);
+		}
+	}, [searchParams]);
+
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		updateFormData({
 			type: 'UPDATE_FORMDATA',
@@ -66,11 +76,8 @@ const SignInPage = () => {
 
 		try {
 			setLoading(true);
-			// // console.log('[SIGNIN-PAYLOAD] :: ', formData);
 
 			const {data} = await axios.post('/api/auth/signin', formData);
-
-			// // console.log('[DATA] :: ', data);
 
 			if (data?.ok == false) {
 				setLoading(false);
@@ -80,29 +87,35 @@ const SignInPage = () => {
 				setLoading(false);
 				updateUser(data);
 
+				const response = await axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/chat/conversations?page=1`,
+					{
+						headers: {
+							Authorization: data?.accessToken,
+						},
+					}
+				);
+
+				updateChatConversations(response.data.data.conversations);
+
 				toast.success('Success');
 
 				if (searchParams.get('redirect_to')) {
-					return router.push(`/${searchParams.get('redirect_to')}`);
+					return router.push(
+						`/${
+							searchParams
+								.get('redirect_to')!
+								.includes('business')
+								? 'business?subscription_now=true'
+								: searchParams.get('redirect_to')!
+						}`
+					);
 				} else {
 					router.push('/');
-
-					const response = await axios.get(
-						`${process.env.NEXT_PUBLIC_API_URL}/chat/conversations?page=1`,
-						{
-							headers: {
-								Authorization: data?.accessToken,
-							},
-						}
-					);
-
-					updateChatConversations(response.data.data.conversations);
 				}
 			}
 		} catch (error) {
 			setLoading(false);
-
-			// console.error('[SIGNIN-ERROR]', error);
 
 			toast.error('Invalid credentials');
 		}
@@ -155,7 +168,7 @@ const SignInPage = () => {
 							</div>
 							<Link
 								href='/forgot-password'
-							className='text-sm text-green-600'
+								className='text-sm text-green-600'
 							>
 								Forgot password?
 							</Link>
@@ -186,7 +199,19 @@ const SignInPage = () => {
 						<Button
 							type='button'
 							variant={'outline'}
-							onClick={() => signIn('google')}
+							onClick={() => {
+								const redirectUrl = searchParams
+									.get('redirect_to')!
+									.includes('business')
+									? '/business?subscription_now=true'
+									: `/${searchParams.get('redirect_to')!}`;
+									
+								document.cookie = `${LIVESTOCX_AUTH_REDIRECT}=${redirectUrl}; Max-Age=${COOKIE_MAX_AGE}; Path=/; SameSite=Strict; Secure=${
+									process.env.NODE_ENV === 'production'
+								}`;
+
+								signIn('google', {callbackUrl: redirectUrl});
+							}}
 							className='flex items-center gap-x-4 h-12 justify-center w-full rounded-full py-4'
 						>
 							<Image

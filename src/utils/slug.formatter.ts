@@ -16,13 +16,17 @@ export function formatProductSlug(product: Product): string {
 }
 
 export function formatVendorSlug(vendor: Vendor): string {
-	const formattedProductName = vendor?.name.replace(/,/g, '');
+	// const slug = vendor?.slug.replace(/,/g, '');
 
-	const formattedVendorNameWithOutCommas = formattedProductName.replace(/\s+/g, '-').toLowerCase();
+	// const formattedVendorNameWithOutCommas = formattedVendorName.replace(/\s+/g, '-').toLowerCase();
 
+<<<<<<< HEAD
 	const slug = `${formattedVendorNameWithOutCommas}_${vendor?.vendorId!}`;
+=======
+	// const slug = `${formattedVendorNameWithOutCommas}_${vendor?.vendorId!.toLowerCase()}`;
+>>>>>>> 96786d9fdd93321b006fe77a73c763b703a3a574
 
-	return slug.toLowerCase();
+	return vendor?.slug.toLowerCase();
 }
 
 export function getProductIdFromSlug(slug: string): string {

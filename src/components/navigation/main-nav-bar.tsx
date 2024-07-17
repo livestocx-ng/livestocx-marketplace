@@ -16,11 +16,11 @@ import axios from 'axios';
 import Link from 'next/link';
 import Image from 'next/image';
 import {NavLinks} from '@/data';
-import {useGlobalStore} from '@/hooks/use-global-store';
 import {Button} from '../ui/button';
 import {toast} from 'react-hot-toast';
 import {useEffect, useState} from 'react';
 import {usePathname, useRouter} from 'next/navigation';
+import {useGlobalStore} from '@/hooks/use-global-store';
 
 const MainNavbar = () => {
 	const router = useRouter();
@@ -244,29 +244,6 @@ const MainNavbar = () => {
 
 									<p className='text-xs'>Messages</p>
 								</Link>
-								{user?.role === 'CUSTOMER' && (
-									<Link
-										href={'/account'}
-										onClick={() => {
-											setSetShowAccountMenu(false);
-
-											router.push('/account');
-
-											updateCurrentAccountTab(
-												'Desired Items'
-											);
-										}}
-										className={` ${
-											scrolling ? 'bg-white' : 'bg-mai'
-										} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
-									>
-										<ShoppingCart
-											className={`h-5 w-5 text-main`}
-										/>
-
-										<p className='text-xs'>Desired Items</p>
-									</Link>
-								)}
 								{user?.role === 'FARMER' && (
 									<Link
 										href={'/account'}
@@ -286,7 +263,7 @@ const MainNavbar = () => {
 										<p className='text-xs'>Products</p>
 									</Link>
 								)}
-								{user?.role === 'FARMER' && (
+								{/**{user?.role === 'FARMER' && (
 									<Link
 										href={'/account'}
 										onClick={() => {
@@ -307,6 +284,7 @@ const MainNavbar = () => {
 										<p className='text-xs'>Promotions</p>
 									</Link>
 								)}
+								**/}
 								<Link
 									href={'/account'}
 									onClick={() => {
@@ -549,29 +527,6 @@ const MainNavbar = () => {
 
 									<p className='text-xs'>Account</p>
 								</Link>
-								{user?.role === 'CUSTOMER' && (
-									<Link
-										href={'/account'}
-										onClick={() => {
-											setSetShowAccountMenu(false);
-
-											router.push('/account');
-
-											updateCurrentAccountTab(
-												'Desired Items'
-											);
-										}}
-										className={` ${
-											scrolling ? 'bg-white' : 'bg-mai'
-										} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
-									>
-										<ShoppingCart
-											className={`h-5 w-5 text-main`}
-										/>
-
-										<p className='text-xs'>Desired Items</p>
-									</Link>
-								)}
 								{user?.role === 'FARMER' && (
 									<Link
 										href={'/account'}
@@ -591,7 +546,7 @@ const MainNavbar = () => {
 										<p className='text-xs'>Products</p>
 									</Link>
 								)}
-								{user?.role === 'FARMER' && (
+								{/* {user?.role === 'FARMER' && (
 									<Link
 										href={'/account'}
 										onClick={() => {
@@ -611,7 +566,7 @@ const MainNavbar = () => {
 
 										<p className='text-xs'>Promotions</p>
 									</Link>
-								)}
+								)} */}
 								<Link
 									href={'/account'}
 									onClick={() => {

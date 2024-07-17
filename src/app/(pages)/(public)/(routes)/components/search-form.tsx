@@ -271,7 +271,7 @@ const SearchForm = () => {
 					handleChange={handleChange}
 					padding='px-5 py-[10px] md:py-3'
 					placeHolder='What are you looking for?'
-					classes='w-[70%] md:w-[60%] bg-[#00A65120] text-black md:text-white text-sm placeholder:text-xs placeholder:italic border-2 border-green-600 focus:border-green-600 rounded-full'
+					classes='w-[70%] md:w-[60%] bg-[#00A65120] text-black md:text-white text-sm placeholder:text-xs placeholder:text-slate-600 placeholder:italic border-2 border-green-600 focus:border-green-600 rounded-full'
 				/>
 
 				{loading ? (

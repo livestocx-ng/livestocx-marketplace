@@ -38,14 +38,14 @@ const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 
 	return (
 		<Fragment>
-			<div className='flex item-center space-x-4'>
+			<div className='flex item-center space-x-4 mt-6 sm:mt-1'>
 				{pathName.length <= 1 && (
 					<>
 						{TabItems.map((tab) => (
 							<Button
 								key={tab.id}
 								type='button'
-								className={`border bg-white hover:bg-white h-4 py-3 text-xs rounded-md ${
+								className={`border bg-white hover:bg-white h-4 py-3 text-[10px] sm:text-xs rounded-md ${
 									currentTab.id === tab.id
 										? 'border-main text-main'
 										: 'border-black text-black'

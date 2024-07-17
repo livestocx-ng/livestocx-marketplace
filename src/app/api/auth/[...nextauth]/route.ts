@@ -2,7 +2,11 @@ import axios from 'axios';
 import {cookies} from 'next/headers';
 import NextAuth from 'next-auth/next';
 import GoogleProvider from 'next-auth/providers/google';
-import {COOKIE_MAX_AGE, COOKIE_NAME} from '@/lib/constants';
+import {
+	COOKIE_MAX_AGE,
+	COOKIE_NAME,
+	LIVESTOCX_AUTH_REDIRECT,
+} from '@/lib/constants';
 
 const handler = NextAuth({
 	secret: process.env.AUTH_SECRET,
@@ -21,9 +25,6 @@ const handler = NextAuth({
 	callbacks: {
 		async signIn({account, profile}) {
 			if (account?.provider === 'google') {
-				// // console.log('[GOOGLE-SIGNIN-SUCCESS]');
-				// // console.log(`[USER] :: `, profile);
-
 				try {
 					const name = profile?.name
 						? profile?.name?.split(' ')
@@ -52,15 +53,74 @@ const handler = NextAuth({
 						secure: process.env.NODE_ENV === 'production',
 					});
 
-					return Promise.resolve('/');
+					// const cookiesInstance = cookies();
+					// const redirectUrlCookie = cookiesInstance.get(
+					// 	LIVESTOCX_AUTH_REDIRECT
+					// );
+
+					// console.info(
+					// 	'[CALLBACK_LIVESTOCX_AUTH_REDIRECT] :: ',
+					// 	redirectUrlCookie
+					// );
+					// console.info(
+					// 	'[CALLBACK_LIVESTOCX_AUTH_REDIRECT_VALUE] :: ',
+					// 	redirectUrlCookie?.value
+					// );
+					// console.info(
+					// 	'[CALLBACK_LIVESTOCX_AUTH_REDIRECT_VALUE_INCLUDES_BUSINESS] :: ',
+					// 	redirectUrlCookie?.value.includes('business')
+					// );
+
+					// if (redirectUrlCookie?.value.includes('business')) {
+					// 	const redirectUrl = redirectUrlCookie?.value.includes(
+					// 		'business'
+					// 	)
+					// 		? '/business?subscription_now=true'
+					// 		: redirectUrlCookie?.value;
+
+					// 	console.info(
+					// 		'[RETURN_LIVESTOCX_AUTH_REDIRECT] :: ',
+					// 		redirectUrlCookie
+					// 	);
+
+					// 	return Promise.resolve(redirectUrl);
+					// }
+
+					// return Promise.resolve('/business?subscription_now=true');
+					return true;
 				} catch (error) {
-					// console.error('[GOOGLE-SIGIN-API-ERROR]', error);
+					// console.error('[GOOGLE-SIGN-API-ERROR]', error);
 				}
 			}
 
 			// return profile?.email && profile?.email.endsWith("@example.com")
 
 			return true; // Do different verification for other providers that don't have `email`
+		},
+		async redirect({url, baseUrl}) {
+			// const cookiesInstance = cookies();
+			// const redirectUrlCookie = cookiesInstance.get(
+			// 	LIVESTOCX_AUTH_REDIRECT
+			// );
+
+			// console.info('[LIVESTOCX_AUTH_REDIRECT] :: ', redirectUrlCookie);
+			// console.info('[LIVESTOCX_AUTH_REDIRECT_VALUE] :: ', redirectUrlCookie?.value);
+			// console.info('[LIVESTOCX_AUTH_REDIRECT_VALUE_INCLUDES_BUSINESS] :: ', redirectUrlCookie?.value.includes('business'));
+
+			// if (redirectUrlCookie?.value.includes('business')) {
+			// 	const redirectUrl = redirectUrlCookie?.value.includes('business')
+			// 		? '/business?subscription_now=true'
+			// 		: redirectUrlCookie?.value;
+
+			// 	console.info(
+			// 		'[LIVESTOCX_AUTH_REDIRECT] :: ',
+			// 		redirectUrlCookie
+			// 	);
+
+			// 	return redirectUrl;
+			// }
+
+			return url || baseUrl;
 		},
 	},
 });

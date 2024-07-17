@@ -10,6 +10,9 @@ import {
 	useUpdateWelcomeFarmerModalStore,
 	useUpdateVendorProfileModalStore,
 	useUpdateSearchLocationModalStore,
+	usePremiumSubscriptionCheckoutModalStore,
+	usePremiumSubscriptionSuccessModalStore,
+	useShareSellerStoreModalStore,
 } from '@/hooks/use-global-store';
 import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';
@@ -23,6 +26,9 @@ import UpgradeToPremiumModal from '@/components/modals/premium/upgrade-to-premiu
 import DownloadMobileAppModal from '@/components/modals/welcome/download-mobile-app-modal';
 import UpdateVendorProfileModal from '@/components/modals/user/update-vendor-profile-modal';
 import UpdateSearchLocationModal from '@/components/modals/utils/update-search-location-modal';
+import PremiumSubscriptionSuccessModal from '@/components/modals/premium/premium-subscription-success-modal';
+import PremiumSubscriptionCheckoutModal from '@/components/modals/premium/premium-subscription-checkout-modal';
+import ShareSellerStoreModal from '@/components/modals/store/share-seller-store-modal';
 
 interface PagesLayoutProps {
 	children: React.ReactNode;
@@ -32,6 +38,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const {user} = useUserHook();
 
 	const {
+		updateVendorProfile,
 		updatePromotionPlans,
 		updateChatConversations,
 		updateUserPromotionPlan,
@@ -44,9 +51,12 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const updateUserRoleModal = useUpdateUserRoleModalStore();
 	const welcomeFarmerModal = useUpdateWelcomeFarmerModalStore();
 	const readNotificationModal = useReadNotificationModalStore();
+	const shareSellerStoreModal = useShareSellerStoreModalStore();
 	const updateVendorProfileModal = useUpdateVendorProfileModalStore();
 	const upgradeToPremiumAccessModal = useUpgradeToPremiumAccessStore();
 	const updateSearchLocationModal = useUpdateSearchLocationModalStore();
+	const premiumSubscriptionSuccessModal = usePremiumSubscriptionSuccessModalStore();
+	const premiumSubscriptionCheckoutModal = usePremiumSubscriptionCheckoutModalStore();
 
 	const initializeDownloadAppModal = () => {
 		setTimeout(() => {
@@ -85,26 +95,35 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 				return;
 			}
 
-			const [userPromotionPlanRequest, userPremiumSubscriptionRequest] =
-				await Promise.all([
-					axios.get(
-						`${process.env.NEXT_PUBLIC_API_URL}/promotions/plan`,
-						{
-							headers: {
-								Authorization: user?.accessToken,
-							},
-						}
-					),
-					axios.get(
-						`${process.env.NEXT_PUBLIC_API_URL}/vendor/premium-subscription`,
-						{
-							headers: {
-								Authorization: user?.accessToken,
-							},
-						}
-					),
-				]);
+			const [
+				userPromotionPlanRequest,
+				userPremiumSubscriptionRequest,
+				vendorProfileRequest,
+			] = await Promise.all([
+				axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/promotions/plan`,
+					{
+						headers: {
+							Authorization: user?.accessToken,
+						},
+					}
+				),
+				axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/vendor/premium-subscription`,
+					{
+						headers: {
+							Authorization: user?.accessToken,
+						},
+					}
+				),
+				axios.get(`${process.env.NEXT_PUBLIC_API_URL}/vendor/profile`, {
+					headers: {
+						Authorization: user?.accessToken,
+					},
+				}),
+			]);
 
+			updateVendorProfile(vendorProfileRequest.data.data);
 			updateUserPromotionPlan(userPromotionPlanRequest.data.data);
 			updateUserPremiumSubscription(
 				userPremiumSubscriptionRequest.data.data
@@ -165,13 +184,20 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 			{updateUserRoleModal.isOpen && <UpdateUserRoleModal />}
 			{downloadAppModal.isOpen && <DownloadMobileAppModal />}
 			{readNotificationModal.isOpen && <NotificationModal />}
+			{shareSellerStoreModal.isOpen && <ShareSellerStoreModal />}
 			{upgradeToPremiumAccessModal.isOpen && <UpgradeToPremiumModal />}
 			{updateVendorProfileModal.isOpen && <UpdateVendorProfileModal />}
 			{updateSearchLocationModal.isOpen && <UpdateSearchLocationModal />}
+			{premiumSubscriptionSuccessModal.isOpen && (
+				<PremiumSubscriptionSuccessModal />
+			)}
+			{premiumSubscriptionCheckoutModal.isOpen && (
+				<PremiumSubscriptionCheckoutModal />
+			)}
 
-			<Navbar />
+			{/* <Navbar /> */}
 			{children}
-			<Footer />
+			{/* <Footer /> */}
 		</div>
 	);
 };

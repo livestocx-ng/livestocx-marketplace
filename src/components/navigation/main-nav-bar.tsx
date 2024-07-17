@@ -3,6 +3,7 @@ import {
 	Bell,
 	User2,
 	Mails,
+	Store,
 	Package,
 	Settings,
 	Megaphone,
@@ -10,39 +11,31 @@ import {
 	ShoppingCart,
 	MessageCircle,
 	MessagesSquare,
-	ZapIcon,
 } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link';
 import Image from 'next/image';
 import {NavLinks} from '@/data';
-import {
-	useGlobalStore,
-	useUpdateUserRoleModalStore,
-	useUpgradeToPremiumAccessStore,
-} from '@/hooks/use-global-store';
 import {Button} from '../ui/button';
 import {toast} from 'react-hot-toast';
-import {useRouter} from 'next/navigation';
 import {useEffect, useState} from 'react';
-import {signOut, useSession} from 'next-auth/react';
+import {usePathname, useRouter} from 'next/navigation';
+import {useGlobalStore} from '@/hooks/use-global-store';
 
 const MainNavbar = () => {
 	const router = useRouter();
-	const session = useSession();
+	const pathName = usePathname();
 
 	const {
 		user,
 		updateUser,
+		vendorProfile,
 		chatConversations,
 		updateCurrentAccountTab,
 		updateChatConversations,
 		userPremiumSubscription,
 		updateUserPremiumSubscription,
 	} = useGlobalStore();
-
-	const updateUserRoleModal = useUpdateUserRoleModalStore();
-	const upgradeToPremiumAccessModal = useUpgradeToPremiumAccessStore();
 
 	const [scrolling, setScrolling] = useState<boolean>(false);
 	const [showMenu, setSetShowMenu] = useState<boolean>(false);
@@ -78,6 +71,23 @@ const MainNavbar = () => {
 		});
 	}, []);
 
+	const handleLogout = async () => {
+		try {
+			await axios.get('/api/auth/signout');
+
+			toast.success('Logged out!', {className: 'text-sm'});
+
+			updateUser(null);
+			updateChatConversations([]);
+			setSetShowAccountMenu(false);
+			updateUserPremiumSubscription(null);
+
+			router.push('/');
+		} catch (error) {
+			toast.error('Error!');
+		}
+	};
+
 	return (
 		<div className='relative'>
 			<nav
@@ -112,7 +122,7 @@ const MainNavbar = () => {
 
 				<div className='flex items-center space-x-5'>
 					{chatConversations?.filter(
-						(conversation) => conversation.unreadMessages !== 0
+						(conversation) => conversation?.unreadMessages !== 0
 					).length !== 0 && (
 						<div
 							onClick={() => {
@@ -142,18 +152,43 @@ const MainNavbar = () => {
 								{
 									chatConversations?.filter(
 										(conversation) =>
-											conversation.unreadMessages !== 0
+											conversation?.unreadMessages !== 0
 									).length
 								}
 							</div>
 						</div>
 					)}
 
+					{userPremiumSubscription && user?.role === 'FARMER' && (
+						<Link
+							target='_blank'
+							href={`/store/${vendorProfile?.slug}`}
+							className={`h-8 w-8 ${
+								scrolling ? 'bg-white' : 'bg-main'
+							} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
+						>
+							<Store
+								className={`h-4 w-4 ${
+									scrolling
+										? 'text-main'
+										: 'text-white cursor-pointer'
+								}`}
+							/>
+						</Link>
+					)}
+
 					<div
-						// href={user ? '/account' : '/signin'}
 						onClick={() => {
 							if (!user) {
-								router.push(`${!user && '/signin'}`);
+								if (pathName.length > 1) {
+									router.push(
+										`/signin?redirect_to=${pathName.slice(
+											1
+										)}`
+									);
+								} else {
+									router.push('/signin');
+								}
 							} else {
 								setSetShowAccountMenu(!showAccountMenu);
 							}
@@ -209,29 +244,6 @@ const MainNavbar = () => {
 
 									<p className='text-xs'>Messages</p>
 								</Link>
-								{user?.role === 'CUSTOMER' && (
-									<Link
-										href={'/account'}
-										onClick={() => {
-											setSetShowAccountMenu(false);
-
-											router.push('/account');
-
-											updateCurrentAccountTab(
-												'Desired Items'
-											);
-										}}
-										className={` ${
-											scrolling ? 'bg-white' : 'bg-mai'
-										} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
-									>
-										<ShoppingCart
-											className={`h-5 w-5 text-main`}
-										/>
-
-										<p className='text-xs'>Desired Items</p>
-									</Link>
-								)}
 								{user?.role === 'FARMER' && (
 									<Link
 										href={'/account'}
@@ -251,7 +263,7 @@ const MainNavbar = () => {
 										<p className='text-xs'>Products</p>
 									</Link>
 								)}
-								{user?.role === 'FARMER' && (
+								{/**{user?.role === 'FARMER' && (
 									<Link
 										href={'/account'}
 										onClick={() => {
@@ -272,6 +284,7 @@ const MainNavbar = () => {
 										<p className='text-xs'>Promotions</p>
 									</Link>
 								)}
+								**/}
 								<Link
 									href={'/account'}
 									onClick={() => {
@@ -321,30 +334,7 @@ const MainNavbar = () => {
 								</Link>
 								<p
 									// href={'#'}
-									onClick={async () => {
-										try {
-											await axios.get(
-												'/api/auth/signout'
-											);
-
-											toast.success('Logged out!');
-
-											updateUser(null);
-											updateChatConversations([]);
-											setSetShowAccountMenu(false);
-
-											router.push('/');
-
-											// window.location.reload();
-										} catch (error) {
-											//  console.log(
-											// 	'[LOGOUT-ERROR] :: ',
-											// 	error
-											// );
-
-											toast.error('Error!');
-										}
-									}}
+									onClick={handleLogout}
 									className={` ${
 										scrolling ? 'bg-white' : 'bg-mai'
 									} pt-10 rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in cursor-pointer`}
@@ -361,7 +351,7 @@ const MainNavbar = () => {
 						)}
 					</div>
 
-					<div
+					{/* <div
 						onClick={() => {
 							if (!user) {
 								router.push(`/signup?seller=true`);
@@ -380,19 +370,7 @@ const MainNavbar = () => {
 						className={`h-8 bg-orange-400 rounded-sm w-[80px] text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
 					>
 						Sell
-					</div>
-
-					{/* {!userPremiumSubscription && (
-						<div
-							onClick={() => {
-								upgradeToPremiumAccessModal.onOpen();
-							}}
-							className={`h-8 bg-blue-600 border border-[#ffffff80] hover:border-white px-4 rounded-sm text-white text-xs flex items-center justify-center space-x-2 cursor-pointer`}
-						>
-							<ZapIcon size={14} />
-							<p>Pro Access</p>
-						</div>
-					)} */}
+					</div> */}
 				</div>
 			</nav>
 
@@ -422,7 +400,7 @@ const MainNavbar = () => {
 				</Button>
 
 				<div className='flex items-center space-x-2'>
-					<div
+					{/* <div
 						onClick={() => {
 							if (!user) {
 								router.push(`/signup?seller=true`);
@@ -441,22 +419,10 @@ const MainNavbar = () => {
 						className={`h-8 bg-orange-400 rounded-sm w-[60px] text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
 					>
 						Sell
-					</div>
-
-					{/* {!userPremiumSubscription && (
-						<div
-							onClick={() => {
-								upgradeToPremiumAccessModal.onOpen();
-							}}
-							className={`h-8 bg-blue-600 px-2 rounded-sm text-white text-xs flex items-center justify-center space-x-2 cursor-pointer`}
-						>
-							<ZapIcon size={14} />
-							<p>Pro Access</p>
-						</div>
-					)} */}
+					</div> */}
 
 					{chatConversations?.filter(
-						(conversation) => conversation.unreadMessages !== 0
+						(conversation) => conversation?.unreadMessages !== 0
 					).length !== 0 && (
 						<div
 							onClick={() => {
@@ -486,18 +452,43 @@ const MainNavbar = () => {
 								{
 									chatConversations?.filter(
 										(conversation) =>
-											conversation.unreadMessages !== 0
+											conversation?.unreadMessages !== 0
 									).length
 								}
 							</div>
 						</div>
 					)}
 
+					{userPremiumSubscription && user?.role === 'FARMER' && (
+						<Link
+							target='_blank'
+							href={`/store/${vendorProfile?.slug}`}
+							className={`h-8 w-8 ${
+								scrolling ? 'bg-white' : 'bg-main'
+							} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
+						>
+							<Store
+								className={`h-3 w-3 ${
+									scrolling
+										? 'text-main'
+										: 'text-white cursor-pointer'
+								}`}
+							/>
+						</Link>
+					)}
+
 					<div
-						// href={user ? '/account' : '/signin'}
 						onClick={() => {
 							if (!user) {
-								router.push(`${!user && '/signin'}`);
+								if (pathName.length > 1) {
+									router.push(
+										`/signin?redirect_to=${pathName.slice(
+											1
+										)}`
+									);
+								} else {
+									router.push('/signin');
+								}
 							} else {
 								setSetShowAccountMenu(!showAccountMenu);
 							}
@@ -536,29 +527,6 @@ const MainNavbar = () => {
 
 									<p className='text-xs'>Account</p>
 								</Link>
-								{user?.role === 'CUSTOMER' && (
-									<Link
-										href={'/account'}
-										onClick={() => {
-											setSetShowAccountMenu(false);
-
-											router.push('/account');
-
-											updateCurrentAccountTab(
-												'Desired Items'
-											);
-										}}
-										className={` ${
-											scrolling ? 'bg-white' : 'bg-mai'
-										} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
-									>
-										<ShoppingCart
-											className={`h-5 w-5 text-main`}
-										/>
-
-										<p className='text-xs'>Desired Items</p>
-									</Link>
-								)}
 								{user?.role === 'FARMER' && (
 									<Link
 										href={'/account'}
@@ -578,7 +546,7 @@ const MainNavbar = () => {
 										<p className='text-xs'>Products</p>
 									</Link>
 								)}
-								{user?.role === 'FARMER' && (
+								{/* {user?.role === 'FARMER' && (
 									<Link
 										href={'/account'}
 										onClick={() => {
@@ -598,7 +566,7 @@ const MainNavbar = () => {
 
 										<p className='text-xs'>Promotions</p>
 									</Link>
-								)}
+								)} */}
 								<Link
 									href={'/account'}
 									onClick={() => {
@@ -648,30 +616,7 @@ const MainNavbar = () => {
 								</Link>
 								<p
 									// href={'#'}
-									onClick={async () => {
-										try {
-											await axios.get(
-												'/api/auth/signout'
-											);
-
-											toast.success('Logged out!');
-
-											updateUser(null);
-											setSetShowAccountMenu(false);
-											updateUserPremiumSubscription(null);
-
-											router.push('/');
-
-											// window.location.reload();
-										} catch (error) {
-											//  console.log(
-											// 	'[LOGOUT-ERROR] :: ',
-											// 	error
-											// );
-
-											toast.error('Error!');
-										}
-									}}
+									onClick={handleLogout}
 									className={` ${
 										scrolling ? 'bg-white' : 'bg-mai'
 									} pt-10 rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in cursor-pointer`}

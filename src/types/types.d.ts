@@ -46,11 +46,17 @@ export interface Vendor {
 	name: string;
 	state?: string;
 	city?: string;
+	slug: string;
 	address: string;
 	avatar: string;
 	avatarKey: string;
 	email: string;
 	user: string;
+	isVerified: boolean;
+	facebookUrl: string,
+	twitterUrl: string,
+	instagramUrl: string,
+	isAccountDisabled: boolean;
 	phoneNumber: string;
 	isUpdated: boolean;
 }
@@ -137,6 +143,7 @@ export interface ProductInfo {
 	email: string;
 	phoneNumber: string;
 	avgRating: number;
+	vendor: Vendor;
 	moreProducts: Product[];
 	reviews: ProductInfoReview[];
 	ratings: ProductInfoRating[];
@@ -293,4 +300,10 @@ export interface PremiumSubscriptionPlan {
 		id: number;
 		title: string;
 	}[];
+}
+
+export interface EnterprisePlanComparison {
+	feature: string;
+	platform: string;
+	customBusinessWebsite: string;
 }

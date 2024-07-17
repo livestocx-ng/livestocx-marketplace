@@ -10,7 +10,7 @@ interface VendorProfileDto {
 	state: string;
 	city: string;
 	phoneNumber: string;
-};
+}
 
 interface SignupDto {
 	firstName: string;
@@ -28,14 +28,25 @@ interface SignupDto {
 	role: 'FARMER' | 'CUSTOMER';
 }
 
+interface PremiumSubscriptionCheckoutDto extends VendorProfileDto {
+	slug: string;
+	facebookUrl?: string;
+	instagramUrl?: string;
+	twitterUrl?: string;
+}
+
 const phoneRegEX = new RegExp(/^\d{11}$/);
 
 const isNumberRegEX = new RegExp(/^[0-9]+$/);
 
 const emailRegEX = new RegExp(/^\S+@\S+\.\S+$/);
 
-const passwordRegEX = new RegExp(
-	'(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[^ws]).{8,60}$'
+const sellerSlugRegEX = new RegExp(/^[a-z]+$/);
+
+const passwordRegEX = new RegExp('^.{8,}$');
+
+const socialMediaRegEX = new RegExp(
+	/^(https?:\/\/)?(www\.|web\.)?(facebook\.com\/.+|instagram\.com\/.+|twitter\.com\/.+)$/
 );
 
 export function ValidateSigninFormData(formData: SigninDto): string {
@@ -88,8 +99,7 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 		return (message = 'Passwords do match.');
 	}
 	if (!passwordRegEX.test(formData.password)) {
-		return (message =
-			'Password must be at least 8 characters, include an uppercase and lowecase character.');
+		return (message = 'Password must be at least 8 characters');
 	}
 
 	if (formData.role === 'CUSTOMER' && !formData.location) {
@@ -110,13 +120,16 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 	}
 
 	if (formData.acceptedTerms === false) {
-		return (message = 'Please accept our terms of service and privacy policy.');
+		return (message =
+			'Please accept our terms of service and privacy policy.');
 	}
 
 	return message;
 }
 
-export function ValidateVendorProfileFormData(formData: VendorProfileDto): string {
+export function ValidateVendorProfileFormData(
+	formData: VendorProfileDto
+): string {
 	let message = '';
 
 	if (!formData.name) {
@@ -147,6 +160,62 @@ export function ValidateVendorProfileFormData(formData: VendorProfileDto): strin
 
 	if (!formData.city) {
 		return (message = 'Business city is required.');
+	}
+
+	return message;
+}
+
+export function ValidatePremiumSubscriptionCheckoutFormData(
+	formData: PremiumSubscriptionCheckoutDto
+): string {
+	let message = '';
+
+	if (!formData.name) {
+		return (message = 'Business name is required.');
+	}
+
+	if (!formData.email) {
+		return (message = 'Business email is required.');
+	}
+	if (!emailRegEX.test(formData.email)) {
+		return (message = 'Invalid email input.');
+	}
+
+	if (!formData.phoneNumber) {
+		return (message = 'Phone number is required.');
+	}
+	if (!isNumberRegEX.test(formData.phoneNumber)) {
+		return (message = 'Invalid phone number.');
+	}
+
+	if (!formData.address) {
+		return (message = 'Business address is required.');
+	}
+
+	if (!formData.slug) {
+		return (message = 'Business domain handle is required.');
+	}
+	if (!sellerSlugRegEX.test(formData.slug)) {
+		return (message =
+			'Invalid domain handle, use lowercase characters without space.');
+	}
+
+	if (!formData.state) {
+		return (message = 'Business state is required.');
+	}
+
+	if (!formData.city) {
+		return (message = 'Business city is required.');
+	}
+
+	if (formData.facebookUrl && !socialMediaRegEX.test(formData.facebookUrl)) {
+		return (message = 'Invalid facebook url.');
+	}
+	if (formData.instagramUrl && !socialMediaRegEX.test(formData.instagramUrl)) {
+		return (message = 'Invalid instagram url.');
+	}
+	if (formData.twitterUrl && !socialMediaRegEX.test(formData.twitterUrl)) {
+		return (message = 'Invalid twitter url.');
 	}
 
 	return message;

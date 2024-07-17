@@ -37,24 +37,27 @@ import {
 	AlertDialogDescription,
 } from '@/components/ui/alert-dialog';
 import {toast} from 'react-hot-toast';
-import {usePathname} from 'next/navigation';
+import {useRouter} from 'next/navigation';
 import ProductCard from '../cards/product-card';
 import {Product, ProductInfo} from '@/types/types';
 import React, {Dispatch, SetStateAction} from 'react';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import {formatVendorSlug} from '@/utils/slug.formatter';
 import {getMediaImageUrl} from '@/utils/media/media.url';
 import SellerInfoTab from '../product-info/seller-info-tab';
 import ProductReviewTab from '../product-info/product-review-tab';
 import MoreFromSellerTab from '../product-info/more-from-seller-tab';
 import {likesViewsImpressionFormatter} from '@/utils/like.view.impression.formatter';
+import Link from 'next/link';
 
 interface SingleProductContentProps {
 	currentTab: Tab;
 	loading: boolean;
 	product: Product;
 	productInfo: ProductInfo | null;
-	handleAddToDesiredProducts: () => void;
+	handleAddUserToCallSeller: () => void;
+	handleMessageSeller: () => void;
 	setCurrentTab: Dispatch<SetStateAction<Tab>>;
 	handleLikeUnlikeProduct: (formData: {value?: boolean}) => void;
 }
@@ -70,9 +73,10 @@ const SingleProductContent = ({
 	productInfo,
 	setCurrentTab,
 	handleLikeUnlikeProduct,
-	handleAddToDesiredProducts,
+	handleAddUserToCallSeller,
+	handleMessageSeller,
 }: SingleProductContentProps) => {
-	const pathName = usePathname();
+	const router = useRouter();
 
 	const {user, products} = useGlobalStore();
 
@@ -158,18 +162,6 @@ const SingleProductContent = ({
 					</div>
 
 					<div className='absolute flex items-center bottom-0 right-0'>
-						{/* {product?.likedUsers?.length! > 0 && (
-							<Button
-								type='button'
-								variant={'outline'}
-								className='bg-slate-800 border-0 text-white hover:bg-slate-800 hover:text-white text-xs py-2 flex items-center space-x-3 rounded-none'
-							>
-								{product?.likedUsers?.length!}{' '}
-								{product?.likedUsers?.length == 1
-									? 'Like'
-									: 'Likes'}
-							</Button>
-						)} */}
 						{user && (
 							<Button
 								type='button'
@@ -230,14 +222,22 @@ const SingleProductContent = ({
 							)}
 						</div>
 
-						<div className='flex items-center space-x-3 py-3'>
+						<Link
+							href={
+								productInfo?.vendor?.slug.length! > 0
+									? `/store/${formatVendorSlug(
+											productInfo?.vendor!
+									  )}`
+									: '#'
+							}
+							className='flex items-center space-x-3 py-3 cursor-pointer'
+						>
 							<Image
 								width={40}
 								height={40}
 								unoptimized={true}
 								alt={productInfo?.name!}
 								src={productInfo?.avatar ?? '/icon__user.svg'}
-								// src={'/icon__user.svg'}
 								className='rounded-full border object-fill'
 							/>
 
@@ -245,17 +245,14 @@ const SingleProductContent = ({
 								<p className='text-xs font-medium'>
 									{productInfo?.name! ?? ''}
 								</p>
-								{/* <p className='text-[10px] px-2 py-1 text-center bg-gray-200 rounded-md'>
-									{productInfo?.name && 'Replies in 2 days'}
-								</p> */}
 							</div>
-						</div>
+						</Link>
 
 						<div className='flex flex-wrap items-center mt-3 gap-5 justify-between'>
 							<Button
 								type='button'
 								variant={'outline'}
-								onClick={handleAddToDesiredProducts}
+								onClick={handleMessageSeller}
 								className='bg-main text-white hover:bg-main hover:text-white text-[10px] md:text-xs h-10 w-[45%] rounded-full py-2'
 							>
 								Chat with Seller
@@ -264,6 +261,8 @@ const SingleProductContent = ({
 								type='button'
 								variant={'outline'}
 								onClick={() => {
+									handleAddUserToCallSeller();
+
 									const telLink = document.createElement('a');
 
 									telLink.href = `tel:${productInfo?.phoneNumber}`;

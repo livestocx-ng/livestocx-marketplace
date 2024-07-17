@@ -94,11 +94,7 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 	}
 	if (!passwordRegEX.test(formData.password)) {
 		return (message =
-<<<<<<< HEAD
-			'Password must be at least 8 characters, include an uppercase and lowecase character.');
-=======
 			'Password must be at least 8 characters');
->>>>>>> 1706a53f226e788b9d0a592a82dd796aa1db7abe
 	}
 
 	if (formData.role === 'CUSTOMER' && !formData.location) {

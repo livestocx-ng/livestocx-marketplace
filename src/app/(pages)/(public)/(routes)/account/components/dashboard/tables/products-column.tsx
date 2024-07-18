@@ -164,41 +164,26 @@ export const columns: ColumnDef<ProductColumn>[] = [
 		cell: ({row}) => (
 			<div className='flex space-x-2'>
 				<WhatsappShareButton
-<<<<<<< HEAD
-					url={`https://livestocx.com/marketplace/products/${row.original.productId.toLowerCase()}`}
-					title='Check out this awesome product on Livestocx: '
-=======
 					url={`https://livestocx.com/marketplace/products/${formatProductSlug(
 						row.original
 					)}`}
 					title={`Check out my ${row.original.name} on livestocx: `}
->>>>>>> 3ead5968c41fd841833b689abc5f6c6c0ef91b2d
 				>
 					<WhatsappIcon size={25} round />
 				</WhatsappShareButton>
 				<FacebookShareButton
-<<<<<<< HEAD
-					url={`https://livestocx.com/marketplace/products/${row.original.productId.toLowerCase()}`}
-					title='Check out this awesome product on Livestocx: '
-=======
 					url={`https://livestocx.com/marketplace/products/${formatProductSlug(
 						row.original
 					)}`}
 					title={`Check out my ${row.original.name} on livestocx: `}
->>>>>>> 3ead5968c41fd841833b689abc5f6c6c0ef91b2d
 				>
 					<FacebookIcon size={25} round />
 				</FacebookShareButton>
 				<TwitterShareButton
-<<<<<<< HEAD
-					url={`https://livestocx.com/marketplace/products/${row.original.productId.toLowerCase()}`}
-					title='Check out this awesome product on Livestocx: '
-=======
 					url={`https://livestocx.com/marketplace/products/${formatProductSlug(
 						row.original
 					)}`}
 					title={`Check out my ${row.original.name} on livestocx: `}
->>>>>>> 3ead5968c41fd841833b689abc5f6c6c0ef91b2d
 				>
 					<TwitterIcon size={25} round />
 				</TwitterShareButton>

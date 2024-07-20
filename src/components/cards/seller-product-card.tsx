@@ -135,7 +135,7 @@ const SellerProductCard = ({product}: SellerProductCardProps) => {
 		>
 			<div
 				onClick={() => {
-					router.push(
+					return router.push(
 						`/store/${vendorProfile?.slug}/products/${formatProductSlug(product!)}`
 					);
 				}}

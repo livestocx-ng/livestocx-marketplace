@@ -134,13 +134,9 @@ const ProductCard = ({product}: ProductCardProps) => {
 		>
 			<div
 				onClick={() => {
-					if (pathName.includes('marketplace')) {
-						return router.push(
-							`/marketplace/products/${formatProductSlug(
-								product!
-							)}`
-						);
-					}
+					return router.push(
+						`/marketplace/products/${formatProductSlug(product!)}`
+					);
 				}}
 				className='h-[180px] relative cursor-pointer'
 			>

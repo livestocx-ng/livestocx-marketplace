@@ -19,7 +19,7 @@ const SignInPage = () => {
 
 	const [loading, setLoading] = useState(false);
 	const [otp, setOtp] = useState(Array(numberOfInputs).fill(''));
-	const inputRefs = useRef(Array(numberOfInputs).fill(null));
+	const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
 	useEffect(() => {
 		if (user) {

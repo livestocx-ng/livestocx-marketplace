@@ -35,6 +35,22 @@ interface PremiumSubscriptionCheckoutDto extends VendorProfileDto {
 	twitterUrl?: string;
 }
 
+interface PremiumSubscriptionCheckoutFormOneDto {
+	name: string;
+	slug: string;
+	email: string;
+	phoneNumber: string;
+	address: string;
+}
+
+interface PremiumSubscriptionCheckoutFormTwoDto {
+	state: string;
+	city: string;
+	facebookUrl?: string;
+	instagramUrl?: string;
+	twitterUrl?: string;
+}
+
 const phoneRegEX = new RegExp(/^\d{11}$/);
 
 const isNumberRegEX = new RegExp(/^[0-9]+$/);
@@ -165,8 +181,8 @@ export function ValidateVendorProfileFormData(
 	return message;
 }
 
-export function ValidatePremiumSubscriptionCheckoutFormData(
-	formData: PremiumSubscriptionCheckoutDto
+export function ValidatePremiumSubscriptionCheckoutStepOneFormData(
+	formData: PremiumSubscriptionCheckoutFormOneDto
 ): string {
 	let message = '';
 
@@ -200,6 +216,14 @@ export function ValidatePremiumSubscriptionCheckoutFormData(
 			'Invalid domain handle, use lowercase characters without space.');
 	}
 
+	return message;
+}
+
+export function ValidatePremiumSubscriptionCheckoutStepTwoFormData(
+	formData: PremiumSubscriptionCheckoutFormTwoDto
+): string {
+	let message = '';
+
 	if (!formData.state) {
 		return (message = 'Business state is required.');
 	}
@@ -211,7 +235,10 @@ export function ValidatePremiumSubscriptionCheckoutFormData(
 	if (formData.facebookUrl && !socialMediaRegEX.test(formData.facebookUrl)) {
 		return (message = 'Invalid facebook url.');
 	}
-	if (formData.instagramUrl && !socialMediaRegEX.test(formData.instagramUrl)) {
+	if (
+		formData.instagramUrl &&
+		!socialMediaRegEX.test(formData.instagramUrl)
+	) {
 		return (message = 'Invalid instagram url.');
 	}
 	if (formData.twitterUrl && !socialMediaRegEX.test(formData.twitterUrl)) {

@@ -42,15 +42,15 @@ export const AccountNavLinks: FooterNavLink[] = [
 		url: '/account',
 		currentTab: 'Products',
 	},
-	{
-		title: 'Desired Items',
-		url: '/account',
-		currentTab: 'Desired Items',
-	},
-	{
-		title: 'Sellers',
-		url: '/sellers',
-	},
+	// {
+	// 	title: 'Desired Items',
+	// 	url: '/account',
+	// 	currentTab: 'Desired Items',
+	// },
+	// {
+	// 	title: 'Sellers',
+	// 	url: '/sellers',
+	// },
 ];
 
 export const HelpNavLinks: NavLink[] = [

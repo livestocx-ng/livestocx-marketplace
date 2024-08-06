@@ -119,7 +119,6 @@ const DashboardContent = () => {
 						vendorProfile?.slug?.length! > 1 && (
 							<div className='flex items-center space-x-4'>
 								<p
-									// onClick={() => updateCurrentAccountTab('Settings')}
 									className='text-sm'
 								>
 									Share Profile:

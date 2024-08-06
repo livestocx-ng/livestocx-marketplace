@@ -82,7 +82,9 @@ const MainNavbar = () => {
 			setSetShowAccountMenu(false);
 			updateUserPremiumSubscription(null);
 
-			router.push('/');
+			if (pathName.includes('account')) {
+				router.push('/');
+			}
 		} catch (error) {
 			toast.error('Error!');
 		}
@@ -164,7 +166,7 @@ const MainNavbar = () => {
 							target='_blank'
 							href={`/store/${vendorProfile?.slug}`}
 							className={`h-8 w-8 ${
-								scrolling ? 'bg-white' : 'bg-main'
+								scrolling ? 'bg-white' : 'bg-main shadow-sm shadow-slate-400'
 							} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
 						>
 							<Store
@@ -194,7 +196,7 @@ const MainNavbar = () => {
 							}
 						}}
 						className={`h-8 w-8 ${
-							scrolling ? 'bg-white' : 'bg-main'
+							scrolling ? 'bg-white' : 'bg-main shadow-sm shadow-slate-400'
 						} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
 					>
 						<User2
@@ -464,7 +466,7 @@ const MainNavbar = () => {
 							target='_blank'
 							href={`/store/${vendorProfile?.slug}`}
 							className={`h-8 w-8 ${
-								scrolling ? 'bg-white' : 'bg-main'
+								scrolling ? 'bg-white' : 'bg-main shadow-sm shadow-slate-400'
 							} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
 						>
 							<Store
@@ -494,7 +496,7 @@ const MainNavbar = () => {
 							}
 						}}
 						className={`h-8 w-8 ${
-							scrolling ? 'bg-white' : 'bg-main'
+							scrolling ? 'bg-white' : 'bg-main shadow-sm shadow-slate-400'
 						} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
 					>
 						<User2

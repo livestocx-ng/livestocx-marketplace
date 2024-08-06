@@ -13,11 +13,11 @@ import {
 	Award,
 	EyeIcon,
 	ThumbsUp,
-	LineChart,
+	BarChart3,
 	ThumbsDown,
 	FlagTriangleRight,
-	BarChart3,
 } from 'lucide-react';
+import Link from 'next/link';
 import Image from 'next/image';
 import {cn} from '@/lib/utils';
 import {
@@ -37,7 +37,6 @@ import {
 	AlertDialogDescription,
 } from '@/components/ui/alert-dialog';
 import {toast} from 'react-hot-toast';
-import {useRouter} from 'next/navigation';
 import ProductCard from '../cards/product-card';
 import {Product, ProductInfo} from '@/types/types';
 import React, {Dispatch, SetStateAction} from 'react';
@@ -49,7 +48,6 @@ import SellerInfoTab from '../product-info/seller-info-tab';
 import ProductReviewTab from '../product-info/product-review-tab';
 import MoreFromSellerTab from '../product-info/more-from-seller-tab';
 import {likesViewsImpressionFormatter} from '@/utils/like.view.impression.formatter';
-import Link from 'next/link';
 
 interface SingleProductContentProps {
 	currentTab: Tab;
@@ -65,19 +63,16 @@ interface SingleProductContentProps {
 type Tab = 'Seller Info' | 'Review' | 'More From Seller';
 const CurrentTabs: Tab[] = ['Seller Info', 'Review', 'More From Seller'];
 
-
 const SingleProductContent = ({
 	loading,
 	product,
 	currentTab,
 	productInfo,
 	setCurrentTab,
+	handleMessageSeller,
 	handleLikeUnlikeProduct,
 	handleAddUserToCallSeller,
-	handleMessageSeller,
 }: SingleProductContentProps) => {
-	const router = useRouter();
-
 	const {user, products} = useGlobalStore();
 
 	const isProductMediaModalOpen = useProductMediaModalStore(
@@ -260,17 +255,7 @@ const SingleProductContent = ({
 							<Button
 								type='button'
 								variant={'outline'}
-								onClick={() => {
-									handleAddUserToCallSeller();
-
-									const telLink = document.createElement('a');
-
-									telLink.href = `tel:${productInfo?.phoneNumber}`;
-
-									telLink.target = '_blank';
-
-									telLink.click();
-								}}
+								onClick={handleAddUserToCallSeller}
 								className='bg-white text-main hover:bg-white hover:text-main border border-main text-[10px] md:text-xs h-10 w-[45%] rounded-full py-2'
 							>
 								Call Seller

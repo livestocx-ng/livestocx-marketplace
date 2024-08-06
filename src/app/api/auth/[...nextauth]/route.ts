@@ -53,73 +53,14 @@ const handler = NextAuth({
 						secure: process.env.NODE_ENV === 'production',
 					});
 
-					// const cookiesInstance = cookies();
-					// const redirectUrlCookie = cookiesInstance.get(
-					// 	LIVESTOCX_AUTH_REDIRECT
-					// );
-
-					// console.info(
-					// 	'[CALLBACK_LIVESTOCX_AUTH_REDIRECT] :: ',
-					// 	redirectUrlCookie
-					// );
-					// console.info(
-					// 	'[CALLBACK_LIVESTOCX_AUTH_REDIRECT_VALUE] :: ',
-					// 	redirectUrlCookie?.value
-					// );
-					// console.info(
-					// 	'[CALLBACK_LIVESTOCX_AUTH_REDIRECT_VALUE_INCLUDES_BUSINESS] :: ',
-					// 	redirectUrlCookie?.value.includes('business')
-					// );
-
-					// if (redirectUrlCookie?.value.includes('business')) {
-					// 	const redirectUrl = redirectUrlCookie?.value.includes(
-					// 		'business'
-					// 	)
-					// 		? '/business?subscription_now=true'
-					// 		: redirectUrlCookie?.value;
-
-					// 	console.info(
-					// 		'[RETURN_LIVESTOCX_AUTH_REDIRECT] :: ',
-					// 		redirectUrlCookie
-					// 	);
-
-					// 	return Promise.resolve(redirectUrl);
-					// }
-
-					// return Promise.resolve('/business?subscription_now=true');
 					return true;
 				} catch (error) {
 					// console.error('[GOOGLE-SIGN-API-ERROR]', error);
 				}
 			}
-
-			// return profile?.email && profile?.email.endsWith("@example.com")
-
-			return true; // Do different verification for other providers that don't have `email`
+			return true;
 		},
 		async redirect({url, baseUrl}) {
-			// const cookiesInstance = cookies();
-			// const redirectUrlCookie = cookiesInstance.get(
-			// 	LIVESTOCX_AUTH_REDIRECT
-			// );
-
-			// console.info('[LIVESTOCX_AUTH_REDIRECT] :: ', redirectUrlCookie);
-			// console.info('[LIVESTOCX_AUTH_REDIRECT_VALUE] :: ', redirectUrlCookie?.value);
-			// console.info('[LIVESTOCX_AUTH_REDIRECT_VALUE_INCLUDES_BUSINESS] :: ', redirectUrlCookie?.value.includes('business'));
-
-			// if (redirectUrlCookie?.value.includes('business')) {
-			// 	const redirectUrl = redirectUrlCookie?.value.includes('business')
-			// 		? '/business?subscription_now=true'
-			// 		: redirectUrlCookie?.value;
-
-			// 	console.info(
-			// 		'[LIVESTOCX_AUTH_REDIRECT] :: ',
-			// 		redirectUrlCookie
-			// 	);
-
-			// 	return redirectUrl;
-			// }
-
 			return url || baseUrl;
 		},
 	},

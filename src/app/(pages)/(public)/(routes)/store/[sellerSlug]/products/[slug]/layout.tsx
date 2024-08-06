@@ -36,7 +36,7 @@ export async function generateMetadata(
 	}
 
 	return {
-		title: `Livestocx - ${data.data.name}`,
+		title: data.data.name,
 		openGraph: {
 			images: [
 				{

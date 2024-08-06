@@ -125,6 +125,9 @@ const PremiumSubscriptionCheckoutModal = () => {
 				email: vendorProfile?.email,
 				address: vendorProfile?.address,
 				phoneNumber: vendorProfile?.phoneNumber,
+				facebookUrl: vendorProfile?.facebookUrl,
+				instagramUrl: vendorProfile?.instagramUrl,
+				twitterUrl: vendorProfile?.twitterUrl,
 			},
 		});
 

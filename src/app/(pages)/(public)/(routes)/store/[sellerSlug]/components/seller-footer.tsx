@@ -1,9 +1,9 @@
+import Link from 'next/link';
 import Image from 'next/image';
 import {useGlobalStore} from '@/hooks/use-global-store';
-import Link from 'next/link';
 
 const SellerFooter = () => {
-	const {vendorProfile} = useGlobalStore();
+	const {vendor} = useGlobalStore();
 
 	return (
 		<div className='pt-5 md:pt-10 w-full bg-main flex flex-col px-5 sm:px-10'>
@@ -15,51 +15,63 @@ const SellerFooter = () => {
 						height={30}
 						unoptimized={true}
 						className='rounded-md'
-						src={vendorProfile?.avatar!}
+						src={vendor?.avatar!}
 					/>
 
 					<h1 className='text-white text-xs'>
-						{vendorProfile?.name}
+						{vendor?.name}
 					</h1>
 
 					<div className='flex flex-col items-start space-y-2'>
 						<p className='text-white text-xs'>
-							{vendorProfile?.address} {vendorProfile?.city},{' '}
-							{vendorProfile?.state}
-						</p>
-						<p className='text-white text-xs'>
-							{vendorProfile?.phoneNumber}
+							{vendor?.address} {vendor?.city},{' '}
+							{vendor?.state}
 						</p>
 
 						<p className='text-white text-xs'>
-							{vendorProfile?.email}
+							{vendor?.email}
 						</p>
 					</div>
 				</div>
 
 				<div className='flex flex-col justify-start md:items-center md:justify-center space-y-5 mt-5'>
 					<div className='flex items-center space-x-10 sm:space-x-3'>
-						<Link href={'#'}>
+					<Link
+							target='_blank'
+							href={
+								vendor?.facebookUrl ? vendor?.facebookUrl : '#'
+							}
+						>
 							<Image
 								alt={''}
 								width={30}
 								height={30}
-								className='object-cover'
 								unoptimized={true}
+								className='object-cover'
 								src={'/icon__facebook.svg'}
 							/>
 						</Link>
-						<Link href={'#'}>
+						<Link
+							target='_blank'
+							href={vendor?.twitterUrl ? vendor?.twitterUrl : '#'}
+						>
 							<Image
 								alt={''}
 								width={30}
 								height={30}
 								unoptimized={true}
 								className='object-cover'
-								src={'/icon__linkedin.svg'}
+								src={'/icon__twitter.svg'}
 							/>
 						</Link>
-						<Link href={'#'}>
+						<Link
+							target='_blank'
+							href={
+								vendor?.instagramUrl
+									? vendor?.instagramUrl
+									: '#'
+							}
+						>
 							<Image
 								alt={''}
 								width={30}

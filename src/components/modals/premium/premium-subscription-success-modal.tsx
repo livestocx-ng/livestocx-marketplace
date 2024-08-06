@@ -7,6 +7,7 @@ import {
 	FacebookShareButton,
 	WhatsappShareButton,
 } from 'react-share';
+import axios from 'axios';
 import {useEffect} from 'react';
 import {
 	useGlobalStore,
@@ -20,15 +21,13 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import Link from 'next/link';
 
 const PremiumSubscriptionSuccessModal = () => {
-	const router = useRouter();
-
 	const {vendorProfile} = useGlobalStore();
 
 	const {onClose} = usePremiumSubscriptionSuccessModalStore();
 
 	useEffect(() => {
 		if (vendorProfile) {
-			fetch(`https://livestocx.com/store/${vendorProfile?.slug}}`);
+			axios.get(`https://livestocx.com/store/${vendorProfile?.slug}}`);
 		}
 	}, [vendorProfile]);
 
@@ -58,9 +57,9 @@ const PremiumSubscriptionSuccessModal = () => {
 					<div className='flex justify-center'>
 						<Link
 							target='_blank'
-							onClick={() => {
-                                onClose();
-							}}
+							// onClick={() => {
+                            //     onClose();
+							// }}
                             href={`/store/${vendorProfile?.slug}`}
 							className='w-fit bg-green-50 hover:bg-green-50 text-xs h-12 text-green-600 hover:text-green-600 underline rounded py-3 px-8 border-0'
 						>

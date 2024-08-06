@@ -14,7 +14,6 @@ import LoadingAnimationOne from '@/components/loader/loading-animation-one';
 import SingleProductContent from '@/components/product/single-product-content';
 import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import EmptyAnimation from '../../../../../../../../public/animations/animation__3.json';
-import LoadingAnimation from '../../../../../../../../public/animations/animation__3.json';
 
 interface ProductPageParams {
 	params: {
@@ -216,13 +215,6 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 
 				{loading && (
 					<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
-						{/* <div className='h-[200px] w-1/2 mx-auto bg-white'>
-							<Lottie
-								loop={true}
-								className='h-full'
-								animationData={LoadingAnimation}
-							/>
-						</div> */}
 						<LoadingAnimationOne />
 					</div>
 				)}

@@ -21,12 +21,13 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 		user,
 		vendor,
 		updateVendor,
-		updateSellerPagination,
 		updateSellerProducts,
+		updateSellerPagination,
 	} = useGlobalStore();
 
 	const [loading, setLoading] = useState<boolean>(true);
 	const [currentPage, setCurrentPage] = useState<number>(1);
+	const [isSellerProductsLoading, setIsSellerProductsLoading] = useState<boolean>(true);
 
 	const fetchSeller = async () => {
 		try {
@@ -49,7 +50,7 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 
 	const fetchSellerProducts = async () => {
 		try {
-			setLoading(true);
+			setIsSellerProductsLoading(true);
 
 			const {data} = await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/profile/products?slug=${params.sellerSlug}&page=${currentPage}`
@@ -61,9 +62,9 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 			updateSellerProducts(data.data.products);
 			updateSellerPagination(data.data.totalPages, data.data.hasNext);
 
-			setLoading(false);
+			setIsSellerProductsLoading(false);
 		} catch (error) {
-			setLoading(false);
+			setIsSellerProductsLoading(false);
 			const _error = error as AxiosError;
 
 			// console.log('[FETCH-SELLERS-ERROR] :: ', _error);
@@ -121,6 +122,7 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 							<SellerInfoProducts
 								currentPage={currentPage}
 								updateCurrentPage={setCurrentPage}
+								isSellerProductsLoading={isSellerProductsLoading}
 							/>
 						</div>
 					</div>

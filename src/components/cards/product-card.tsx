@@ -3,10 +3,11 @@ import {
 	Award,
 	Forward,
 	MapPin,
-	MessageCircle,
-	ThumbsDown,
 	ThumbsUp,
+	ThumbsDown,
+	MessageCircle,
 } from 'lucide-react';
+import Link from 'next/link';
 import Image from 'next/image';
 import {
 	useGlobalStore,
@@ -15,12 +16,11 @@ import {
 import {Product} from '@/types/types';
 import axios, {AxiosError} from 'axios';
 import {useEffect, useState} from 'react';
+import {useRouter} from 'next/navigation';
 import {useInView} from 'react-intersection-observer';
-import {usePathname, useRouter} from 'next/navigation';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {getMediaImageUrl} from '@/utils/media/media.url';
 import {formatProductSlug} from '@/utils/slug.formatter';
-import Link from 'next/link';
 
 interface ProductCardProps {
 	product: Product | null;
@@ -28,7 +28,6 @@ interface ProductCardProps {
 
 const ProductCard = ({product}: ProductCardProps) => {
 	const router = useRouter();
-	const pathName = usePathname();
 
 	const shareProductModal = useShareProductModalStore();
 	const {

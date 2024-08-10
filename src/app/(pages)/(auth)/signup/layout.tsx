@@ -48,7 +48,7 @@ export const metadata: Metadata = {
 		card: 'summary',
 		site: '@livestocx',
 		creator: '@livestocx',
-		title: 'Livestocx',
+		title: 'Livestocx - Sign Up',
 
 		description: 'Best deals, Everything Animals',
 		images: [

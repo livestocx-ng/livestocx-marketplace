@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 		'facebook-domain-verification': 'yy2fxudmyl6e8nxtl2zjx9lss8j8dl',
 	},
 	openGraph: {
-		title: 'Livestocx - Sign Up',
+		title: 'Livestocx - Forgot Password',
 		description: 'Best deals, Everything Animals',
 		url: 'https://livestocx.com',
 		siteName: 'Livestocx',
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
 		card: 'summary',
 		site: '@livestocx',
 		creator: '@livestocx',
-		title: 'Livestocx',
+		title: 'Livestocx - Forgot Password',
 
 		description: 'Best deals, Everything Animals',
 		images: [

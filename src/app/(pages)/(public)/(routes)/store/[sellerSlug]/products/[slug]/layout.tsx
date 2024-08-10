@@ -37,7 +37,12 @@ export async function generateMetadata(
 
 	return {
 		title: data.data.name,
+
 		openGraph: {
+			title: data.data.name,
+			description: data.data?.description,
+			siteName: 'Livestocx',
+			type: 'website',
 			images: [
 				{
 					url: ogImage200x200,
@@ -60,6 +65,11 @@ export async function generateMetadata(
 			],
 		},
 		twitter: {
+			card: 'summary',
+			site: '@livestocx',
+			creator: '@livestocx',
+			title: `Livestocx - ${data.data.name}`,
+			description: data.data?.description,
 			images: [
 				{
 					url: ogImage200x200,

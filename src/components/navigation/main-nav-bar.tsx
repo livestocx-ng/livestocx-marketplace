@@ -11,6 +11,7 @@ import {
 	ShoppingCart,
 	MessageCircle,
 	MessagesSquare,
+	Users,
 } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link';
@@ -20,7 +21,7 @@ import {Button} from '../ui/button';
 import {toast} from 'react-hot-toast';
 import {useEffect, useState} from 'react';
 import {usePathname, useRouter} from 'next/navigation';
-import {useGlobalStore} from '@/hooks/use-global-store';
+import {useGlobalStore, useReferralModalStore} from '@/hooks/use-global-store';
 
 const MainNavbar = () => {
 	const router = useRouter();
@@ -36,6 +37,8 @@ const MainNavbar = () => {
 		userPremiumSubscription,
 		updateUserPremiumSubscription,
 	} = useGlobalStore();
+
+	const referralModal = useReferralModalStore();
 
 	const [scrolling, setScrolling] = useState<boolean>(false);
 	const [showMenu, setSetShowMenu] = useState<boolean>(false);
@@ -70,6 +73,12 @@ const MainNavbar = () => {
 			}
 		});
 	}, []);
+
+	const handleReferralModal = () => {
+		if (referralModal.isOpen) return;
+
+		referralModal.onOpen();
+	};
 
 	const handleLogout = async () => {
 		try {
@@ -166,7 +175,9 @@ const MainNavbar = () => {
 							target='_blank'
 							href={`/store/${vendorProfile?.slug}`}
 							className={`h-8 w-8 ${
-								scrolling ? 'bg-white' : 'bg-main shadow-sm shadow-slate-400'
+								scrolling
+									? 'bg-white'
+									: 'bg-main shadow-sm shadow-slate-400'
 							} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
 						>
 							<Store
@@ -196,7 +207,9 @@ const MainNavbar = () => {
 							}
 						}}
 						className={`h-8 w-8 ${
-							scrolling ? 'bg-white' : 'bg-main shadow-sm shadow-slate-400'
+							scrolling
+								? 'bg-white'
+								: 'bg-main shadow-sm shadow-slate-400'
 						} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
 					>
 						<User2
@@ -229,6 +242,16 @@ const MainNavbar = () => {
 
 									<p className='text-xs'>Account</p>
 								</Link>
+								<div
+									onClick={handleReferralModal}
+									className={` ${
+										scrolling ? 'bg-white' : 'bg-mai'
+									} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
+								>
+									<Users className={`h-5 w-5 text-main`} />
+
+									<p className='text-xs'>Referrals</p>
+								</div>
 								<Link
 									href={'/account'}
 									onClick={() => {
@@ -466,7 +489,9 @@ const MainNavbar = () => {
 							target='_blank'
 							href={`/store/${vendorProfile?.slug}`}
 							className={`h-8 w-8 ${
-								scrolling ? 'bg-white' : 'bg-main shadow-sm shadow-slate-400'
+								scrolling
+									? 'bg-white'
+									: 'bg-main shadow-sm shadow-slate-400'
 							} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
 						>
 							<Store
@@ -496,7 +521,9 @@ const MainNavbar = () => {
 							}
 						}}
 						className={`h-8 w-8 ${
-							scrolling ? 'bg-white' : 'bg-main shadow-sm shadow-slate-400'
+							scrolling
+								? 'bg-white'
+								: 'bg-main shadow-sm shadow-slate-400'
 						} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
 					>
 						<User2
@@ -529,6 +556,16 @@ const MainNavbar = () => {
 
 									<p className='text-xs'>Account</p>
 								</Link>
+								<div
+									onClick={handleReferralModal}
+									className={` ${
+										scrolling ? 'bg-white' : 'bg-mai'
+									} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
+								>
+									<Users className={`h-5 w-5 text-main`} />
+
+									<p className='text-xs'>Referrals</p>
+								</div>
 								{user?.role === 'FARMER' && (
 									<Link
 										href={'/account'}

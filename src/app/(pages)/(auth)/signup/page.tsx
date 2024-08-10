@@ -82,6 +82,15 @@ const SignUpPage = () => {
 			});
 		}
 	}, [searchParams.get('seller')]);
+	
+	useEffect(() => {
+		if (searchParams.has('referralCode')) {
+			updateFormData({
+				type: 'UPDATE_FORMDATA',
+				payload: {referralCode: searchParams.get('referralCode')!},
+			});
+		}
+	}, [searchParams.get('referralCode')]);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		updateFormData({

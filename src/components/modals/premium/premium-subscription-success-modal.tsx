@@ -8,6 +8,7 @@ import {
 	WhatsappShareButton,
 } from 'react-share';
 import axios from 'axios';
+import Link from 'next/link';
 import {useEffect} from 'react';
 import {
 	useGlobalStore,
@@ -15,10 +16,8 @@ import {
 } from '@/hooks/use-global-store';
 import {Copy, X} from 'lucide-react';
 import {toast} from 'react-hot-toast';
-import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-import Link from 'next/link';
 
 const PremiumSubscriptionSuccessModal = () => {
 	const {vendorProfile} = useGlobalStore();

@@ -15,6 +15,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
 	console.log('SLUG ', params.sellerSlug);
 
+	let ogImage100x100 = '';
 	let ogImage200x200 = '';
 	let ogImage300x200 = '';
 	let ogImage300x300 = '';
@@ -28,6 +29,7 @@ export async function generateMetadata(
 	const imageUrl = data.data.avatar;
 
 	if (imageUrl.includes('https')) {
+		ogImage100x100 = await generateOGImageFromURL(100, 100, imageUrl);
 		ogImage200x200 = await generateOGImageFromURL(200, 200, imageUrl);
 		ogImage300x200 = await generateOGImageFromURL(300, 200, imageUrl);
 		ogImage300x300 = await generateOGImageFromURL(300, 300, imageUrl);
@@ -36,7 +38,18 @@ export async function generateMetadata(
 	return {
 		title: data.data.name,
 		openGraph: {
+			title: data.data.name,
+			description: 'Best deals, Everything Animals',
+			url: 'https://livestocx.com',
+			siteName: 'Livestocx',
+			type: 'website',
 			images: [
+				{
+					url: ogImage100x100,
+					secureUrl: ogImage100x100,
+					width: 100,
+					height: 100,
+				},
 				{
 					url: ogImage200x200,
 					secureUrl: ogImage200x200,
@@ -58,7 +71,18 @@ export async function generateMetadata(
 			],
 		},
 		twitter: {
+			card: 'summary',
+			site: '@livestocx',
+			creator: '@livestocx',
+			title: data.data.name,
+			description: 'Best deals, Everything Animals',
 			images: [
+				{
+					url: ogImage100x100,
+					secureUrl: ogImage100x100,
+					width: 100,
+					height: 100,
+				},
 				{
 					url: ogImage200x200,
 					secureUrl: ogImage200x200,

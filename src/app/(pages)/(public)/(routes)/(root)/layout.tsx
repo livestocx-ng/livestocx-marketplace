@@ -5,7 +5,7 @@ export const metadata: Metadata = {
 	description: 'Best deals, Everything Animals',
 	keywords: ['Livestocx', 'Livestock', 'Nigeria', 'Animals', 'Meat'],
 	openGraph: {
-		title: 'Livestocx - Sign Up',
+		title: 'Livestocx - Marketplace',
 		description: 'Best deals, Everything Animals',
 		url: 'https://livestocx.com',
 		siteName: 'Livestocx',
@@ -45,8 +45,7 @@ export const metadata: Metadata = {
 		card: 'summary',
 		site: '@livestocx',
 		creator: '@livestocx',
-		title: 'Livestocx',
-
+		title: 'Livestocx - Marketplace',
 		description: 'Best deals, Everything Animals',
 		images: [
 			{

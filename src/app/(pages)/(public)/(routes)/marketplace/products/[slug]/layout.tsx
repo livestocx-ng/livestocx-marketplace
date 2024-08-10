@@ -17,6 +17,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
 	// console.log('SLUG ', params.slug);
 
+	let ogImage100x100 = '';
 	let ogImage200x200 = '';
 	let ogImage300x200 = '';
 	let ogImage300x300 = '';
@@ -30,6 +31,7 @@ export async function generateMetadata(
 	const imageUrl = getMediaImageUrl(data.data);
 
 	if (imageUrl.includes('https')) {
+		ogImage100x100 = await generateOGImageFromURL(100, 100, imageUrl);
 		ogImage200x200 = await generateOGImageFromURL(200, 200, imageUrl);
 		ogImage300x200 = await generateOGImageFromURL(300, 200, imageUrl);
 		ogImage300x300 = await generateOGImageFromURL(300, 300, imageUrl);
@@ -37,8 +39,24 @@ export async function generateMetadata(
 
 	return {
 		title: `Livestocx - ${data.data.name}`,
+		description: data.data?.description,
+		keywords: ['Livestocx', 'Livestock', 'Nigeria', 'Animals', 'Meat'],
+		other: {
+			'facebook-domain-verification': 'yy2fxudmyl6e8nxtl2zjx9lss8j8dl',
+		},
 		openGraph: {
+			title: `Livestocx - ${data.data.name}`,
+			description: data.data?.description,
+			url: 'https://livestocx.com',
+			siteName: 'Livestocx',
+			type: 'website',
 			images: [
+				{
+					url: ogImage100x100,
+					secureUrl: ogImage100x100,
+					width: 100,
+					height: 100,
+				},
 				{
 					url: ogImage200x200,
 					secureUrl: ogImage200x200,
@@ -60,7 +78,18 @@ export async function generateMetadata(
 			],
 		},
 		twitter: {
+			card: 'summary',
+			site: '@livestocx',
+			creator: '@livestocx',
+			title: `Livestocx - ${data.data.name}`,
+			description: data.data?.description,
 			images: [
+				{
+					url: ogImage100x100,
+					secureUrl: ogImage100x100,
+					width: 100,
+					height: 100,
+				},
 				{
 					url: ogImage200x200,
 					secureUrl: ogImage200x200,

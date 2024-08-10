@@ -17,7 +17,6 @@ export async function generateMetadata(
 ): Promise<Metadata> {
 	// console.log('SLUG ', params.slug);
 
-	let ogImage180x180 = '';
 	let ogImage200x200 = '';
 	let ogImage300x200 = '';
 	let ogImage300x300 = '';
@@ -31,7 +30,6 @@ export async function generateMetadata(
 	const imageUrl = getMediaImageUrl(data.data);
 
 	if (imageUrl.includes('https')) {
-		ogImage180x180 = await generateOGImageFromURL(180, 180, imageUrl);
 		ogImage200x200 = await generateOGImageFromURL(200, 200, imageUrl);
 		ogImage300x200 = await generateOGImageFromURL(300, 200, imageUrl);
 		ogImage300x300 = await generateOGImageFromURL(300, 300, imageUrl);
@@ -51,12 +49,6 @@ export async function generateMetadata(
 			siteName: 'Livestocx',
 			type: 'website',
 			images: [
-				{
-					url: ogImage180x180,
-					secureUrl: ogImage180x180,
-					width: 180,
-					height: 180,
-				},
 				{
 					url: ogImage200x200,
 					secureUrl: ogImage200x200,
@@ -84,12 +76,6 @@ export async function generateMetadata(
 			title: `Livestocx - ${data.data.name}`,
 			description: data.data?.description,
 			images: [
-				{
-					url: ogImage180x180,
-					secureUrl: ogImage180x180,
-					width: 180,
-					height: 180,
-				},
 				{
 					url: ogImage200x200,
 					secureUrl: ogImage200x200,

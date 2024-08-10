@@ -25,14 +25,8 @@ interface SignupDto {
 	phoneNumber: string;
 	acceptedTerms: boolean;
 	confirmPassword: string;
+	referralCode?: string;
 	role: 'FARMER' | 'CUSTOMER';
-}
-
-interface PremiumSubscriptionCheckoutDto extends VendorProfileDto {
-	slug: string;
-	facebookUrl?: string;
-	instagramUrl?: string;
-	twitterUrl?: string;
 }
 
 interface PremiumSubscriptionCheckoutFormOneDto {
@@ -116,6 +110,14 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 	}
 	if (!passwordRegEX.test(formData.password)) {
 		return (message = 'Password must be at least 8 characters');
+	}
+	
+	if (formData.referralCode && formData.referralCode.length <= 7) {
+		return (message = 'Referral code must be at least 8 characters');
+	}
+	
+	if (formData.referralCode && formData.referralCode.length > 8) {
+		return (message = 'Referral code must be at least 8 characters');
 	}
 
 	if (formData.role === 'CUSTOMER' && !formData.location) {

@@ -1,21 +1,21 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import {NigerianCities, NigerianStates} from '@/data';
 import {toast} from 'react-hot-toast';
 import {signIn} from 'next-auth/react';
 import axios, {AxiosError} from 'axios';
 import {Button} from '@/components/ui/button';
 import {Separator} from '@/components/ui/separator';
-import {Fragment, useEffect, useReducer, useState} from 'react';
+import Footer from '@/components/navigation/footer';
+import {NigerianCities, NigerianStates} from '@/data';
 import {useRouter, useSearchParams} from 'next/navigation';
 import ButtonLoader from '@/components/loader/button-loader';
+import MainNavbar from '@/components/navigation/main-nav-bar';
 import FormTextInput from '@/components/input/form-text-input';
+import {Fragment, useEffect, useReducer, useState} from 'react';
 import FormPasswordInput from '@/components/input/form-password-input';
 import {useUpdateWelcomeFarmerModalStore} from '@/hooks/use-global-store';
 import {ValidateSignupFormData} from '@/utils/form-validations/auth.validation';
-import MainNavbar from '@/components/navigation/main-nav-bar';
-import Footer from '@/components/navigation/footer';
 
 type FormData = {
 	firstName: string;
@@ -31,6 +31,7 @@ type FormData = {
 	location: string;
 	acceptedTerms: boolean;
 	confirmPassword: string;
+	referralCode: string;
 };
 
 type FormAction = {
@@ -52,6 +53,7 @@ const initialState: FormData = {
 	role: 'CUSTOMER',
 	acceptedTerms: false,
 	confirmPassword: '',
+	referralCode: '',
 };
 
 const formReducer = (state: FormData, action: FormAction) => {
@@ -107,7 +109,10 @@ const SignUpPage = () => {
 
 			if (validationError) {
 				setLoading(false);
-				return toast.error(validationError, {duration: 10000});
+				return toast.error(validationError, {
+					duration: 10000,
+					className: 'text-sm',
+				});
 			}
 
 			// console.log('[SIGNUP-PAYLOAD] :: ', formData);
@@ -118,7 +123,10 @@ const SignUpPage = () => {
 
 			if (!emailAvailability.data.data) {
 				setLoading(false);
-				return toast.error('Email already exists', {duration: 10000});
+				return toast.error('Email already exists', {
+					duration: 1000,
+					className: 'text-sm',
+				});
 			}
 
 			const {data} = await axios.post('/api/auth/signup', formData);
@@ -132,7 +140,9 @@ const SignUpPage = () => {
 			} else {
 				setLoading(false);
 
-				toast.success('Account created successfully');
+				toast.success('Account created successfully', {
+					className: 'text-sm',
+				});
 
 				router.push('/');
 
@@ -145,9 +155,9 @@ const SignUpPage = () => {
 		} catch (error) {
 			setLoading(false);
 
-			// console.error('[SIGNUP-ERROR]', error);
+			console.error('[SIGNUP-ERROR]', error);
 
-			toast.error('An error occurred');
+			toast.error('An error occurred', {className: 'text-sm'});
 		}
 	};
 
@@ -304,6 +314,15 @@ const SignUpPage = () => {
 								value={formData.confirmPassword}
 								handleChange={handleChange}
 								placeHolder='Confirm Password'
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
+
+							<FormTextInput
+								name='referralCode'
+								padding='py-4 px-4'
+								value={formData.referralCode}
+								handleChange={handleChange}
+								placeHolder='Referral Code (Optional)'
 								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 							/>
 

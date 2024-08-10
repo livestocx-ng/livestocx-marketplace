@@ -30,10 +30,10 @@ const Footer = () => {
 							1680 East Barstow Avenue, <br /> Fresno California, United States
 						</p>
 						<p className='text-white text-xs'>+1(559)6683783</p>
-						<p className='text-white text-xs'>+23432549273</p>
+						{/* <p className='text-white text-xs'>+23432549273</p> */}
 						
 						<p className='text-white text-xs'>
-							livestocxltd@gmail.com
+							support@livestocx.com
 						</p>
 					</div>
 				</div>

@@ -22,6 +22,7 @@ export interface User {
 	phoneNumber: string;
 	email: string;
 	role: string;
+	referralCode: string;
 	isProfileUpdated: boolean;
 	isVendorProfileUpdated: boolean;
 	accessToken: string;

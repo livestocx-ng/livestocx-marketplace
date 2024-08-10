@@ -226,6 +226,12 @@ export const usePremiumSubscriptionSuccessModalStore =	create<ActivateModal>((se
 	onClose: () => set({isOpen: false}),
 }));
 
+export const useReferralModalStore =	create<ActivateModal>((set) => ({
+	isOpen: false,
+	onOpen: () => set({isOpen: true}),
+	onClose: () => set({isOpen: false}),
+}));
+
 export const useUpdateProductModalStore = create<UpdateProductModal>((set) => ({
 	isOpen: false,
 	payload: {

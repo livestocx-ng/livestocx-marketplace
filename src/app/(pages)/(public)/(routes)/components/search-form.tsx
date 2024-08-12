@@ -83,10 +83,6 @@ const SearchForm = () => {
 			fetchProducts();
 		}
 
-		if (formData.query === '' && pathName.includes('sellers')) {
-			fetchSellers();
-		}
-
 		if (formData.query.trim().length > 2 || formData.location) {
 			handleSearch();
 		}
@@ -116,23 +112,6 @@ const SearchForm = () => {
 			const _error = error as AxiosError;
 
 			// console.log('[FETCH-PRODUCTS-ERROR] :: ', _error);
-		}
-	};
-
-	const fetchSellers = async () => {
-		try {
-			const {data} = await axios.get(
-				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/fetch-all?page=1`
-			);
-
-			// // console.log('[DATA] ::  ', data);
-
-			updateVendors(data.data.vendors);
-			updatePagination(data.data.totalPages, data.data.hasNext);
-		} catch (error) {
-			const _error = error as AxiosError;
-
-			// console.log('[SEARCH-PRODUCTS-ERROR] :: ', _error);
 		}
 	};
 

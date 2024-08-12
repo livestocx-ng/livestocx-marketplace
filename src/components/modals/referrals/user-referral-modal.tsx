@@ -7,9 +7,8 @@ import {
 	FacebookShareButton,
 	WhatsappShareButton,
 } from 'react-share';
-import {Copy, Users, X} from 'lucide-react';
 import {toast} from 'react-hot-toast';
-import {Badge} from '@/components/ui/badge';
+import {Copy, Users, X} from 'lucide-react';
 import {Button} from '@/components/ui/button';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import {useReferralModalStore, useGlobalStore} from '@/hooks/use-global-store';
@@ -38,20 +37,30 @@ const UserReferralModal = () => {
 					</Button>
 				</div>
 
-				<div className='space-y-3 my-5'>
+				<div className='space-y-3 my-'>
 					<p className='text-sm leading-6'>
-						Congratulations! You're now a part of our referral
-						program! Share your unique referral code with friends
-						and family, earn rewards and discounts for every
-						successful referral! Plus, get a chance to win a{' '}
-						<span className='font-medium'>
-							Free product promotion every week🚀.
-						</span>{' '}
-						&nbsp; Refer now and start earning!
-						<br />
+						Top referrers get promotions every week!!!🎉🎉🎉 Refer
+						your friends and colleagues to use Livestocx. Try it
+						now!
 					</p>
 
-					<p className='text-center text-sm'>Share link via:</p>
+					<div className='flex justify-center'>
+						<CopyToClipboard
+							text={user?.referralCode!}
+							onCopy={(text: string, result: boolean) => {
+								toast.success('Referral code copied to clipboard', {
+									duration: 6500,
+									className: 'text-sm',
+								});
+							}}
+						>
+							<div className='bg-green-50 hover:bg-green-50 h-12 text-sm text-green-600 hover:text-green-600 underline rounded py-3 px-8 flex items-center justify-center cursor-pointer'>
+								Copy Code
+							</div>
+						</CopyToClipboard>
+					</div>
+
+					<p className='text-center text-sm font-semibold'>Share on:</p>
 
 					<div className='flex justify-center space-x-2'>
 						<WhatsappShareButton
@@ -76,7 +85,8 @@ const UserReferralModal = () => {
 						<CopyToClipboard
 							text={`https://livestocx.com/signup?referralCode=${user?.referralCode}`}
 							onCopy={(text: string, result: boolean) => {
-								toast.success('Link copied to clipboard', {
+								toast.success('Referral link copied to clipboard', {
+									duration: 6500,
 									className: 'text-sm',
 								});
 							}}

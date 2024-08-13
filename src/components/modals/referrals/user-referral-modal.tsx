@@ -57,7 +57,7 @@ const UserReferralModal = () => {
 								);
 							}}
 						>
-							<div className='bg-green-500 hover:bg-green-500 h-12 text-xs font-semibold text-white hover:text-white underline rounded-md py-3 px-4 cursor-pointer'>
+							<div className='bg-green-500 hover:bg-green-500 h-8 text-xs font-semibold text-white hover:text-white underline rounded-md py-2 px-4 cursor-pointer flex items-center'>
 								Copy Code
 							</div>
 						</CopyToClipboard>

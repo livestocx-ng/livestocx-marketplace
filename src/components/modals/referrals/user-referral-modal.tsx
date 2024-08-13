@@ -19,7 +19,7 @@ const UserReferralModal = () => {
 
 	return (
 		<div className='fixed h-screen flex flex-col items-center justify-center w-full bg-[#11111190] backdrop-blur-sm z-20'>
-			<div className='bg-white py-6 px-5 w-[90%] md:w-[40%] transition-all duration-700 ease-in-out md:translate-x-3'>
+			<div className='bg-white py-6 px-5 w-[90%] md:w-[40%] lg:w-[35%] rounded-md transition-all duration-700 ease-in-out md:translate-x-3'>
 				<div className='flex items-center justify-between'>
 					<div className='flex items-center space-x-2'>
 						<h1 className='text-sm font-bold'>Referrals </h1>
@@ -46,37 +46,42 @@ const UserReferralModal = () => {
 
 					<div className='flex justify-center'>
 						<CopyToClipboard
-							text={user?.referralCode!}
+							text={`https://livestocx.com/signup?referralCode=${user?.referralCode}`}
 							onCopy={(text: string, result: boolean) => {
-								toast.success('Referral code copied to clipboard', {
-									duration: 6500,
-									className: 'text-sm',
-								});
+								toast.success(
+									'Referral code copied to clipboard',
+									{
+										duration: 6500,
+										className: 'text-sm',
+									}
+								);
 							}}
 						>
-							<div className='bg-green-50 hover:bg-green-50 h-12 text-sm text-green-600 hover:text-green-600 underline rounded py-3 px-8 flex items-center justify-center cursor-pointer'>
-								Copy Code
+							<div className='bg-green-500 hover:bg-green-500 h-12 text-xs font-semibold text-white hover:text-white underline rounded-md py-3 px-4 flex items-center justify-center space-x-2 cursor-pointer'>
+								<p>Copy Code</p> <Copy className='h-4 w-4' />
 							</div>
 						</CopyToClipboard>
 					</div>
 
-					<p className='text-center text-sm font-semibold'>Share on:</p>
+					<p className='text-center text-sm font-semibold'>
+						Share on:
+					</p>
 
-					<div className='flex justify-center space-x-2'>
+					<div className='flex justify-center space-x-6'>
 						<WhatsappShareButton
-							title={`Join Livestocx with my referral code & get rewards! ${user?.referralCode}`}
+							title={`Hey, I use Livestocx app to buy and sell my livestock and pets faster. Use my link or my code "${user?.referralCode}" to join and get easy promotions and sales of your products. https://livestocx.com/signup?referralCode=${user?.referralCode}`}
 							url={`https://livestocx.com/signup?referralCode=${user?.referralCode}`}
 						>
 							<WhatsappIcon size={30} round />
 						</WhatsappShareButton>
 						<FacebookShareButton
-							title={`Join Livestocx with my referral code & get rewards! ${user?.referralCode}`}
+							title={`Hey, I use Livestocx app to buy and sell my livestock and pets faster. Use my link or my code "${user?.referralCode}" to join and get easy promotions and sales of your products. https://livestocx.com/signup?referralCode=${user?.referralCode}`}
 							url={`https://livestocx.com/signup?referralCode=${user?.referralCode}`}
 						>
 							<FacebookIcon size={30} round />
 						</FacebookShareButton>
 						<TwitterShareButton
-							title={`Join Livestocx with my referral code & get rewards! ${user?.referralCode}`}
+							title={`Hey, I use Livestocx app to buy and sell my livestock and pets faster. Use my link or my code "${user?.referralCode}" to join and get easy promotions and sales of your products. https://livestocx.com/signup?referralCode=${user?.referralCode}`}
 							url={`https://livestocx.com/signup?referralCode=${user?.referralCode}`}
 						>
 							<TwitterIcon size={30} round />
@@ -85,10 +90,13 @@ const UserReferralModal = () => {
 						<CopyToClipboard
 							text={`https://livestocx.com/signup?referralCode=${user?.referralCode}`}
 							onCopy={(text: string, result: boolean) => {
-								toast.success('Referral link copied to clipboard', {
-									duration: 6500,
-									className: 'text-sm',
-								});
+								toast.success(
+									'Referral link copied to clipboard',
+									{
+										duration: 6500,
+										className: 'text-sm',
+									}
+								);
 							}}
 						>
 							<div className='rounded-full border border-slate-400 h-8 w-8 flex items-center justify-center cursor-pointer'>

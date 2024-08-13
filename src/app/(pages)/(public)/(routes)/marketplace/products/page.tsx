@@ -2,7 +2,7 @@
 import React, {useEffect} from 'react';
 import {useRouter} from 'next/navigation';
 
-const MarketplacePage = () => {
+const MarketplaceProductsPage = () => {
 	const router = useRouter();
 
 	const initializeRedirect = () => {
@@ -17,9 +17,9 @@ const MarketplacePage = () => {
 
 	return (
 		<div className='h-screen flex flex-col items-center justify-center'>
-			Marketplace
+			Marketplace Products
 		</div>
 	);
 };
 
-export default MarketplacePage;
+export default MarketplaceProductsPage;

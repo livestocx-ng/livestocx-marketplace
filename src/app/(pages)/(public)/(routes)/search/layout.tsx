@@ -1,14 +1,14 @@
 import type {Metadata} from 'next';
 
 export const metadata: Metadata = {
-	title: 'Livestocx - Login',
+	title: 'Livestocx - Search',
 	description: 'Best deals, Everything Animals',
 	keywords: ['Livestocx', 'Livestock', 'Nigeria', 'Pets', 'Animals', 'Meat'],
 	other: {
 		'facebook-domain-verification': 'yy2fxudmyl6e8nxtl2zjx9lss8j8dl',
 	},
 	openGraph: {
-		title: 'Livestocx -Login',
+		title: 'Livestocx - Search',
 		description: 'Best deals, Everything Animals',
 		url: 'https://livestocx.com',
 		siteName: 'Livestocx',
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
 		card: 'summary',
 		site: '@livestocx',
 		creator: '@livestocx',
-		title: 'Livestocx -Login',
+		title: 'Livestocx - Search',
 
 		description: 'Best deals, Everything Animals',
 		images: [

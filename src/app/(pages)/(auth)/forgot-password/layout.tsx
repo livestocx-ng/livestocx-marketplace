@@ -49,7 +49,6 @@ export const metadata: Metadata = {
 		site: '@livestocx',
 		creator: '@livestocx',
 		title: 'Livestocx - Forgot Password',
-
 		description: 'Best deals, Everything Animals',
 		images: [
 			{

@@ -1,7 +1,7 @@
 import type {Metadata} from 'next';
 
 export const metadata: Metadata = {
-	title: 'Livestocx - Signup',
+	title: 'Livestocx - Sign Up',
 	description: 'Best deals, Everything Animals',
 	keywords: ['Livestocx', 'Livestock', 'Nigeria', 'Pets', 'Animals', 'Meat'],
 	other: {

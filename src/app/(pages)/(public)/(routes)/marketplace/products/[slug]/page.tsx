@@ -62,8 +62,8 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 				),
 			]);
 
-			// // console.log('[DATA] ::  ', _product.data.data);
-			// // console.log('[DATA] ::  ', data);
+			// console.log('[DATA] ::  ', _product.data.data);
+			// console.log('[DATA] ::  ', data);
 
 			updatePayload(_product.data.data);
 			updateProductInfo(_productInfo.data.data);

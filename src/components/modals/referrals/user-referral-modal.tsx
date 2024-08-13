@@ -57,8 +57,8 @@ const UserReferralModal = () => {
 								);
 							}}
 						>
-							<div className='bg-green-500 hover:bg-green-500 h-12 text-xs font-semibold text-white hover:text-white underline rounded-md py-3 px-4 flex items-center justify-center space-x-2 cursor-pointer'>
-								<p>Copy Code</p> <Copy className='h-4 w-4' />
+							<div className='bg-green-500 hover:bg-green-500 h-12 text-xs font-semibold text-white hover:text-white underline rounded-md py-3 px-4 cursor-pointer'>
+								Copy Code
 							</div>
 						</CopyToClipboard>
 					</div>
@@ -69,19 +69,19 @@ const UserReferralModal = () => {
 
 					<div className='flex justify-center space-x-6'>
 						<WhatsappShareButton
-							title={`Hey, I use Livestocx app to buy and sell my livestock and pets faster. Use my link or my code "${user?.referralCode}" to join and get easy promotions and sales of your products. https://livestocx.com/signup?referralCode=${user?.referralCode}`}
+							title={`Hey, I use Livestocx app to buy and sell my livestock and pets faster. Use my link or my code "${user?.referralCode}" to join and get easy promotions and sales of your products.`}
 							url={`https://livestocx.com/signup?referralCode=${user?.referralCode}`}
 						>
 							<WhatsappIcon size={30} round />
 						</WhatsappShareButton>
 						<FacebookShareButton
-							title={`Hey, I use Livestocx app to buy and sell my livestock and pets faster. Use my link or my code "${user?.referralCode}" to join and get easy promotions and sales of your products. https://livestocx.com/signup?referralCode=${user?.referralCode}`}
+							title={`Hey, I use Livestocx app to buy and sell my livestock and pets faster. Use my link or my code "${user?.referralCode}" to join and get easy promotions and sales of your products.`}
 							url={`https://livestocx.com/signup?referralCode=${user?.referralCode}`}
 						>
 							<FacebookIcon size={30} round />
 						</FacebookShareButton>
 						<TwitterShareButton
-							title={`Hey, I use Livestocx app to buy and sell my livestock and pets faster. Use my link or my code "${user?.referralCode}" to join and get easy promotions and sales of your products. https://livestocx.com/signup?referralCode=${user?.referralCode}`}
+							title={`Hey, I use Livestocx app to buy and sell my livestock and pets faster. Use my link or my code "${user?.referralCode}" to join and get easy promotions and sales of your products.`}
 							url={`https://livestocx.com/signup?referralCode=${user?.referralCode}`}
 						>
 							<TwitterIcon size={30} round />

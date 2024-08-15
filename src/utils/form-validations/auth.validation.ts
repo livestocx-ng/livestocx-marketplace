@@ -116,7 +116,7 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 		return (message = 'Referral code must be at least 8 characters');
 	}
 	
-	if (formData.referralCode && formData.referralCode.length > 8) {
+	if (formData.referralCode && (formData.referralCode.length > 8 || formData.referralCode.length < 7)) {
 		return (message = 'Referral code must be at least 8 characters');
 	}
 

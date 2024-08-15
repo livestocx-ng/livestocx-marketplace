@@ -75,13 +75,13 @@ const SignUpPage = () => {
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
 
 	useEffect(() => {
-		if (searchParams.get('seller')) {
+		if (searchParams.has('seller')) {
 			updateFormData({
 				type: 'UPDATE_FORMDATA',
 				payload: {role: 'FARMER'},
 			});
 		}
-	}, [searchParams.get('seller')]);
+	}, [searchParams.has('seller')]);
 	
 	useEffect(() => {
 		if (searchParams.has('referralCode')) {
@@ -90,7 +90,7 @@ const SignUpPage = () => {
 				payload: {referralCode: searchParams.get('referralCode')!},
 			});
 		}
-	}, [searchParams.get('referralCode')]);
+	}, [searchParams.has('referralCode')]);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		updateFormData({
@@ -164,7 +164,7 @@ const SignUpPage = () => {
 		} catch (error) {
 			setLoading(false);
 
-			console.error('[SIGNUP-ERROR]', error);
+			// console.error('[SIGNUP-ERROR]', error);
 
 			toast.error('An error occurred', {className: 'text-sm'});
 		}

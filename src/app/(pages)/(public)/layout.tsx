@@ -168,12 +168,6 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 			// console.log('[FETCH-USER-PROMOTION-PLAN-ERROR] :: ', _error);
 		}
 	};
-	
-	useEffect(() => {
-		if(user) {
-			initializeUserReferralModal();
-		}
-	}, [user]);
 
 	// useEffect(() => {
 	// 	initializeDownloadAppModal();
@@ -185,8 +179,11 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 			user?.role === 'FARMER' &&
 			user?.isVendorProfileUpdated === false
 		) {
-			// router.push('/compliance');
 			updateVendorProfileModal.onOpen();
+		}
+
+		if(user) {
+			initializeUserReferralModal();
 		}
 
 		fetchChatConversations();

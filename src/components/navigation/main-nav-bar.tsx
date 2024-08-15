@@ -4,14 +4,12 @@ import {
 	User2,
 	Mails,
 	Store,
+	Users,
 	Package,
 	Settings,
-	Megaphone,
 	LogOutIcon,
-	ShoppingCart,
 	MessageCircle,
 	MessagesSquare,
-	Users,
 } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link';
@@ -66,10 +64,10 @@ const MainNavbar = () => {
 
 			if (scrollPosition > 50) {
 				setScrolling(true);
-				// // console.log('[SCROLLING]');
+				// console.log('[SCROLLING]');
 			} else {
 				setScrolling(false);
-				// // console.log('[FALSE]');
+				// console.log('[FALSE]');
 			}
 		});
 	}, []);
@@ -95,7 +93,7 @@ const MainNavbar = () => {
 				router.push('/');
 			}
 		} catch (error) {
-			toast.error('Error!');
+			toast.error('Error!', { className: 'text-sm' });
 		}
 	};
 

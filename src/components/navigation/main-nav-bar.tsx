@@ -82,7 +82,7 @@ const MainNavbar = () => {
 		try {
 			await axios.get('/api/auth/signout');
 
-			toast.success('Logged out!', {className: 'text-sm'});
+			toast.success('Logged out!', {className: 'text-xs sm:text-sm'});
 
 			updateUser(null);
 			updateChatConversations([]);
@@ -93,7 +93,7 @@ const MainNavbar = () => {
 				router.push('/');
 			}
 		} catch (error) {
-			toast.error('Error!', { className: 'text-sm' });
+			toast.error('Error!', { className: 'text-xs sm:text-sm' });
 		}
 	};
 

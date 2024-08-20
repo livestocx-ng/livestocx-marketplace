@@ -19,7 +19,9 @@ const ProductUploadSubscriptionModal = () => {
 
 	const modal = useProductUploadSubscriptionModalStore();
 	const createProductModalStore = useCreateProductModalStore();
-	const {user, updateUser, productUploadSubscriptionPlans} = useGlobalStore();
+
+	const {user, updateUser, products, productUploadSubscriptionPlans} =
+		useGlobalStore();
 
 	const [loading, setLoading] = useState(false);
 	const [currentPlan, setCurrentPlan] = useState<{
@@ -121,14 +123,14 @@ const ProductUploadSubscriptionModal = () => {
 					</Button>
 				</div>
 
-				<div className='flex flex-col lg:flex-row lg:flex-wrap items-center lg:items-start justify-center lg:justify-evenly gap-y-10 pb-3 w-full mb-2'>
+				<div className='flex flex-col lg:flex-row lg:flex-wrap items-center lg:items-start justify-center lg:justify-evenly w-full mb-2'>
 					{productUploadSubscriptionPlans?.map((plan, index) => (
 						<div
 							key={plan.id}
 							className={`flex flex-col items-center text-center space-y-5 w-full`}
 						>
 							<h1 className='text-sm md:text-base font-semibold'>
-								{plan.title}
+								{products?.length > 0 ? 'Continue Posting' : plan.title}
 							</h1>
 
 							<h1 className='text-xs md:text-sm'>
@@ -188,13 +190,17 @@ const ProductUploadSubscriptionModal = () => {
 											}}
 											className={`text-white h-10 w-full md:w-[50%] rounded-full py-3 text-xs font-medium bg-green-600 hover:bg-green-700`}
 										>
-											Subscribe
+											Pay Now
 										</Button>
 									)}
 								</>
 							)}
 						</div>
 					))}
+
+					<div className='text-xs pt-2'>
+						Over 3,000 farmers already paid!
+					</div>
 				</div>
 			</div>
 		</div>

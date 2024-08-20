@@ -64,13 +64,13 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const premiumSubscriptionCheckoutModal = usePremiumSubscriptionCheckoutModalStore();
 
 	const initializeUserReferralModal = () => {
-		setTimeout(() => {
-			referralModal.onOpen();
-		}, 6500);
+		// setTimeout(() => {
+		// 	referralModal.onOpen();
+		// }, 6500);
 
 		setInterval(() => {
 			referralModal.onOpen();
-		}, 300000);
+		}, 150000);
 	};
 
 	const initializeDownloadAppModal = () => {

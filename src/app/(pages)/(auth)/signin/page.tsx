@@ -78,7 +78,10 @@ const SignInPage = () => {
 
 		if (validationError) {
 			setLoading(false);
-			return toast.error(validationError, {duration: 10000});
+			return toast.error(validationError, {
+				duration: 10000,
+				className: 'text-xs sm:text-sm',
+			});
 		}
 
 		try {

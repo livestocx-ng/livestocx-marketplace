@@ -82,7 +82,7 @@ const SignUpPage = () => {
 			});
 		}
 	}, [searchParams.has('seller')]);
-	
+
 	useEffect(() => {
 		if (searchParams.has('referralCode')) {
 			updateFormData({
@@ -120,7 +120,7 @@ const SignUpPage = () => {
 				setLoading(false);
 				return toast.error(validationError, {
 					duration: 10000,
-					className: 'text-sm',
+					className: 'text-xs sm:text-sm',
 				});
 			}
 
@@ -134,7 +134,7 @@ const SignUpPage = () => {
 				setLoading(false);
 				return toast.error('Email already exists', {
 					duration: 1000,
-					className: 'text-sm',
+					className: 'text-xs sm:text-sm',
 				});
 			}
 
@@ -150,7 +150,7 @@ const SignUpPage = () => {
 				setLoading(false);
 
 				toast.success('Account created successfully', {
-					className: 'text-sm',
+					className: 'text-xs sm:text-sm',
 				});
 
 				router.push('/');
@@ -166,7 +166,7 @@ const SignUpPage = () => {
 
 			// console.error('[SIGNUP-ERROR]', error);
 
-			toast.error('An error occurred', {className: 'text-sm'});
+			toast.error('An error occurred', {className: 'text-xs sm:text-sm'});
 		}
 	};
 

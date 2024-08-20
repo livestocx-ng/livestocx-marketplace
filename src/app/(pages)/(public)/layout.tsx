@@ -68,7 +68,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 			referralModal.onOpen();
 		}, 6500);
 
-		setTimeout(() => {
+		setInterval(() => {
 			referralModal.onOpen();
 		}, 300000);
 	};

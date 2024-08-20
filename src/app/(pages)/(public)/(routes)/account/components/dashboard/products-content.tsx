@@ -2,6 +2,7 @@
 import {
 	useGlobalStore,
 	useCreateProductModalStore,
+	useProductUploadSubscriptionModalStore,
 } from '@/hooks/use-global-store';
 import {useEffect} from 'react';
 import {Plus} from 'lucide-react';
@@ -13,6 +14,8 @@ import {DataTable} from '@/components/ui/data-table';
 const ProductsContent = () => {
 	const isModalOpen = useCreateProductModalStore((state) => state.isOpen);
 	const onModalOpen = useCreateProductModalStore((state) => state.onOpen);
+	const productUploadSubscriptionModal =
+		useProductUploadSubscriptionModalStore();
 
 	const {user, products, updateProducts} = useGlobalStore();
 
@@ -49,7 +52,9 @@ const ProductsContent = () => {
 				<Button
 					type='button'
 					onClick={() => {
-						if (!isModalOpen) {
+						if (user?.isProductUploadSubscriptionActive === false) {
+							return productUploadSubscriptionModal.onOpen();
+						} else if (!isModalOpen) {
 							onModalOpen();
 						}
 					}}

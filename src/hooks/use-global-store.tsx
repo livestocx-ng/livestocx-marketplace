@@ -17,6 +17,7 @@ import {
 	PremiumSubscription,
 	PromotionProductInfo,
 	PremiumSubscriptionPlan,
+	ProductUploadSubscriptionPlan,
 } from '@/types/types';
 import { Socket } from 'socket.io-client';
 import {create} from 'zustand';
@@ -34,6 +35,7 @@ interface GlobalStore {
 	user: User | null;
 	userPremiumSubscription: PremiumSubscription | null;
 	premiumSubscriptionPlans: PremiumSubscriptionPlan[];
+	productUploadSubscriptionPlans: ProductUploadSubscriptionPlan[];
 	vendor: Vendor | null;
 	vendorProfile: Vendor | null;
 	vendors: Vendor[];
@@ -72,6 +74,7 @@ interface GlobalStore {
 	updatePremiumSubscriptionPlanInfo: (id: number, amount: number)=> void;
 	updateUserPremiumSubscription: (value: PremiumSubscription | null)=> void;
 	updatePremiumSubscriptionPlans: (value: PremiumSubscriptionPlan[])=> void;
+	updateProductUploadSubscriptionPlans: (value: ProductUploadSubscriptionPlan[])=> void;
 	updatePromotionInfoProducts: (value: Product[])=> void;
 	updatePromotionProducts: (value: Product[])=> void;
 	updateCurrentPromotion: (value: Promotion | null)=> void;
@@ -198,6 +201,12 @@ export const useUpdateUserRoleModalStore = create<ActivateModal>(
 		onClose: () => set({isOpen: false}),
 	})
 );
+
+export const useProductUploadSubscriptionModalStore = create<ActivateModal>((set) => ({
+	isOpen: false,
+	onOpen: () => set({isOpen: true}),
+	onClose: () => set({isOpen: false}),
+}));
 
 export const useCreateProductModalStore = create<ActivateModal>((set) => ({
 	isOpen: false,
@@ -346,6 +355,7 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	chatConversationMessages: [],
 	userPremiumSubscription: null,
 	premiumSubscriptionPlans: [],
+	productUploadSubscriptionPlans: [],
 	showChatConversation: false,
 	searchQuery: '',
 	searchQueryState: '',
@@ -396,6 +406,7 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	updateShowPromotionInfo: (value: boolean) => set({showPromotionInfo: value}),
 	updateCurrentPromotionPlan: (value: number) => set({currentPromotionPlan: value}),
 	updatePromotionPlans: (value: PromotionPlan[]) => set({promotionPlans: value}),
+	updateProductUploadSubscriptionPlans: (value: ProductUploadSubscriptionPlan[]) => set({productUploadSubscriptionPlans: value}),
 	updateUserPromotionPlan: (value: UserPromotionPlan) => set({userPromotionPlan: value}),
 	updatePromotions: (value: Promotion[]) => set({promotions: value}),
 	updatePromotionProductsInfo: (value: PromotionProductInfo[]) => set({promotionProductsInfo: value}),

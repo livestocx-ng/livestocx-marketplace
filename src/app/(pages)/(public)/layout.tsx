@@ -12,6 +12,7 @@ import {
 	useUpdateWelcomeFarmerModalStore,
 	useUpdateVendorProfileModalStore,
 	useUpdateSearchLocationModalStore,
+	useProductUploadSubscriptionModalStore,
 	usePremiumSubscriptionSuccessModalStore,
 	usePremiumSubscriptionCheckoutModalStore,
 } from '@/hooks/use-global-store';
@@ -27,6 +28,7 @@ import UpgradeToPremiumModal from '@/components/modals/premium/upgrade-to-premiu
 import DownloadMobileAppModal from '@/components/modals/welcome/download-mobile-app-modal';
 import UpdateVendorProfileModal from '@/components/modals/user/update-vendor-profile-modal';
 import UpdateSearchLocationModal from '@/components/modals/utils/update-search-location-modal';
+import ProductUploadSubscriptionModal from '@/components/modals/premium/product-upload-subscription-modal';
 import PremiumSubscriptionSuccessModal from '@/components/modals/premium/premium-subscription-success-modal';
 import PremiumSubscriptionCheckoutModal from '@/components/modals/premium/premium-subscription-checkout-modal';
 
@@ -44,6 +46,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 		updateUserPromotionPlan,
 		updateUserPremiumSubscription,
 		updatePremiumSubscriptionPlans,
+		updateProductUploadSubscriptionPlans,
 	} = useGlobalStore();
 
 	const referralModal = useReferralModalStore();
@@ -56,17 +59,18 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const updateVendorProfileModal = useUpdateVendorProfileModalStore();
 	const upgradeToPremiumAccessModal = useUpgradeToPremiumAccessStore();
 	const updateSearchLocationModal = useUpdateSearchLocationModalStore();
-	const premiumSubscriptionSuccessModal =	usePremiumSubscriptionSuccessModalStore();
+	const productUploadSubscriptionModal = useProductUploadSubscriptionModalStore();
+	const premiumSubscriptionSuccessModal = usePremiumSubscriptionSuccessModalStore();
 	const premiumSubscriptionCheckoutModal = usePremiumSubscriptionCheckoutModalStore();
 
 	const initializeUserReferralModal = () => {
 		setTimeout(() => {
 			referralModal.onOpen();
 		}, 6500);
-		
+
 		setTimeout(() => {
 			referralModal.onOpen();
-		}, 300000 );
+		}, 300000);
 	};
 
 	const initializeDownloadAppModal = () => {
@@ -148,19 +152,30 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 
 	const fetchSubscriptionPlans = async () => {
 		try {
-			const [promotionPlansRequest, premiumSubscriptionPlansRequest] =
-				await Promise.all([
-					axios.get(
-						`${process.env.NEXT_PUBLIC_API_URL}/promotions/plans`
-					),
-					axios.get(
-						`${process.env.NEXT_PUBLIC_API_URL}/vendor/premium-subscription-plans`
-					),
-				]);
+			const [
+				promotionPlansRequest,
+				premiumSubscriptionPlansRequest,
+				productUploadSubscriptionPlansRequest,
+			] = await Promise.all([
+				axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/promotions/plans`
+				),
+				axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/vendor/premium-subscription-plans`
+				),
+				axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/vendor/product-upload-subscription-plans`
+				),
+			]);
 
 			updatePromotionPlans(promotionPlansRequest.data.data);
+			
 			updatePremiumSubscriptionPlans(
 				premiumSubscriptionPlansRequest.data.data
+			);
+			
+			updateProductUploadSubscriptionPlans(
+				productUploadSubscriptionPlansRequest.data.data
 			);
 		} catch (error) {
 			const _error = error as AxiosError;
@@ -182,7 +197,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 			updateVendorProfileModal.onOpen();
 		}
 
-		if(user) {
+		if (user) {
 			initializeUserReferralModal();
 		}
 
@@ -203,8 +218,9 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 			{upgradeToPremiumAccessModal.isOpen && <UpgradeToPremiumModal />}
 			{updateVendorProfileModal.isOpen && <UpdateVendorProfileModal />}
 			{updateSearchLocationModal.isOpen && <UpdateSearchLocationModal />}
-			{premiumSubscriptionSuccessModal.isOpen && <PremiumSubscriptionSuccessModal />}
-			{premiumSubscriptionCheckoutModal.isOpen && <PremiumSubscriptionCheckoutModal />}
+			{productUploadSubscriptionModal.isOpen && <ProductUploadSubscriptionModal /> }
+			{premiumSubscriptionSuccessModal.isOpen && <PremiumSubscriptionSuccessModal /> }
+			{premiumSubscriptionCheckoutModal.isOpen && <PremiumSubscriptionCheckoutModal /> }
 
 			{children}
 		</div>

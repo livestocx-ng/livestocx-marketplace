@@ -24,6 +24,7 @@ export interface User {
 	role: string;
 	referralCode: string;
 	isProfileUpdated: boolean;
+	isProductUploadSubscriptionActive: boolean;
 	isVendorProfileUpdated: boolean;
 	accessToken: string;
 	refreshToken: string;
@@ -54,9 +55,9 @@ export interface Vendor {
 	email: string;
 	user: string;
 	isVerified: boolean;
-	facebookUrl: string,
-	twitterUrl: string,
-	instagramUrl: string,
+	facebookUrl: string;
+	twitterUrl: string;
+	instagramUrl: string;
 	isAccountDisabled: boolean;
 	phoneNumber: string;
 	isUpdated: boolean;
@@ -307,4 +308,13 @@ export interface EnterprisePlanComparison {
 	feature: string;
 	platform: string;
 	customBusinessWebsite: string;
+}
+
+export interface ProductUploadSubscriptionPlan {
+	id: number;
+	title: string;
+	description: string;
+	price: number;
+	position: number;
+	createdAt: Date;
 }

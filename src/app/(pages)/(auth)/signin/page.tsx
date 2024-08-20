@@ -89,7 +89,9 @@ const SignInPage = () => {
 			if (data?.ok == false) {
 				setLoading(false);
 
-				toast.error('Invalid credentials');
+				toast.error('Invalid credentials', {
+					className: 'text-xs sm:text-sm',
+				});
 			} else {
 				setLoading(false);
 
@@ -106,7 +108,7 @@ const SignInPage = () => {
 
 				updateChatConversations(response.data.data.conversations);
 
-				toast.success('Success');
+				toast.success('Success', {className: 'text-xs sm:text-sm'});
 
 				if (searchParams.has('redirect_to')!) {
 					return router.push(
@@ -125,7 +127,9 @@ const SignInPage = () => {
 		} catch (error) {
 			setLoading(false);
 
-			toast.error('Invalid credentials');
+			toast.error('Invalid credentials', {
+				className: 'text-xs sm:text-sm',
+			});
 		}
 	};
 

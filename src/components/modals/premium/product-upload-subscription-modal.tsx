@@ -29,7 +29,7 @@ const ProductUploadSubscriptionModal = () => {
 	}>({id: 0, amount: 0, buttonTitle: ''});
 
 	const handleClose = () => {
-		toast.error('Payment cancelled!');
+		toast.error('Payment cancelled!', {className: 'text-xs sm:text-sm'});
 	};
 
 	const handleCreatePremiumSubscription = async (response: any) => {
@@ -60,7 +60,7 @@ const ProductUploadSubscriptionModal = () => {
 
 			toast.success(`Product upload subscription successful!`, {
 				duration: 3500,
-				className: 'text-sm',
+				className: 'text-xs sm:text-sm',
 			});
 
 			setLoading(false);
@@ -75,7 +75,9 @@ const ProductUploadSubscriptionModal = () => {
 
 			console.log('[PRODUCT-UPLOAD-SUBSCRIPTION-PAYMENT-ERROR]', _error);
 
-			toast.error('An error occurred.', {className: 'text-sm'});
+			toast.error('An error occurred.', {
+				className: 'text-xs sm:text-sm',
+			});
 		}
 	};
 
@@ -129,7 +131,9 @@ const ProductUploadSubscriptionModal = () => {
 								{plan.title}
 							</h1>
 
-							<h1 className='text-xs md:text-sm'>{plan.description}</h1>
+							<h1 className='text-xs md:text-sm'>
+								{plan.description}
+							</h1>
 
 							<h1 className='text-xs md:text-sm font-semibold '>
 								Amount:{' '}
@@ -177,7 +181,9 @@ const ProductUploadSubscriptionModal = () => {
 												setCurrentPlan({
 													id: plan.id,
 													amount: plan.price,
-													buttonTitle: `Proceed to pay ${PriceFormatter(plan.price)}`,
+													buttonTitle: `Proceed to pay ${PriceFormatter(
+														plan.price
+													)}`,
 												});
 											}}
 											className={`text-white h-10 w-full md:w-[50%] rounded-full py-3 text-xs font-medium bg-green-600 hover:bg-green-700`}

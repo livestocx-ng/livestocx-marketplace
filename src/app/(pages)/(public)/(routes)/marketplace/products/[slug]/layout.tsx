@@ -1,8 +1,11 @@
 import axios from 'axios';
 import {Metadata, ResolvingMetadata} from 'next';
 import {getMediaImageUrl} from '@/utils/media/media.url';
-import {getProductIdFromSlug} from '@/utils/slug.formatter';
-import {generateOGImageFromURL, generateOGImagesFromURLWithSizes} from '@/utils/og.image.generator';
+import {formatProductSlug, getProductIdFromSlug} from '@/utils/slug.formatter';
+import {
+	generateOGImageFromURL,
+	generateOGImagesFromURLWithSizes,
+} from '@/utils/og.image.generator';
 
 interface ProductDescriptionLayoutProps {
 	params: {
@@ -43,8 +46,10 @@ export async function generateMetadata(
 		},
 		openGraph: {
 			title: `Livestocx - ${data.data.name}`,
-			description: data.data?.description,
-			url: 'https://livestocx.com',
+			description:
+				data.data?.description?.length > 100
+					? `${data.data?.description?.slice(0, 100)}...`
+					: data.data?.description,
 			siteName: 'Livestocx',
 			type: 'website',
 			images: ogImages,
@@ -54,7 +59,10 @@ export async function generateMetadata(
 			site: '@livestocx',
 			creator: '@livestocx',
 			title: `Livestocx - ${data.data.name}`,
-			description: data.data?.description,
+			description:
+				data.data?.description?.length > 100
+					? `${data.data?.description?.slice(0, 100)}...`
+					: data.data?.description,
 			images: ogImages,
 		},
 	};

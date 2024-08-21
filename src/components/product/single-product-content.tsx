@@ -459,26 +459,6 @@ const SingleProductContent = ({
 						?.slice(0, 10)
 						.map((product) => (
 							<ProductCard key={product.id} product={product} />
-							// if (!pathName.includes('marketplace')) {
-							// 	return (
-							// 	);
-							// }
-							// if (pathName.includes('marketplace')) {
-							// 	return (
-							// 		<MarketPlaceProductCard
-							// 			key={product.id}
-							// 			product={product}
-							// 		/>
-							// 	);
-							// }
-							// if (pathName.includes('sellers')) {
-							// 	return (
-							// 		<SellerProductCard
-							// 			key={product.id}
-							// 			product={product}
-							// 		/>
-							// 	);
-							// }
 						))}
 				</div>
 			</div>

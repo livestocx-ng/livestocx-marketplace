@@ -434,26 +434,8 @@ const StoreSingleProductContent = ({
 			<div className='w-full pb-5 px-4 md:px-0'>
 				{currentTab === 'Seller Info' && <SellerInfoTab />}
 				{currentTab === 'Review' && <ProductReviewTab />}
-				{currentTab === 'More From Seller' && <MoreFromSellerTab />}
+				{/* {currentTab === 'More From Seller' && <MoreFromSellerTab />} */}
 			</div>
-
-			{/* <div className='flex flex-col space-y-5 w-full px-4 md:px-0'>
-				<div className='w-full bg-slate-200 py-4 pl-5 font-semibold'>
-					Related Products
-				</div>
-
-				<div className='flex flex-wrap items-center justify-between w-full gap-y-4 md:gap-6 mt-10'>
-					{products
-						?.filter((prd) => prd.id !== product?.id)
-						?.slice(0, 10)
-						.map((product) => (
-							<SellerProductCard
-								key={product.id}
-								product={product}
-							/>
-						))}
-				</div>
-			</div> */}
 		</div>
 	);
 };

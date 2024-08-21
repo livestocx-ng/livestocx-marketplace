@@ -28,11 +28,11 @@ export async function generateMetadata(
 		{width: 200, height: 200},
 		{width: 300, height: 200},
 		{width: 300, height: 300},
-		{width: 1200, height: 630},
-		{width: 4096, height: 4096},
+		// {width: 1200, height: 630},
+		// {width: 4096, height: 4096},
 	];
 
-	const ogImages = await generateOGImagesFromURLWithSizes(imageUrl, sizes, 50);
+	const ogImages = await generateOGImagesFromURLWithSizes(imageUrl, sizes);
 
 	return {
 		title: `Livestocx - ${data.data.name}`,

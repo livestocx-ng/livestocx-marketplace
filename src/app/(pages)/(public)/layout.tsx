@@ -69,7 +69,9 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 		// }, 6500);
 
 		setInterval(() => {
-			referralModal.onOpen();
+			if(!referralModal.isOpen){
+				referralModal.onOpen();
+			}
 		}, 150000);
 	};
 

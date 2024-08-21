@@ -32,7 +32,7 @@ const SellerProductCard = ({product}: SellerProductCardProps) => {
 	const shareProductModal = useShareProductModalStore();
 	const {
 		user,
-		vendorProfile,
+		vendor,
 		updateProduct,
 		updateChatConversation,
 		updateCurrentAccountTab,
@@ -136,13 +136,13 @@ const SellerProductCard = ({product}: SellerProductCardProps) => {
 			<Link
 				// onClick={() => {
 				// 	return router.push(
-				// 		`/store/${vendorProfile?.slug}/products/${formatProductSlug(product!)}`
+				// 		`/store/${vendor?.slug}/products/${formatProductSlug(product!)}`
 				// 	);
 				// }}
 				prefetch
 				className='h-[180px] relative cursor-pointer'
 				href={`/store/${
-					vendorProfile?.slug
+					vendor?.slug!
 				}/products/${formatProductSlug(product!)}`}
 			>
 				<Image

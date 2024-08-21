@@ -61,7 +61,7 @@ const UserPromotionsContent = () => {
 						onClick={() => onCreatePromotionModalOpen()}
 						className='bg-green-600 flex items-center space-x-2 text-white hover:bg-green-700 w-fit rounded py-2'
 					>
-						<Plus className='h-4 w-4' /> <p>Add Promotion</p>
+						<Plus className='h-4 w-4' /> <p className='text-xs md:text-sm'>Add Promotion</p>
 					</Button>
 				</div>
 			)}

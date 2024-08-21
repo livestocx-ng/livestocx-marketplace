@@ -15,6 +15,7 @@ import {PaystackButton} from 'react-paystack';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {getMediaImageUrl} from '@/utils/media/media.url';
 import ButtonLoader from '@/components/loader/button-loader';
+import LoadingAnimationOne from '@/components/loader/loading-animation-one';
 import EmptyAnimation from '../../../../public/animations/animation__3.json';
 import {generateRandomPaymentReference} from '@/utils/promotion.util.formatter';
 
@@ -36,9 +37,12 @@ const CreatePromotionModal = () => {
 	const modal = useCreatePromotionModalStore();
 
 	const [loading, setLoading] = useState<boolean>(false);
+	const [isCreatePromotionPending, setIsCreatePromotionPending] =
+		useState<boolean>(false);
 
 	const fetchPromotionProducts = async () => {
 		try {
+			setLoading(true);
 			const {data} = await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/promotions/user-products?page=${currentPage}`,
 				{
@@ -53,7 +57,11 @@ const CreatePromotionModal = () => {
 				data.data.hasNext
 			);
 			updatePromotionProducts(data.data.products);
+
+			setLoading(false);
 		} catch (error) {
+			setLoading(false);
+
 			const _error = error as AxiosError;
 		}
 	};
@@ -89,7 +97,7 @@ const CreatePromotionModal = () => {
 
 	const handleSuccess = async (response: any) => {
 		try {
-			setLoading(true);
+			setIsCreatePromotionPending(true);
 			// console.log(response);
 
 			const {data} = await axios.post(
@@ -117,13 +125,13 @@ const CreatePromotionModal = () => {
 				)
 			);
 
-			setLoading(false);
+			setIsCreatePromotionPending(false);
 
 			modal.onClose();
 
 			toast.success(`Promotion created successfully!`, {duration: 3500});
 		} catch (error) {
-			setLoading(false);
+			setIsCreatePromotionPending(false);
 
 			const _error = error as AxiosError;
 
@@ -165,7 +173,7 @@ const CreatePromotionModal = () => {
 		<div className='fixed h-screen flex flex-col items-center justify-center w-full bg-[#11111190] backdrop-blur-sm z-10'>
 			<div className='flex flex-col w-[90%] lg:w-[35%] bg-white py-2 px-4 max-h-[600px] overflow-y-auto scrollbar__1'>
 				<div className='flex items-center justify-between px4 w-full'>
-					{loading ? (
+					{isCreatePromotionPending ? (
 						<Button
 							type='button'
 							variant={'outline'}
@@ -196,7 +204,11 @@ const CreatePromotionModal = () => {
 
 					<Button
 						type='button'
-						onClick={() => modal.onClose()}
+						onClick={() => {
+							modal.onClose();
+
+							updatePromotionProducts([]);
+						}}
 						className='bg-white hover:bg-white'
 					>
 						<X className='text-red-500 h-4 w-4' />
@@ -204,7 +216,13 @@ const CreatePromotionModal = () => {
 				</div>
 
 				<div className='flex flex-col items-start w-full space-y-3 mt-3'>
-					{promotionProducts?.length === 0 && (
+					{loading && promotionProducts?.length === 0 && (
+						<div className='w-full bg-white flex flex-col items-center justify-center h-[300px]'>
+							<LoadingAnimationOne />
+						</div>
+					)}
+
+					{!loading && promotionProducts?.length === 0 && (
 						<div className='w-full bg-white flex flex-col items-center justify-center'>
 							<div className='h-[300px] w-1/3 mx-auto bg-white'>
 								<Lottie

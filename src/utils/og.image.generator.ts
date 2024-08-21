@@ -79,7 +79,8 @@ interface OGImageResponse {
 
 export async function generateOGImagesFromURLWithSizes(
 	imageURL: string,
-	sizes: ImageSize[]
+	sizes: ImageSize[],
+	quality: number = 80,
 ): Promise<OGImageResponse[]> {
 	try {
 		const s3 = new AWS.S3({
@@ -96,7 +97,7 @@ export async function generateOGImagesFromURLWithSizes(
 
 		const uploadPromises = sizes.map(async ({ width, height }) => {
 			const resizedImage = image.clone();
-			resizedImage.resize(width, height).cover(width, height).quality(80);
+			resizedImage.resize(width, height).cover(width, height).quality(quality);
 
 			const imageBuffer = await resizedImage.getBufferAsync(Jimp.MIME_PNG);
 			const fileName = MediaIdGenerator(14) + '.png';

@@ -32,7 +32,7 @@ export async function generateMetadata(
 		{width: 4096, height: 4096},
 	];
 
-	const ogImages = await generateOGImagesFromURLWithSizes(imageUrl, sizes);
+	const ogImages = await generateOGImagesFromURLWithSizes(imageUrl, sizes, 50);
 
 	return {
 		title: `Livestocx - ${data.data.name}`,

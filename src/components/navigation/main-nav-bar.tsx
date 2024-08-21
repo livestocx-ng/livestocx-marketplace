@@ -7,6 +7,7 @@ import {
 	Users,
 	Package,
 	Settings,
+	LineChart,
 	LogOutIcon,
 	MessageCircle,
 	MessagesSquare,
@@ -93,7 +94,7 @@ const MainNavbar = () => {
 				router.push('/');
 			}
 		} catch (error) {
-			toast.error('Error!', { className: 'text-xs sm:text-sm' });
+			toast.error('Error!', {className: 'text-xs sm:text-sm'});
 		}
 	};
 
@@ -286,7 +287,7 @@ const MainNavbar = () => {
 										<p className='text-xs'>Products</p>
 									</Link>
 								)}
-								{/**{user?.role === 'FARMER' && (
+								{user?.role === 'FARMER' && (
 									<Link
 										href={'/account'}
 										onClick={() => {
@@ -300,14 +301,14 @@ const MainNavbar = () => {
 											scrolling ? 'bg-white' : 'bg-mai'
 										} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
 									>
-										<Megaphone
+										<LineChart
 											className={`h-5 w-5 text-main`}
 										/>
 
 										<p className='text-xs'>Promotions</p>
 									</Link>
 								)}
-								**/}
+
 								<Link
 									href={'/account'}
 									onClick={() => {
@@ -583,7 +584,7 @@ const MainNavbar = () => {
 										<p className='text-xs'>Products</p>
 									</Link>
 								)}
-								{/* {user?.role === 'FARMER' && (
+								{user?.role === 'FARMER' && (
 									<Link
 										href={'/account'}
 										onClick={() => {
@@ -597,13 +598,13 @@ const MainNavbar = () => {
 											scrolling ? 'bg-white' : 'bg-mai'
 										} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
 									>
-										<Megaphone
+										<LineChart
 											className={`h-5 w-5 text-main`}
 										/>
 
 										<p className='text-xs'>Promotions</p>
 									</Link>
-								)} */}
+								)}
 								<Link
 									href={'/account'}
 									onClick={() => {

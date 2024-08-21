@@ -1,6 +1,6 @@
 'use client';
 import {
-    TwitterIcon,
+	TwitterIcon,
 	WhatsappIcon,
 	FacebookIcon,
 	TwitterShareButton,
@@ -217,14 +217,19 @@ const StoreSingleProductContent = ({
 							}
 							className='flex items-center space-x-3 py-3 cursor-pointer'
 						>
-							<Image
-								width={40}
-								height={40}
-								unoptimized={true}
-								alt={productInfo?.name!}
-								src={productInfo?.avatar ?? '/icon__user.svg'}
-								className='rounded-full border object-fill'
-							/>
+							<div className='h-[40px] w-[40px] relative'>
+								<Image
+									// width={40}
+									// height={40}
+									fill
+									unoptimized={true}
+									alt={productInfo?.name!}
+									src={
+										productInfo?.avatar ?? '/icon__user.svg'
+									}
+									className='rounded-full border object-fill'
+								/>
+							</div>
 
 							<div className='flex flex-col space-y-3'>
 								<p className='text-xs font-medium'>
@@ -392,7 +397,10 @@ const StoreSingleProductContent = ({
 						{product?.media
 							?.filter((media) => media.mediaType === 'VIDEO')
 							?.map((media, index) => (
-								<div className='h-[250px] w-full md:w-[25%] relative border border-slate-400'>
+								<div
+									key={index}
+									className='h-[250px] w-full md:w-[25%] relative border border-slate-400'
+								>
 									<video
 										controls
 										src={media.mediaUrl}

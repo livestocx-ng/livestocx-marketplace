@@ -96,7 +96,7 @@ export async function generateOGImagesFromURLWithSizes(
 
 		const uploadPromises = sizes.map(async ({ width, height }) => {
 			const resizedImage = image.clone();
-			resizedImage.resize(width, height).cover(width, height);
+			resizedImage.resize(width, height).cover(width, height).quality(80);
 
 			const imageBuffer = await resizedImage.getBufferAsync(Jimp.MIME_PNG);
 			const fileName = MediaIdGenerator(14) + '.png';

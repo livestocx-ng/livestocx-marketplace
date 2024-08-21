@@ -43,7 +43,9 @@ export async function generateMetadata(
 		},
 		openGraph: {
 			title: data.data.name,
-			description: data.data?.description,
+			description: data.data?.description?.length > 100
+					? `${data.data?.description?.slice(0, 100)}...`
+					: data.data?.description,
 			siteName: 'Livestocx',
 			type: 'website',
 			images: ogImages,
@@ -53,7 +55,9 @@ export async function generateMetadata(
 			site: '@livestocx',
 			creator: '@livestocx',
 			title: `Livestocx - ${data.data.name}`,
-			description: data.data?.description,
+			description: data.data?.description?.length > 100
+					? `${data.data?.description?.slice(0, 100)}...`
+					: data.data?.description,
 			images: ogImages,
 		},
 	};

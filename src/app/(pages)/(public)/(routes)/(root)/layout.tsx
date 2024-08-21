@@ -1,6 +1,23 @@
-import type {Metadata} from 'next';
+import { generateOGImagesFromURLWithSizes } from '@/utils/og.image.generator';
+import type {Metadata, ResolvingMetadata} from 'next';
 
-export const metadata: Metadata = {
+export async function generateMetadata(
+	parent: ResolvingMetadata
+): Promise<Metadata> { 
+	const imageUrl = 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-1200x630.png';
+	const sizes = [
+		{width: 144, height: 144},
+		{width: 300, height: 157},
+		{width: 200, height: 200},
+		{width: 300, height: 200},
+		{width: 300, height: 300},
+		// {width: 1200, height: 630},
+		// {width: 4096, height: 4096},
+	];
+
+	const ogImages = await generateOGImagesFromURLWithSizes(imageUrl, sizes);
+	
+	return {
 	title: 'Livestocx - Marketplace',
 	description: 'Best deals, Everything Animals',
 	keywords: ['Livestocx', 'Livestock', 'Nigeria', 'Animals', 'Meat'],
@@ -10,36 +27,7 @@ export const metadata: Metadata = {
 		url: 'https://livestocx.com',
 		siteName: 'Livestocx',
 		type: 'website',
-		images: [
-			{
-				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x200.png',
-				secureUrl:
-					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x200.png',
-				width: 300,
-				height: 200,
-			},
-			{
-				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
-				secureUrl:
-					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
-				width: 300,
-				height: 300,
-			},
-			{
-				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-1200x630.png',
-				secureUrl:
-					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-1200x630.png',
-				alt: 'Livestocx Banner',
-				width: 1200,
-				height: 630,
-			},
-			{
-				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-1200x630.png',
-				secureUrl:
-					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-1200x630.png',
-				alt: 'Livestocx Banner',
-			},
-		],
+		images: ogImages,
 	},
 	twitter: {
 		card: 'summary',
@@ -47,37 +35,9 @@ export const metadata: Metadata = {
 		creator: '@livestocx',
 		title: 'Livestocx - Marketplace',
 		description: 'Best deals, Everything Animals',
-		images: [
-			{
-				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x200.png',
-				secureUrl:
-					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x200.png',
-				width: 300,
-				height: 200,
-			},
-			{
-				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
-				secureUrl:
-					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x300.png',
-				width: 300,
-				height: 300,
-			},
-			{
-				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-1200x630.png',
-				secureUrl:
-					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-1200x630.png',
-				alt: 'Livestocx Banner',
-				width: 1200,
-				height: 630,
-			},
-			{
-				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-1200x630.png',
-				secureUrl:
-					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-1200x630.png',
-				alt: 'Livestocx Banner',
-			},
-		],
+		images: ogImages,
 	},
+}
 };
 
 export default function Layout({children}: {children: React.ReactNode}) {

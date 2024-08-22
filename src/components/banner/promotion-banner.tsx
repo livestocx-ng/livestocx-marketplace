@@ -37,10 +37,11 @@ const PromotionBanner = () => {
 				delay: 1.2,
 				// repeatDelay: 0.5,
 			}}
+			
 			onClick={async () => {
 				try {
-					if (user == null) {
-						return router.push('/signin');
+					if (!user) {
+						return router.replace('/signin');
 					}
 
 					updateCurrentAccountTab('Promotions');

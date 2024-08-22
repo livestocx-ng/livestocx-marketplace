@@ -1,14 +1,31 @@
-import React from 'react';
 import {Rocket} from 'lucide-react';
 import {motion} from 'framer-motion';
 import {useRouter} from 'next/navigation';
+import {PromotionPlan} from '@/types/types';
+import React, {useEffect, useState} from 'react';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {useGlobalStore} from '@/hooks/use-global-store';
 
 const PromotionBanner = () => {
 	const router = useRouter();
 
-	const {premiumSubscriptionPlans} = useGlobalStore();
+	const {user, promotionPlans, updateCurrentAccountTab} = useGlobalStore();
+
+	const [plan, setPlan] = useState<PromotionPlan | null>(null);
+
+	const filterPromotionPlans = () => {
+		const plan = promotionPlans?.filter((plan) => plan.position === 1)[0];
+
+		if (plan) {
+			setPlan(plan);
+		}
+
+		// console.log('[PLAN] :: ', plan);
+	};
+
+	useEffect(() => {
+		filterPromotionPlans();
+	}, [promotionPlans.length]);
 
 	return (
 		<motion.div
@@ -22,13 +39,13 @@ const PromotionBanner = () => {
 			}}
 			onClick={async () => {
 				try {
-					// if (user == null) {
-					// 	return router.push('/signin');
-					// }
+					if (user == null) {
+						return router.push('/signin');
+					}
 
-					router.push('/business');
+					updateCurrentAccountTab('Promotions');
 
-					// updateCurrentAccountTab('Promotions');
+					router.replace('/account');
 				} catch (error) {
 					// console.log(_error);
 				}
@@ -36,14 +53,18 @@ const PromotionBanner = () => {
 			className='absolute top-0 left-0 w-full py-2 bg-gradient-to-tr from-orange-200 to-orange-500 text-sm px-4 flex justify-center space-x-3 cursor-pointer'
 		>
 			<p className='text-[12px] md:text-sm font-medium text-center'>
-				Want to sell very fast? Get your Livestocx online store for{' '}
-				{premiumSubscriptionPlans?.length > 0
+				Want to sell very fast? Boost your product with just for{' '}
+				{promotionPlans?.length > 0
 					? `${
-							PriceFormatter(
-								premiumSubscriptionPlans[0]?.price
-							).split('.00')[0]
-					  }/year.`
-					: `${PriceFormatter(10050).split('.00')[0]}`}
+							plan
+								? PriceFormatter(plan?.discount_price).split(
+										'.00'
+								  )[0]
+								: PriceFormatter(
+										promotionPlans[0]?.price
+								  ).split('.00')[0]
+					  } per week.`
+					: `${PriceFormatter(1600).split('.00')[0]} per week`}
 			</p>
 			<Rocket size={20} className='text-white' />
 		</motion.div>

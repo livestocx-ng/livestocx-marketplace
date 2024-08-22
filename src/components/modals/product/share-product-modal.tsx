@@ -15,17 +15,20 @@ import {Button} from '@/components/ui/button';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {formatProductSlug} from '@/utils/slug.formatter';
 import {useShareProductModalStore} from '@/hooks/use-global-store';
+import axios from 'axios';
 
 const ShareProductModal = () => {
 	const {payload, onClose} = useShareProductModalStore();
 
 	useEffect(() => {
-		fetch(
-			`https://livestocx.com/marketplace/products/${formatProductSlug(
-				payload!
-			)}`
-		);
-	}, []);
+		if (payload) {
+			const productSlug = formatProductSlug(payload);
+
+			axios.get(
+				`https://livestocx.com/marketplace/products/${productSlug}}`
+			);
+		}
+	}, [payload]);
 
 	return (
 		<div className='fixed h-screen flex flex-col items-center justify-center w-full bg-[#11111190] backdrop-blur-sm z-10'>
@@ -61,10 +64,10 @@ const ShareProductModal = () => {
 					</div>
 
 					<div className='flex items-center'>
-						<h1 className='text-sm font-medium'>
+						{/* <h1 className='text-sm font-medium'>
 							Share On: &nbsp;
-						</h1>
-						<div className='flex space-x-2'>
+						</h1> */}
+						<div className='flex space-x-5'>
 							<WhatsappShareButton
 								title={`Check out my ${payload.name} on livestocx: `}
 								url={`https://livestocx.com/marketplace/products/${formatProductSlug(

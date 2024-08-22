@@ -1,5 +1,5 @@
-import {generateOGImagesFromURLWithSizes} from '@/utils/og.image.generator';
 import type {Metadata, ResolvingMetadata} from 'next';
+import {generateOGImagesFromURLWithSizes} from '@/utils/og.image.generator';
 
 export async function generateMetadata(): Promise<Metadata> {
 	const imageUrl =

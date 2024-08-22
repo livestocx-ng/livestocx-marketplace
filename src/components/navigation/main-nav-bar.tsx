@@ -20,7 +20,11 @@ import {Button} from '../ui/button';
 import {toast} from 'react-hot-toast';
 import {useEffect, useState} from 'react';
 import {usePathname, useRouter} from 'next/navigation';
-import {useGlobalStore, useReferralModalStore} from '@/hooks/use-global-store';
+import {
+	useGlobalStore,
+	useUpdateUserRoleModalStore,
+	useReferralModalStore,
+} from '@/hooks/use-global-store';
 
 const MainNavbar = () => {
 	const router = useRouter();
@@ -38,6 +42,7 @@ const MainNavbar = () => {
 	} = useGlobalStore();
 
 	const referralModal = useReferralModalStore();
+	const updateUserRoleModal = useUpdateUserRoleModalStore();
 
 	const [scrolling, setScrolling] = useState<boolean>(false);
 	const [showMenu, setSetShowMenu] = useState<boolean>(false);
@@ -375,10 +380,10 @@ const MainNavbar = () => {
 						)}
 					</div>
 
-					{/* <div
+					<div
 						onClick={() => {
 							if (!user) {
-								router.push(`/signup?seller=true`);
+								router.replace(`/signup`);
 							}
 
 							if (user && user?.role === 'CUSTOMER') {
@@ -388,13 +393,13 @@ const MainNavbar = () => {
 							if (user && user?.role === 'FARMER') {
 								updateCurrentAccountTab('Products');
 
-								router.push('/account');
+								router.replace('/account');
 							}
 						}}
-						className={`h-8 bg-orange-400 rounded-sm w-[80px] text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
+						className={`h-8 px-3 bg-orange-400 rounded-md w-fit text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
 					>
 						Sell
-					</div> */}
+					</div>
 				</div>
 			</nav>
 
@@ -424,10 +429,10 @@ const MainNavbar = () => {
 				</Button>
 
 				<div className='flex items-center space-x-2'>
-					{/* <div
+					<div
 						onClick={() => {
 							if (!user) {
-								router.push(`/signup?seller=true`);
+								router.replace(`/signup`);
 							}
 
 							if (user && user?.role === 'CUSTOMER') {
@@ -437,13 +442,13 @@ const MainNavbar = () => {
 							if (user && user?.role === 'FARMER') {
 								updateCurrentAccountTab('Products');
 
-								router.push('/account');
+								router.replace('/account');
 							}
 						}}
-						className={`h-8 bg-orange-400 rounded-sm w-[60px] text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
+						className={`h-8 px-3 bg-orange-400 rounded-md w-fit text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
 					>
 						Sell
-					</div> */}
+					</div>
 
 					{chatConversations?.filter(
 						(conversation) => conversation?.unreadMessages !== 0

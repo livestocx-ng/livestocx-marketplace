@@ -130,11 +130,16 @@ const ProductUploadSubscriptionModal = () => {
 							className={`flex flex-col items-center text-center space-y-5 w-full`}
 						>
 							<h1 className='text-sm md:text-base font-semibold'>
-								{products?.length > 0 ? 'Continue Posting' : plan.title}
+								plan.title
 							</h1>
 
 							<h1 className='text-xs md:text-sm'>
-								{plan.description}
+								{products?.length > 0
+									? plan.description.replace(
+											'start',
+											'continue'
+									  )
+									: plan.description}
 							</h1>
 
 							<h1 className='text-xs md:text-sm font-semibold '>

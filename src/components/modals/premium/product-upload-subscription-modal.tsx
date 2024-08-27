@@ -130,7 +130,7 @@ const ProductUploadSubscriptionModal = () => {
 							className={`flex flex-col items-center text-center space-y-5 w-full`}
 						>
 							<h1 className='text-sm md:text-base font-semibold'>
-								plan.title
+								{plan.title}
 							</h1>
 
 							<h1 className='text-xs md:text-sm'>

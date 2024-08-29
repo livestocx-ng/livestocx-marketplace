@@ -7,26 +7,28 @@ import {
 	FacebookShareButton,
 	WhatsappShareButton,
 } from 'react-share';
+import axios from 'axios';
 import Image from 'next/image';
-import {useEffect} from 'react';
 import {Copy, X} from 'lucide-react';
 import {toast} from 'react-hot-toast';
+import {useEffect, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {formatProductSlug} from '@/utils/slug.formatter';
 import {useShareProductModalStore} from '@/hooks/use-global-store';
-import axios from 'axios';
 
 const ShareProductModal = () => {
 	const {payload, onClose} = useShareProductModalStore();
 
+	const [productSlug, setProductSlug] = useState<string>('');
+
 	useEffect(() => {
 		if (payload) {
-			const productSlug = formatProductSlug(payload);
+			const slug = formatProductSlug(payload);
 
-			axios.get(
-				`https://livestocx.com/marketplace/products/${productSlug}}`
-			);
+			setProductSlug(slug);
+
+			axios.get(`https://livestocx.com/marketplace/products/${slug}`);
 		}
 	}, [payload]);
 
@@ -70,33 +72,25 @@ const ShareProductModal = () => {
 						<div className='flex space-x-5'>
 							<WhatsappShareButton
 								title={`Check out my ${payload.name} on livestocx: `}
-								url={`https://livestocx.com/marketplace/products/${formatProductSlug(
-									payload!
-								)}`}
+								url={`https://livestocx.com/marketplace/products/${productSlug}`}
 							>
 								<WhatsappIcon size={30} round />
 							</WhatsappShareButton>
 							<FacebookShareButton
 								title={`Check out my ${payload.name} on livestocx: `}
-								url={`https://livestocx.com/marketplace/products/${formatProductSlug(
-									payload!
-								)}`}
+								url={`https://livestocx.com/marketplace/products/${productSlug}`}
 							>
 								<FacebookIcon size={30} round />
 							</FacebookShareButton>
 							<TwitterShareButton
 								title={`Check out my ${payload.name} on livestocx: `}
-								url={`https://livestocx.com/marketplace/products/${formatProductSlug(
-									payload!
-								)}`}
+								url={`https://livestocx.com/marketplace/products/${productSlug}`}
 							>
 								<TwitterIcon size={30} round />
 							</TwitterShareButton>
 
 							<CopyToClipboard
-								text={`https://livestocx.com/marketplace/products/${formatProductSlug(
-									payload!
-								)}`}
+								text={`https://livestocx.com/marketplace/products/${productSlug}`}
 								onCopy={(text: string, result: boolean) => {
 									toast.success('Copied to clipboard');
 								}}

@@ -53,7 +53,7 @@ const PromotionBanner = () => {
 			className='absolute top-0 left-0 w-full py-2 bg-gradient-to-tr from-orange-200 to-orange-500 text-sm px-4 flex justify-center space-x-3 cursor-pointer'
 		>
 			<p className='text-[12px] md:text-sm font-medium text-center'>
-				Boost your posted product with just for{' '}
+				Boost your posted product for{' '}
 				{promotionPlans?.length > 0
 					? `${
 							plan

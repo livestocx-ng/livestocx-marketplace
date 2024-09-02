@@ -6,15 +6,16 @@ import {toast} from 'react-hot-toast';
 import {signIn} from 'next-auth/react';
 import {Button} from '@/components/ui/button';
 import {Separator} from '@/components/ui/separator';
-import {Fragment, useEffect, useReducer, useState} from 'react';
+import Footer from '@/components/navigation/footer';
+import {PriceFormatter} from '@/utils/price.formatter';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import {useRouter, useSearchParams} from 'next/navigation';
 import ButtonLoader from '@/components/loader/button-loader';
+import MainNavbar from '@/components/navigation/main-nav-bar';
 import FormTextInput from '@/components/input/form-text-input';
+import {Fragment, useEffect, useReducer, useState} from 'react';
 import FormPasswordInput from '@/components/input/form-password-input';
 import {ValidateSigninFormData} from '@/utils/form-validations/auth.validation';
-import MainNavbar from '@/components/navigation/main-nav-bar';
-import Footer from '@/components/navigation/footer';
 
 type FormData = {
 	email: string;
@@ -140,13 +141,13 @@ const SignInPage = () => {
 		<Fragment>
 			<MainNavbar />
 			<div className='w-full'>
-				<section className='h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
+				<section className='h-[22vh] md:h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
 					<h1 className='text-xl md:text-5xl font-medium text-white'>
 						Sign In
 					</h1>
 				</section>
 
-				<div className='flex flex-col justify-center items-center py-20'>
+				<div className='flex flex-col justify-center items-center pt-5 pb-20'>
 					<form
 						autoComplete='off'
 						onSubmit={handleSubmit}
@@ -155,6 +156,11 @@ const SignInPage = () => {
 						<h1 className='text-center text-2xl font-semibold'>
 							Sign In
 						</h1>
+						<p className='text-sm text-center font-medium'>
+							Note: Sellers Pay{' '}
+							{PriceFormatter(1500).split('.00')[0]} to start
+							posting!
+						</p>
 						<div className='space-y-4'>
 							<FormTextInput
 								name='email'

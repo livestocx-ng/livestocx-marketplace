@@ -157,7 +157,7 @@ const SignInPage = () => {
 							Sign In
 						</h1>
 						<p className='text-sm text-center font-medium'>
-							Note: Sellers Pay{' '}
+							Note: Sellers pay{' '}
 							{PriceFormatter(1500).split('.00')[0]} to start
 							posting!
 						</p>

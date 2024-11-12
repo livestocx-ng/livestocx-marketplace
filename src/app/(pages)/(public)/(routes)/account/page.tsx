@@ -3,7 +3,8 @@ import {
 	useGlobalStore,
 	useProductMediaModalStore,
 } from '@/hooks/use-global-store';
-import {Fragment} from 'react';
+import {useEffect, Fragment} from 'react';
+import {useSearchParams} from 'next/navigation';
 import Footer from '@/components/navigation/footer';
 import AccountSideBar from './components/account-side-bar';
 import MainNavbar from '@/components/navigation/main-nav-bar';
@@ -20,11 +21,21 @@ import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import NotificationsContent from './components/dashboard/notifications-content';
 
 const AccountPage = () => {
-	const {currentAccountTab} = useGlobalStore();
+	const searchParams = useSearchParams();
+
+	const {currentAccountTab, updateCurrentAccountTab} = useGlobalStore();
 
 	const isProductMediaModalOpen = useProductMediaModalStore(
 		(state) => state.isOpen
 	);
+
+	useEffect(() => {
+		if (searchParams.has('postProduct')) {
+			updateCurrentAccountTab(
+				searchParams.get('postProduct')! == 'true' ? 'Products' : 'Account'
+			);
+		}
+	}, [searchParams]);
 
 	return (
 		<Fragment>

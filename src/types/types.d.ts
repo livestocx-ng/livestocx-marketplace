@@ -211,6 +211,8 @@ export interface ChatMessage {
 	sender: number;
 	recipient: number;
 	conversation: number;
+	hasCTA: boolean;
+	ctaType: string;
 }
 
 export interface PromotionPlan {

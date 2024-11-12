@@ -48,20 +48,20 @@ const ChatConversationCard = ({conversation}: ChatConversationCardProps) => {
 						{conversation?.user1?.role === 'ADMIN' ? (
 							<Image
 								alt='image'
-								width={40}
-								height={40}
+								width={15}
+								height={15}
 								src={'/icon__verified__1.svg'}
 								unoptimized={true}
-								className='object-cover h-full w-full'
+								className='object-cover'
 							/>
 						) : conversation?.user2?.role === 'ADMIN' ? (
 							<Image
 								alt='image'
-								width={40}
-								height={40}
+								width={15}
+								height={15}
 								src={'/icon__verified__1.svg'}
 								unoptimized={true}
-								className='object-cover h-full w-full'
+								className='object-cover'
 							/>
 						) : (
 							<div></div>

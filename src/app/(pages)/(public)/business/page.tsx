@@ -222,7 +222,7 @@ const BusinessPage = () => {
 									<Image
 										width={60}
 										height={60}
-										alt='testimonial'
+										alt='DefaultTestimonial'
 										unoptimized={true}
 										src={'/vendor.jpg'}
 										className='border border-slate-300 shadow-md shadow-slate-200 rounded-full'

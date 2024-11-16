@@ -6,7 +6,7 @@ import {
 	Feature,
 	FaqOption,
 } from '@/types/index.types';
-import {EnterprisePlanComparison, Testimonial} from '@/types/types';
+import {EnterprisePlanComparison, DefaultTestimonial} from '@/types/types';
 
 export const NavLinks: NavLink[] = [
 	{
@@ -91,7 +91,7 @@ export const OtherNavLinks: NavLink[] = [
 	},
 ];
 
-export const Testimonials: Testimonial[] = [
+export const Testimonials: DefaultTestimonial[] = [
 	{
 		id: 1,
 		author: 'Blessing Ugo',
@@ -141,7 +141,7 @@ export const TeamMembers: TeamMember[] = [
 		image: '/team/about__3.jpg',
 		name: 'Yada Martins',
 		intro: 'Co-founder/CTO: Martins is a full stack developer with 6 years+ experience with JavaScript and Python. Most experienced in  NestJS, NextJS, and Flutter. He is the technical backbone of Livestocx, leading the development and implementation of our technology stack with his expertise in software development and emerging technologies.',
- 		facebook: 'https://www.facebook.com/chide2001?mibextid=ZbWKwL',
+		facebook: 'https://www.facebook.com/chide2001?mibextid=ZbWKwL',
 		linkedin: 'https://www.linkedin.com/in/yada-martins',
 		twitter: 'https://x.com/ojo__chide?s=09',
 	},
@@ -343,11 +343,11 @@ export const FaqItems: FaqOption[] = [
 	},
 ];
 
-
 export const enterprisePlanComparisons: EnterprisePlanComparison[] = [
 	{
 		feature: 'Initial Cost',
-		customBusinessWebsite: 'High (design, development, hosting, domain) ₦150,000 - ₦800,000',
+		customBusinessWebsite:
+			'High (design, development, hosting, domain) ₦150,000 - ₦800,000',
 		platform: 'Low (starting at ₦10,050/year)',
 	},
 	{
@@ -731,7 +731,7 @@ export const NigerianCities: {[key: string]: string[]} = {
 		'Udenu',
 		'Uzo-Uwani',
 	],
-	'Abuja': [
+	Abuja: [
 		'Central Business District',
 		'Gwarinpa',
 		'Kubwa',

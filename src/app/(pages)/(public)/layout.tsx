@@ -40,6 +40,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const {user} = useUserHook();
 
 	const {
+		updateTestimonials,
 		updateVendorProfile,
 		updatePromotionPlans,
 		updateChatConversations,
@@ -155,10 +156,14 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const fetchSubscriptionPlans = async () => {
 		try {
 			const [
+				testimonialsRequest,
 				promotionPlansRequest,
 				premiumSubscriptionPlansRequest,
 				productUploadSubscriptionPlansRequest,
 			] = await Promise.all([
+				axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/utilities/testimonials`
+				),
 				axios.get(
 					`${process.env.NEXT_PUBLIC_API_URL}/promotions/plans`
 				),
@@ -169,6 +174,10 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 					`${process.env.NEXT_PUBLIC_API_URL}/vendor/product-upload-subscription-plans`
 				),
 			]);
+
+			console.log('[TESTIMONIALS] :: ', testimonialsRequest)
+
+			updateTestimonials(testimonialsRequest.data.data);
 
 			updatePromotionPlans(promotionPlansRequest.data.data);
 			

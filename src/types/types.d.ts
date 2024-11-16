@@ -158,6 +158,13 @@ export interface ProductReviewUpdate {
 }
 
 export interface Testimonial {
+	id: string, 
+	author: string,
+	avatarUrl:string,
+	testimonial:string,
+}
+
+export interface DefaultTestimonial {
 	id: number;
 	author: string;
 	avatar: string;

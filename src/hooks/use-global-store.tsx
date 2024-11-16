@@ -18,6 +18,7 @@ import {
 	PromotionProductInfo,
 	PremiumSubscriptionPlan,
 	ProductUploadSubscriptionPlan,
+	Testimonial,
 } from '@/types/types';
 import { Socket } from 'socket.io-client';
 import {create} from 'zustand';
@@ -64,6 +65,7 @@ interface GlobalStore {
 	promotionsTotalPages: number;
 	promotionsHasNextPage: boolean;
 	showPromotionInfo: boolean;
+	testimonials: Testimonial[];
 	currentPromotion: Promotion | null;
 	promotionProducts: Product[];
 	promotionInfoProducts: Product[];
@@ -71,6 +73,7 @@ interface GlobalStore {
 	promotionProductsHasNextPage: boolean;
 	premiumSubscriptionPlanId: number;
 	premiumSubscriptionPlanAmount: number;
+	updateTestimonials: (value: Testimonial[]) => void;
 	updatePremiumSubscriptionPlanInfo: (id: number, amount: number)=> void;
 	updateUserPremiumSubscription: (value: PremiumSubscription | null)=> void;
 	updatePremiumSubscriptionPlans: (value: PremiumSubscriptionPlan[])=> void;
@@ -352,6 +355,7 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	cookieConsentStatus: false,
 	chatConversation: null,
 	chatConversations: [],
+	testimonials: [],
 	chatConversationMessages: [],
 	userPremiumSubscription: null,
 	premiumSubscriptionPlans: [],
@@ -397,6 +401,7 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	promotionProductsHasNextPage: false,
 	premiumSubscriptionPlanId: 0,
 	premiumSubscriptionPlanAmount: 0,
+	updateTestimonials: (value: Testimonial[]) => set({testimonials: value}),
 	updatePremiumSubscriptionPlanInfo: (id: number, amount: number) => set({premiumSubscriptionPlanId: id, premiumSubscriptionPlanAmount: amount}),
 	updateUserPremiumSubscription: (value: PremiumSubscription|null) => set({userPremiumSubscription: value}),
 	updatePremiumSubscriptionPlans: (value: PremiumSubscriptionPlan[]) => set({premiumSubscriptionPlans: value}),

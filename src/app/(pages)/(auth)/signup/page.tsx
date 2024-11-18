@@ -1,7 +1,12 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
+import {
+	useGlobalStore,
+	useUpdateWelcomeFarmerModalStore,
+} from '@/hooks/use-global-store';
 import {toast} from 'react-hot-toast';
+import {FaStar} from 'react-icons/fa';
 import {signIn} from 'next-auth/react';
 import axios, {AxiosError} from 'axios';
 import {Button} from '@/components/ui/button';
@@ -14,7 +19,6 @@ import MainNavbar from '@/components/navigation/main-nav-bar';
 import FormTextInput from '@/components/input/form-text-input';
 import {Fragment, useEffect, useReducer, useState} from 'react';
 import FormPasswordInput from '@/components/input/form-password-input';
-import {useUpdateWelcomeFarmerModalStore} from '@/hooks/use-global-store';
 import {ValidateSignupFormData} from '@/utils/form-validations/auth.validation';
 
 type FormData = {
@@ -69,10 +73,30 @@ const SignUpPage = () => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
+	const {testimonials, updateTestimonials} = useGlobalStore();
+
 	const welcomeFarmerModal = useUpdateWelcomeFarmerModalStore();
 
 	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
+
+	const fetchTestimonials = async () => {
+		try {
+			const {data} = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/utilities/testimonials`
+			);
+
+			updateTestimonials(data.data);
+		} catch (error) {
+			const _error = error as AxiosError;
+
+			// console.log('[FETCH-TESTIMONIALS-ERROR] :: ', _error);
+		}
+	};
+
+	useEffect(() => {
+		fetchTestimonials();
+	}, []);
 
 	useEffect(() => {
 		if (searchParams.has('seller')) {
@@ -477,6 +501,48 @@ const SignUpPage = () => {
 									<span className='text-main'>Login</span>
 								</Link>
 							</div>
+						</div>
+
+						<div className='w-full overflow-x-auto gap-x-2 flex'>
+							{testimonials.length > 0 &&
+								testimonials.map((data) => (
+									<div
+										key={data.id}
+										className='flex flex-col items-center justify-center space-y-5 border rounded-lg px-4 py-4 md:mb-0'
+									>
+										<div className='flex space-x-3 items-center w-full'>
+											{[1, 2, 3, 4, 5].map((item) => (
+												<FaStar
+													key={item}
+													className='text-orange-500'
+													size={13}
+												/>
+											))}
+										</div>
+
+										<p className='text-center text-[10px] w-full'>
+											{data.testimonial}
+										</p>
+
+										<div className='flex w-full items-center text-main font-medium space-x-4'>
+											<div className='w-[35px] h-[35px] relative'>
+												<Image
+													fill
+													// width={50}
+													// height={50}
+													alt='testimonial'
+													unoptimized={true}
+													src={data.avatarUrl}
+													className='rounded-full object-cover border border-slate-400 shadow-md'
+												/>
+											</div>
+
+											<p className='text-[10px]'>
+												{data.author}
+											</p>
+										</div>
+									</div>
+								))}
 						</div>
 					</form>
 				</div>

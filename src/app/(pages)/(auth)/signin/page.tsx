@@ -307,7 +307,7 @@ const SignInPage = () => {
 											{data.testimonial}
 										</p>
 
-										<div className='flex w-full items-center text-main font-medium space-x-4'>
+										<div className='flex flex-col w-full items-center text-main font-medium space-x-4'>
 											<div className='w-[35px] h-[35px] relative'>
 												<Image
 													fill

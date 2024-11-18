@@ -1,5 +1,5 @@
 'use client';
-import axios from 'axios';
+import axios, {AxiosError} from 'axios';
 import Link from 'next/link';
 import Image from 'next/image';
 import {toast} from 'react-hot-toast';
@@ -16,6 +16,8 @@ import FormTextInput from '@/components/input/form-text-input';
 import {Fragment, useEffect, useReducer, useState} from 'react';
 import FormPasswordInput from '@/components/input/form-password-input';
 import {ValidateSigninFormData} from '@/utils/form-validations/auth.validation';
+import TestimonialCard from '@/components/common/testimonial-card';
+import {FaStar} from 'react-icons/fa';
 
 type FormData = {
 	email: string;
@@ -45,15 +47,37 @@ const SignInPage = () => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
-	const {user, updateUser, updateChatConversations} = useGlobalStore();
+	const {
+		user,
+		updateUser,
+		updateChatConversations,
+		testimonials,
+		updateTestimonials,
+	} = useGlobalStore();
 
 	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
+
+	const fetchTestimonials = async () => {
+		try {
+			const {data} = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/utilities/testimonials`
+			);
+
+			updateTestimonials(data.data);
+		} catch (error) {
+			const _error = error as AxiosError;
+
+			// console.log('[FETCH-TESTIMONIALS-ERROR] :: ', _error);
+		}
+	};
 
 	useEffect(() => {
 		if (user) {
 			return router.push('/');
 		}
+
+		fetchTestimonials();
 	}, [user]);
 
 	useEffect(() => {
@@ -147,21 +171,21 @@ const SignInPage = () => {
 					</h1>
 				</section>
 
-				<div className='flex flex-col justify-center items-center pt-5 pb-20'>
+				<div className='flex flex-col justify-center items-center pt-5 pb-20 w-full'>
 					<form
 						autoComplete='off'
 						onSubmit={handleSubmit}
 						className='w-[90%] sm:w-[600px] py-10 px-4 sm:px-10 border rounded-lg shadow-md flex flex-col space-y-8'
 					>
-						<h1 className='text-center text-2xl font-semibold'>
+						{/* <h1 className='text-center text-2xl font-semibold'>
 							Sign In
-						</h1>
+						</h1> */}
 						<p className='text-sm text-center font-medium'>
 							🚀Note: Sellers pay{' '}
 							{PriceFormatter(1500).split('.00')[0]} to start
 							posting!
 						</p>
-						<div className='space-y-4'>
+						<div className='space-y-4 w-full'>
 							<FormTextInput
 								name='email'
 								padding='py-4 px-4'
@@ -260,6 +284,48 @@ const SignInPage = () => {
 									<span className='text-main'>Register</span>
 								</Link>
 							</div>
+						</div>
+
+						<div className='w-full overflow-x-auto gap-x-2 flex'>
+							{testimonials.length > 0 &&
+								testimonials.map((data) => (
+									<div
+										key={data.id}
+										className='flex flex-col items-center justify-center space-y-5 border rounded-lg px-4 py-4 md:mb-0'
+									>
+										<div className='flex space-x-3 items-center w-full'>
+											{[1, 2, 3, 4, 5].map((item) => (
+												<FaStar
+													key={item}
+													className='text-orange-500'
+													size={13}
+												/>
+											))}
+										</div>
+
+										<p className='text-center text-[10px] w-full'>
+											{data.testimonial}
+										</p>
+
+										<div className='flex w-full items-center text-main font-medium space-x-4'>
+											<div className='w-[35px] h-[35px] relative'>
+												<Image
+													fill
+													// width={50}
+													// height={50}
+													alt='testimonial'
+													unoptimized={true}
+													src={data.avatarUrl}
+													className='rounded-full object-cover border border-slate-400 shadow-md'
+												/>
+											</div>
+
+											<p className='text-[10px]'>
+												{data.author}
+											</p>
+										</div>
+									</div>
+								))}
 						</div>
 					</form>
 				</div>

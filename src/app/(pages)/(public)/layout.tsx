@@ -175,7 +175,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 				),
 			]);
 
-			console.log('[TESTIMONIALS] :: ', testimonialsRequest)
+			// console.log('[TESTIMONIALS] :: ', testimonialsRequest)
 
 			updateTestimonials(testimonialsRequest.data.data);
 

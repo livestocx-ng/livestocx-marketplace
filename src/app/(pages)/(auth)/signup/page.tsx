@@ -508,7 +508,7 @@ const SignUpPage = () => {
 								testimonials.map((data) => (
 									<div
 										key={data.id}
-										className='flex flex-col items-center justify-center space-y-5 border rounded-lg px-4 py-4 md:mb-0'
+										className='flex flex-col items-center justify-between space-y-5 border rounded-lg px-4 py-4 md:mb-0'
 									>
 										<div className='flex space-x-3 items-center w-full'>
 											{[1, 2, 3, 4, 5].map((item) => (
@@ -520,11 +520,11 @@ const SignUpPage = () => {
 											))}
 										</div>
 
-										<p className='text-center text-[10px] w-full'>
+										<p className='text-center text-[10px] w-full leading-4'>
 											{data.testimonial}
 										</p>
 
-										<div className='flex flex-col w-full items-center text-main font-medium space-x-4'>
+										<div className='flex flex-col w-full items-center text-main font-medium mt-5'>
 											<div className='w-[35px] h-[35px] relative'>
 												<Image
 													fill
@@ -537,7 +537,7 @@ const SignUpPage = () => {
 												/>
 											</div>
 
-											<p className='text-[10px]'>
+											<p className='text-[10px] text-center'>
 												{data.author}
 											</p>
 										</div>

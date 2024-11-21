@@ -7,6 +7,7 @@ import {Dispatch, Fragment, SetStateAction, useState} from 'react';
 import ProductCard from '../../../../../components/cards/product-card';
 import TestimonialCard from '@/components/common/testimonial-card';
 import {Product, Testimonial} from '@/types/types';
+import { createGridItems } from '@/utils';
 
 interface Tab {
 	id: number;
@@ -32,55 +33,11 @@ const TabItems: Tab[] = [
 	},
 ];
 
-type GridItem =
-	| {
-			type: 'product';
-			id: string;
-			product: Product;
-			// other product properties
-	  }
-	| {
-			type: 'testimonial';
-			id: string;
-			testimonial: Testimonial;
-			// testimonial properties
-	  };
-
 const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 	const pathName = usePathname();
 	const {products, testimonials, totalPages, hasNextPage} = useGlobalStore();
 
 	const [currentTab, setCurrentTab] = useState<Tab>(TabItems[0]);
-
-	function createGridItems(
-		products: Product[],
-		testimonials: Testimonial[],
-		interval: number
-	  ): GridItem[] {
-		const gridItems: GridItem[] = [];
-		let testimonialIndex = 0;
-	  
-		products.map((product, index) => {
-		  // Add the product as a GridItem
-		  gridItems.push({
-			type: 'product',
-			id: product.id,
-			product: product,
-		  });
-	  
-		  // After every `interval` products, add a testimonial if available
-		  if ((index + 1) % interval === 0 && testimonialIndex < testimonials.length) {
-			gridItems.push({
-			  type: 'testimonial',
-			  id: testimonials[testimonialIndex].id,
-			  testimonial: testimonials[testimonialIndex],
-			});
-			testimonialIndex++;
-		  }
-		});
-	  
-		return gridItems;
-	  }
 
 	return (
 		<Fragment>

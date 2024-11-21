@@ -158,10 +158,10 @@ export interface ProductReviewUpdate {
 }
 
 export interface Testimonial {
-	id: string, 
-	author: string,
-	avatarUrl:string,
-	testimonial:string,
+	id: string;
+	author: string;
+	avatarUrl: string;
+	testimonial: string;
 }
 
 export interface DefaultTestimonial {
@@ -327,3 +327,15 @@ export interface ProductUploadSubscriptionPlan {
 	position: number;
 	createdAt: Date;
 }
+
+export type GridItem =
+	| {
+			type: 'product';
+			id: string;
+			product: Product;
+	  }
+	| {
+			type: 'testimonial';
+			id: string;
+			testimonial: Testimonial;
+	  };

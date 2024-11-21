@@ -1,11 +1,13 @@
 'use client';
 import Link from 'next/link';
 import {RotateCw} from 'lucide-react';
+import {createGridItems} from '@/utils';
 import {usePathname} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import {Dispatch, Fragment, SetStateAction} from 'react';
 import ProductCard from '@/components/cards/product-card';
+import TestimonialCard from '@/components/common/testimonial-card';
 
 interface HomeProductsProps {
 	currentPage: number;
@@ -16,30 +18,43 @@ const SearchProducts = ({
 	currentPage,
 	updateCurrentPage,
 }: HomeProductsProps) => {
-    const pathname = window.location.pathname;
+	const pathname = window.location.pathname;
 	const searchParams = window.location.search;
 
-	const {user, searchProducts, searchTotalPages, searchHasNextPage} =
-		useGlobalStore();
+	const {
+		user,
+		searchProducts,
+		searchTotalPages,
+		searchHasNextPage,
+		testimonials,
+	} = useGlobalStore();
 
 	return (
 		<div className='relative mt-4 sm:mt-0'>
 			{!user && (
 				<div className='absolute top-0 left-0 h-full w-full bg-[#ffffff90] backdrop-blur-md z-[5] flex flex-col items-center justify-cente pt-40'>
 					<Link
-						href={`/signin?redirect_to=${pathname.slice(1).concat(
-							searchParams
-						)}`}
+						href={`/signin?redirect_to=${pathname
+							.slice(1)
+							.concat(searchParams)}`}
 						className='text-center text-sm font-medium cursor-pointer underline'
 					>
 						Login to see search results
 					</Link>
 				</div>
 			)}
+
 			<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2 mt-2'>
-				{searchProducts?.map((product) => (
-					<ProductCard key={product.id} product={product} />
-				))}
+				{createGridItems(searchProducts, testimonials, 4)?.map((item) =>
+					item.type === 'product' ? (
+						<ProductCard key={item.id} product={item.product} />
+					) : (
+						<TestimonialCard
+							key={item.id}
+							data={item.testimonial}
+						/>
+					)
+				)}
 			</div>
 
 			{!searchHasNextPage && searchTotalPages > 1 && (
@@ -61,6 +76,7 @@ const SearchProducts = ({
 					</Button>
 				</div>
 			)}
+
 			{searchHasNextPage && (
 				<div className='flex justify-center mt-10'>
 					<Button

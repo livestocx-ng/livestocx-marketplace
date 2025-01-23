@@ -537,7 +537,7 @@ const SignUpPage = () => {
 						</div>
 
 						<div className='w-full overflow-x-auto gap-x-2 flex'>
-						{currentTestimonial && (
+							{currentTestimonial && (
 								<div
 									// key={data.id}
 									className='flex flex-col items-cente justify-between space-y-3 border rounded-lg p-2 md:mb-0 w-full'

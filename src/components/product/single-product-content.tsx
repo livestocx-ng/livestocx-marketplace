@@ -39,7 +39,6 @@ import {
 import {toast} from 'react-hot-toast';
 import ProductCard from '../cards/product-card';
 import {Product, ProductInfo} from '@/types/types';
-import React, {Dispatch, SetStateAction} from 'react';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {formatVendorSlug} from '@/utils/slug.formatter';
@@ -47,6 +46,7 @@ import {getMediaImageUrl} from '@/utils/media/media.url';
 import SellerInfoTab from '../product-info/seller-info-tab';
 import ProductReviewTab from '../product-info/product-review-tab';
 import MoreFromSellerTab from '../product-info/more-from-seller-tab';
+import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import {likesViewsImpressionFormatter} from '@/utils/like.view.impression.formatter';
 
 interface SingleProductContentProps {
@@ -84,6 +84,76 @@ const SingleProductContent = ({
 	const updateProductModalPayload = useProductMediaModalStore(
 		(state) => state.updatePayload
 	);
+
+	const [countdown, setCountdown] = useState<number>(86400); // 24 hours in seconds
+	const [endTime, setEndTime] = useState<Date | null>(null);
+
+	const formatTime = (seconds: number) => {
+		const hours = Math.floor(seconds / 3600)
+			.toString()
+			.padStart(2, '0');
+		const minutes = Math.floor((seconds % 3600) / 60)
+			.toString()
+			.padStart(2, '0');
+		const secs = (seconds % 60).toString().padStart(2, '0');
+
+		return `${hours}:${minutes}:${secs}`;
+	};
+
+	// Load saved countdown from localStorage
+	useEffect(() => {
+		const savedEndTime = localStorage.getItem(
+			'LVSX_PRODUCT_TIMER_END_TIME'
+		);
+		if (savedEndTime) {
+			const endTimeDate = new Date(parseInt(savedEndTime));
+			setEndTime(endTimeDate);
+			const remainingTime = Math.floor(
+				(endTimeDate.getTime() - Date.now()) / 1000
+			);
+			if (remainingTime > 0) {
+				setCountdown(remainingTime);
+			} else {
+				restartCountdown();
+			}
+		} else {
+			restartCountdown();
+		}
+	}, []);
+
+	// Restart countdown function
+	const restartCountdown = () => {
+		const possibleDurations = [28800, 32400, 36000, 43200, 86400]; // Various durations in seconds
+		const randomDuration =
+			possibleDurations[
+				Math.floor(Math.random() * possibleDurations.length)
+			];
+		const newEndTime = new Date(Date.now() + randomDuration * 1000);
+		setEndTime(newEndTime);
+		setCountdown(randomDuration);
+		localStorage.setItem(
+			'LVSX_PRODUCT_TIMER_END_TIME',
+			newEndTime.getTime().toString()
+		);
+	};
+
+	// Countdown timer
+	useEffect(() => {
+		const timer = setInterval(() => {
+			if (endTime) {
+				const remainingTime = Math.floor(
+					(endTime.getTime() - Date.now()) / 1000
+				);
+				if (remainingTime <= 0) {
+					restartCountdown();
+				} else {
+					setCountdown(remainingTime);
+				}
+			}
+		}, 1000);
+
+		return () => clearInterval(timer);
+	}, [endTime]);
 
 	return (
 		<div className='flex flex-col justify-start items-start pt-0 md:pt-3 pb-10 md:px-8'>
@@ -216,6 +286,10 @@ const SingleProductContent = ({
 								</Badge>
 							)}
 						</div>
+
+						<p className='text-sm underline text-red-500 font-semibold'>
+							Offer ends in {formatTime(countdown)}
+						</p>
 
 						<Link
 							href={

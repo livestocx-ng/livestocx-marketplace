@@ -278,11 +278,16 @@ const ProductCard = ({product}: ProductCardProps) => {
 				</div>
 
 				<div>
-					{product?.isPromotion && (
-						<p className='flex justify-end text-[8px] text-green-500 font-medium pr-2'>
-							Promoted
+					<div className='flex justify-between px-2'>
+						<p className='text-[8px] text-gree font-medium'>
+							Few items left
 						</p>
-					)}
+						{product?.isPromotion && (
+							<p className='text-[8px] text-green-500 font-medium'>
+								Promoted
+							</p>
+						)}
+					</div>
 					{product?.vendor?.state && (
 						<div className='border-t border-slate-400 text-[8px] font-medium px-2 pt-1 flex items-center space-x-2'>
 							<MapPin className='h-3 w-3 text-black' />

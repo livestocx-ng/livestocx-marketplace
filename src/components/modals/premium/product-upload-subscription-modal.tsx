@@ -4,12 +4,12 @@ import {
 	useCreateProductModalStore,
 	useProductUploadSubscriptionModalStore,
 } from '@/hooks/use-global-store';
-import React, {useState} from 'react';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {PaystackButton} from 'react-paystack';
+import React, {useEffect, useState} from 'react';
 import {PriceFormatter} from '@/utils/price.formatter';
 import ButtonLoader from '@/components/loader/button-loader';
 import {generateRandomPaymentReference} from '@/utils/promotion.util.formatter';
@@ -29,6 +29,74 @@ const ProductUploadSubscriptionModal = () => {
 		amount: number;
 		buttonTitle: string;
 	}>({id: 0, amount: 0, buttonTitle: ''});
+	const [countdown, setCountdown] = useState<number>(36000); // 24 hours in seconds
+	const [endTime, setEndTime] = useState<Date | null>(null);
+
+	const formatTime = (seconds: number) => {
+		const hours = Math.floor(seconds / 3600)
+			.toString()
+			.padStart(2, '0');
+		const minutes = Math.floor((seconds % 3600) / 60)
+			.toString()
+			.padStart(2, '0');
+		const secs = (seconds % 60).toString().padStart(2, '0');
+		return `${hours}:${minutes}:${secs}`;
+	};
+
+	// Load saved countdown from localStorage
+	useEffect(() => {
+		const savedEndTime = localStorage.getItem(
+			'LVSX_PRODUCT_UPLOAD_SUBSCRIPTION_TIMER_END_TIME'
+		);
+		if (savedEndTime) {
+			const endTimeDate = new Date(parseInt(savedEndTime));
+			setEndTime(endTimeDate);
+			const remainingTime = Math.floor(
+				(endTimeDate.getTime() - Date.now()) / 1000
+			);
+			if (remainingTime > 0) {
+				setCountdown(remainingTime);
+			} else {
+				restartCountdown();
+			}
+		} else {
+			restartCountdown();
+		}
+	}, []);
+
+	// Restart countdown function
+	const restartCountdown = () => {
+		const possibleDurations = [28800, 32400, 36000, 43200, 86400]; // Various durations in seconds
+		const randomDuration =
+			possibleDurations[
+				Math.floor(Math.random() * possibleDurations.length)
+			];
+		const newEndTime = new Date(Date.now() + randomDuration * 1000);
+		setEndTime(newEndTime);
+		setCountdown(randomDuration);
+		localStorage.setItem(
+			'LVSX_PRODUCT_UPLOAD_SUBSCRIPTION_TIMER_END_TIME',
+			newEndTime.getTime().toString()
+		);
+	};
+
+	// Countdown timer
+	useEffect(() => {
+		const timer = setInterval(() => {
+			if (endTime) {
+				const remainingTime = Math.floor(
+					(endTime.getTime() - Date.now()) / 1000
+				);
+				if (remainingTime <= 0) {
+					restartCountdown();
+				} else {
+					setCountdown(remainingTime);
+				}
+			}
+		}, 1000);
+
+		return () => clearInterval(timer);
+	}, [endTime]);
 
 	const handleClose = () => {
 		toast.error('Payment cancelled!', {className: 'text-xs sm:text-sm'});
@@ -149,6 +217,10 @@ const ProductUploadSubscriptionModal = () => {
 								</span>
 							</h1>
 
+							<h1 className='text-xs text-red-500 md:text-sm font-semibold '>
+								Offer ends in {formatTime(countdown)}
+							</h1>
+
 							{loading ? (
 								<Button
 									type='button'
@@ -204,7 +276,7 @@ const ProductUploadSubscriptionModal = () => {
 					))}
 
 					<div className='text-xs pt-2'>
-						Over 3,000 farmers already paid!
+						Over 3,500 farmers already paid!
 					</div>
 				</div>
 			</div>

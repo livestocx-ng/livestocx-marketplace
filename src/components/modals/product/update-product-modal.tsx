@@ -468,7 +468,7 @@ const UpdateProductModal = () => {
 						</div>
 
 						<div className='space-y-'>
-							<p className='text-xs'>Name</p>
+							<p className='text-xs'>Product Name</p>
 							<FormTextInput
 								name='name'
 								disabled={loading}

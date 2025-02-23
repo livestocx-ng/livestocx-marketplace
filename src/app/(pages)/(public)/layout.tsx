@@ -3,32 +3,34 @@ import {useEffect} from 'react';
 import {
 	useGlobalStore,
 	useDownloadAppStore,
+	useReferralModalStore,
 	useShareProductModalStore,
 	useUpdateUserRoleModalStore,
 	useReadNotificationModalStore,
+	useShareSellerStoreModalStore,
 	useUpgradeToPremiumAccessStore,
 	useUpdateWelcomeFarmerModalStore,
 	useUpdateVendorProfileModalStore,
 	useUpdateSearchLocationModalStore,
-	usePremiumSubscriptionCheckoutModalStore,
+	useProductUploadSubscriptionModalStore,
 	usePremiumSubscriptionSuccessModalStore,
-	useShareSellerStoreModalStore,
+	usePremiumSubscriptionCheckoutModalStore,
 } from '@/hooks/use-global-store';
 import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';
-import Footer from '@/components/navigation/footer';
-import Navbar from '@/components/navigation/main-nav-bar';
 import ShareProductModal from '@/components/modals/product/share-product-modal';
 import UpdateUserRoleModal from '@/components/modals/user/update-user-role-modal';
 import WelcomeFarmerModal from '@/components/modals/welcome/welcome-farmer-modal';
+import UserReferralModal from '@/components/modals/referrals/user-referral-modal';
 import NotificationModal from '@/components/modals/notifications/notification-modal';
+import ShareSellerStoreModal from '@/components/modals/store/share-seller-store-modal';
 import UpgradeToPremiumModal from '@/components/modals/premium/upgrade-to-premium-modal';
 import DownloadMobileAppModal from '@/components/modals/welcome/download-mobile-app-modal';
 import UpdateVendorProfileModal from '@/components/modals/user/update-vendor-profile-modal';
 import UpdateSearchLocationModal from '@/components/modals/utils/update-search-location-modal';
+import ProductUploadSubscriptionModal from '@/components/modals/premium/product-upload-subscription-modal';
 import PremiumSubscriptionSuccessModal from '@/components/modals/premium/premium-subscription-success-modal';
 import PremiumSubscriptionCheckoutModal from '@/components/modals/premium/premium-subscription-checkout-modal';
-import ShareSellerStoreModal from '@/components/modals/store/share-seller-store-modal';
 
 interface PagesLayoutProps {
 	children: React.ReactNode;
@@ -38,14 +40,17 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const {user} = useUserHook();
 
 	const {
+		updateTestimonials,
 		updateVendorProfile,
 		updatePromotionPlans,
 		updateChatConversations,
 		updateUserPromotionPlan,
 		updateUserPremiumSubscription,
 		updatePremiumSubscriptionPlans,
+		updateProductUploadSubscriptionPlans,
 	} = useGlobalStore();
 
+	const referralModal = useReferralModalStore();
 	const downloadAppModal = useDownloadAppStore();
 	const shareProductModal = useShareProductModalStore();
 	const updateUserRoleModal = useUpdateUserRoleModalStore();
@@ -55,8 +60,21 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const updateVendorProfileModal = useUpdateVendorProfileModalStore();
 	const upgradeToPremiumAccessModal = useUpgradeToPremiumAccessStore();
 	const updateSearchLocationModal = useUpdateSearchLocationModalStore();
+	const productUploadSubscriptionModal = useProductUploadSubscriptionModalStore();
 	const premiumSubscriptionSuccessModal = usePremiumSubscriptionSuccessModalStore();
 	const premiumSubscriptionCheckoutModal = usePremiumSubscriptionCheckoutModalStore();
+
+	const initializeUserReferralModal = () => {
+		// setTimeout(() => {
+		// 	referralModal.onOpen();
+		// }, 6500);
+
+		// setInterval(() => {
+		// 	if(!referralModal.isOpen){
+		// 		referralModal.onOpen();
+		// 	}
+		// }, 150000);
+	};
 
 	const initializeDownloadAppModal = () => {
 		setTimeout(() => {
@@ -137,19 +155,38 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 
 	const fetchSubscriptionPlans = async () => {
 		try {
-			const [promotionPlansRequest, premiumSubscriptionPlansRequest] =
-				await Promise.all([
-					axios.get(
-						`${process.env.NEXT_PUBLIC_API_URL}/promotions/plans`
-					),
-					axios.get(
-						`${process.env.NEXT_PUBLIC_API_URL}/vendor/premium-subscription-plans`
-					),
-				]);
+			const [
+				testimonialsRequest,
+				promotionPlansRequest,
+				premiumSubscriptionPlansRequest,
+				productUploadSubscriptionPlansRequest,
+			] = await Promise.all([
+				axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/utilities/testimonials`
+				),
+				axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/promotions/plans`
+				),
+				axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/vendor/premium-subscription-plans`
+				),
+				axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/vendor/product-upload-subscription-plans`
+				),
+			]);
+
+			// console.log('[TESTIMONIALS] :: ', testimonialsRequest)
+
+			updateTestimonials(testimonialsRequest.data.data);
 
 			updatePromotionPlans(promotionPlansRequest.data.data);
+			
 			updatePremiumSubscriptionPlans(
 				premiumSubscriptionPlansRequest.data.data
+			);
+			
+			updateProductUploadSubscriptionPlans(
+				productUploadSubscriptionPlansRequest.data.data
 			);
 		} catch (error) {
 			const _error = error as AxiosError;
@@ -158,9 +195,9 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 		}
 	};
 
-	useEffect(() => {
-		initializeDownloadAppModal();
-	}, []);
+	// useEffect(() => {
+	// 	initializeDownloadAppModal();
+	// }, []);
 
 	useEffect(() => {
 		if (
@@ -168,8 +205,11 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 			user?.role === 'FARMER' &&
 			user?.isVendorProfileUpdated === false
 		) {
-			// router.push('/compliance');
 			updateVendorProfileModal.onOpen();
+		}
+
+		if (user) {
+			initializeUserReferralModal();
 		}
 
 		fetchChatConversations();
@@ -179,6 +219,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 
 	return (
 		<div className='relative'>
+			{referralModal.isOpen && <UserReferralModal />}
 			{shareProductModal.isOpen && <ShareProductModal />}
 			{welcomeFarmerModal.isOpen && <WelcomeFarmerModal />}
 			{updateUserRoleModal.isOpen && <UpdateUserRoleModal />}
@@ -188,16 +229,11 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 			{upgradeToPremiumAccessModal.isOpen && <UpgradeToPremiumModal />}
 			{updateVendorProfileModal.isOpen && <UpdateVendorProfileModal />}
 			{updateSearchLocationModal.isOpen && <UpdateSearchLocationModal />}
-			{premiumSubscriptionSuccessModal.isOpen && (
-				<PremiumSubscriptionSuccessModal />
-			)}
-			{premiumSubscriptionCheckoutModal.isOpen && (
-				<PremiumSubscriptionCheckoutModal />
-			)}
+			{productUploadSubscriptionModal.isOpen && <ProductUploadSubscriptionModal /> }
+			{premiumSubscriptionSuccessModal.isOpen && <PremiumSubscriptionSuccessModal /> }
+			{premiumSubscriptionCheckoutModal.isOpen && <PremiumSubscriptionCheckoutModal /> }
 
-			{/* <Navbar /> */}
 			{children}
-			{/* <Footer /> */}
 		</div>
 	);
 };

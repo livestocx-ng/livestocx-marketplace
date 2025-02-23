@@ -263,7 +263,7 @@ const AboutUsPage = () => {
 					))}
 				</div>
 				{/* 
-			<TestimonialScetion /> */}
+			<DefaultTestimonialScetion /> */}
 			</main>
 
 			<Footer />

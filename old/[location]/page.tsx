@@ -2,10 +2,10 @@
 import Lottie from 'lottie-react';
 import axios, {AxiosError} from 'axios';
 import {Fragment, useEffect, useState} from 'react';
-import SearchForm from '../components/search-form';
-import HomeProducts from '../components/home-products';
+import SearchForm from '../../src/app/(pages)/(public)/(routes)/components/search-form';
+import HomeProducts from '../../src/app/(pages)/(public)/(routes)/components/home-products';
 import {useGlobalStore} from '@/hooks/use-global-store';
-import EmptyAnimation from '../../../../../../public/animations/animation__3.json';
+import EmptyAnimation from '../../public/animations/animation__3.json';
 import PromotionBanner from '@/components/banner/promotion-banner';
 import MainNavbar from '@/components/navigation/main-nav-bar';
 import Footer from '@/components/navigation/footer';
@@ -86,12 +86,7 @@ const SearchLocationPage = ({params}: SearchLocationPageParams) => {
 		<Fragment>
 			<MainNavbar />
 			<main className='bg-[#28312B]'>
-				<section className='h-[22vh] md:h-[50vh md:h-[300px] w-full bg-white md:bg-home flex flex-col items-center justify-end gap-y-3 md:gap-y-10 py-2 md:py-10 md:pt-0'>
-					{/* <h1 className='text-xl md:text-4xl font-medium text-white'>
-					Best <span className='text-green-600'>deals.</span>{' '}
-					Everything <span className='text-green-600'>Livestocx</span>
-				</h1> */}
-
+				<section className='h-[22vh] md:h-[50vh md:h-[300px] w-full bg-white md:bg-gradient-to-b md:from-green-800 md:to-green-50 flex flex-col items-center justify-end gap-y-3 md:gap-y-10 py-2 md:py-10 md:pt-0'>
 					<SearchForm />
 				</section>
 

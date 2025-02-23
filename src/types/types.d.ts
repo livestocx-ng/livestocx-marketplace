@@ -22,7 +22,9 @@ export interface User {
 	phoneNumber: string;
 	email: string;
 	role: string;
+	referralCode: string;
 	isProfileUpdated: boolean;
+	isProductUploadSubscriptionActive: boolean;
 	isVendorProfileUpdated: boolean;
 	accessToken: string;
 	refreshToken: string;
@@ -53,9 +55,9 @@ export interface Vendor {
 	email: string;
 	user: string;
 	isVerified: boolean;
-	facebookUrl: string,
-	twitterUrl: string,
-	instagramUrl: string,
+	facebookUrl: string;
+	twitterUrl: string;
+	instagramUrl: string;
 	isAccountDisabled: boolean;
 	phoneNumber: string;
 	isUpdated: boolean;
@@ -156,6 +158,13 @@ export interface ProductReviewUpdate {
 }
 
 export interface Testimonial {
+	id: string;
+	author: string;
+	avatarUrl: string;
+	testimonial: string;
+}
+
+export interface DefaultTestimonial {
 	id: number;
 	author: string;
 	avatar: string;
@@ -209,6 +218,8 @@ export interface ChatMessage {
 	sender: number;
 	recipient: number;
 	conversation: number;
+	hasCTA: boolean;
+	ctaType: string;
 }
 
 export interface PromotionPlan {
@@ -307,3 +318,24 @@ export interface EnterprisePlanComparison {
 	platform: string;
 	customBusinessWebsite: string;
 }
+
+export interface ProductUploadSubscriptionPlan {
+	id: number;
+	title: string;
+	description: string;
+	price: number;
+	position: number;
+	createdAt: Date;
+}
+
+export type GridItem =
+	| {
+			type: 'product';
+			id: string;
+			product: Product;
+	  }
+	| {
+			type: 'testimonial';
+			id: string;
+			testimonial: Testimonial;
+	  };

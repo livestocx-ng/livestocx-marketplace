@@ -3,15 +3,10 @@ import {
 	useGlobalStore,
 	useUpdateSearchLocationModalStore,
 } from '@/hooks/use-global-store';
-import {toast} from 'react-hot-toast';
-import axios, {AxiosError} from 'axios';
-import {useRouter} from 'next/navigation';
-import {Button} from '@/components/ui/button';
+import {useEffect, useReducer} from 'react';
 import {NigerianCities, NigerianStates} from '@/data';
-import {useEffect, useReducer, useState} from 'react';
-import {ChevronLeft, ChevronRight, X} from 'lucide-react';
-import ButtonLoader from '@/components/loader/button-loader';
-import FormTextInput from '@/components/input/form-text-input';
+import {ChevronLeft, ChevronRight} from 'lucide-react';
+import {useRouter, useSearchParams} from 'next/navigation';
 
 type FormData = {
 	search: string;
@@ -43,12 +38,12 @@ const formReducer = (state: FormData, action: FormAction) => {
 
 const UpdateSearchLocationModal = () => {
 	const router = useRouter();
+	const searchParams = useSearchParams();
 
 	const {user, updateSearchLocation, updateProducts} = useGlobalStore();
 
 	const {onClose} = useUpdateSearchLocationModalStore();
 
-	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
 
 	useEffect(() => {
@@ -58,28 +53,6 @@ const UpdateSearchLocationModal = () => {
 			}
 		});
 	}, []);
-
-	const handleSubmit = async () => {
-		try {
-			setLoading(true);
-
-			// close modal
-			onClose();
-		} catch (error) {
-			setLoading(false);
-
-			const _error = error as AxiosError;
-
-			toast.error('Error');
-		}
-	};
-
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		updateFormData({
-			type: 'UPDATE_FORMDATA',
-			payload: {[event.target.name]: event.target.value},
-		});
-	};
 
 	return (
 		<div className='fixed h-screen flex flex-col items-center justify-center w-full bg-[#11111190] backdrop-blur-sm z-[15]'>
@@ -92,7 +65,7 @@ const UpdateSearchLocationModal = () => {
 			<div className='flex flex-col w-[90%] lg:w-[60%] bg-white py-4 px-4 rounded-md overflow-y-auto z-[20] scrollbar__1'>
 				<div className='flex flex-col-reverse lg:flex-row items-center justify-between mb-2'>
 					{!formData.showCities && (
-						<h1 className='text-sm'>All Nigeria</h1>
+						<h1 className='text-xs font-semibold'>All Nigeria</h1>
 					)}
 					{formData.showCities && (
 						<div
@@ -104,21 +77,12 @@ const UpdateSearchLocationModal = () => {
 									},
 								});
 							}}
-							className='flex cursor-pointer hover:translate-x-1 transition-all duration-700'
+							className='flex items-center cursor-pointer hover:translate-x-1 transition-all duration-700'
 						>
-							<ChevronLeft className='h-5 w-5' />{' '}
-							<h1 className='text-sm'>Back</h1>
+							<ChevronLeft size={14} className='h-5 w-5' />{' '}
+							<h1 className='text-xs font-semibold'>Back</h1>
 						</div>
 					)}
-
-					{/* <FormTextInput
-						name='search'
-						padding='py-2 px-4'
-						value={formData.search}
-						handleChange={handleChange}
-						placeHolder='Find state, city or district'
-						classes='w-full lg:w-[30%] text-white text-sm placeholder:text-sm placeholder:italic border border-slate-600'
-					/> */}
 					<div></div>
 				</div>
 
@@ -137,14 +101,14 @@ const UpdateSearchLocationModal = () => {
 											},
 										});
 									}}
-									className='border-b text-sm py-2 flex justify-between cursor-pointer hover:translate-y-1 transition-all duration-700'
+									className='border-b text-xs py-2 flex justify-between cursor-pointer hover:translate-y-1 transition-all duration-700'
 								>
 									<p>
 										{state === 'Abuja'
-											? 'FCT Abuja'
+											? 'Abuja'
 											: `${state} State`}
 									</p>{' '}
-									<ChevronRight className='text-slate-400' />
+									<ChevronRight size={14} className='text-black' />
 								</div>
 							))}
 						</div>
@@ -161,14 +125,14 @@ const UpdateSearchLocationModal = () => {
 											},
 										});
 									}}
-									className='border-b text-sm py-2 flex justify-between cursor-pointer hover:translate-y-1 transition-all duration-700'
+									className='border-b text-xs py-2 flex justify-between cursor-pointer hover:translate-y-1 transition-all duration-700'
 								>
 									<p>
 										{state.includes('Federal')
-											? 'Abuja (FCT)'
+											? 'Abuja'
 											: `${state} State`}
 									</p>{' '}
-									<ChevronRight className='text-slate-400' />
+									<ChevronRight size={14} className='text-black' />
 								</div>
 							))}
 						</div>
@@ -185,14 +149,14 @@ const UpdateSearchLocationModal = () => {
 											},
 										});
 									}}
-									className='border-b text-sm py-2 flex justify-between cursor-pointer hover:translate-y-1 transition-all duration-700'
+									className='border-b text-xs py-2 flex justify-between cursor-pointer hover:translate-y-1 transition-all duration-700'
 								>
 									<p>
-										{state.includes('Federal')
-											? 'Abuja (FCT)'
+										{state === 'Abuja'
+											? 'Abuja'
 											: `${state} State`}
 									</p>{' '}
-									<ChevronRight className='text-slate-400' />
+									<ChevronRight size={14} className='text-black' />
 								</div>
 							))}
 						</div>
@@ -200,7 +164,7 @@ const UpdateSearchLocationModal = () => {
 				)}
 
 				{formData.showCities && (
-					<div className='flex flex-col lg:grid grid-cols-3 gap-x-8 w-full py-5 border-t border-t-slate-600 max-h-[500px] lg:max-h-[600px] overflow-y-auto scrollbar__1'>
+					<div className='flex flex-col lg:grid grid-cols-3 gap-x-8 gap-y-5 w-full py-5 border-t border-t-slate-600 max-h-[500px] lg:max-h-[600px] overflow-y-auto scrollbar__1'>
 						<div>
 							<div
 								onClick={() => {
@@ -226,16 +190,47 @@ const UpdateSearchLocationModal = () => {
 											searchQueryCity: '',
 										})
 									);
-									router.push(`/${location}`);
+									// router.push(`/${location}`);
 
-									updateProducts([]);
+									// updateProducts([]);
+
+									const updatedSearchParams =
+										new URLSearchParams(
+											searchParams.toString()
+										);
+
+									updatedSearchParams.set(
+										'query',
+										searchParams.has('query')
+											? searchParams.get('query')!
+											: ''
+									);
+									updatedSearchParams.set(
+										'state',
+										encodeURI(location)
+									);
+									updatedSearchParams.set(
+										'city',
+										searchParams.has('city')
+											? searchParams.get('city')!
+											: ''
+									);
+
+									router.push(
+										`/search?${updatedSearchParams}`
+									);
 
 									onClose();
 								}}
 								className='border-b text-sm py-2 flex justify-between w-full cursor-pointer hover:translate-y-1 transition-all duration-700'
 							>
-								<p>All {formData.searchLocationState} {formData.searchLocationState === 'Abuja'? '' : `${formData.searchLocationState} State`}</p>{' '}
-								<ChevronRight className='text-slate-400' />
+								<p className='text-xs'>
+									All {formData.searchLocationState}{' '}
+									{formData.searchLocationState === 'Abuja'
+										? ''
+										: `${formData.searchLocationState} State`}
+								</p>{' '}
+								<ChevronRight size={14} className='text-black' />
 							</div>
 							{NigerianCities[formData.searchLocationState]
 								.slice(0, 5)
@@ -272,21 +267,43 @@ const UpdateSearchLocationModal = () => {
 													searchQueryCity: location,
 												})
 											);
-											router.push(`/${location}`);
+											// router.push(`/${location}`);
 
-											updateProducts([]);
+											// updateProducts([]);
+											const updatedSearchParams =
+												new URLSearchParams(
+													searchParams.toString()
+												);
+
+											updatedSearchParams.set(
+												'query',
+												searchParams.has('query')
+													? searchParams.get('query')!
+													: ''
+											);
+											updatedSearchParams.set(
+												'state',
+												encodeURI(
+													formData.searchLocationState
+												)
+											);
+											updatedSearchParams.set(
+												'city',
+												encodeURI(location)
+											);
+
+											router.push(
+												`/search?${updatedSearchParams}`
+											);
 
 											onClose();
 										}}
 										className='border-b text-sm py-2 flex flex-col w-full cursor-pointer hover:translate-y-1 transition-all duration-700'
 									>
-										<div className='flex justify-between'>
+										<div className='flex justify-between text-xs'>
 											<p>{city}</p>{' '}
-											<ChevronRight className='text-slate-400' />
+											<ChevronRight size={14} className='text-black' />
 										</div>
-										<p className='text-xs text-slate-500'>
-											{formData.searchLocationState} State
-										</p>{' '}
 									</div>
 								))}
 						</div>
@@ -326,21 +343,43 @@ const UpdateSearchLocationModal = () => {
 													searchQueryCity: location,
 												})
 											);
-											router.push(`/${location}`);
+											// router.push(`/${location}`);
 
-											updateProducts([]);
+											// updateProducts([]);
+											const updatedSearchParams =
+												new URLSearchParams(
+													searchParams.toString()
+												);
+
+											updatedSearchParams.set(
+												'query',
+												searchParams.has('query')
+													? searchParams.get('query')!
+													: ''
+											);
+											updatedSearchParams.set(
+												'state',
+												encodeURI(
+													formData.searchLocationState
+												)
+											);
+											updatedSearchParams.set(
+												'city',
+												encodeURI(location)
+											);
+
+											router.push(
+												`/search?${updatedSearchParams}`
+											);
 
 											onClose();
 										}}
 										className='border-b text-sm py-2 flex flex-col w-full cursor-pointer hover:translate-y-1 transition-all duration-700'
 									>
-										<div className='flex justify-between'>
+										<div className='flex justify-between text-xs'>
 											<p>{city}</p>{' '}
-											<ChevronRight className='text-slate-400' />
+											<ChevronRight size={14} className='text-black' />
 										</div>
-										<p className='text-xs text-slate-500'>
-											{formData.searchLocationState} State
-										</p>{' '}
 									</div>
 								))}
 						</div>
@@ -380,21 +419,44 @@ const UpdateSearchLocationModal = () => {
 													searchQueryCity: location,
 												})
 											);
-											router.push(`/${location}`);
+											// router.push(`/${location}`);
 
-											updateProducts([]);
+											// updateProducts([]);
+
+											const updatedSearchParams =
+												new URLSearchParams(
+													searchParams.toString()
+												);
+
+											updatedSearchParams.set(
+												'query',
+												searchParams.has('query')
+													? searchParams.get('query')!
+													: ''
+											);
+											updatedSearchParams.set(
+												'state',
+												encodeURI(
+													formData.searchLocationState
+												)
+											);
+											updatedSearchParams.set(
+												'city',
+												encodeURI(location)
+											);
+
+											router.push(
+												`/search?${updatedSearchParams}`
+											);
 
 											onClose();
 										}}
 										className='border-b text-sm py-2 flex flex-col w-full cursor-pointer hover:translate-y-1 transition-all duration-700'
 									>
-										<div className='flex justify-between'>
+										<div className='flex justify-between text-xs'>
 											<p>{city}</p>{' '}
-											<ChevronRight className='text-slate-400' />
+											<ChevronRight size={14} className='text-black' />
 										</div>
-										<p className='text-xs text-slate-500'>
-											{formData.searchLocationState} State
-										</p>{' '}
 									</div>
 								))}
 						</div>

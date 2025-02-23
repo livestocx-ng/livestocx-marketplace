@@ -7,6 +7,7 @@ import {
 	FacebookShareButton,
 	WhatsappShareButton,
 } from 'react-share';
+import axios from 'axios';
 import Image from 'next/image';
 import {
 	useGlobalStore,
@@ -34,7 +35,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
 		cell: ({row}) => {
 			const {updatePayload, updateCurrentAccountTab} = useGlobalStore();
 
-			fetch(
+			axios.get(
 				`https://livestocx.com/marketplace/products/${formatProductSlug(
 					row.original
 				)}`
@@ -184,7 +185,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
 						row.original
 					)}`}
 					title={`Check out my ${row.original.name} on livestocx: `}
-
+>>>>>>> 3ead5968c41fd841833b689abc5f6c6c0ef91b2d
 				>
 					<TwitterIcon size={25} round />
 				</TwitterShareButton>

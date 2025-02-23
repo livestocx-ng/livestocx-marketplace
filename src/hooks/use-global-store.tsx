@@ -17,6 +17,8 @@ import {
 	PremiumSubscription,
 	PromotionProductInfo,
 	PremiumSubscriptionPlan,
+	ProductUploadSubscriptionPlan,
+	Testimonial,
 } from '@/types/types';
 import { Socket } from 'socket.io-client';
 import {create} from 'zustand';
@@ -34,6 +36,7 @@ interface GlobalStore {
 	user: User | null;
 	userPremiumSubscription: PremiumSubscription | null;
 	premiumSubscriptionPlans: PremiumSubscriptionPlan[];
+	productUploadSubscriptionPlans: ProductUploadSubscriptionPlan[];
 	vendor: Vendor | null;
 	vendorProfile: Vendor | null;
 	vendors: Vendor[];
@@ -49,6 +52,8 @@ interface GlobalStore {
 	sellerProducts: Product[];
 	totalPages: number;
 	hasNextPage: boolean;
+	searchTotalPages: number;
+	searchHasNextPage: boolean;
 	sellerTotalPages: number;
 	sellerHasNextPage: boolean;
 	currentAccountTab: Tab | 'Account' | null;
@@ -60,6 +65,7 @@ interface GlobalStore {
 	promotionsTotalPages: number;
 	promotionsHasNextPage: boolean;
 	showPromotionInfo: boolean;
+	testimonials: Testimonial[];
 	currentPromotion: Promotion | null;
 	promotionProducts: Product[];
 	promotionInfoProducts: Product[];
@@ -67,9 +73,11 @@ interface GlobalStore {
 	promotionProductsHasNextPage: boolean;
 	premiumSubscriptionPlanId: number;
 	premiumSubscriptionPlanAmount: number;
+	updateTestimonials: (value: Testimonial[]) => void;
 	updatePremiumSubscriptionPlanInfo: (id: number, amount: number)=> void;
 	updateUserPremiumSubscription: (value: PremiumSubscription | null)=> void;
 	updatePremiumSubscriptionPlans: (value: PremiumSubscriptionPlan[])=> void;
+	updateProductUploadSubscriptionPlans: (value: ProductUploadSubscriptionPlan[])=> void;
 	updatePromotionInfoProducts: (value: Product[])=> void;
 	updatePromotionProducts: (value: Product[])=> void;
 	updateCurrentPromotion: (value: Promotion | null)=> void;
@@ -108,6 +116,7 @@ interface GlobalStore {
 	updateProductInfo: (value: ProductInfo) => void;
 	updateProduct: (productId: string, product: Product) => void;
 	updatePagination: (totalPages: number, hasNextPage: boolean) => void;
+	updateSearchPagination: (totalPages: number, hasNextPage: boolean) => void;
 	updateSellerPagination: (totalPages: number, hasNextPage: boolean) => void;
 }
 
@@ -196,6 +205,12 @@ export const useUpdateUserRoleModalStore = create<ActivateModal>(
 	})
 );
 
+export const useProductUploadSubscriptionModalStore = create<ActivateModal>((set) => ({
+	isOpen: false,
+	onOpen: () => set({isOpen: true}),
+	onClose: () => set({isOpen: false}),
+}));
+
 export const useCreateProductModalStore = create<ActivateModal>((set) => ({
 	isOpen: false,
 	onOpen: () => set({isOpen: true}),
@@ -221,6 +236,12 @@ export const usePremiumSubscriptionCheckoutModalStore =	create<ActivateModal>((s
 }));
 
 export const usePremiumSubscriptionSuccessModalStore =	create<ActivateModal>((set) => ({
+	isOpen: false,
+	onOpen: () => set({isOpen: true}),
+	onClose: () => set({isOpen: false}),
+}));
+
+export const useReferralModalStore =	create<ActivateModal>((set) => ({
 	isOpen: false,
 	onOpen: () => set({isOpen: true}),
 	onClose: () => set({isOpen: false}),
@@ -334,9 +355,11 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	cookieConsentStatus: false,
 	chatConversation: null,
 	chatConversations: [],
+	testimonials: [],
 	chatConversationMessages: [],
 	userPremiumSubscription: null,
 	premiumSubscriptionPlans: [],
+	productUploadSubscriptionPlans: [],
 	showChatConversation: false,
 	searchQuery: '',
 	searchQueryState: '',
@@ -354,6 +377,8 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	products: [],
 	sellerProducts: [],
 	totalPages: 0,
+	searchTotalPages: 0,
+	searchHasNextPage: false,
 	sellerTotalPages: 0,
 	sellerHasNextPage: false,
 	product: null,
@@ -376,6 +401,7 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	promotionProductsHasNextPage: false,
 	premiumSubscriptionPlanId: 0,
 	premiumSubscriptionPlanAmount: 0,
+	updateTestimonials: (value: Testimonial[]) => set({testimonials: value}),
 	updatePremiumSubscriptionPlanInfo: (id: number, amount: number) => set({premiumSubscriptionPlanId: id, premiumSubscriptionPlanAmount: amount}),
 	updateUserPremiumSubscription: (value: PremiumSubscription|null) => set({userPremiumSubscription: value}),
 	updatePremiumSubscriptionPlans: (value: PremiumSubscriptionPlan[]) => set({premiumSubscriptionPlans: value}),
@@ -385,6 +411,7 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	updateShowPromotionInfo: (value: boolean) => set({showPromotionInfo: value}),
 	updateCurrentPromotionPlan: (value: number) => set({currentPromotionPlan: value}),
 	updatePromotionPlans: (value: PromotionPlan[]) => set({promotionPlans: value}),
+	updateProductUploadSubscriptionPlans: (value: ProductUploadSubscriptionPlan[]) => set({productUploadSubscriptionPlans: value}),
 	updateUserPromotionPlan: (value: UserPromotionPlan) => set({userPromotionPlan: value}),
 	updatePromotions: (value: Promotion[]) => set({promotions: value}),
 	updatePromotionProductsInfo: (value: PromotionProductInfo[]) => set({promotionProductsInfo: value}),
@@ -445,6 +472,7 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 		});
 	},
 	updatePagination: (totalPages: number, hasNextPage: boolean) => set({totalPages: totalPages, hasNextPage: hasNextPage}),
+	updateSearchPagination: (totalPages: number, hasNextPage: boolean) => set({searchTotalPages: totalPages, searchHasNextPage: hasNextPage}),
 	updateSellerPagination: (totalPages: number, hasNextPage: boolean) => set({sellerTotalPages: totalPages, sellerHasNextPage: hasNextPage}),
 	updateProducts: (products: Product[]) => set({products: products}),
 	updateSearchProducts: (products: Product[]) => set({searchProducts: products}),

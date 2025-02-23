@@ -26,14 +26,22 @@ const Footer = () => {
 					<h1 className='text-white text-xs'>Livestocx</h1>
 
 					<div className='flex flex-col items-start space-y-2'>
+						<div className='space-y-1'>
+							<p className='text-white text-xs'>
+								1680 East Barstow Avenue, <br /> Fresno
+								California, United States
+							</p>
+							<p className='text-white text-xs'>+1(559)6683783</p>
+						</div>
+						<div className='space-y-1'>
+							<p className='text-white text-xs'>
+								Shimex Estate Lugbe Federal Capital Territory, Nigeria.
+							</p>
+							<p className='text-white text-xs'>+2348132549273</p>
+						</div>
+
 						<p className='text-white text-xs'>
-							1680 East Barstow Avenue, <br /> Fresno California, United States
-						</p>
-						<p className='text-white text-xs'>+1(559)6683783</p>
-						<p className='text-white text-xs'>+23432549273</p>
-						
-						<p className='text-white text-xs'>
-							livestocxltd@gmail.com
+							support@livestocx.com
 						</p>
 					</div>
 				</div>

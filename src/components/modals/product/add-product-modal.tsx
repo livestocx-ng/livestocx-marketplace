@@ -425,44 +425,44 @@ const AddProductModal = () => {
               </select>
             </div>
 
-            <div className="space-y-">
-              <p className="text-xs">Name</p>
-              <FormTextInput
-                name="name"
-                disabled={loading}
-                padding="py-3 px-4"
-                value={formData.name}
-                handleChange={handleChange}
-                placeHolder="Product name"
-                classes="w-full text-xs placeholder:text-xs border focus:border-slate-500 "
-              />
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="space-y- w-[45%]">
-                <p className="text-xs">Price</p>
-                <FormTextInput
-                  name="price"
-                  disabled={loading}
-                  padding="py-3 px-4"
-                  value={formData.price}
-                  handleChange={handleChange}
-                  placeHolder="Price"
-                  classes="w-full text-xs placeholder:text-xs border focus:border-slate-500 "
-                />
-              </div>
-              <div className="space-y- w-[45%]">
-                <p className="text-xs">Discount Price</p>
-                <FormTextInput
-                  name="discountPrice"
-                  padding="py-3 px-4"
-                  disabled={loading}
-                  handleChange={handleChange}
-                  placeHolder="Discount price"
-                  value={formData.discountPrice}
-                  classes="w-full text-xs placeholder:text-xs border focus:border-slate-500 "
-                />
-              </div>
-            </div>
+						<div className='space-y-'>
+							<p className='text-xs'>Name</p>
+							<FormTextInput
+								name='name'
+								disabled={loading}
+								padding='py-3 px-4'
+								value={formData.name}
+								handleChange={handleChange}
+								placeHolder='Product name'
+								classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 '
+							/>
+						</div>
+						<div className='flex items-center justify-between'>
+							<div className='space-y- w-[45%]'>
+								<p className='text-xs'>Price</p>
+								<FormTextInput
+									name='price'
+									disabled={loading}
+									padding='py-3 px-4'
+									value={formData.price}
+									handleChange={handleChange}
+									placeHolder='Price'
+									classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 '
+								/>
+							</div>
+							<div className='space-y- w-[45%]'>
+								<p className='text-xs'>Discount Price</p>
+								<FormTextInput
+									name='discountPrice'
+									padding='py-3 px-4'
+									disabled={loading}
+									handleChange={handleChange}
+									placeHolder='Discount price'
+									value={formData.discountPrice}
+									classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 '
+								/>
+							</div>
+						</div>
 
             <div className="space-y- w-full">
               <p className="text-xs">Description</p>

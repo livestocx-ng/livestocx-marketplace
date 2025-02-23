@@ -6,17 +6,20 @@ import {
 	MessageCircle,
 	ThumbsDown,
 	ThumbsUp,
+	Phone,
 } from 'lucide-react';
+import Link from 'next/link';
 import Image from 'next/image';
 import {
 	useGlobalStore,
 	useShareProductModalStore,
 } from '@/hooks/use-global-store';
+import {toast} from 'react-hot-toast';
 import {Product} from '@/types/types';
 import axios, {AxiosError} from 'axios';
+import {useRouter} from 'next/navigation';
 import {useEffect, useState} from 'react';
 import {useInView} from 'react-intersection-observer';
-import {usePathname, useRouter} from 'next/navigation';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {getMediaImageUrl} from '@/utils/media/media.url';
 import {formatProductSlug} from '@/utils/slug.formatter';
@@ -27,12 +30,11 @@ interface SellerProductCardProps {
 
 const SellerProductCard = ({product}: SellerProductCardProps) => {
 	const router = useRouter();
-	const pathName = usePathname();
 
 	const shareProductModal = useShareProductModalStore();
 	const {
 		user,
-		vendorProfile,
+		vendor,
 		updateProduct,
 		updateChatConversation,
 		updateCurrentAccountTab,
@@ -131,15 +133,19 @@ const SellerProductCard = ({product}: SellerProductCardProps) => {
 	return (
 		<div
 			ref={ref}
-			className='w-[48%] sm:w-[150px] flex flex-col justify-between shadow__1 relative'
+			className='w-[48%] sm:w-[165px] flex flex-col justify-between shadow__1 relative'
 		>
-			<div
-				onClick={() => {
-					router.push(
-						`/store/${vendorProfile?.slug}/products/${formatProductSlug(product!)}`
-					);
-				}}
+			<Link
+				// onClick={() => {
+				// 	return router.push(
+				// 		`/store/${vendor?.slug}/products/${formatProductSlug(product!)}`
+				// 	);
+				// }}
+				prefetch
 				className='h-[180px] relative cursor-pointer'
+				href={`/store/${vendor?.slug!}/products/${formatProductSlug(
+					product!
+				)}`}
 			>
 				<Image
 					fill
@@ -175,7 +181,7 @@ const SellerProductCard = ({product}: SellerProductCardProps) => {
 						<p className='text-[8px] text-white'>Out Of Stock</p>
 					</div>
 				)}
-			</div>
+			</Link>
 
 			<div className='flex flex-col justify-between bg-orange-100 border border-t-0 border-slate-400 py-2 relative h-[160px] rounded-b-md'>
 				<div className='space-y-1'>
@@ -184,30 +190,57 @@ const SellerProductCard = ({product}: SellerProductCardProps) => {
 							onClick={() => {
 								if (loading) return;
 
-								if (!user) return router.push('/signin');
+								if (!user) return router.replace('/signin');
 
-								const formData: {value?: boolean} = {};
-								if (
-									product?.likedUsers?.includes(
-										parseInt(user?.id!)
-									)
-								) {
-									formData.value = false;
-								} else {
-									formData.value = true;
+								// const formData: {value?: boolean} = {};
+								// if (
+								// 	product?.likedUsers?.includes(
+								// 		parseInt(user?.id!)
+								// 	)
+								// ) {
+								// 	formData.value = false;
+								// } else {
+								// 	formData.value = true;
+								// }
+
+								// handleLikeUnlikeProduct(formData);
+
+								if (!product?.vendor?.phoneNumber) {
+									return toast.error(
+										'Sorry, this store does not have a contact phone number',
+										{
+											className: 'text-xs sm:text-sm',
+										}
+									);
 								}
 
-								handleLikeUnlikeProduct(formData);
+								axios.get(
+									`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-user-to-call-seller?product=${product?.id}`,
+									{
+										headers: {
+											Authorization: user?.accessToken,
+										},
+									}
+								);
+
+								const telLink = document.createElement('a');
+
+								telLink.href = `tel:${product?.vendor?.phoneNumber}`;
+
+								telLink.target = '_blank';
+
+								telLink.click();
 							}}
 							className=' flex items-center justify-center h-8 sm:h-8 w-8 sm:w-8 bg-main rounded-full cursor-pointer'
 						>
-							{product?.likedUsers?.includes(
+							{/* {product?.likedUsers?.includes(
 								parseInt(user?.id!)
 							) ? (
 								<ThumbsDown className='h-4 sm:h-4 w-4 sm:w-4 text-white' />
 							) : (
 								<ThumbsUp className='h-4 sm:h-4 w-4 sm:w-4 text-white' />
-							)}
+								)} */}
+							<Phone className='h-4 w-4 sm:w-4 text-white' />
 						</div>
 
 						<div
@@ -225,18 +258,18 @@ const SellerProductCard = ({product}: SellerProductCardProps) => {
 						</div>
 					</div>
 
-					<div className='text-xs sm:text-sm font-semibold px-2'>
+					<div className='text-xs sm:text-s font-semibold px-2'>
 						{product?.name.length! > 15
 							? `${product?.name.slice(0, 15)}...`
 							: product?.name}
 					</div>
 					{product?.isNegotiable && (
-						<div className='text-xs sm:text-sm text-main font-medium px-2'>
+						<div className='text-xs sm:text-s text-main font-medium px-2'>
 							{PriceFormatter(product?.discountPrice!)}
 						</div>
 					)}
 					<div
-						className={`text-xs sm:text-sm font-medium px-2 ${
+						className={`text-xs sm:text-s font-medium px-2 ${
 							product?.isNegotiable
 								? 'line-through text-slate-500'
 								: 'text-main'
@@ -258,8 +291,8 @@ const SellerProductCard = ({product}: SellerProductCardProps) => {
 							<p className='text-[8px]'>
 								{product?.vendor?.state ===
 								'Federal Capital Territory'
-									? `${product?.vendor?.city}, Abuja`
-									: `${product?.vendor?.city}, ${product?.vendor?.state}`}
+									? `${product?.vendor?.city}- Abuja`
+									: `${product?.vendor?.city}- ${product?.vendor?.state}`}
 							</p>
 						</div>
 					)}

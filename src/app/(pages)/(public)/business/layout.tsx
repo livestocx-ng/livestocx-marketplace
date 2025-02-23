@@ -45,11 +45,10 @@ export const metadata: Metadata = {
 		],
 	},
 	twitter: {
-		card: 'summary_large_image',
+		card: 'summary',
 		site: '@livestocx',
 		creator: '@livestocx',
-		title: 'Livestocx',
-
+		title: 'Livestocx - Business',
 		description: 'Best deals, Everything Animals',
 		images: [
 			{

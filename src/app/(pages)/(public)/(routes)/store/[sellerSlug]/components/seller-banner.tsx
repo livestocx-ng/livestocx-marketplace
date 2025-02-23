@@ -1,30 +1,32 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
-import axios, {AxiosError} from 'axios';
-import {useRouter} from 'next/navigation';
-import {Button} from '@/components/ui/button';
-import {formatVendorSlug} from '@/utils/slug.formatter';
-import {MessageCircle, Phone, Share2} from 'lucide-react';
 import {
 	useGlobalStore,
 	useShareSellerStoreModalStore,
 } from '@/hooks/use-global-store';
+import {toast} from 'react-hot-toast';
+import axios, {AxiosError} from 'axios';
+import {Button} from '@/components/ui/button';
+import {usePathname, useRouter} from 'next/navigation';
+import {formatVendorSlug} from '@/utils/slug.formatter';
+import {MessageCircle, Phone, Share2} from 'lucide-react';
 
 const SellerBanner = () => {
 	const router = useRouter();
+	const pathName = usePathname();
 
 	const shareSellerStoreModal = useShareSellerStoreModalStore();
 
 	const {
 		user,
-		vendorProfile,
+		vendor,
 		updateChatConversation,
 		updateCurrentAccountTab,
 		updateShowChatConversation,
 	} = useGlobalStore();
 
-	// console.log(vendorProfile);
+	// console.log(vendor);
 
 	return (
 		<div className='w-[100%] sm:h-[200px] flex flex-col sm:flex-row items-center sm:items-start justify-between'>
@@ -32,8 +34,8 @@ const SellerBanner = () => {
 				<Image
 					fill
 					unoptimized={true}
-					src={vendorProfile?.avatar!}
-					alt={formatVendorSlug(vendorProfile!)}
+					src={vendor?.avatar!}
+					alt={formatVendorSlug(vendor!)}
 					className='h-full w-full object-cover border border-slate-300 shadow-lg shadow-slate-200 rounded-md'
 				/>
 			</div>
@@ -41,9 +43,9 @@ const SellerBanner = () => {
 			<div className='flex flex-col justify-be h-full sm:space-y-4 w-full sm:w-[85%] sm:px-10 mt-2 sm:mt-0'>
 				<div className='flex items-center space-x-2'>
 					<h1 className='text-sm sm:text-xl font-semibold'>
-						{vendorProfile?.name}
+						{vendor?.name}
 					</h1>
-					{vendorProfile?.isVerified && (
+					{vendor?.isVerified && (
 						<div className='relative h-[20px] w-[20px]'>
 							<Image
 								alt='image'
@@ -52,43 +54,39 @@ const SellerBanner = () => {
 								fill
 								unoptimized={true}
 								src={'/icon__verified__1.svg'}
-								className='object-cover h-full w-full absoute'
+								className='object-cover h-full w-full'
 							/>
 						</div>
 					)}
 				</div>
 				<p className='text-xs sm:text-sm'>
-					{vendorProfile?.city}
+					{vendor?.city}
 					{', '}
-					{vendorProfile?.state}
-					{vendorProfile?.state !== 'Abuja' ? ' State' : ' '}
+					{vendor?.state}
+					{vendor?.state !== 'Abuja' ? ' State' : ' '}
 				</p>
-				{/* <p>
-						Email:{' '}
-						<span className='text-orange-500'>{vendorProfile?.email}</span>
-					</p>
-					<p>
-						Contact:{' '}
-						<span className='text-orange-500'>
-							{vendorProfile?.phoneNumber}
-						</span>
-					</p> */}
+
 				<div className='hidden sm:flex flex-col sm:flex-row sm:space-x-5'>
 					<Button
 						type='button'
 						variant={'outline'}
 						onClick={async () => {
 							try {
-								if (!user) return router.push('/signin');
+								if (!user)
+									return router.replace(
+										`/signin?redirect_to=${pathName.slice(
+											1
+										)}`
+									);
 
-								if (user?.id == vendorProfile?.user) {
+								if (user?.id == vendor?.user) {
 									return;
 								}
 
-								if (vendorProfile?.isAccountDisabled) return;
+								if (vendor?.isAccountDisabled) return;
 
 								const {data} = await axios.get(
-									`${process.env.NEXT_PUBLIC_API_URL}/chat/conversation?receiver=${vendorProfile?.user}`,
+									`${process.env.NEXT_PUBLIC_API_URL}/chat/conversation?receiver=${vendor?.user}`,
 									{
 										headers: {
 											Authorization: user?.accessToken,
@@ -98,7 +96,7 @@ const SellerBanner = () => {
 
 								updateChatConversation(data.data);
 
-								router.push('/account');
+								router.replace('/account');
 
 								updateCurrentAccountTab('Messages');
 
@@ -117,10 +115,27 @@ const SellerBanner = () => {
 						variant={'default'}
 						onClick={async () => {
 							try {
-								if (vendorProfile?.isAccountDisabled) return;
+								if (!user)
+									return router.push(
+										`/signin?redirect_to=${pathName.slice(
+											1
+										)}`
+									);
+
+								if (vendor?.isAccountDisabled) return;
+
+								if (!vendor?.phoneNumber) {
+									return toast.error(
+										'Sorry, this store does not have a contact phone number',
+										{
+											duration: 8500,
+											className: 'text-xs sm:text-sm',
+										}
+									);
+								}
 
 								const link = document.createElement('a');
-								link.href = `tel:${vendorProfile?.phoneNumber}`;
+								link.href = `tel:${vendor?.phoneNumber}`;
 								link.target = '_blank';
 
 								link.click();
@@ -137,9 +152,7 @@ const SellerBanner = () => {
 					<Button
 						type='button'
 						variant={'default'}
-						onClick={async () => {
-							shareSellerStoreModal.onOpen();
-						}}
+						onClick={() => shareSellerStoreModal.onOpen()}
 						className='flex items-center space-x-3 bg-main text-xs rounded-full py-3 w-full sm:w-[150px]'
 					>
 						<Share2 size={18} />
@@ -154,16 +167,19 @@ const SellerBanner = () => {
 					variant={'outline'}
 					onClick={async () => {
 						try {
-							if (!user) return router.push('/signin');
+							if (!user)
+								return router.replace(
+									`/signin?redirect_to=${pathName.slice(1)}`
+								);
 
-							if (user?.id == vendorProfile?.user) {
+							if (user?.id == vendor?.user) {
 								return;
 							}
 
-							if (vendorProfile?.isAccountDisabled) return;
+							if (vendor?.isAccountDisabled) return;
 
 							const {data} = await axios.get(
-								`${process.env.NEXT_PUBLIC_API_URL}/chat/conversation?receiver=${vendorProfile?.user}`,
+								`${process.env.NEXT_PUBLIC_API_URL}/chat/conversation?receiver=${vendor?.user}`,
 								{
 									headers: {
 										Authorization: user?.accessToken,
@@ -192,10 +208,25 @@ const SellerBanner = () => {
 					variant={'default'}
 					onClick={async () => {
 						try {
-							if (vendorProfile?.isAccountDisabled) return;
+							if (!user)
+								return router.replace(
+									`/signin?redirect_to=${pathName.slice(1)}`
+								);
+
+							if (vendor?.isAccountDisabled) return;
+
+							if (!vendor?.phoneNumber) {
+								return toast.error(
+									'Sorry, this store does not have a contact phone number',
+									{
+										duration: 8500,
+										className: 'text-xs sm:text-sm',
+									}
+								);
+							}
 
 							const link = document.createElement('a');
-							link.href = `tel:${vendorProfile?.phoneNumber}`;
+							link.href = `tel:${vendor?.phoneNumber}`;
 							link.target = '_blank';
 
 							link.click();
@@ -212,9 +243,7 @@ const SellerBanner = () => {
 				<Button
 					type='button'
 					variant={'default'}
-					onClick={async () => {
-						shareSellerStoreModal.onOpen();
-					}}
+					onClick={() => shareSellerStoreModal.onOpen()}
 					className='flex items-center space-x-3 bg-main text-xs rounded-full py-3 w-full sm:w-[150px]'
 				>
 					<Share2 size={18} />

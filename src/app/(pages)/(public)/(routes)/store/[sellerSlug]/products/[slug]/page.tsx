@@ -4,18 +4,17 @@ import {
 	useProductMediaModalStore,
 } from '@/hooks/use-global-store';
 import Lottie from 'lottie-react';
+import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {Fragment, useEffect, useState} from 'react';
-import Footer from '@/components/navigation/footer';
 import {usePathname, useRouter} from 'next/navigation';
+import SellerFooter from '../../components/seller-footer';
 import {getProductIdFromSlug} from '@/utils/slug.formatter';
 import MainNavbar from '@/components/navigation/main-nav-bar';
 import LoadingAnimationOne from '@/components/loader/loading-animation-one';
-import SingleProductContent from '@/components/product/single-product-content';
 import ProductMediaModal from '@/components/modals/product/product-media-modal';
-import EmptyAnimation from '../../../../../../../../../public/animations/animation__3.json';
-import LoadingAnimation from '../../../../../../../../../public/animations/animation__3.json';
 import StoreSingleProductContent from '@/components/product/store-single-product-content';
+import EmptyAnimation from '../../../../../../../../../public/animations/animation__3.json';
 
 interface ProductPageParams {
 	params: {
@@ -125,6 +124,16 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 			if (!user)
 				return router.push(`/signin?redirect_to=${pathName.slice(1)}`);
 
+			if (!product?.vendor?.phoneNumber) {
+				return toast.error(
+					'Sorry, the seller for this product does not have a contact phone number',
+					{
+						duration: 8500,
+						className: 'text-xs sm:text-sm',
+					}
+				);
+			}
+
 			axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-user-to-call-seller?product=${product?.id}`,
 				{
@@ -195,19 +204,10 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 					<h1 className='text-xl md:text-5xl font-medium text-white capitalize px-6 sm:px-0 text-center'>
 						{product?.name}
 					</h1>
-
-					{/* <SearchForm /> */}
 				</section>
 
 				{loading && (
 					<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
-						{/* <div className='h-[200px] w-1/2 mx-auto bg-white'>
-							<Lottie
-								loop={true}
-								className='h-full'
-								animationData={LoadingAnimation}
-							/>
-						</div> */}
 						<LoadingAnimationOne />
 					</div>
 				)}
@@ -237,7 +237,7 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 					/>
 				)}
 			</main>
-			<Footer />
+			<SellerFooter />
 		</Fragment>
 	);
 };

@@ -284,22 +284,25 @@
 'use client';
 import {
 	Award,
-	Forward,
+	Phone,
 	MapPin,
-	MessageCircle,
-	ThumbsDown,
+	Forward,
 	ThumbsUp,
+	ThumbsDown,
+	MessageCircle,
 } from 'lucide-react';
+import Link from 'next/link';
 import Image from 'next/image';
 import {
 	useGlobalStore,
 	useShareProductModalStore,
 } from '@/hooks/use-global-store';
+import {toast} from 'react-hot-toast';
 import {Product} from '@/types/types';
 import axios, {AxiosError} from 'axios';
 import {useEffect, useState} from 'react';
+import {useRouter} from 'next/navigation';
 import {useInView} from 'react-intersection-observer';
-import {usePathname, useRouter} from 'next/navigation';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {getMediaImageUrl} from '@/utils/media/media.url';
 import {formatProductSlug} from '@/utils/slug.formatter';
@@ -310,7 +313,6 @@ interface ProductCardProps {
 
 const ProductCard = ({product}: ProductCardProps) => {
 	const router = useRouter();
-	const pathName = usePathname();
 
 	const shareProductModal = useShareProductModalStore();
 	const {
@@ -413,19 +415,17 @@ const ProductCard = ({product}: ProductCardProps) => {
 	return (
 		<div
 			ref={ref}
-			className='w-[48%] sm:w-[150px] flex flex-col justify-between shadow__1 relative'
+			className='w-[48%] sm:w-[165px] flex flex-col justify-between shadow__1 relative'
 		>
-			<div
-				onClick={() => {
-					if (pathName.includes('marketplace')) {
-						return router.push(
-							`/marketplace/products/${formatProductSlug(
-								product!
-							)}`
-						);
-					}
-				}}
+			<Link
+				// onClick={() => {
+				// 	return router.push(
+				// 		`/marketplace/products/${formatProductSlug(product!)}`
+				// 	);
+				// }}
+				prefetch
 				className='h-[180px] relative cursor-pointer'
+				href={`/marketplace/products/${formatProductSlug(product!)}`}
 			>
 				<Image
 					fill
@@ -435,14 +435,14 @@ const ProductCard = ({product}: ProductCardProps) => {
 					className='object-cover rounded-t-md'
 				/>
 
-				{product?.likeCount !== 0 && (
+				{/* {product?.likeCount !== 0 && (
 					<div className='absolute bottom-0 left-0 bg-[#11111180] px-4 rounded-tl-md'>
 						<p className='text-[8px] text-white'>
 							{product?.likeCount}{' '}
 							{product?.likeCount == 1 ? 'Like' : 'Likes'}
 						</p>
 					</div>
-				)}
+				)} */}
 
 				{product?.isPromotion && (
 					<div className='absolute top-0 right-0 bg-green-500 px-1 py-1 rounded-md shadow-lg shadow-slate-500'>
@@ -461,7 +461,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 						<p className='text-[8px] text-white'>Out Of Stock</p>
 					</div>
 				)}
-			</div>
+			</Link>
 
 			<div className='flex flex-col justify-between bg-orange-100 border border-t-0 border-slate-400 py-2 relative h-[160px] rounded-b-md'>
 				<div className='space-y-1'>
@@ -470,30 +470,58 @@ const ProductCard = ({product}: ProductCardProps) => {
 							onClick={() => {
 								if (loading) return;
 
-								if (!user) return router.push('/signin');
+								if (!user) return router.replace('/signin');
 
-								const formData: {value?: boolean} = {};
-								if (
-									product?.likedUsers?.includes(
-										parseInt(user?.id!)
-									)
-								) {
-									formData.value = false;
-								} else {
-									formData.value = true;
+								// const formData: {value?: boolean} = {};
+								// if (
+								// 	product?.likedUsers?.includes(
+								// 		parseInt(user?.id!)
+								// 	)
+								// ) {
+								// 	formData.value = false;
+								// } else {
+								// 	formData.value = true;
+								// }
+
+								// handleLikeUnlikeProduct(formData);
+
+								if (!product?.vendor?.phoneNumber) {
+									return toast.error(
+										'Sorry, the seller for this product does not have a contact phone number',
+										{
+											duration: 8500,
+											className: 'text-xs sm:text-sm',
+										}
+									);
 								}
 
-								handleLikeUnlikeProduct(formData);
+								axios.get(
+									`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-user-to-call-seller?product=${product?.id}`,
+									{
+										headers: {
+											Authorization: user?.accessToken,
+										},
+									}
+								);
+
+								const telLink = document.createElement('a');
+
+								telLink.href = `tel:${product?.vendor?.phoneNumber}`;
+
+								telLink.target = '_blank';
+
+								telLink.click();
 							}}
 							className=' flex items-center justify-center h-8 sm:h-8 w-8 sm:w-8 bg-main rounded-full cursor-pointer'
 						>
-							{product?.likedUsers?.includes(
+							{/* {product?.likedUsers?.includes(
 								parseInt(user?.id!)
 							) ? (
 								<ThumbsDown className='h-4 sm:h-4 w-4 sm:w-4 text-white' />
 							) : (
 								<ThumbsUp className='h-4 sm:h-4 w-4 sm:w-4 text-white' />
-							)}
+								)} */}
+							<Phone className='h-4 w-4 sm:w-4 text-white' />
 						</div>
 
 						<div
@@ -511,18 +539,18 @@ const ProductCard = ({product}: ProductCardProps) => {
 						</div>
 					</div>
 
-					<div className='text-xs sm:text-sm font-semibold px-2'>
+					<div className='text-xs sm:text-s font-semibold px-2'>
 						{product?.name.length! > 15
 							? `${product?.name.slice(0, 15)}...`
 							: product?.name}
 					</div>
 					{product?.isNegotiable && (
-						<div className='text-xs sm:text-sm text-main font-medium px-2'>
+						<div className='text-xs sm:text-s text-main font-medium px-2'>
 							{PriceFormatter(product?.discountPrice!)}
 						</div>
 					)}
 					<div
-						className={`text-xs sm:text-sm font-medium px-2 ${
+						className={`text-xs sm:text-s font-medium px-2 ${
 							product?.isNegotiable
 								? 'line-through text-slate-500'
 								: 'text-main'
@@ -533,19 +561,24 @@ const ProductCard = ({product}: ProductCardProps) => {
 				</div>
 
 				<div>
-					{product?.isPromotion && (
-						<p className='flex justify-end text-[8px] text-green-500 font-medium pr-2'>
-							Promoted
+					<div className='flex justify-between px-2'>
+						<p className='text-[8px] text-gree font-medium'>
+							Few items left
 						</p>
-					)}
+						{product?.isPromotion && (
+							<p className='text-[8px] text-green-500 font-medium'>
+								Promoted
+							</p>
+						)}
+					</div>
 					{product?.vendor?.state && (
 						<div className='border-t border-slate-400 text-[8px] font-medium px-2 pt-1 flex items-center space-x-2'>
 							<MapPin className='h-3 w-3 text-black' />
 							<p className='text-[8px]'>
 								{product?.vendor?.state ===
 								'Federal Capital Territory'
-									? `${product?.vendor?.city}, Abuja`
-									: `${product?.vendor?.city}, ${product?.vendor?.state}`}
+									? `${product?.vendor?.city}- Abuja`
+									: `${product?.vendor?.city}- ${product?.vendor?.state}`}
 							</p>
 						</div>
 					)}

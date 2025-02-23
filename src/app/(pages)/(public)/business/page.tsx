@@ -7,13 +7,13 @@ import {
 	usePremiumSubscriptionCheckoutModalStore,
 } from '@/hooks/use-global-store';
 import {toast} from 'react-hot-toast';
-import {useRouter, useSearchParams} from 'next/navigation';
 import {Button} from '@/components/ui/button';
-import {Fragment, useEffect, useRef, useState} from 'react';
 import {enterprisePlanComparisons} from '@/data';
 import Footer from '@/components/navigation/footer';
 import {DataTable} from '@/components/ui/data-table';
 import {PriceFormatter} from '@/utils/price.formatter';
+import {useRouter, useSearchParams} from 'next/navigation';
+import {Fragment, useEffect, useRef, useState} from 'react';
 import ButtonLoader from '@/components/loader/button-loader';
 import MainNavbar from '@/components/navigation/main-nav-bar';
 import {premiumSubscriptionPlanDurationFormatter} from '@/utils';
@@ -55,7 +55,7 @@ const BusinessPage = () => {
 	}, [searchParams, subscriptionPlansRef]);
 
 	const handlePremiumSubscriptionInquiry = async () => {
-		await axios.post(
+		axios.post(
 			`${process.env.NEXT_PUBLIC_API_URL}/vendor/premium-subscription-inquiry`,
 			{},
 			{
@@ -144,7 +144,7 @@ const BusinessPage = () => {
 						<div className='w-full md:w-[50%] space-y-10'>
 							<div className='space-y-3 list-none'>
 								<div className=' flex items-start justify-between space-x-'>
-									<div className='h-[30px] w-[30px] relativ'>
+									<div className='h-[30px] w-[30px] '>
 										<BadgeCheck
 											size={22}
 											className='text-green-600'
@@ -161,7 +161,7 @@ const BusinessPage = () => {
 									</p>
 								</div>
 								<div className='flex items-start justify-between space-x-'>
-									<div className='h-[30px] w-[30px] relativ'>
+									<div className='h-[30px] w-[30px] '>
 										<Laptop
 											size={22}
 											className='text-green-600'
@@ -181,7 +181,7 @@ const BusinessPage = () => {
 									</p>
 								</div>
 								<div className=' flex items-start justify-between space-x-'>
-									<div className='h-[30px] w-[30px] relativ'>
+									<div className='h-[30px] w-[30px] '>
 										<Award
 											size={22}
 											className='text-green-600'
@@ -198,7 +198,7 @@ const BusinessPage = () => {
 									</p>
 								</div>
 								<div className=' flex items-start justify-between space-x-'>
-									<div className='h-[30px] w-[30px] relativ'>
+									<div className='h-[30px] w-[30px] '>
 										<PieChart
 											size={22}
 											className='text-green-600'
@@ -222,7 +222,7 @@ const BusinessPage = () => {
 									<Image
 										width={60}
 										height={60}
-										alt='testimonial'
+										alt='DefaultTestimonial'
 										unoptimized={true}
 										src={'/vendor.jpg'}
 										className='border border-slate-300 shadow-md shadow-slate-200 rounded-full'

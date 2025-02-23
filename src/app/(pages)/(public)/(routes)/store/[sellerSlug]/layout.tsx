@@ -1,6 +1,9 @@
 import axios from 'axios';
 import {Metadata, ResolvingMetadata} from 'next';
-import {generateOGImageFromURL} from '@/utils/og.image.generator';
+import {
+	generateOGImageFromURL,
+	generateOGImagesFromURLWithSizes,
+} from '@/utils/og.image.generator';
 
 interface SellerProfileLayoutProps {
 	params: {
@@ -13,71 +16,46 @@ export async function generateMetadata(
 	{params}: SellerProfileLayoutProps,
 	parent: ResolvingMetadata
 ): Promise<Metadata> {
-	console.log('SLUG ', params.sellerSlug);
-
-	let ogImage200x200 = '';
-	let ogImage300x200 = '';
-	let ogImage300x300 = '';
-
 	const {data} = await axios.get(
 		`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/profile?slug=${params.sellerSlug}`
 	);
 
 	// console.log('[SEO-SELLER-DATA] :: ', data);
 
+	const sizes = [
+		{width: 144, height: 144},
+		{width: 300, height: 157},
+		{width: 200, height: 200},
+		{width: 300, height: 200},
+		{width: 300, height: 300},
+		// {width: 1200, height: 630},
+		// {width: 4096, height: 4096},
+	];
+
 	const imageUrl = data.data.avatar;
 
-	if (imageUrl.includes('https')) {
-		ogImage200x200 = await generateOGImageFromURL(200, 200, imageUrl);
-		ogImage300x200 = await generateOGImageFromURL(300, 200, imageUrl);
-		ogImage300x300 = await generateOGImageFromURL(300, 300, imageUrl);
-	}
+	// if (imageUrl.includes('https')) {
+	const ogImages = await generateOGImagesFromURLWithSizes(imageUrl, sizes);
+	// }
 
 	return {
 		title: data.data.name,
+		description: 'Best deals, Everything Animals',
 		openGraph: {
-			images: [
-				{
-					url: ogImage200x200,
-					secureUrl: ogImage200x200,
-					width: 200,
-					height: 200,
-				},
-				{
-					url: ogImage300x200,
-					secureUrl: ogImage300x200,
-					width: 300,
-					height: 200,
-				},
-				{
-					url: ogImage300x300,
-					secureUrl: ogImage300x300,
-					width: 300,
-					height: 300,
-				},
-			],
+			title: data.data.name,
+			description: 'Best deals, Everything Animals',
+			url: 'https://livestocx.com',
+			siteName: 'Livestocx',
+			type: 'website',
+			images: ogImages,
 		},
 		twitter: {
-			images: [
-				{
-					url: ogImage200x200,
-					secureUrl: ogImage200x200,
-					width: 200,
-					height: 200,
-				},
-				{
-					url: ogImage300x200,
-					secureUrl: ogImage300x200,
-					width: 300,
-					height: 200,
-				},
-				{
-					url: ogImage300x300,
-					secureUrl: ogImage300x300,
-					width: 300,
-					height: 300,
-				},
-			],
+			card: 'summary',
+			site: '@livestocx',
+			creator: '@livestocx',
+			title: data.data.name,
+			description: 'Best deals, Everything Animals',
+			images: ogImages,
 		},
 	};
 }

@@ -25,11 +25,21 @@ interface SignupDto {
 	phoneNumber: string;
 	acceptedTerms: boolean;
 	confirmPassword: string;
+	referralCode?: string;
 	role: 'FARMER' | 'CUSTOMER';
 }
 
-interface PremiumSubscriptionCheckoutDto extends VendorProfileDto {
+interface PremiumSubscriptionCheckoutFormOneDto {
+	name: string;
 	slug: string;
+	email: string;
+	phoneNumber: string;
+	address: string;
+}
+
+interface PremiumSubscriptionCheckoutFormTwoDto {
+	state: string;
+	city: string;
 	facebookUrl?: string;
 	instagramUrl?: string;
 	twitterUrl?: string;
@@ -100,6 +110,7 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 	}
 	if (!passwordRegEX.test(formData.password)) {
 		return (message = 'Password must be at least 8 characters');
+>>>>>>>>> Temporary merge branch 2
 	}
 
 	if (formData.role === 'CUSTOMER' && !formData.location) {
@@ -165,8 +176,8 @@ export function ValidateVendorProfileFormData(
 	return message;
 }
 
-export function ValidatePremiumSubscriptionCheckoutFormData(
-	formData: PremiumSubscriptionCheckoutDto
+export function ValidatePremiumSubscriptionCheckoutStepOneFormData(
+	formData: PremiumSubscriptionCheckoutFormOneDto
 ): string {
 	let message = '';
 
@@ -200,6 +211,14 @@ export function ValidatePremiumSubscriptionCheckoutFormData(
 			'Invalid domain handle, use lowercase characters without space.');
 	}
 
+	return message;
+}
+
+export function ValidatePremiumSubscriptionCheckoutStepTwoFormData(
+	formData: PremiumSubscriptionCheckoutFormTwoDto
+): string {
+	let message = '';
+
 	if (!formData.state) {
 		return (message = 'Business state is required.');
 	}
@@ -211,7 +230,10 @@ export function ValidatePremiumSubscriptionCheckoutFormData(
 	if (formData.facebookUrl && !socialMediaRegEX.test(formData.facebookUrl)) {
 		return (message = 'Invalid facebook url.');
 	}
-	if (formData.instagramUrl && !socialMediaRegEX.test(formData.instagramUrl)) {
+	if (
+		formData.instagramUrl &&
+		!socialMediaRegEX.test(formData.instagramUrl)
+	) {
 		return (message = 'Invalid instagram url.');
 	}
 	if (formData.twitterUrl && !socialMediaRegEX.test(formData.twitterUrl)) {

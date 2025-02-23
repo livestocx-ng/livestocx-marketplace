@@ -4,11 +4,11 @@ import {
 	User2,
 	Mails,
 	Store,
+	Users,
 	Package,
 	Settings,
-	Megaphone,
+	LineChart,
 	LogOutIcon,
-	ShoppingCart,
 	MessageCircle,
 	MessagesSquare,
 } from 'lucide-react';
@@ -20,7 +20,11 @@ import {Button} from '../ui/button';
 import {toast} from 'react-hot-toast';
 import {useEffect, useState} from 'react';
 import {usePathname, useRouter} from 'next/navigation';
-import {useGlobalStore} from '@/hooks/use-global-store';
+import {
+	useGlobalStore,
+	useUpdateUserRoleModalStore,
+	useReferralModalStore,
+} from '@/hooks/use-global-store';
 
 const MainNavbar = () => {
 	const router = useRouter();
@@ -36,6 +40,9 @@ const MainNavbar = () => {
 		userPremiumSubscription,
 		updateUserPremiumSubscription,
 	} = useGlobalStore();
+
+	const referralModal = useReferralModalStore();
+	const updateUserRoleModal = useUpdateUserRoleModalStore();
 
 	const [scrolling, setScrolling] = useState<boolean>(false);
 	const [showMenu, setSetShowMenu] = useState<boolean>(false);
@@ -63,28 +70,36 @@ const MainNavbar = () => {
 
 			if (scrollPosition > 50) {
 				setScrolling(true);
-				// // console.log('[SCROLLING]');
+				// console.log('[SCROLLING]');
 			} else {
 				setScrolling(false);
-				// // console.log('[FALSE]');
+				// console.log('[FALSE]');
 			}
 		});
 	}, []);
+
+	const handleReferralModal = () => {
+		if (referralModal.isOpen) return;
+
+		referralModal.onOpen();
+	};
 
 	const handleLogout = async () => {
 		try {
 			await axios.get('/api/auth/signout');
 
-			toast.success('Logged out!', {className: 'text-sm'});
+			toast.success('Logged out!', {className: 'text-xs sm:text-sm'});
 
 			updateUser(null);
 			updateChatConversations([]);
 			setSetShowAccountMenu(false);
 			updateUserPremiumSubscription(null);
 
-			router.push('/');
+			if (pathName.includes('account')) {
+				router.push('/');
+			}
 		} catch (error) {
-			toast.error('Error!');
+			toast.error('Error!', {className: 'text-xs sm:text-sm'});
 		}
 	};
 
@@ -164,7 +179,9 @@ const MainNavbar = () => {
 							target='_blank'
 							href={`/store/${vendorProfile?.slug}`}
 							className={`h-8 w-8 ${
-								scrolling ? 'bg-white' : 'bg-main'
+								scrolling
+									? 'bg-white'
+									: 'bg-main shadow-sm shadow-slate-400'
 							} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
 						>
 							<Store
@@ -194,7 +211,9 @@ const MainNavbar = () => {
 							}
 						}}
 						className={`h-8 w-8 ${
-							scrolling ? 'bg-white' : 'bg-main'
+							scrolling
+								? 'bg-white'
+								: 'bg-main shadow-sm shadow-slate-400'
 						} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
 					>
 						<User2
@@ -227,6 +246,16 @@ const MainNavbar = () => {
 
 									<p className='text-xs'>Account</p>
 								</Link>
+								<div
+									onClick={handleReferralModal}
+									className={` ${
+										scrolling ? 'bg-white' : 'bg-mai'
+									} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
+								>
+									<Users className={`h-5 w-5 text-main`} />
+
+									<p className='text-xs'>Referrals</p>
+								</div>
 								<Link
 									href={'/account'}
 									onClick={() => {
@@ -263,7 +292,7 @@ const MainNavbar = () => {
 										<p className='text-xs'>Products</p>
 									</Link>
 								)}
-								{/**{user?.role === 'FARMER' && (
+								{user?.role === 'FARMER' && (
 									<Link
 										href={'/account'}
 										onClick={() => {
@@ -277,14 +306,14 @@ const MainNavbar = () => {
 											scrolling ? 'bg-white' : 'bg-mai'
 										} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
 									>
-										<Megaphone
+										<LineChart
 											className={`h-5 w-5 text-main`}
 										/>
 
 										<p className='text-xs'>Promotions</p>
 									</Link>
 								)}
-								**/}
+
 								<Link
 									href={'/account'}
 									onClick={() => {
@@ -351,10 +380,10 @@ const MainNavbar = () => {
 						)}
 					</div>
 
-					{/* <div
+					<div
 						onClick={() => {
 							if (!user) {
-								router.push(`/signup?seller=true`);
+								router.replace(`/signup`);
 							}
 
 							if (user && user?.role === 'CUSTOMER') {
@@ -364,13 +393,13 @@ const MainNavbar = () => {
 							if (user && user?.role === 'FARMER') {
 								updateCurrentAccountTab('Products');
 
-								router.push('/account');
+								router.replace('/account');
 							}
 						}}
-						className={`h-8 bg-orange-400 rounded-sm w-[80px] text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
+						className={`h-8 px-3 bg-orange-400 rounded-md w-fit text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
 					>
 						Sell
-					</div> */}
+					</div>
 				</div>
 			</nav>
 
@@ -400,10 +429,10 @@ const MainNavbar = () => {
 				</Button>
 
 				<div className='flex items-center space-x-2'>
-					{/* <div
+					<div
 						onClick={() => {
 							if (!user) {
-								router.push(`/signup?seller=true`);
+								router.replace(`/signup`);
 							}
 
 							if (user && user?.role === 'CUSTOMER') {
@@ -413,13 +442,13 @@ const MainNavbar = () => {
 							if (user && user?.role === 'FARMER') {
 								updateCurrentAccountTab('Products');
 
-								router.push('/account');
+								router.replace('/account');
 							}
 						}}
-						className={`h-8 bg-orange-400 rounded-sm w-[60px] text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
+						className={`h-8 px-3 bg-orange-400 rounded-md w-fit text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
 					>
 						Sell
-					</div> */}
+					</div>
 
 					{chatConversations?.filter(
 						(conversation) => conversation?.unreadMessages !== 0
@@ -464,7 +493,9 @@ const MainNavbar = () => {
 							target='_blank'
 							href={`/store/${vendorProfile?.slug}`}
 							className={`h-8 w-8 ${
-								scrolling ? 'bg-white' : 'bg-main'
+								scrolling
+									? 'bg-white'
+									: 'bg-main shadow-sm shadow-slate-400'
 							} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
 						>
 							<Store
@@ -494,7 +525,9 @@ const MainNavbar = () => {
 							}
 						}}
 						className={`h-8 w-8 ${
-							scrolling ? 'bg-white' : 'bg-main'
+							scrolling
+								? 'bg-white'
+								: 'bg-main shadow-sm shadow-slate-400'
 						} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
 					>
 						<User2
@@ -527,6 +560,16 @@ const MainNavbar = () => {
 
 									<p className='text-xs'>Account</p>
 								</Link>
+								<div
+									onClick={handleReferralModal}
+									className={` ${
+										scrolling ? 'bg-white' : 'bg-mai'
+									} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
+								>
+									<Users className={`h-5 w-5 text-main`} />
+
+									<p className='text-xs'>Referrals</p>
+								</div>
 								{user?.role === 'FARMER' && (
 									<Link
 										href={'/account'}
@@ -546,7 +589,7 @@ const MainNavbar = () => {
 										<p className='text-xs'>Products</p>
 									</Link>
 								)}
-								{/* {user?.role === 'FARMER' && (
+								{user?.role === 'FARMER' && (
 									<Link
 										href={'/account'}
 										onClick={() => {
@@ -560,13 +603,13 @@ const MainNavbar = () => {
 											scrolling ? 'bg-white' : 'bg-mai'
 										} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
 									>
-										<Megaphone
+										<LineChart
 											className={`h-5 w-5 text-main`}
 										/>
 
 										<p className='text-xs'>Promotions</p>
 									</Link>
-								)} */}
+								)}
 								<Link
 									href={'/account'}
 									onClick={() => {

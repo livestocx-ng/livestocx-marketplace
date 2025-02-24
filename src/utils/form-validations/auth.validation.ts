@@ -65,7 +65,7 @@ export function ValidateSigninFormData(formData: SigninDto): string {
 	if (!formData.email) {
 		return (message = 'Email is required.');
 	}
-	if (!emailRegEX.test(formData.email)) {
+	if (!emailRegEX.test(formData.email.trim())) {
 		return (message = 'Invalid email input.');
 	}
 	if (!formData.password) {
@@ -87,7 +87,7 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 	if (!formData.email) {
 		return (message = 'Email is required.');
 	}
-	if (!emailRegEX.test(formData.email)) {
+	if (!emailRegEX.test(formData.email.trim())) {
 		return (message = 'Invalid email input.');
 	}
 	if (!formData.phoneNumber) {

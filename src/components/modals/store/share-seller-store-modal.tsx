@@ -19,19 +19,19 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import axios from 'axios';
 
 const ShareSellerStoreModal = () => {
-	const {vendorProfile} = useGlobalStore();
+	const {vendor} = useGlobalStore();
 
 	const {onClose} = useShareSellerStoreModalStore();
 
 	const handleFetchStoreUrl = async () => {
-		await axios.get(`https://livestocx.com/store/${vendorProfile?.slug}`);
+		await axios.get(`https://livestocx.com/store/${vendor?.slug}`);
 	};
 
 	useEffect(() => {
-		if (vendorProfile !== null) {
+		if (vendor !== null) {
 			handleFetchStoreUrl();
 		}
-	}, [vendorProfile]);
+	}, [vendor]);
 
 	return (
 		<div className='fixed h-screen flex flex-col items-center justify-center w-full bg-[#11111190] backdrop-blur-sm z-10'>
@@ -52,26 +52,26 @@ const ShareSellerStoreModal = () => {
 					<div className='flex items-center'>
 						<div className='flex space-x-5'>
 							<WhatsappShareButton
-								title={`Check out my mini-website/online store ${vendorProfile?.name} on Livestocx: `}
-								url={`https://livestocx.com/store/${vendorProfile?.slug}`}
+								title={`Check out my mini-website/online store ${vendor?.name} on Livestocx: `}
+								url={`https://livestocx.com/store/${vendor?.slug}`}
 							>
 								<WhatsappIcon size={30} round />
 							</WhatsappShareButton>
 							<FacebookShareButton
-								title={`Check out my mini-website/online store ${vendorProfile?.name} on Livestocx: `}
-								url={`https://livestocx.com/store/${vendorProfile?.slug}`}
+								title={`Check out my mini-website/online store ${vendor?.name} on Livestocx: `}
+								url={`https://livestocx.com/store/${vendor?.slug}`}
 							>
 								<FacebookIcon size={30} round />
 							</FacebookShareButton>
 							<TwitterShareButton
-								title={`Check out my mini-website/online store ${vendorProfile?.name} on Livestocx: `}
-								url={`https://livestocx.com/store/${vendorProfile?.slug}`}
+								title={`Check out my mini-website/online store ${vendor?.name} on Livestocx: `}
+								url={`https://livestocx.com/store/${vendor?.slug}`}
 							>
 								<TwitterIcon size={30} round />
 							</TwitterShareButton>
 
 							<CopyToClipboard
-								text={`https://livestocx.com/store/${vendorProfile?.slug}`}
+								text={`https://livestocx.com/store/${vendor?.slug}`}
 								onCopy={(text: string, result: boolean) => {
 									toast.success('Copied to clipboard');
 								}}

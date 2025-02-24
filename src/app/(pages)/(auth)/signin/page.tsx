@@ -125,7 +125,7 @@ const SignInPage = () => {
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		updateFormData({
 			type: 'UPDATE_FORMDATA',
-			payload: {[event.target.name]: event.target.value},
+			payload: {[event.target.name]: event.target.value.trim()},
 		});
 	};
 

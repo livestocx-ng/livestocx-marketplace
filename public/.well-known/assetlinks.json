@@ -8,6 +8,8 @@
 			"namespace": "android_app",
 			"package_name": "com.livestocx.livestocx_mobile",
 			"sha256_cert_fingerprints": [
+				"C4:B5:73:03:C1:08:84:4E:E9:92:1B:DA:B9:DF:85:A7:D6:01:92:4B",
+				"F2:AB:5D:B0:30:E0:C0:39:95:14:16:E3:B0:3A:01:2D:78:21:61:78",
 				"5D:33:38:6B:09:C5:0A:E9:A2:42:C3:B5:41:7A:B6:D7:12:E8:87:07:0A:97:C1:43:12:CD:5F:3E:D9:AB:54:D5"
 			]
 		}

@@ -1,0 +1,15 @@
+[
+	{
+		"relation": [
+			"delegate_permission/common.handle_all_urls",
+			"delegate_permission/common.get_login_creds"
+		],
+		"target": {
+			"namespace": "android_app",
+			"package_name": "com.livestocx.livestocx_mobile",
+			"sha256_cert_fingerprints": [
+				"5D:33:38:6B:09:C5:0A:E9:A2:42:C3:B5:41:7A:B6:D7:12:E8:87:07:0A:97:C1:43:12:CD:5F:3E:D9:AB:54:D5"
+			]
+		}
+	}
+]

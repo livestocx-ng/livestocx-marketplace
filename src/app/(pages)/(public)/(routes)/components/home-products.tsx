@@ -7,7 +7,7 @@ import {Dispatch, Fragment, SetStateAction, useState} from 'react';
 import ProductCard from '../../../../../components/cards/product-card';
 import TestimonialCard from '@/components/common/testimonial-card';
 import {Product, Testimonial} from '@/types/types';
-import { createGridItems } from '@/utils';
+import {createGridItems} from '@/utils';
 
 interface Tab {
 	id: number;
@@ -39,6 +39,50 @@ const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 
 	const [currentTab, setCurrentTab] = useState<Tab>(TabItems[0]);
 
+	const gridItems = createGridItems(products, testimonials, 8);
+
+	let rows: JSX.Element[] = [];
+	let productRow: JSX.Element[] = [];
+
+	gridItems.forEach((item, idx) => {
+		if (item.type === 'product') {
+			productRow.push(
+				<ProductCard key={item.id} product={item.product} />
+			);
+		} else if (item.type === 'testimonial') {
+			// Flush the current product row if it has items
+			if (productRow.length > 0) {
+				rows.push(
+					<div
+						key={`products-row-${idx}`}
+						className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 mt-2'
+					>
+						{productRow}
+					</div>
+				);
+				productRow = [];
+			}
+			// Render testimonial as a full-width row
+			rows.push(
+				<div key={`testimonial-row-${item.id}`} className='w-full flex justify-center mt-2'>
+					<TestimonialCard data={item.testimonial} />
+				</div>
+			);
+		}
+	});
+
+	// Flush any remaining products
+	if (productRow.length > 0) {
+		rows.push(
+			<div
+				key={`products-row-final`}
+				className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 mt-2'
+			>
+				{productRow}
+			</div>
+		);
+	}
+
 	return (
 		<Fragment>
 			<div className='flex item-center space-x-4 mt-6 sm:mt-1'>
@@ -68,10 +112,7 @@ const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 				)}
 			</div>
 
-			<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2 mt-2'>
-				{/* {products?.map((product) => (
-					<ProductCard key={product.id} product={product} />
-				))} */}
+			{/* <div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2 mt-2'>
 				{createGridItems(products, testimonials, 4).map((item, index) =>
 					item.type === 'product' ? (
 						<ProductCard key={item.id} product={item.product} />
@@ -82,7 +123,9 @@ const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 						/>
 					)
 				)}
-			</div>
+			</div> */}
+
+			{rows}
 
 			{!hasNextPage && totalPages > 1 && (
 				<div className='flex justify-center mt-10'>

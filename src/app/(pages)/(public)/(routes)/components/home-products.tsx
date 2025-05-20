@@ -39,7 +39,7 @@ const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 
 	const [currentTab, setCurrentTab] = useState<Tab>(TabItems[0]);
 
-	const gridItems = createGridItems(products, testimonials, 8);
+	const gridItems = createGridItems(products, testimonials, 7);
 
 	let rows: JSX.Element[] = [];
 	let productRow: JSX.Element[] = [];

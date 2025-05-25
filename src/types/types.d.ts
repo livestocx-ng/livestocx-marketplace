@@ -357,3 +357,8 @@ export interface BlogItem {
 		description: string;
 	}[];
 }
+
+export interface Sponsor {
+	name: string;
+	image: string;
+}

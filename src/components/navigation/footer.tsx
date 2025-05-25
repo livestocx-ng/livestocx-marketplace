@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {useRouter} from 'next/navigation';
 import {useGlobalStore} from '@/hooks/use-global-store';
-import {AccountNavLinks, HelpNavLinks, OtherNavLinks} from '@/data';
+import {AccountNavLinks, HelpNavLinks, OtherNavLinks, Sponsors} from '@/data';
 
 const Footer = () => {
 	const router = useRouter();
@@ -13,6 +13,22 @@ const Footer = () => {
 	return (
 		<div className='pt-5 md:pt-10 w-full bg-main flex flex-col px-5 sm:px-10'>
 			<div className='flex flex-row flex-wrap items-start justify-between w-full'>
+				<div className='flex flex-col justify-between w-full mb-5 md:mb-10'>
+					<div className='flex justify-center items-center text-white'>
+						Sponsored by
+					</div>
+					<div className='flex flex-row flex-wrap items-center justify-center gap-4 w-full'>
+						{Sponsors.map((sponsor) => (
+							<Image
+								width={80}
+								height={80}
+								src={sponsor.image}
+								className='object-cover'
+								alt={`Livestocx Sponsored by: ${sponsor.name}`}
+							/>
+						))}
+					</div>
+				</div>
 				<div className='mb-10 sm:mb-0 flex flex-col space-y-5 w-full md:w-fit'>
 					<Image
 						alt='logo'
@@ -35,7 +51,8 @@ const Footer = () => {
 						</div>
 						<div className='space-y-1'>
 							<p className='text-white text-xs'>
-								Shimex Estate Lugbe Federal Capital Territory, Nigeria.
+								Shimex Estate Lugbe Federal Capital Territory,
+								Nigeria.
 							</p>
 							<p className='text-white text-xs'>+2348132549273</p>
 						</div>

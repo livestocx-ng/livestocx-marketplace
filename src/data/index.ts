@@ -6,7 +6,7 @@ import {
 	Feature,
 	FaqOption,
 } from '@/types/index.types';
-import {EnterprisePlanComparison, DefaultTestimonial, BlogItem} from '@/types/types';
+import {EnterprisePlanComparison, DefaultTestimonial, BlogItem, Sponsor} from '@/types/types';
 
 export const NavLinks: NavLink[] = [
 	{
@@ -403,6 +403,25 @@ export const enterprisePlanComparisons: EnterprisePlanComparison[] = [
 		customBusinessWebsite: 'Varies, generally limited to hosting provider',
 		platform: 'Included (platform support and assistance)',
 	},
+];
+
+export const Sponsors: Sponsor[] = [
+	{
+		name: 'AI Collective',
+		image: '/sponsors/ai_collective.png',
+	},
+	{
+		name: 'Federal Ministry of Communications, Innovation and Development Economy',
+		image: '/sponsors/fmcide.png',
+	},
+	{
+		name: 'National Center for Artificial Intelligence and Robotics',
+		image: '/sponsors/ncair.png',
+	},
+	{
+		name: 'National Information Technology Development Agency',
+		image: '/sponsors/nitda.png',
+	}
 ];
 
 export const NigerianStates: string[] = [

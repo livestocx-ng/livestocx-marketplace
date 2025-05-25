@@ -20,11 +20,9 @@ interface BlogDetailsPageParams {
 	};
 }
 
-const BlogDetailsPage = async ({params}: BlogDetailsPageParams) => {
+const BlogDetailsPage = ({params}: BlogDetailsPageParams) => {
 	const router = useRouter();
-
 	const {blog, user, updateBlog} = useGlobalStore();
-
 	const [loading, setLoading] = useState(false);
 
 	const fetchBlogDescription = async () => {
@@ -47,7 +45,6 @@ const BlogDetailsPage = async ({params}: BlogDetailsPageParams) => {
 			setLoading(false);
 		} catch (error) {
 			setLoading(false);
-
 			// console.log('[FETCH-BLOG-ERROR] :: ', error);
 		}
 	};
@@ -146,7 +143,9 @@ const BlogDetailsPage = async ({params}: BlogDetailsPageParams) => {
 								className='text-sm leading-6'
 								style={{whiteSpace: 'pre-wrap'}}
 							>
-								<ReactMarkdown>{article?.description}</ReactMarkdown>
+								<ReactMarkdown>
+									{article?.description}
+								</ReactMarkdown>
 							</section>
 						</article>
 					))}

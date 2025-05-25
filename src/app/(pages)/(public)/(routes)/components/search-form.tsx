@@ -83,11 +83,27 @@ const SearchForm = () => {
 						>
 							<Image
 								alt={''}
-								width={130}
+								width={90}
 								height={60}
 								unoptimized={true}
 								className='object-contain'
 								src={'/icon__playstore__2.svg'}
+							/>
+						</Link>
+						<Link
+							className=''
+							target='_blank'
+							href={
+								'https://apps.apple.com/ng/app/livestocx/id6738842775?platform=iphone'
+							}
+						>
+							<Image
+								alt={''}
+								width={90}
+								height={60}
+								unoptimized={true}
+								className='object-contain'
+								src={'/icon__appstore__2.svg'}
 							/>
 						</Link>
 

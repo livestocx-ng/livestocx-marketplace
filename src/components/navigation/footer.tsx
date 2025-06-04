@@ -15,7 +15,7 @@ const Footer = () => {
 			<div className='flex flex-row flex-wrap items-start justify-between w-full'>
 				<div className='flex flex-col justify-between w-full mb-5 md:mb-10'>
 					<div className='flex justify-center items-center text-white'>
-						Sponsored by
+						Our Partners
 					</div>
 					<div className='flex flex-row flex-wrap items-center justify-center gap-4 w-full'>
 						{Sponsors.map((sponsor) => (

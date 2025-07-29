@@ -6,7 +6,12 @@ import {
 	Feature,
 	FaqOption,
 } from '@/types/index.types';
-import {EnterprisePlanComparison, DefaultTestimonial, BlogItem, Sponsor} from '@/types/types';
+import {
+	EnterprisePlanComparison,
+	DefaultTestimonial,
+	BlogItem,
+	Sponsor,
+} from '@/types/types';
 
 export const NavLinks: NavLink[] = [
 	{
@@ -421,7 +426,27 @@ export const Sponsors: Sponsor[] = [
 	{
 		name: 'National Information Technology Development Agency',
 		image: '/sponsors/nitda.png',
-	}
+	},
+	{
+		name: 'Deutsche Gesellschaft für Internationale Zusammenarbeit',
+		image: '/sponsors/giz.jpg',
+	},
+	{
+		name: 'Co-founded by the European Union',
+		image: '/sponsors/eu.jpg',
+	},
+	{
+		name: 'Agric-Business Facility for Africa',
+		image: '/sponsors/abfa.jpg',
+	},
+	{
+		name: 'german cooperation DEUTSCHE ZUSAMMENARBEIT',
+		image: '/sponsors/gcd.jpg',
+	},
+	{
+		name: 'Organisation of African, Caribbean and Pacific States (OACPS)',
+		image: '/sponsors/oacps.jpg',
+	},
 ];
 
 export const NigerianStates: string[] = [

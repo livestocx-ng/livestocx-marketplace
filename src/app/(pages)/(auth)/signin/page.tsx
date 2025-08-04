@@ -368,5 +368,5 @@ const SignInPage = () => {
 		</Fragment>
 	);
 };
-user
+
 export default SignInPage;

@@ -110,7 +110,6 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 	}
 	if (!passwordRegEX.test(formData.password)) {
 		return (message = 'Password must be at least 8 characters');
->>>>>>>>> Temporary merge branch 2
 	}
 
 	if (formData.role === 'CUSTOMER' && !formData.location) {

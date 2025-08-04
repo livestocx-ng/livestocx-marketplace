@@ -14,8 +14,8 @@ const Footer = () => {
 		<div className='pt-5 md:pt-10 w-full bg-main flex flex-col px-5 sm:px-10'>
 			<div className='flex flex-row flex-wrap items-start justify-between w-full'>
 				<div className='flex flex-col justify-between w-full mb-5 md:mb-10'>
-					<div className='flex justify-center items-center text-white'>
-						Our Partners
+					<div className='flex justify-center items-center text-white text-md md:text-xl mb-5'>
+						Backed by
 					</div>
 					<div className='flex flex-row flex-wrap items-center justify-center gap-4 w-full'>
 						{Sponsors.map((sponsor) => (
@@ -23,8 +23,8 @@ const Footer = () => {
 								width={80}
 								height={80}
 								src={sponsor.image}
-								className='object-cover'
-								alt={`Livestocx Sponsored by: ${sponsor.name}`}
+								className='object-cover rounded-md'
+								alt={`Livestocx Backed by: ${sponsor.name}`}
 							/>
 						))}
 					</div>

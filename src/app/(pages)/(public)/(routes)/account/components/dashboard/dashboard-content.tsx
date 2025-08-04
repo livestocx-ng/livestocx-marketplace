@@ -89,6 +89,25 @@ const DashboardContent = () => {
 		}
 	};
 
+<<<<<<< HEAD
+	const formatVendorSlug = (vendor: Vendor): string => {
+		if (vendor) {
+			const formattedProductName = vendor?.name.replace(/,/g, '');
+
+			const formattedVendorNameWithOutCommas = formattedProductName
+				.replace(/\s+/g, '-')
+				.toLowerCase();
+
+			const slug = `${formattedVendorNameWithOutCommas}_${vendor?.vendorId!}`;
+
+			return slug.toLowerCase();
+		}
+
+		return '';
+	};
+
+=======
+>>>>>>> 96786d9fdd93321b006fe77a73c763b703a3a574
 	return (
 		<div className='w-full md:w-[78%] flex flex-col gap-5'>
 			<div className='flex flex-col md:flex-row items-center justify-between w-full'>

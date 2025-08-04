@@ -72,19 +72,28 @@ const ShareProductModal = () => {
 						<div className='flex space-x-5'>
 							<WhatsappShareButton
 								title={`Check out my ${payload.name} on livestocx: `}
-								url={`https://livestocx.com/marketplace/products/${productSlug}`}
+								url={`https://livestocx.com/marketplace/products/${formatProductSlug(
+									payload!
+								)}`}
+>>>>>>> 3ead5968c41fd841833b689abc5f6c6c0ef91b2d
 							>
 								<WhatsappIcon size={30} round />
 							</WhatsappShareButton>
 							<FacebookShareButton
 								title={`Check out my ${payload.name} on livestocx: `}
-								url={`https://livestocx.com/marketplace/products/${productSlug}`}
+								url={`https://livestocx.com/marketplace/products/${formatProductSlug(
+									payload!
+								)}`}
+>>>>>>> 3ead5968c41fd841833b689abc5f6c6c0ef91b2d
 							>
 								<FacebookIcon size={30} round />
 							</FacebookShareButton>
 							<TwitterShareButton
 								title={`Check out my ${payload.name} on livestocx: `}
-								url={`https://livestocx.com/marketplace/products/${productSlug}`}
+								url={`https://livestocx.com/marketplace/products/${formatProductSlug(
+									payload!
+								)}`}
+>>>>>>> 3ead5968c41fd841833b689abc5f6c6c0ef91b2d
 							>
 								<TwitterIcon size={30} round />
 							</TwitterShareButton>

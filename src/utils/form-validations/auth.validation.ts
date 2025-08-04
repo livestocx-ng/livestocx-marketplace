@@ -110,14 +110,7 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 	}
 	if (!passwordRegEX.test(formData.password)) {
 		return (message = 'Password must be at least 8 characters');
-	}
-	
-	if (formData.referralCode && formData.referralCode.length <= 7) {
-		return (message = 'Referral code must be at least 8 characters');
-	}
-	
-	if (formData.referralCode && (formData.referralCode.length > 8 || formData.referralCode.length < 7)) {
-		return (message = 'Referral code must be at least 8 characters');
+>>>>>>>>> Temporary merge branch 2
 	}
 
 	if (formData.role === 'CUSTOMER' && !formData.location) {

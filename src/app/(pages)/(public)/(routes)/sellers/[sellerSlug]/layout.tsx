@@ -30,10 +30,7 @@ export async function generateMetadata(
 	const imageUrl = data.data.avatar;
 
 	if (imageUrl.includes('https')) {
-		ogImage = await generateOGImageFromURL(			
-			imageUrl,
-			formatVendorSlug(data.data)
-		);
+		ogImage = await generateOGImageFromURL(300, 200, imageUrl);
 	}
 
 	return {

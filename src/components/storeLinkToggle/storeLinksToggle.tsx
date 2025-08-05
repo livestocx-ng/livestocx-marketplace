@@ -11,9 +11,9 @@ const StoreLinksToggle = () => {
 			<div className='flex justify-center'>
 				<button
 					onClick={() => setShowStores(!showStores)}
-					className='px-6 py-2 rounded bg-main text-white text-sm font-semibold hover:bg-main transition'
+					className='px-6 py-2 rounded bg-main text-white text-sm font- hover:bg-main transition'
 				>
-					{showStores ? 'Hide App Links' : 'Know More'}
+					{showStores ? 'Hide App Links' : 'Learn More'}
 				</button>
 			</div>
 

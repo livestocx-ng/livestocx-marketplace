@@ -3,6 +3,7 @@ import Image from 'next/image';
 import React, {Fragment} from 'react';
 import Footer from '@/components/navigation/footer';
 import MainNavbar from '@/components/navigation/main-nav-bar';
+import StoreLinksToggle from '@/components/storeLinkToggle/storeLinksToggle';
 
 const VetinaryResponsePage = () => {
 	return (
@@ -150,11 +151,13 @@ const VetinaryResponsePage = () => {
 							institutional action, Livestocx builds a more
 							responsive and integrated livestock health
 							ecosystem. In a world where emerging diseases are
-							becoming more frequent and complex, early
-							detection is no longer optional it is the frontline
-							defense for rural resilience and sustainable
-							agriculture.
+							becoming more frequent and complex, early detection
+							is no longer optional it is the frontline defense
+							for rural resilience and sustainable agriculture.
 						</p>
+					</div>
+					<div>
+						<StoreLinksToggle />
 					</div>
 				</div>
 			</main>

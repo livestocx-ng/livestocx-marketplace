@@ -1,10 +1,13 @@
 'use client';
 import Image from 'next/image';
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import Footer from '@/components/navigation/footer';
 import MainNavbar from '@/components/navigation/main-nav-bar';
+import Link from 'next/link';
+import StoreLinksToggle from '@/components/storeLinkToggle/storeLinksToggle';
 
 const DigitalAdvisorPage = () => {
+	const [showStores, setShowStores] = useState(false);
 	return (
 		<Fragment>
 			<MainNavbar />
@@ -154,6 +157,10 @@ const DigitalAdvisorPage = () => {
 							approach is what sets the platform apart and ensures
 							long-term impact on the agricultural economy.
 						</p>
+					</div>
+
+					<div>
+						<StoreLinksToggle />
 					</div>
 				</div>
 			</main>

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import React, {Fragment} from 'react';
 import Footer from '@/components/navigation/footer';
 import MainNavbar from '@/components/navigation/main-nav-bar';
+import StoreLinksToggle from '@/components/storeLinkToggle/storeLinksToggle';
 
 const MobileClimatePage = () => {
 	return (
@@ -65,23 +66,22 @@ const MobileClimatePage = () => {
 					</div>
 					<div>
 						<p className='text-sm leading-7'>
-							In addition to regular forecasts, Livestocx
-							delivers real time early warning alerts for
-							climate related hazards such as droughts, floods,
-							and extreme heatwaves. These warnings aren’t just
-							notifications, they’re paired with step by step
-							guidance tailored to the user’s region and herd
-							type. For example, if a drought warning is issued
-							for a particular region, the platform might
-							recommend early offloading of some animals,
-							relocation to better-grazed zones, or specific water
-							conservation techniques. The system pulls data from
-							multiple sources including satellite feeds,
-							meteorological agencies, and local weather stations.
-							However, what sets it apart is its integration of
-							indigenous climate knowledge. Many pastoral
-							communities already have early indicators for
-							climate changes, and Livestocx collaborates with
+							In addition to regular forecasts, Livestocx delivers
+							real time early warning alerts for climate related
+							hazards such as droughts, floods, and extreme
+							heatwaves. These warnings aren’t just notifications,
+							they’re paired with step by step guidance tailored
+							to the user’s region and herd type. For example, if
+							a drought warning is issued for a particular region,
+							the platform might recommend early offloading of
+							some animals, relocation to better-grazed zones, or
+							specific water conservation techniques. The system
+							pulls data from multiple sources including satellite
+							feeds, meteorological agencies, and local weather
+							stations. However, what sets it apart is its
+							integration of indigenous climate knowledge. Many
+							pastoral communities already have early indicators
+							for climate changes, and Livestocx collaborates with
 							these communities to embed such insights into its
 							predictive models. The system uses AI-based climate
 							modeling to analyze patterns and trends, improving
@@ -153,19 +153,21 @@ const MobileClimatePage = () => {
 							to smallholder farmers not just in interface design,
 							but in linguistic support, offline functionality,
 							and cost effectiveness. The platform doesn’t require
-							users to have a deep understanding of meteorology, it
-							simply guides them through every step of
-							decision making with timely, easy to understand
-							prompts. This creates a bridge between the world of
-							climate science and traditional farming knowledge.
-							As climate change continues to intensify, these
-							kinds of digital services will become not just
-							helpful, but essential to sustainable livestock
-							production. Livestocx is proud to lead this change,
-							using technology to empower farmers and herders to
-							protect their animals, their income, and their
-							future.
+							users to have a deep understanding of meteorology,
+							it simply guides them through every step of decision
+							making with timely, easy to understand prompts. This
+							creates a bridge between the world of climate
+							science and traditional farming knowledge. As
+							climate change continues to intensify, these kinds
+							of digital services will become not just helpful,
+							but essential to sustainable livestock production.
+							Livestocx is proud to lead this change, using
+							technology to empower farmers and herders to protect
+							their animals, their income, and their future.
 						</p>
+					</div>
+					<div>
+						<StoreLinksToggle />
 					</div>
 				</div>
 			</main>

@@ -110,7 +110,7 @@ const MainNavbar = () => {
 					scrolling && 'bg-main backdrop-blur-sm'
 				}`}
 			>
-				<div className='flex items-center gap-x-8'>
+				<div className='flex items-center gap-x-6'>
 					<Link href={'/'}>
 						<Image
 							alt='logo'
@@ -708,7 +708,7 @@ const MainNavbar = () => {
 					</Button>
 				</div>
 
-				<div className='flex flex-col items-start gap-y-12'>
+				<div className='flex flex-col items-start gap-y-8'>
 					{NavLinks.map((link) => (
 						<Link
 							href={link.url}

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import React, {Fragment} from 'react';
 import Footer from '@/components/navigation/footer';
 import MainNavbar from '@/components/navigation/main-nav-bar';
+import StoreLinksToggle from '@/components/storeLinkToggle/storeLinksToggle';
 
 const VetinaryResponsePage = () => {
 	return (
@@ -155,6 +156,9 @@ const VetinaryResponsePage = () => {
 							infrastructure in rural regions and contributes to
 							national food security and economic growth.
 						</p>
+					</div>
+					<div>
+						<StoreLinksToggle />
 					</div>
 				</div>
 			</main>

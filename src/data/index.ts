@@ -23,6 +23,22 @@ export const NavLinks: NavLink[] = [
 		url: '/business',
 	},
 	{
+		title: 'Mobile Climate',
+		url: '/mobile-climate',
+	},
+	{
+		title: 'Digital Advisory',
+		url: '/digital-advisor',
+	},
+	{
+		title: 'Vetinary Response',
+		url: '/vetinary-response',
+	},
+	{
+		title: 'Livestock Outbreak',
+		url: '/livestock-outbreak',
+	},
+	{
 		title: 'Blog',
 		url: '/blog',
 	},

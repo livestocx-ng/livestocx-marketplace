@@ -20,7 +20,7 @@ const DigitalAdvisorPage = () => {
 
 				<div className='w-full py-10 px-4 md:px-8 flex flex-col space-y-5'>
 					<div>
-						<p className='text-sm leading-7'>
+						<p className='text-sm leading-7 px-0 md:px-[200px]'>
 							Livestock health is not just a biological concern it
 							is the lifeblood of rural economies and food
 							systems. In Africa, smallholder farmers often lack
@@ -62,7 +62,7 @@ const DigitalAdvisorPage = () => {
 						</div>
 					</div>
 					<div>
-						<p className='text-sm leading-7'>
+						<p className='text-sm leading-7 px-0 md:px-[200px]'>
 							A common challenge in livestock management is the
 							delayed identification and treatment of diseases.
 							Many farmers may not recognize early warning signs
@@ -95,7 +95,7 @@ const DigitalAdvisorPage = () => {
 						</p>
 					</div>
 					<div>
-						<p className='text-sm leading-7'>
+						<p className='text-sm leading-7 px-0 md:px-[200px]'>
 							Feed management is another area where the Livestocx
 							digital platform is making a measurable difference.
 							Livestock nutrition directly affects growth rates,
@@ -127,7 +127,7 @@ const DigitalAdvisorPage = () => {
 						</p>
 					</div>
 					<div>
-						<p className='text-sm leading-7'>
+						<p className='text-sm leading-7 px-0 md:px-[200px]'>
 							Beyond health and nutrition, Livestocx's advisory
 							services support livestock owners in understanding
 							and navigating the market. Accessing fair and

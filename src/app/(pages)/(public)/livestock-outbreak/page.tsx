@@ -18,7 +18,7 @@ const VetinaryResponsePage = () => {
 
 				<div className='w-full py-10 px-4 md:px-8 flex flex-col space-y-5'>
 					<div>
-						<p className='text-sm leading-7'>
+						<p className='text-sm leading-7 px-0 md:px-[200px]'>
 							Disease outbreaks can cripple livestock dependent
 							communities in a matter of days, especially when
 							detection is delayed. The economic impact of losing
@@ -61,7 +61,7 @@ const VetinaryResponsePage = () => {
 						</div>
 					</div>
 					<div>
-						<p className='text-sm leading-7'>
+						<p className='text-sm leading-7 px-0 md:px-[200px]'>
 							What makes this system truly powerful is its AI
 							driven diagnostic capability. Using machine learning
 							models trained on thousands of cases across
@@ -93,7 +93,7 @@ const VetinaryResponsePage = () => {
 						</p>
 					</div>
 					<div>
-						<p className='text-sm leading-7'>
+						<p className='text-sm leading-7 px-0 md:px-[200px]'>
 							A major strength of Livestocx early detection
 							approach is its participatory design. Instead of
 							relying solely on government officials or
@@ -126,7 +126,7 @@ const VetinaryResponsePage = () => {
 						</p>
 					</div>
 					<div>
-						<p className='text-sm leading-7'>
+						<p className='text-sm leading-7 px-0 md:px-[200px]'>
 							Finally, Livestocx ensures that outbreak data is not
 							only used at the local level but also contributes to
 							national and continental disease control efforts.

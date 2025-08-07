@@ -18,7 +18,7 @@ const VetinaryResponsePage = () => {
 
 				<div className='w-full py-10 px-4 md:px-8 flex flex-col space-y-5'>
 					<div>
-						<p className='text-sm leading-7'>
+						<p className='text-sm leading-7 px-0 md:px-[200px]'>
 							In many rural and pastoral regions, the absence of
 							reliable veterinary services means that even minor
 							health problems in livestock can escalate into
@@ -59,7 +59,7 @@ const VetinaryResponsePage = () => {
 						</div>
 					</div>
 					<div>
-						<p className='text-sm leading-7'>
+						<p className='text-sm leading-7 px-0 md:px-[200px]'>
 							One of the core components of this system is its
 							real-time disease tracking functionality. Every time
 							a farmer reports an animal illness or death, the
@@ -92,7 +92,7 @@ const VetinaryResponsePage = () => {
 						</p>
 					</div>
 					<div>
-						<p className='text-sm leading-7'>
+						<p className='text-sm leading-7 px-0 md:px-[200px]'>
 							Another critical feature of the Veterinary Response
 							System is its streamlined coordination of
 							vaccination campaigns. Livestock vaccination, though
@@ -126,7 +126,7 @@ const VetinaryResponsePage = () => {
 						</p>
 					</div>
 					<div>
-						<p className='text-sm leading-7'>
+						<p className='text-sm leading-7 px-0 md:px-[200px]'>
 							To complement physical intervention, Livestocx’s
 							Veterinary Response System includes a powerful layer
 							of remote consultation. Not every animal illness

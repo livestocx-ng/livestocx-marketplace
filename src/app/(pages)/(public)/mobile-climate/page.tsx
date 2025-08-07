@@ -18,7 +18,7 @@ const MobileClimatePage = () => {
 
 				<div className='w-full py-10 px-4 md:px-8 flex flex-col space-y-5'>
 					<div>
-						<p className='text-sm leading-7'>
+						<p className='text-sm leading-7 px-0 md:px-[200px]'>
 							Livestock production across Africa is highly
 							dependent on seasonal climatic conditions, making
 							timely and localized weather information not just
@@ -65,7 +65,7 @@ const MobileClimatePage = () => {
 						</div>
 					</div>
 					<div>
-						<p className='text-sm leading-7'>
+						<p className='text-sm leading-7 px-0 md:px-[200px]'>
 							In addition to regular forecasts, Livestocx delivers
 							real time early warning alerts for climate related
 							hazards such as droughts, floods, and extreme
@@ -99,7 +99,7 @@ const MobileClimatePage = () => {
 						</p>
 					</div>
 					<div>
-						<p className='text-sm leading-7'>
+						<p className='text-sm leading-7 px-0 md:px-[200px]'>
 							Among the platform’s standout innovations is the
 							livestock movement planning tool. In countries where
 							transhumance is common, managing livestock mobility
@@ -135,7 +135,7 @@ const MobileClimatePage = () => {
 						</p>
 					</div>
 					<div>
-						<p className='text-sm leading-7'>
+						<p className='text-sm leading-7 px-0 md:px-[200px]'>
 							The impact of these services extends far beyond
 							productivity it touches on resilience, economic
 							stability, and long-term adaptation. By

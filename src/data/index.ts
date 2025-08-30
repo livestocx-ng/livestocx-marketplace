@@ -16,38 +16,47 @@ import {
 export const NavLinks: NavLink[] = [
 	{
 		title: 'Home',
+		target: '',
 		url: '/',
 	},
 	{
 		title: 'Business',
+		target: '',
 		url: '/business',
 	},
 	{
-		title: 'Mobile Climate',
-		url: '/mobile-climate',
+		title: 'AI-Climate',
+		target: '_blank',
+		url: 'https://climateresilience.livestocx.com',
 	},
 	{
 		title: 'Digital Advisory',
+		target: '',
 		url: '/digital-advisor',
 	},
 	{
 		title: 'Vetinary Response',
+		target: '',
 		url: '/vetinary-response',
 	},
 	{
 		title: 'Livestock Outbreak',
+		target: '',
 		url: '/livestock-outbreak',
 	},
 	{
 		title: 'Blog',
+		target: '',
 		url: '/blog',
 	},
 	{
 		title: 'About Us',
+		target: '',
 		url: '/about-us',
 	},
 	{
 		title: 'Contact Us',
+		target: '',
 		url: '/contact-us',
 	},
 ];

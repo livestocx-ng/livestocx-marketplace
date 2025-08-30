@@ -9,6 +9,7 @@ export interface FooterNavLink {
 export interface NavLink {
 	title: string;
 	url: string;
+	target: string;
 }
 
 export interface TeamMember {

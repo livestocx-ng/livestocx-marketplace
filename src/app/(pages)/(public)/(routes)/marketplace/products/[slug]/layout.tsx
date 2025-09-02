@@ -7,15 +7,21 @@ import {
 	generateOGImagesFromURLWithSizes,
 } from '@/utils/og.image.generator';
 
-interface ProductDescriptionLayoutProps {
+type ProductDescriptionLayoutProps = {
 	params: {
 		slug: string;
 	};
 	children: React.ReactNode;
-}
+};
+
+type MetadataProps = {
+	params: {
+		slug: string;
+	};
+};
 
 export async function generateMetadata(
-	{params}: ProductDescriptionLayoutProps,
+	{params}: MetadataProps,
 	parent: ResolvingMetadata
 ): Promise<Metadata> {
 	const {data} = await axios.get(

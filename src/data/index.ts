@@ -25,7 +25,7 @@ export const NavLinks: NavLink[] = [
 		url: '/business',
 	},
 	{
-		title: 'AI-Climate',
+		title: 'Climate Resilience',
 		target: '_blank',
 		url: 'https://climateresilience.livestocx.com',
 	},
@@ -86,18 +86,22 @@ export const AccountNavLinks: FooterNavLink[] = [
 export const HelpNavLinks: NavLink[] = [
 	{
 		title: 'Contact Us',
+		target: '',
 		url: '/contact-us',
 	},
 	{
 		title: 'FAQs',
+		target: '',
 		url: '/contact-us',
 	},
 	{
 		title: 'Terms of Service',
+		target: '',
 		url: '/terms-of-service',
 	},
 	{
 		title: 'Privacy Policy',
+		target: '',
 		url: '/privacy-policy',
 	},
 ];
@@ -105,18 +109,22 @@ export const HelpNavLinks: NavLink[] = [
 export const OtherNavLinks: NavLink[] = [
 	{
 		title: 'About',
+		target: '',
 		url: '/about-us',
 	},
 	{
 		title: 'Sitemap',
+		target: '',
 		url: '#',
 	},
 	{
 		title: 'Login',
+		target: '',
 		url: '/signin',
 	},
 	{
 		title: 'Register',
+		target: '',
 		url: '/signup',
 	},
 ];

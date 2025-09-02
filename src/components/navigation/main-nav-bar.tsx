@@ -126,7 +126,11 @@ const MainNavbar = () => {
 						<Link
 							href={link.url}
 							key={link.title}
-							className={`text-xs ${
+							className={`text-sm ${
+								link.title === 'Climate Resilience'
+									? 'underline text-md font-semibold'
+									: ''
+							} ${
 								scrolling ? 'text-white' : 'text-white'
 							}`}
 						>

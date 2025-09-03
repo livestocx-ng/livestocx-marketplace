@@ -126,6 +126,7 @@ const MainNavbar = () => {
 						<Link
 							href={link.url}
 							key={link.title}
+							target={link.target}
 							className={`text-sm ${
 								link.title === 'Climate Resilience'
 									? 'underline text-md font-semibold'

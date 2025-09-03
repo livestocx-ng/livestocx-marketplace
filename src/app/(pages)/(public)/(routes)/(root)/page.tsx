@@ -74,7 +74,7 @@ export default function HomePage() {
 									'_blank'
 								);
 							}}
-							className='bg-green-600 text-white h- hover:bg-green-700 w-fit rounded-full py-2 flex-col animate-pulse duration-1000 delay-1000 ease-in-out'
+							className='bg-green-600 text-white h- hover:bg-green-700 w-fit rounded-full py-2 flex-col animate-pulse duration-1000 delay-[2000ms] ease-in-out'
 						>
 							<span className='flex items-center gap-x-2 text-g'>
 								Climate Resilience AI™

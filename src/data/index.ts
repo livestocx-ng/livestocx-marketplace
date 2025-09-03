@@ -25,7 +25,7 @@ export const NavLinks: NavLink[] = [
 		url: '/business',
 	},
 	{
-		title: 'Climate Resilience',
+		title: 'Climate Resilience™',
 		target: '_blank',
 		url: 'https://climateresilience.livestocx.com',
 	},

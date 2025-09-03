@@ -9,6 +9,9 @@ import MainNavbar from '@/components/navigation/main-nav-bar';
 import TestimonialSection from '@/components/common/testimonials';
 import PromotionBanner from '@/components/banner/promotion-banner';
 import ProductCardSkeleton from '@/components/skeletons/product-card-skeleton';
+import {Button} from '@/components/ui/button';
+import {ExternalLink} from 'lucide-react';
+import {motion} from 'framer-motion';
 
 export default function HomePage() {
 	const {products, updateProducts, updatePagination, updateSearchLocation} =
@@ -51,8 +54,8 @@ export default function HomePage() {
 		<Fragment>
 			<MainNavbar />
 			<main className='bg-[#28312B]'>
-				<section className='h-[28vh] md:h-[320px] w-full bg-white md:bg-gradient-to-b md:from-green-800 md:to-green-50 flex flex-col items-center justify-end gap-y-3 md:gap-y-10 py-2 md:py-10 md:pb-2'>
-					<h1 className='text-lg md:text-4xl font-medium text-black md:text-white'>
+				<section className='h-[28vh h-[38vh] md:h-[400px] w-full bg-white md:bg-gradient-to-b md:from-green-800 md:to-green-50 flex flex-col items-center md:items-center justify-end gap-y-3 md:gap-y-10 py-2 md:py-10 md:pb-2'>
+					<h1 className='text-lg md:text-4xl font-medium text-black md:text-white text-center'>
 						Best{' '}
 						<span className='text-green-600 md:text-white'>
 							deals.
@@ -62,7 +65,24 @@ export default function HomePage() {
 							Animals
 						</span>
 					</h1>
-
+					<div className='w-full flex items-center justify-center md:justify-start md:items-start px-4 md:px-8'>
+						<Button
+							type='button'
+							onClick={() => {
+								window.open(
+									'https://climateresilience.livestocx.com',
+									'_blank'
+								);
+							}}
+							className='bg-green-600 text-white h- hover:bg-green-700 w-fit rounded-full py-2 flex-col animate-pulse duration-1000 delay-1000 ease-in-out'
+						>
+							<span className='flex items-center gap-x-2 text-g'>
+								Climate Resilience AI™
+								<ExternalLink className='w-4 h-4' />
+							</span>
+							<p className='text-sm underline'>Learn More</p>
+						</Button>
+					</div>
 					<SearchForm />
 				</section>
 

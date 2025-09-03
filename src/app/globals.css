@@ -116,6 +116,27 @@
 	}
 }
 
+@keyframes pulse-green {
+	0% {
+		transform: scale(1);
+		box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
+	}
+
+	70% {
+		transform: scale(1.05);
+		box-shadow: 0 0 0 10px rgba(22, 163, 74, 0);
+	}
+
+	100% {
+		transform: scale(1);
+		box-shadow: 0 0 0 0 rgba(22, 163, 74, 0);
+	}
+}
+
+.animate-pulse-green {
+	animation: pulse-green 2s infinite;
+}
+
 @layer base {
 	* {
 		@apply border-border;

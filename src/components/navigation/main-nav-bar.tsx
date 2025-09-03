@@ -718,6 +718,7 @@ const MainNavbar = () => {
 						<Link
 							href={link.url}
 							key={link.title}
+							target={link.target}
 							onClick={toggleMenu}
 							className={`text-sm `}
 						>

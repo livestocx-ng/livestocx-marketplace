@@ -447,11 +447,11 @@ export const enterprisePlanComparisons: EnterprisePlanComparison[] = [
 export const Sponsors: Sponsor[] = [
 	{
 		name: 'Kenya Climate Innovation Centre',
-		image: '/sponsors/KCIC.png',
+		image: '/sponsors/kcic.png',
 	},
 	{
 		name: 'Global Centre on Adaptation',
-		image: '/sponsors/GCA.svg',
+		image: '/sponsors/gca.svg',
 	},
 	{
 		name: 'AI Collective',

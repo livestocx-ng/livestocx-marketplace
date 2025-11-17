@@ -451,7 +451,7 @@ export const Sponsors: Sponsor[] = [
 	},
 	{
 		name: 'Global Centre on Adaptation',
-		image: '/sponsors/gca.svg',
+		image: '/sponsors/gca.png',
 	},
 	{
 		name: 'AI Collective',

@@ -78,7 +78,8 @@ const Footer = () => {
 									Territory, Nigeria.
 								</p>
 								<p className='text-white text-xs'>
-									+2348132549273
+									{/* +2348132549273 */}
+									+2348108597000
 								</p>
 							</div>
 
